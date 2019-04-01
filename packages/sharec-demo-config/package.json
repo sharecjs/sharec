@@ -1,0 +1,15 @@
+{
+  "name": "sharec-demo-config",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "sharec"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "sharec": "^0.1.0"
+  }
+}

@@ -1,0 +1,4 @@
+50 error execute Error occured with 'sharec-demo-config' while running 'npm run postinstall'
+51 error npm run postinstall [sharec-demo-config] Output from stdout:
+52 error npm run postinstall [sharec-demo-config] Output from stderr:
+53 error execute Error occured with 'sharec-demo-config' while running 'npm run postinstall'
