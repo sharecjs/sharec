@@ -1,12 +1,31 @@
+const fs = require('fs')
 const path = require('path')
-const { readDir, readFile, copyFile, exec } = require('./utils')
+const { readDir, readFile, copyFile, writeFile, exec } = require('./utils')
+
+const ignoredFiles = ['yarn.lock', 'package-lock.json', 'node_modules']
+
+function filterConfigs(configs) {
+  return configs.filter(
+    config => !ignoredFiles.concat(['package.json']).includes(config),
+  )
+}
 
 async function getConfigs(basePath) {
+  // TODO: move to the separated function
   const CONFIGS_PATH = path.join(basePath, 'configs')
-  const lockFiles = ['yarn.lock', 'package-lock.json']
   const res = await readDir(CONFIGS_PATH)
 
-  return res.filter(config => !lockFiles.includes(config))
+  return res.filter(config => !ignoredFiles.includes(config))
+}
+
+async function copyConfigs(basePath, targetPath, configs) {
+  const CONFIGS_PATH = path.join(basePath, 'configs')
+
+  await Promise.all(
+    filterConfigs(configs).map(config =>
+      copyFile(path.join(CONFIGS_PATH, config), path.join(targetPath, config)),
+    ),
+  )
 }
 
 async function getDependenciesFromConfigs(basePath, configs) {
@@ -35,6 +54,7 @@ async function getDependenciesFromConfigs(basePath, configs) {
 }
 
 async function installConfigsDependencies(
+  basePath,
   dependenciesObject = {},
   packageManager = 'npm',
 ) {
@@ -58,7 +78,9 @@ async function installConfigsDependencies(
       installCommand,
     )
 
-    await exec(commandWithArgs)
+    await exec(commandWithArgs, {
+      cwd: basePath,
+    })
   }
 
   if (devDependenciesKeys.length > 0) {
@@ -69,8 +91,33 @@ async function installConfigsDependencies(
       installCommand,
     )
 
-    await exec(commandWithArgs)
+    await exec(commandWithArgs, {
+      cwd: basePath,
+    })
   }
+}
+
+async function updatePackageJson(basePath, targetPath, configs) {
+  if (!configs.includes('package.json')) return
+
+  const packageJson = await readFile(
+    path.join(`${targetPath}/package.json`),
+    'utf8',
+  )
+  const packageJsonNewConfigs = await extractPackageJsonConfigs(
+    basePath,
+    configs,
+  )
+  const mergedPackageJson = mergePackageJsonConfigs(
+    JSON.parse(packageJson),
+    packageJsonNewConfigs,
+  )
+
+  await writeFile(
+    path.join(`${targetPath}/package.json`),
+    JSON.stringify(mergedPackageJson),
+    'utf8',
+  )
 }
 
 async function extractPackageJsonConfigs(basePath, configs) {
@@ -141,9 +188,12 @@ function mergePackageJsonConfigs(packageJsonA = {}, packageJsonB = {}) {
 }
 
 module.exports = {
+  filterConfigs,
   getConfigs,
+  copyConfigs,
   getDependenciesFromConfigs,
   installConfigsDependencies,
+  updatePackageJson,
   extractPackageJsonConfigs,
   mergePackageJsonConfigs,
 }

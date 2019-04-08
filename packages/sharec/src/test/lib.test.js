@@ -4,15 +4,26 @@ const utils = require('utils')
 utils.exec = jest.fn()
 
 const {
+  filterConfigs,
   getConfigs,
+  copyConfigs,
   getDependenciesFromConfigs,
   installConfigsDependencies,
   extractPackageJsonConfigs,
   mergePackageJsonConfigs,
+  updatePackageJson,
 } = require('lib')
 
 afterEach(() => {
   mockFs.restore()
+})
+
+describe('filterConfigs', () => {
+  it('should remove from configs list non-actual files', () => {
+    const configs = ['.prettierrc', 'package.json', 'package-lock.json']
+
+    expect(filterConfigs(configs)).toEqual(['.prettierrc'])
+  })
 })
 
 describe('getConfigs', () => {
@@ -40,6 +51,29 @@ describe('getConfigs', () => {
     const configs = await getConfigs(process.cwd())
 
     expect(configs).toEqual(['.eslintrc', '.prettierrc', 'package.json'])
+  })
+})
+
+describe('copyConfigs', () => {
+  it('should copy configs to target dir', async () => {
+    mockFs({
+      configs: {
+        '.prettierrc': '',
+        '.eslintrc': '',
+        'package.json': '',
+        'package-lock.json': '',
+        'yarn.lock': '',
+      },
+      workDir: {},
+    })
+
+    const rawConfigs = ['.prettierrc', '.eslintrc', 'package.json']
+
+    await copyConfigs('.', './workDir', rawConfigs)
+
+    const res = await utils.readDir('./workDir')
+
+    expect(res).toEqual(['.eslintrc', '.prettierrc'])
   })
 })
 
@@ -84,7 +118,7 @@ describe('installConfigsDependencies', () => {
   })
 
   it('should install given dependencies with passed package manager', async () => {
-    await installConfigsDependencies({
+    await installConfigsDependencies('.', {
       dependencies: {
         foo: '^1.0.0',
       },
@@ -97,15 +131,18 @@ describe('installConfigsDependencies', () => {
     expect(utils.exec).toHaveBeenNthCalledWith(
       1,
       'npm install --save foo@^1.0.0',
+      { cwd: '.' },
     )
     expect(utils.exec).toHaveBeenNthCalledWith(
       2,
       'npm install --save-dev bar@^1.0.0',
+      { cwd: '.' },
     )
   })
 
   it('should install dependencies with yarn if it passed as package manager', async () => {
     await installConfigsDependencies(
+      '.',
       {
         dependencies: {
           foo: '^1.0.0',
@@ -118,13 +155,17 @@ describe('installConfigsDependencies', () => {
     )
 
     expect(utils.exec).toBeCalledTimes(2)
-    expect(utils.exec).toHaveBeenNthCalledWith(1, 'yarn add foo@^1.0.0')
-    expect(utils.exec).toHaveBeenNthCalledWith(2, 'yarn add -D bar@^1.0.0')
+    expect(utils.exec).toHaveBeenNthCalledWith(1, 'yarn add foo@^1.0.0', {
+      cwd: '.',
+    })
+    expect(utils.exec).toHaveBeenNthCalledWith(2, 'yarn add -D bar@^1.0.0', {
+      cwd: '.',
+    })
   })
 
   it('should throw an error if passed package manager not equals to yarn or npm', async done => {
     try {
-      await installConfigsDependencies({}, 'pnpm')
+      await installConfigsDependencies('.', {}, 'pnpm')
     } catch (err) {
       done()
     }
@@ -136,6 +177,13 @@ describe('installConfigsDependencies', () => {
     expect(utils.exec).not.toBeCalled()
   })
 })
+
+// TODO: implement that
+// describe('updatePackageJson', () => {
+//   it('should update current package.json file with given configs', async () => {})
+//
+//   it('should not do anything if package.json is not exists', async () => {})
+// })
 
 describe('extractPackageJsonConfigs', () => {
   it('should extract all configs (non-basic fields, instead scripts) from package.json', async () => {
