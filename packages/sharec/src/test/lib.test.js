@@ -1,13 +1,19 @@
 const mockFs = require('mock-fs')
-const utils = require('../utils')
+const utils = require('utils')
 
 utils.exec = jest.fn()
 
-const { getConfigs, getDependenciesFromConfigs, installConfigsDependencies, extractPackageJsonConfigs, mergePackageJsonConfigs } = require('../lib')
+const {
+  getConfigs,
+  getDependenciesFromConfigs,
+  installConfigsDependencies,
+  extractPackageJsonConfigs,
+  mergePackageJsonConfigs,
+} = require('lib')
 
 afterEach(() => {
   mockFs.restore()
-});
+})
 
 describe('getConfigs', () => {
   it('should throw an error if configs dir is not exists', async done => {
@@ -17,7 +23,7 @@ describe('getConfigs', () => {
       await getConfigs(process.cwd())
     } catch (err) {
       done()
-    } 
+    }
   })
 
   it('should returns all configs paths from configs dir', async () => {
@@ -25,9 +31,11 @@ describe('getConfigs', () => {
       configs: {
         '.eslintrc': 'foo',
         '.prettierrc': 'bar',
-        'package.json': '{}'
-      }
-    })  
+        'yarn.lock': '',
+        'package-lock.json': '',
+        'package.json': '{}',
+      },
+    })
 
     const configs = await getConfigs(process.cwd())
 
@@ -40,12 +48,12 @@ describe('getDependenciesFromConfigs', () => {
     mockFs({
       'configs/package.json': JSON.stringify({
         dependencies: {
-          foo: '^1.0.0'
+          foo: '^1.0.0',
         },
         devDependencies: {
-          bar: '^1.0.0'
-        }
-      })
+          bar: '^1.0.0',
+        },
+      }),
     })
 
     const configs = ['package.json']
@@ -53,11 +61,11 @@ describe('getDependenciesFromConfigs', () => {
 
     expect(res).toEqual({
       dependencies: {
-        foo: '^1.0.0'
+        foo: '^1.0.0',
       },
       devDependencies: {
-        bar: '^1.0.0'
-      }
+        bar: '^1.0.0',
+      },
     })
   })
 
@@ -78,40 +86,49 @@ describe('installConfigsDependencies', () => {
   it('should install given dependencies with passed package manager', async () => {
     await installConfigsDependencies({
       dependencies: {
-        foo: '^1.0.0'
+        foo: '^1.0.0',
       },
       devDependencies: {
-        bar: '^1.0.0'
-      }
+        bar: '^1.0.0',
+      },
     })
 
     expect(utils.exec).toBeCalledTimes(2)
-    expect(utils.exec).toHaveBeenNthCalledWith(1, 'npm install --save foo@^1.0.0')
-    expect(utils.exec).toHaveBeenNthCalledWith(2, 'npm install --save-dev bar@^1.0.0')
+    expect(utils.exec).toHaveBeenNthCalledWith(
+      1,
+      'npm install --save foo@^1.0.0',
+    )
+    expect(utils.exec).toHaveBeenNthCalledWith(
+      2,
+      'npm install --save-dev bar@^1.0.0',
+    )
   })
 
   it('should install dependencies with yarn if it passed as package manager', async () => {
-    await installConfigsDependencies({
-      dependencies: {
-        foo: '^1.0.0'
+    await installConfigsDependencies(
+      {
+        dependencies: {
+          foo: '^1.0.0',
+        },
+        devDependencies: {
+          bar: '^1.0.0',
+        },
       },
-      devDependencies: {
-        bar: '^1.0.0'
-      }
-    }, 'yarn')
+      'yarn',
+    )
 
     expect(utils.exec).toBeCalledTimes(2)
     expect(utils.exec).toHaveBeenNthCalledWith(1, 'yarn add foo@^1.0.0')
     expect(utils.exec).toHaveBeenNthCalledWith(2, 'yarn add -D bar@^1.0.0')
   })
 
-  it('should throw an error if passed package manager not equals to yarn or npm', async (done) => {
+  it('should throw an error if passed package manager not equals to yarn or npm', async done => {
     try {
       await installConfigsDependencies({}, 'pnpm')
     } catch (err) {
       done()
     }
-  })  
+  })
 
   it('should not do anything if dependencies are empty', async () => {
     await installConfigsDependencies({})
@@ -127,25 +144,24 @@ describe('extractPackageJsonConfigs', () => {
       version: '0.0.1',
       license: 'bar',
       scripts: {
-        start: 'baz'
+        start: 'baz',
       },
       'lint-staged': {
-        'js/**/*': [
-          'prettier --write',
-          'git add'
-        ]
-      }
+        'js/**/*': ['prettier --write', 'git add'],
+      },
     }
 
     mockFs({
-      'configs/package.json': JSON.stringify(packageJson)
+      'configs/package.json': JSON.stringify(packageJson),
     })
 
-    const configs = await extractPackageJsonConfigs(process.cwd(), ['package.json'])
+    const configs = await extractPackageJsonConfigs(process.cwd(), [
+      'package.json',
+    ])
 
     expect(configs).toEqual({
       scripts: packageJson.scripts,
-      'lint-staged': packageJson['lint-staged']
+      'lint-staged': packageJson['lint-staged'],
     })
   })
 })
@@ -155,30 +171,27 @@ describe('mergePackageJsonConfigs', () => {
     const packageJsonA = {
       scripts: {
         start: 'foo',
-        test: 'bar'
+        test: 'bar',
       },
       'lint-staged': {
-        'js/**/*': [
-          'prettier --write',
-          'git add'
-        ]
+        'js/**/*': ['prettier --write', 'git add'],
       },
       husky: {
         hooks: {
-          'pre-push': 'echo "hello!";'
-        }
-      }
-    } 
+          'pre-push': 'echo "hello!";',
+        },
+      },
+    }
     const packageJsonB = {
       scripts: {
         start: 'bar',
-        publish: 'baz'
+        publish: 'baz',
       },
       husky: {
         hooks: {
-          'pre-commit': 'echo "hello!";'
-        }
-      }
+          'pre-commit': 'echo "hello!";',
+        },
+      },
     }
     const packageJsonC = mergePackageJsonConfigs(packageJsonA, packageJsonB)
 
@@ -186,19 +199,16 @@ describe('mergePackageJsonConfigs', () => {
       scripts: {
         start: 'bar',
         test: 'bar',
-        publish: 'baz'
+        publish: 'baz',
       },
       'lint-staged': {
-        'js/**/*': [
-          'prettier --write',
-          'git add'
-        ]
+        'js/**/*': ['prettier --write', 'git add'],
       },
       husky: {
         hooks: {
-          'pre-commit': 'echo "hello!";'
-        }
-      }    
+          'pre-commit': 'echo "hello!";',
+        },
+      },
     })
   })
 })

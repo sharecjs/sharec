@@ -2,4 +2,6 @@
 
 const sharec = require('../src/index.js')
 
+console.log('🙌', process.cwd())
+
 sharec(process.cwd())
