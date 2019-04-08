@@ -23,7 +23,7 @@ async function sharec(basePath) {
 
     console.info(chalk.green('sharec: all configs were ejected 🙌'))
   } catch (err) {
-    if (err.message.includes('ENOENT') && err.path.includes('/configs')) {
+    if (err.message.includes('ENOENT')) {
       console.error(
         chalk.red(
           'sharec: configs dir is not exists in current configuration!',

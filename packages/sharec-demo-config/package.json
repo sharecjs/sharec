@@ -1,6 +1,6 @@
 {
   "name": "sharec-demo-config",
-  "version": "0.0.2",
+  "version": "1.0.0",
   "description": "",
   "scripts": {
     "postinstall": "sharec"
@@ -8,11 +8,7 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "devDependencies": {
-    "lint-staged": "^8.1.5",
-    "prettier": "^1.16.4"
-  },
   "dependencies": {
-    "sharec": "file:../sharec"
+    "sharec": "1.0.0"
   }
 }
