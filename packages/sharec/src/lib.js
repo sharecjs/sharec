@@ -10,6 +10,30 @@ function filterConfigs(configs) {
   )
 }
 
+/**
+ * @param {String} targetPath
+ * @returns {Promise<Boolean>}
+ */
+async function getInjectStatus(targetPath) {
+  try {
+    const packageJson = await readFile(
+      path.join(targetPath, 'package.json'),
+      'utf8',
+    )
+    const { sharec } = JSON.parse(packageJson)
+
+    if (!sharec) return false
+
+    return !!sharec.injected
+  } catch (err) {
+    return false
+  }
+}
+
+/**
+ * @param {String} basePath
+ * @returns {Promise<Array<String>>}
+ */
 async function getConfigs(basePath) {
   // TODO: move to the separated function
   const CONFIGS_PATH = path.join(basePath, 'configs')
@@ -18,6 +42,12 @@ async function getConfigs(basePath) {
   return res.filter(config => !ignoredFiles.includes(config))
 }
 
+/**
+ * @param {String} basePath
+ * @param {String} targetPath
+ * @param {Array<String>} configs
+ * @returns {Promise}
+ */
 async function copyConfigs(basePath, targetPath, configs) {
   const CONFIGS_PATH = path.join(basePath, 'configs')
 
@@ -28,6 +58,11 @@ async function copyConfigs(basePath, targetPath, configs) {
   )
 }
 
+/**
+ * @param {String} basePath
+ * @param {Array<String>} configs
+ * @returns {Promise<Object>}
+ */
 async function getDependenciesFromConfigs(basePath, configs) {
   if (!configs.includes('package.json')) return {}
 
@@ -53,6 +88,12 @@ async function getDependenciesFromConfigs(basePath, configs) {
   return dependenciesObject
 }
 
+/**
+ * @param {String} basePath
+ * @param {Object} dependenciesObject
+ * @param {String} packageManager
+ * @returns {Promise}
+ */
 async function installConfigsDependencies(
   basePath,
   dependenciesObject = {},
@@ -97,6 +138,12 @@ async function installConfigsDependencies(
   }
 }
 
+/**
+ * @param {String} basePath
+ * @param {String} targetPath
+ * @param {Array<String>} configs
+ * @returns {Promise}
+ */
 async function updatePackageJson(basePath, targetPath, configs) {
   if (!configs.includes('package.json')) return
 
@@ -120,6 +167,11 @@ async function updatePackageJson(basePath, targetPath, configs) {
   )
 }
 
+/**
+ * @param {String} basePath
+ * @param {Array<String>} configs
+ * @returns {Promise}
+ */
 async function extractPackageJsonConfigs(basePath, configs) {
   if (!configs.includes('package.json')) return {}
 
@@ -171,6 +223,11 @@ async function extractPackageJsonConfigs(basePath, configs) {
     )
 }
 
+/**
+ * @param {Object} packageJsonA
+ * @param {Object} packageJsonB
+ * @returns {Object}
+ */
 function mergePackageJsonConfigs(packageJsonA = {}, packageJsonB = {}) {
   const newPackageJson = { ...packageJsonA }
   const { scripts, ...newConfigs } = packageJsonB
@@ -189,6 +246,7 @@ function mergePackageJsonConfigs(packageJsonA = {}, packageJsonB = {}) {
 
 module.exports = {
   filterConfigs,
+  getInjectStatus,
   getConfigs,
   copyConfigs,
   getDependenciesFromConfigs,

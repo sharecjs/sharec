@@ -1,13 +1,17 @@
 jest.mock('chalk', () => ({
   red: jest.fn(),
   green: jest.fn(),
+  yellow: jest.fn(),
 }))
 jest.mock('lib', () => ({
+  getInjectStatus: jest.fn().mockResolvedValue(false),
   getConfigs: jest.fn(),
   getDependenciesFromConfigs: jest.fn(),
   installConfigsDependencies: jest.fn(),
   extractPackageJsonConfigs: jest.fn(),
   mergePackageJsonConfigs: jest.fn(),
+  copyConfigs: jest.fn(),
+  updatePackageJson: jest.fn(),
 }))
 
 const chalk = require('chalk')
@@ -19,6 +23,7 @@ describe('sharec – base', () => {
   beforeAll(() => {
     jest.spyOn(console, 'info')
     jest.spyOn(console, 'error')
+    jest.spyOn(console, 'warn')
   })
 
   beforeEach(() => {
@@ -30,7 +35,7 @@ describe('sharec – base', () => {
   })
 
   it('should prints start message', async () => {
-    await sharec(process.cwd())
+    await sharec('.')
 
     expect(chalk.green).toBeCalledWith('sharec: extracting configs 📦')
     expect(console.info).toBeCalled()
@@ -41,7 +46,7 @@ describe('sharec – base', () => {
 
     lib.getConfigs.mockRejectedValueOnce(error)
 
-    await sharec(process.cwd())
+    await sharec('.')
 
     expect(chalk.red).toBeCalledWith(
       'sharec: configs dir is not exists in current configuration!',
@@ -51,7 +56,7 @@ describe('sharec – base', () => {
 
   it('should install dependencies from configs', async () => {
     lib.getConfigs.mockResolvedValueOnce(['package.json'])
-    lib.extractPackageJsonConfigs.mockResolvedValueOnce({
+    lib.getDependenciesFromConfigs.mockResolvedValueOnce({
       dependencies: {
         foo: '^1.0.0',
       },
@@ -60,9 +65,9 @@ describe('sharec – base', () => {
       },
     })
 
-    await sharec(process.cwd())
+    await sharec('.')
 
-    expect(lib.installConfigsDependencies).toBeCalledWith({
+    expect(lib.installConfigsDependencies).toBeCalledWith('.', {
       dependencies: {
         foo: '^1.0.0',
       },
@@ -70,5 +75,16 @@ describe('sharec – base', () => {
         bar: '^1.0.0',
       },
     })
+  })
+
+  it('should not do anything if sharec already injected', async () => {
+    lib.getInjectStatus.mockResolvedValueOnce(true)
+
+    await sharec('.')
+
+    expect(chalk.yellow).toBeCalledWith(
+      'sharec: already was injected. You can remove sharec property from your package.json, only if you really shure! ☝️',
+    )
+    expect(console.warn).toBeCalled()
   })
 })

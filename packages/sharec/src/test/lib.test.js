@@ -5,6 +5,7 @@ utils.exec = jest.fn()
 
 const {
   filterConfigs,
+  getInjectStatus,
   getConfigs,
   copyConfigs,
   getDependenciesFromConfigs,
@@ -257,6 +258,56 @@ describe('mergePackageJsonConfigs', () => {
           'pre-commit': 'echo "hello!";',
         },
       },
+    })
+  })
+
+  describe('getInjectStatus', () => {
+    it('should return false if package.json is not exists', async () => {
+      expect.assertions(1)
+      mockFs({})
+
+      const res = await getInjectStatus('.')
+
+      expect(res).toBe(false)
+    })
+
+    it('should return false if sharec in package.json is not exist', async () => {
+      expect.assertions(1)
+      mockFs({
+        'package.json': JSON.stringify({}),
+      })
+
+      const res = await getInjectStatus('.')
+
+      expect(res).toBe(false)
+    })
+
+    it('should return false if sharec.injected in package.json is falsy', async () => {
+      expect.assertions(1)
+      mockFs({
+        'package.json': JSON.stringify({
+          sharec: {},
+        }),
+      })
+
+      const res = await getInjectStatus('.')
+
+      expect(res).toBe(false)
+    })
+
+    it('should return true if sharec.injected in package.json is truthy', async () => {
+      expect.assertions(1)
+      mockFs({
+        'package.json': JSON.stringify({
+          sharec: {
+            injected: true,
+          },
+        }),
+      })
+
+      const res = await getInjectStatus('.')
+
+      expect(res).toBe(true)
     })
   })
 })
