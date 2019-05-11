@@ -31,6 +31,30 @@ async function getInjectStatus(targetPath) {
 }
 
 /**
+ * @param {String} targetPath
+ * @returns {Promise}
+ */
+async function setAsInjected(targetPath) {
+  const packageJson = await readFile(
+    path.join(targetPath, 'package.json'),
+    'utf8',
+  )
+
+  if (!packageJson) return
+
+  await writeFile(
+    path.join(`${targetPath}/package.json`),
+    JSON.stringify({
+      ...JSON.parse(packageJson),
+      sharec: {
+        injected: true,
+      },
+    }),
+    'utf8',
+  )
+}
+
+/**
  * @param {String} basePath
  * @returns {Promise<Array<String>>}
  */
@@ -246,6 +270,7 @@ function mergePackageJsonConfigs(packageJsonA = {}, packageJsonB = {}) {
 
 module.exports = {
   filterConfigs,
+  setAsInjected,
   getInjectStatus,
   getConfigs,
   copyConfigs,

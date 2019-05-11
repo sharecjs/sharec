@@ -1,5 +1,11 @@
 {
-	"devDependencies": {
-		"lerna": "^2.11.0"
-	}
+  "prettier": {
+    "semi": false,
+    "singleQuote": true,
+    "trailingComma": "all"
+  },
+  "devDependencies": {
+    "lerna": "^2.11.0",
+    "prettier": "^1.17.0"
+  }
 }

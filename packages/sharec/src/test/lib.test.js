@@ -5,6 +5,7 @@ utils.exec = jest.fn()
 
 const {
   filterConfigs,
+  setAsInjected,
   getInjectStatus,
   getConfigs,
   copyConfigs,
@@ -308,6 +309,25 @@ describe('mergePackageJsonConfigs', () => {
       const res = await getInjectStatus('.')
 
       expect(res).toBe(true)
+    })
+  })
+
+  describe('setAsInjected', () => {
+    it('should set sharec.injected flag into target dir package.json file', async () => {
+      expect.assertions(2)
+      mockFs({
+        'package.json': JSON.stringify({}),
+      })
+
+      const beforeInject = await getInjectStatus('.')
+
+      expect(beforeInject).toBe(false)
+
+      await setAsInjected('.')
+
+      const afterInject = await getInjectStatus('.')
+
+      expect(afterInject).toBe(true)
     })
   })
 })

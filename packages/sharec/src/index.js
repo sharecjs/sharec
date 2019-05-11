@@ -1,6 +1,7 @@
 const chalk = require('chalk')
 const minimist = require('minimist')
 const {
+  setAsInjected,
   getInjectStatus,
   getConfigs,
   copyConfigs,
@@ -36,6 +37,7 @@ async function sharec(basePath) {
     await copyConfigs(process.env.PWD, basePath, configs)
     await updatePackageJson(process.env.PWD, basePath, configs)
     await installConfigsDependencies(basePath, deps)
+    await setAsInjected(basePath)
 
     console.info(chalk.green('sharec: all configs were ejected 🙌'))
   } catch (err) {

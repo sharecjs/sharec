@@ -4,6 +4,7 @@ jest.mock('chalk', () => ({
   yellow: jest.fn(),
 }))
 jest.mock('lib', () => ({
+  setAsInjected: jest.fn(),
   getInjectStatus: jest.fn().mockResolvedValue(false),
   getConfigs: jest.fn(),
   getDependenciesFromConfigs: jest.fn(),
@@ -35,6 +36,8 @@ describe('sharec – base', () => {
   })
 
   it('should prints start message', async () => {
+    expect.assertions(2)
+
     await sharec('.')
 
     expect(chalk.green).toBeCalledWith('sharec: extracting configs 📦')
@@ -42,6 +45,8 @@ describe('sharec – base', () => {
   })
 
   it('should prints an error if configs dir is not exists', async () => {
+    expect.assertions(2)
+
     const error = new Error('ENOENT')
 
     lib.getConfigs.mockRejectedValueOnce(error)
@@ -55,6 +60,7 @@ describe('sharec – base', () => {
   })
 
   it('should install dependencies from configs', async () => {
+    expect.assertions(1)
     lib.getConfigs.mockResolvedValueOnce(['package.json'])
     lib.getDependenciesFromConfigs.mockResolvedValueOnce({
       dependencies: {
@@ -77,7 +83,17 @@ describe('sharec – base', () => {
     })
   })
 
+  it('should inject sharec injection status', async () => {
+    expect.assertions(1)
+
+    await sharec('.')
+
+    expect(lib.setAsInjected).toBeCalledWith('.')
+  })
+
   it('should not do anything if sharec already injected', async () => {
+    expect.assertions(2)
+
     lib.getInjectStatus.mockResolvedValueOnce(true)
 
     await sharec('.')
