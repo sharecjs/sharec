@@ -1,6 +1,6 @@
 {
   "name": "sharec",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "",
   "main": "./src/index.js",
   "bin": "./bin/sharec",
@@ -28,12 +28,10 @@
     "callsites": "^3.0.0",
     "jest": "^24.7.1",
     "jest-cli": "^24.7.1",
-    "mock-fs": "^4.8.0",
-    "prettier": "^1.16.4"
+    "mock-fs": "^4.8.0"
   },
   "dependencies": {
     "chalk": "^2.4.2",
-    "foo": "^1.0.0",
     "minimist": "^1.2.0"
   }
 }

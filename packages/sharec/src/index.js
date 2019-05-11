@@ -1,6 +1,8 @@
 const chalk = require('chalk')
 const minimist = require('minimist')
 const {
+  setAsInjected,
+  getInjectStatus,
   getConfigs,
   copyConfigs,
   getDependenciesFromConfigs,
@@ -8,8 +10,23 @@ const {
   updatePackageJson,
 } = require('./lib')
 
+/**
+ * @param {String} basePath
+ * @returns {Promise}
+ */
 async function sharec(basePath) {
   if (basePath === process.env.PWD) return
+
+  const isInjected = await getInjectStatus()
+
+  if (isInjected) {
+    console.warn(
+      chalk.yellow(
+        'sharec: already was injected. You can remove sharec property from your package.json, only if you really shure! ☝️',
+      ),
+    )
+    return
+  }
 
   console.info(chalk.green('sharec: extracting configs 📦'))
 
@@ -20,9 +37,11 @@ async function sharec(basePath) {
     await copyConfigs(process.env.PWD, basePath, configs)
     await updatePackageJson(process.env.PWD, basePath, configs)
     await installConfigsDependencies(basePath, deps)
+    await setAsInjected(basePath)
 
     console.info(chalk.green('sharec: all configs were ejected 🙌'))
   } catch (err) {
+    console.log(err)
     if (err.message.includes('ENOENT')) {
       console.error(
         chalk.red(
