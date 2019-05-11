@@ -1,4 +1,4 @@
-# Sharec [![Build Status](https://travis-ci.org/lamartire/sharec.svg?branch=master)](https://travis-ci.org/lamartire/sharec)
+# Sharec [![Build Status](https://travis-ci.org/lamartire/sharec.svg?branch=master)](https://travis-ci.org/lamartire/sharec) [![Greenkeeper badge](https://badges.greenkeeper.io/lamartire/sharec.svg)](https://greenkeeper.io/)
 
 > 📦 Share your configs between projects without pain
 
