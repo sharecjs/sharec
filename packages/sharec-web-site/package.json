@@ -1,6 +1,6 @@
 {
   "name": "poehali",
-  "version": "2.2.0",
+  "version": "1.2.1",
   "description": "Just another frontend starter :rocket:",
   "scripts": {
     "start": "NODE_ENV=development gulp",
@@ -127,5 +127,6 @@
   },
   "dependencies": {
     "highlight.js": "^9.15.6"
-  }
+  },
+  "gitHead": "8b056dc9aedf49a712b84b4d47ea9fa1cea45b08"
 }

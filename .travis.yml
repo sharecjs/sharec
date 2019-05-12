@@ -11,4 +11,6 @@ deploy:
   - provider: script
     script: node ./packages/sharec-web-site/scripts/deploy.js
     on:
-      branch: master
+      branches:
+        only:
+          - master

@@ -1,6 +1,6 @@
 {
   "name": "sharec-demo-config",
-  "version": "1.1.0",
+  "version": "1.2.1",
   "description": "",
   "scripts": {
     "postinstall": "sharec"
@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "sharec": "^1.1.0"
-  }
+    "sharec": "^1.2.1"
+  },
+  "gitHead": "8b056dc9aedf49a712b84b4d47ea9fa1cea45b08"
 }
