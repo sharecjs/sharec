@@ -8,6 +8,7 @@ install:
 script:
   - lerna run test
 deploy:
+  skip_cleanup: true
   - provider: script
     script:
       - ./packages/sharec-web-site/scripts/deploy.sh
