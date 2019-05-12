@@ -127,5 +127,6 @@
   },
   "dependencies": {
     "highlight.js": "^9.15.6"
-  }
+  },
+  "gitHead": "8b056dc9aedf49a712b84b4d47ea9fa1cea45b08"
 }

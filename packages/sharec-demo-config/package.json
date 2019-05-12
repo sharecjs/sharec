@@ -10,5 +10,6 @@
   "license": "ISC",
   "dependencies": {
     "sharec": "^1.2.0"
-  }
+  },
+  "gitHead": "8b056dc9aedf49a712b84b4d47ea9fa1cea45b08"
 }
