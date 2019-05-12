@@ -6,7 +6,8 @@
     "start": "NODE_ENV=development gulp",
     "build": "rimraf dist && NODE_ENV=production gulp build",
     "test": "jest",
-    "eslint": "eslint ./src/**/*.js"
+    "eslint": "eslint ./src/**/*.js",
+    "deploy": "node ./scripts/deploy.js"
   },
   "husky": {
     "hooks": {
@@ -92,6 +93,7 @@
     "eslint-plugin-node": "^9.0.0",
     "eslint-plugin-promise": "^4.0.1",
     "eslint-plugin-standard": "^4.0.0",
+    "gh-pages": "^2.0.1",
     "gulp": "^3.9.1",
     "gulp-cssnano": "^2.1.2",
     "gulp-filter": "^5.1.0",
