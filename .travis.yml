@@ -9,7 +9,8 @@ script:
   - lerna run test
 deploy:
   - provider: script
-    script: node ./packages/sharec-web-site/scripts/deploy.js
+    script:
+      - ./packages/sharec-web-site/scripts/deploy.sh
     on:
       branches:
         only:
