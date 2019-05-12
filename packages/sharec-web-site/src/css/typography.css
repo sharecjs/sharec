@@ -1,0 +1,16 @@
+h1 {
+}
+
+h2 {
+}
+
+blockquote {
+  margin: 0;
+
+  &:before {
+    content: '>';
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 0.5em;
+  }
+}

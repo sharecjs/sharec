@@ -8,7 +8,6 @@ jest.mock('lib', () => ({
   getInjectStatus: jest.fn().mockResolvedValue(false),
   getConfigs: jest.fn(),
   getDependenciesFromConfigs: jest.fn(),
-  installConfigsDependencies: jest.fn(),
   extractPackageJsonConfigs: jest.fn(),
   mergePackageJsonConfigs: jest.fn(),
   copyConfigs: jest.fn(),
@@ -57,30 +56,6 @@ describe('sharec – base', () => {
       'sharec: configs dir is not exists in current configuration!',
     )
     expect(console.error).toBeCalled()
-  })
-
-  it('should install dependencies from configs', async () => {
-    expect.assertions(1)
-    lib.getConfigs.mockResolvedValueOnce(['package.json'])
-    lib.getDependenciesFromConfigs.mockResolvedValueOnce({
-      dependencies: {
-        foo: '^1.0.0',
-      },
-      devDependencies: {
-        bar: '^1.0.0',
-      },
-    })
-
-    await sharec('.')
-
-    expect(lib.installConfigsDependencies).toBeCalledWith('.', {
-      dependencies: {
-        foo: '^1.0.0',
-      },
-      devDependencies: {
-        bar: '^1.0.0',
-      },
-    })
   })
 
   it('should inject sharec injection status', async () => {

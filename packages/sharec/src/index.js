@@ -36,10 +36,13 @@ async function sharec(basePath) {
 
     await copyConfigs(process.env.PWD, basePath, configs)
     await updatePackageJson(process.env.PWD, basePath, configs)
-    await installConfigsDependencies(basePath, deps)
     await setAsInjected(basePath)
 
-    console.info(chalk.green('sharec: all configs were ejected 🙌'))
+    console.info(
+      chalk.green(
+        'sharec: all configs were ejected. Run "npm install" command to install new dependencies! 🙌',
+      ),
+    )
   } catch (err) {
     console.log(err)
     if (err.message.includes('ENOENT')) {
