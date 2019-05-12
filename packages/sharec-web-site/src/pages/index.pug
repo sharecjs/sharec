@@ -1,0 +1,76 @@
+extends /layouts/default
+
+include /blocks/header/header
+include /blocks/footer/footer
+include /blocks/welcome/welcome
+include /blocks/section/section
+include /blocks/code/code
+
+block content
+  +header
+  main
+    +welcome
+    +section('Introduction')
+      p
+        | Sharec – new tool, which will solve headache about configuration. Create it once and reuse everywhere.
+      p
+        | With that tool you can easily create a really "bloat" configs, pack it into extertal package and install as simple npm-package.
+      p
+        | Use our shield to mark your awesome configs as #[strong sharec] user 😏!
+      div(style="text-align: center")
+        img(src="https://img.shields.io/badge/config-sharec-blue.svg")
+    +section('Installation')
+      p
+        | If you want to install #[strong sharec] just use your lovely manager:
+      +code('bash')
+        | npm i --save-dev sharec
+      p
+        | Or with #[strong yarn]
+      +code('bash')
+        | yarn add -D sharec
+      p
+        | ⚠️ Install #[strong sharec] only in your configs directory!
+    +section('Configuration')
+      p
+        | When you have installed #[strong sharec] you should modify your configuration #[strong package.json] with:
+      +code('json')
+        | "scripts": {
+        |   "postinstall": "sharec"
+        | }
+      p
+        | Then should create #[strong configs] directory and init npm package in it:
+      +code('bash')
+        | mkdir configs
+        | cd ./configs
+        | npm init -y
+      p
+        | After initialization you can install #[strong dependencies] right here – in #[strong configs] directory.
+      p
+        | For example, you need to install #[strong eslint]. Exectute that commands in #[strong configs] directory:
+      +code('bash')
+        | npm i --save-dev eslint
+        | eslint --init
+      p
+        | Answer on some questions and #[strong eslint] will be ready to share!
+    +section('Sharing')
+      p
+        | So, now you can publish your config or just share it with github.
+      +code('bash')
+        | npm publish
+      p
+        | Just publish you config and install into your project.
+      +code('bash')
+        | cd my-awesome-project
+        | npm install --save-dev my-awesome-config
+      p
+        | Configuration was applied! 🙌
+    +section('How it works')
+      p
+        | Sharec flow is really simple. There are some steps:
+      ol
+        li Copying configs from #[strong config] directory
+        li Adding dependencies from #[strong config/package.json]
+        li Seting inject status as true
+      p
+        | If you are already install config it will not be injected into your project and you will see warning message.
+  +footer

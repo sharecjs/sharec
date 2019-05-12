@@ -1,0 +1,7 @@
+.section {
+  display: block;
+
+  &:nth-child(2n) {
+    background-color: #fafafa;
+  }
+}

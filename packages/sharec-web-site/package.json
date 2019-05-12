@@ -1,0 +1,131 @@
+{
+  "name": "poehali",
+  "version": "2.2.0",
+  "description": "Just another frontend starter :rocket:",
+  "scripts": {
+    "start": "NODE_ENV=development gulp",
+    "build": "rimraf dist && NODE_ENV=production gulp build",
+    "test": "jest",
+    "eslint": "eslint ./src/**/*.js"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.js": [
+      "eslint",
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "author": "lamartire",
+  "license": "MIT",
+  "repository": "https://github.com/lamartire/poehali",
+  "browserslist": [
+    "last 2 version",
+    "> 1%"
+  ],
+  "babel": {
+    "presets": [
+      "@babel/preset-env"
+    ]
+  },
+  "postcss": {
+    "plugins": {
+      "postcss-partial-import": {},
+      "postcss-custom-properties": {
+        "preserve": false
+      },
+      "postcss-nested": {},
+      "autoprefixer": {}
+    }
+  },
+  "prettier": {
+    "singleQuote": true,
+    "semi": false
+  },
+  "jest": {
+    "testURL": "http://localhost/",
+    "moduleNameMapper": {
+      "^src/(.*)$": "<rootDir>/src/$1"
+    }
+  },
+  "eslintConfig": {
+    "parser": "babel-eslint",
+    "env": {
+      "browser": true,
+      "es6": true,
+      "node": true,
+      "jest": true
+    },
+    "extends": "standard",
+    "rules": {
+      "space-before-function-paren": 0
+    },
+    "parserOptions": {
+      "ecmaVersion": 8,
+      "ecmaFeatures": {
+        "spread": true
+      },
+      "sourceType": "module"
+    }
+  },
+  "eslintIgnore": [
+    "/node_modules",
+    "/dist"
+  ],
+  "devDependencies": {
+    "@babel/core": "^7.0.1",
+    "@babel/preset-env": "^7.0.0",
+    "autoprefixer": "^9.1.5",
+    "babel-core": "7.0.0-bridge.0",
+    "babel-eslint": "^10.0.0",
+    "babel-jest": "^23.6.0",
+    "bemto.pug": "git+https://git@github.com/kizu/bemto.git",
+    "browser-sync": "^2.23.6",
+    "cssnano": "^4.1.0",
+    "eslint": "^5.6.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.9.0",
+    "eslint-plugin-node": "^9.0.0",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "gulp": "^3.9.1",
+    "gulp-cssnano": "^2.1.2",
+    "gulp-filter": "^5.1.0",
+    "gulp-if": "^2.0.2",
+    "gulp-imagemin": "^5.0.0",
+    "gulp-plumber": "^1.2.0",
+    "gulp-plumber-error-handler": "^1.0.0",
+    "gulp-postcss": "^8.0.0",
+    "gulp-pug": "^4.0.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-sourcemaps": "^2.6.4",
+    "gulp-svgmin": "^2.0.0",
+    "gulp-svgstore": "^7.0.0",
+    "gulp-uglify": "^3.0.0",
+    "gulp-watch": "^5.0.0",
+    "husky": "^2.0.0",
+    "hygen": "^4.0.1",
+    "jade-get-data": "^1.0.1",
+    "jest": "^23.6.0",
+    "lint-staged": "^8.0.4",
+    "pngjs": "^3.3.2",
+    "postcss": "^7.0.2",
+    "postcss-custom-properties": "^8.0.0",
+    "postcss-nested": "^4.1.0",
+    "postcss-partial-import": "^4.1.0",
+    "prettier": "^1.11.1",
+    "require-dir": "^1.0.0",
+    "rimraf": "^2.6.2",
+    "run-sequence": "^2.2.1",
+    "webpack": "^4.23.1",
+    "webpack-dev-middleware": "^3.4.0",
+    "webpack-hot-middleware": "^2.24.3"
+  },
+  "dependencies": {
+    "highlight.js": "^9.15.6"
+  }
+}

@@ -1,0 +1,13 @@
+body {
+  padding: 0;
+  margin: 0;
+}
+
+*,
+body,
+input,
+button,
+select,
+textarea {
+  font-family: 'Iosevka';
+}
