@@ -2,8 +2,13 @@ language: node_js
 node_js:
   - v10
 before_install:
-  - npm install --global lerna  
+  - npm install --global lerna
 install:
   - lerna bootstrap
 script:
   - lerna run test
+deploy:
+  - provider: script
+    script: node ./packages/sharec-web-site/scripts/deploy.js
+    on:
+      branch: master
