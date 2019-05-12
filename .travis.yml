@@ -7,10 +7,11 @@ install:
   - lerna bootstrap
 script:
   - lerna run test
+  - ./packages/sharec-web-site/scripts/build.sh
 deploy:
-  - provider: script
-    script: node ./packages/sharec-web-site/scripts/deploy.js
-    on:
-      branches:
-        only:
-          - master
+  provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN
+  keep_history: true
+  target_branch: gh_pages
+  local_dir: ./packages/sharec-web-site/dist
