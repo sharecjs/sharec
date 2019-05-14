@@ -1,12 +1,13 @@
 {
   "lerna": "2.11.0",
-  "packages": [
-    "packages/*"
-  ],
+  "packages": ["packages/*"],
   "version": "1.2.1",
   "command": {
     "bootstrap": {
       "ignore": "sharec-demo-*"
+    },
+    "publish": {
+      "ignore": "sharec-web-site"
     }
   }
 }
