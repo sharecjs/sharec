@@ -1,9 +1,11 @@
 include ./../../node_modules/bemto.pug/bemto
 include /blocks/head/head
+include /blocks/footer/footer
 
 +head('Sharec. One tool – many configurations')
 
 body
   block content
 
+  +footer
   script(src='./assets/js/app.js')
