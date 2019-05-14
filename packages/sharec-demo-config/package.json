@@ -5,6 +5,7 @@
   "scripts": {
     "postinstall": "sharec"
   },
+  "homapage": "https://lamartire.github.io/sharec/",
   "keywords": [],
   "author": "",
   "license": "ISC",
