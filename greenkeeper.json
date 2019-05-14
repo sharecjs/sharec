@@ -1,0 +1,12 @@
+{
+  "groups": {
+    "default": {
+      "packages": [
+        "package.json",
+        "packages/sharec-demo-config/configs/package.json",
+        "packages/sharec-demo-config/package.json",
+        "packages/sharec/package.json"
+      ]
+    }
+  }
+}
