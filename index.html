@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta>
+  <link rel="stylesheet" href="./assets/css/main.css">
+  <title>poehali!</title>
+</head>
+<body>
+  <div class="header">
+  </div>
+  <main>
+    <div class="welcome">
+      <div class="container">
+        <h1>Sharec 📦</h1>
+        <ul class="welcome__badges">
+          <li><a href="https://www.npmjs.com/package/sharec"><img src="https://img.shields.io/npm/v/sharec.svg?style=flat-square"/></a></li>
+          <li><a href="https://travis-ci.org/lamartire/sharec"><img src="https://travis-ci.org/lamartire/sharec.svg?branch=master"/></a></li>
+          <li><a href="https://www.npmjs.com/package/prettier"><img src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square"/></a></li>
+        </ul>
+        <blockquote>One tool – many configurations</blockquote>
+      </div>
+    </div>
+    <section class="section">
+      <div class="container">
+        <h2 class="section__title">Introduction
+        </h2>
+        <section class="section__content">
+          <p>Sharec – new tool, which will solve headache about configuration. Create it once and reuse everywhere.</p>
+          <p>With that tool you can easily create a really "bloat" configs, pack it into extertal package and install as simple npm-package.</p>
+          <p>Use our shield to mark your awesome configs as <strong>sharec</strong> user 😏!</p>
+          <div style="text-align: center"><img src="https://img.shields.io/badge/config-sharec-blue.svg"></div>
+        </section>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
+        <h2 class="section__title">Installation
+        </h2>
+        <section class="section__content">
+          <p>If you want to install <strong>sharec</strong> just use your lovely manager:</p><pre class="core"><code class="bash">npm i --save-dev sharec</code></pre>
+          <p>Or with <strong>yarn</strong></p><pre class="core"><code class="bash">yarn add -D sharec</code></pre>
+          <p>⚠️ Install <strong>sharec</strong> only in your configs directory!</p>
+        </section>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
+        <h2 class="section__title">Configuration
+        </h2>
+        <section class="section__content">
+          <p>When you have installed <strong>sharec</strong> you should modify your configuration <strong>package.json</strong> with:</p><pre class="core"><code class="json">
+            "scripts": {
+              "postinstall": "sharec"
+            }</code></pre>
+          <p>Then should create <strong>configs</strong> directory and init npm package in it:</p><pre class="core"><code class="bash">
+            mkdir configs
+            cd ./configs
+            npm init -y</code></pre>
+          <p>After initialization you can install <strong>dependencies</strong> right here – in <strong>configs</strong> directory.</p>
+          <p>For example, you need to install <strong>eslint</strong>. Exectute that commands in <strong>configs</strong> directory:</p><pre class="core"><code class="bash">
+            npm i --save-dev eslint
+            eslint --init</code></pre>
+          <p>Answer on some questions and <strong>eslint</strong> will be ready to share!</p>
+        </section>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
+        <h2 class="section__title">Sharing
+        </h2>
+        <section class="section__content">
+          <p>So, now you can publish your config or just share it with github.</p><pre class="core"><code class="bash">npm publish</code></pre>
+          <p>Just publish you config and install into your project.</p><pre class="core"><code class="bash">
+            cd my-awesome-project
+            npm install --save-dev my-awesome-config
+            npm install</code></pre>
+          <p>⚠️ You should install new dependencies in "hand" mode!</p>
+          <p>Configuration was applied! 🙌</p>
+        </section>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
+        <h2 class="section__title">How it works
+        </h2>
+        <section class="section__content">
+          <p>Sharec flow is really simple. There are some steps:</p>
+          <ol>
+            <li>Copying configs from <strong>config</strong> directory</li>
+            <li>Adding dependencies from <strong>config/package.json</strong></li>
+            <li>Seting inject status as true</li>
+          </ol>
+          <p>If you are already install config it will not be injected into your project and you will see warning message.</p>
+        </section>
+      </div>
+    </section>
+  </main>
+  <footer class="footer"><span>2019, <a href="https://github.com/lamartire/sharec" target="_blank">Sharec</a> created with ❤️ by <a href="https://github.com/lamartire" target="_blank">lamartire</a></span>
+  </footer>
+  <script src="./assets/js/app.js"></script>
+</body>
