@@ -1,0 +1,22 @@
+.welcome {
+  margin: 3.5em 0 5em;
+  text-align: center;
+}
+
+.welcome__badges {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  list-style: none;
+  padding: 0;
+  margin-bottom: 1em;
+
+  li {
+    flex: 0 0 auto;
+    margin-right: 0.5em;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}

@@ -1,0 +1,8 @@
+include /blocks/container/container
+
+mixin section(title, modifier)
+  +b('section').section(class=modifier)
+    .container
+      +e('h2').title #{title}
+      +e('section').content
+        block

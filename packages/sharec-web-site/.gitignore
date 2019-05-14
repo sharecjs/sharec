@@ -1,0 +1,7 @@
+node_modules/
+dist/
+dist.zip
+.idea/
+.eslintcache
+*.log
+.vscode

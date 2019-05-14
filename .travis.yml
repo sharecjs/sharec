@@ -2,8 +2,16 @@ language: node_js
 node_js:
   - v10
 before_install:
-  - npm install --global lerna  
+  - npm install --global lerna
 install:
   - lerna bootstrap
 script:
   - lerna run test
+  - ./packages/sharec-web-site/scripts/build.sh
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN
+  keep_history: true
+  target_branch: gh-pages
+  local_dir: ./packages/sharec-web-site/dist

@@ -114,56 +114,6 @@ async function getDependenciesFromConfigs(basePath, configs) {
 
 /**
  * @param {String} basePath
- * @param {Object} dependenciesObject
- * @param {String} packageManager
- * @returns {Promise}
- */
-async function installConfigsDependencies(
-  basePath,
-  dependenciesObject = {},
-  packageManager = 'npm',
-) {
-  const allowedPackageManagers = ['npm', 'yarn']
-
-  if (!allowedPackageManagers.includes(packageManager)) {
-    throw new Error(
-      `${packageManager} is not currently supported yet! Use npm or yarn instead!`,
-    )
-  }
-
-  const { dependencies = {}, devDependencies = {} } = dependenciesObject
-  const dependenciesKeys = Object.keys(dependencies)
-  const devDependenciesKeys = Object.keys(devDependencies)
-
-  if (dependenciesKeys.length > 0) {
-    const installCommand =
-      packageManager === 'yarn' ? 'yarn add' : 'npm install --save'
-    const commandWithArgs = dependenciesKeys.reduce(
-      (acc, key) => `${acc} ${key}@${dependencies[key]}`,
-      installCommand,
-    )
-
-    await exec(commandWithArgs, {
-      cwd: basePath,
-    })
-  }
-
-  if (devDependenciesKeys.length > 0) {
-    const installCommand =
-      packageManager === 'yarn' ? 'yarn add -D' : 'npm install --save-dev'
-    const commandWithArgs = devDependenciesKeys.reduce(
-      (acc, key) => `${acc} ${key}@${devDependencies[key]}`,
-      installCommand,
-    )
-
-    await exec(commandWithArgs, {
-      cwd: basePath,
-    })
-  }
-}
-
-/**
- * @param {String} basePath
  * @param {String} targetPath
  * @param {Array<String>} configs
  * @returns {Promise}
@@ -270,12 +220,11 @@ function mergePackageJsonConfigs(packageJsonA = {}, packageJsonB = {}) {
 
 module.exports = {
   filterConfigs,
+  copyConfigs,
   setAsInjected,
   getInjectStatus,
   getConfigs,
-  copyConfigs,
   getDependenciesFromConfigs,
-  installConfigsDependencies,
   updatePackageJson,
   extractPackageJsonConfigs,
   mergePackageJsonConfigs,

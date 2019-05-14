@@ -1,0 +1,21 @@
+include /blocks/section/section
+
+mixin welcome()
+  +b.welcome
+    .container
+      h1 Sharec 📦
+      +e("ul").badges
+        li
+          a(href="https://www.npmjs.com/package/sharec")
+            img(src="https://img.shields.io/npm/v/sharec.svg?style=flat-square")
+        li
+          a(href="https://www.npmjs.com/package/prettier")
+            img(src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square")
+        li
+          a(href="https://travis-ci.org/lamartire/sharec")
+            img(src="https://travis-ci.org/lamartire/sharec.svg?branch=master")
+        li
+          a(href="https://ci.appveyor.com/project/lamartire/sharec/branch/master")
+            img(src="https://ci.appveyor.com/api/projects/status/mjtiauhp4xmvr9w7/branch/master?svg=true")
+      blockquote
+        | One tool – many configurations

@@ -1,4 +1,5 @@
 {
+  "homapage": "https://lamartire.github.io/sharec/",
   "prettier": {
     "semi": false,
     "singleQuote": true,

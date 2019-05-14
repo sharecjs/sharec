@@ -10,7 +10,6 @@ const {
   getConfigs,
   copyConfigs,
   getDependenciesFromConfigs,
-  installConfigsDependencies,
   extractPackageJsonConfigs,
   mergePackageJsonConfigs,
   updatePackageJson,
@@ -111,72 +110,6 @@ describe('getDependenciesFromConfigs', () => {
     const res = await getDependenciesFromConfigs(process.cwd(), [])
 
     expect(res).toEqual({})
-  })
-})
-
-describe('installConfigsDependencies', () => {
-  beforeEach(() => {
-    jest.clearAllMocks()
-  })
-
-  it('should install given dependencies with passed package manager', async () => {
-    await installConfigsDependencies('.', {
-      dependencies: {
-        foo: '^1.0.0',
-      },
-      devDependencies: {
-        bar: '^1.0.0',
-      },
-    })
-
-    expect(utils.exec).toBeCalledTimes(2)
-    expect(utils.exec).toHaveBeenNthCalledWith(
-      1,
-      'npm install --save foo@^1.0.0',
-      { cwd: '.' },
-    )
-    expect(utils.exec).toHaveBeenNthCalledWith(
-      2,
-      'npm install --save-dev bar@^1.0.0',
-      { cwd: '.' },
-    )
-  })
-
-  it('should install dependencies with yarn if it passed as package manager', async () => {
-    await installConfigsDependencies(
-      '.',
-      {
-        dependencies: {
-          foo: '^1.0.0',
-        },
-        devDependencies: {
-          bar: '^1.0.0',
-        },
-      },
-      'yarn',
-    )
-
-    expect(utils.exec).toBeCalledTimes(2)
-    expect(utils.exec).toHaveBeenNthCalledWith(1, 'yarn add foo@^1.0.0', {
-      cwd: '.',
-    })
-    expect(utils.exec).toHaveBeenNthCalledWith(2, 'yarn add -D bar@^1.0.0', {
-      cwd: '.',
-    })
-  })
-
-  it('should throw an error if passed package manager not equals to yarn or npm', async done => {
-    try {
-      await installConfigsDependencies('.', {}, 'pnpm')
-    } catch (err) {
-      done()
-    }
-  })
-
-  it('should not do anything if dependencies are empty', async () => {
-    await installConfigsDependencies({})
-
-    expect(utils.exec).not.toBeCalled()
   })
 })
 
