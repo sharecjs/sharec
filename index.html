@@ -7,8 +7,6 @@
   <title>Sharec. One tool – many configurations</title>
 </head>
 <body>
-  <div class="header">
-  </div>
   <main>
     <div class="welcome">
       <div class="container">
@@ -27,10 +25,8 @@
         <h2 class="section__title">Introduction
         </h2>
         <section class="section__content">
-          <p>Sharec – new tool, which will solve headache about configuration. Create it once and reuse everywhere.</p>
-          <p>With that tool you can easily create a really "bloat" configs, pack it into extertal package and install as simple npm-package.</p>
-          <p>Use our shield to mark your awesome configs as <strong>sharec</strong> user 😏!</p>
-          <div style="text-align: center"><img src="https://img.shields.io/badge/config-sharec-blue.svg"></div>
+          <p><strong>sharec</strong> – is a new tool for sharing bloat and difficult configuration between many projects.</p>
+          <p>With this tool you can place all your configuration files in single repository and install it with <strong>npm</strong> or other package manager. That will make configuration process pretty simple.</p>
         </section>
       </div>
     </section>
@@ -39,60 +35,47 @@
         <h2 class="section__title">Installation
         </h2>
         <section class="section__content">
-          <p>If you want to install <strong>sharec</strong> just use your lovely manager:</p><pre class="core"><code class="bash">npm i --save sharec</code></pre>
-          <p>Or with <strong>yarn</strong></p><pre class="core"><code class="bash">yarn add sharec</code></pre>
-          <p>⚠️ Install <strong>sharec</strong> only in your configs directory and as <strong>dependency, not dev</strong>!</p>
+          <p>You should create new package and install <strong>sharec</strong> into as dependency.</p><pre class="core"><code class="shell">
+            npm i --save sharec # With npm
+            yarn add sharec     # Or with yarn</code></pre>
+          <p>Next step – add <strong>sharec</strong> to <strong>postinstall</strong> hook of your configs:</p><pre class="core"><code class="json">
+            {
+              "name": "my-awesome-configs",
+              "scripts": {
+                "postinstall": "sharec"
+              },
+              "dependencies": {
+                "sharec": "1.0.0"
+              }
+            }</code></pre>
+          <p>All done! You are ready to create configs.</p>
         </section>
       </div>
     </section>
     <section class="section">
       <div class="container">
-        <h2 class="section__title">Configuration
+        <h2 class="section__title">Configuration creating
         </h2>
         <section class="section__content">
-          <p>When you have installed <strong>sharec</strong> you should modify your configuration <strong>package.json</strong> with:</p><pre class="core"><code class="json">
-            "scripts": {
-              "postinstall": "sharec"
-            }</code></pre>
-          <p>Then should create <strong>configs</strong> directory and init npm package in it:</p><pre class="core"><code class="bash">
+          <p>After installing you must create <strong>configs</strong> directory and init <strong>npm</strong> here.</p><pre class="core"><code class="shell">
             mkdir configs
             cd ./configs
             npm init -y</code></pre>
-          <p>After initialization you can install <strong>dependencies</strong> right here – in <strong>configs</strong> directory.</p>
-          <p>For example, you need to install <strong>eslint</strong>. Exectute that commands in <strong>configs</strong> directory:</p><pre class="core"><code class="bash">
-            npm i --save-dev eslint
-            eslint --init</code></pre>
-          <p>Answer on some questions and <strong>eslint</strong> will be ready to share!</p>
+          <p>Now, you allowed to create sharable configs! <a href="https://www.npmjs.com/package/sharec-demo-config">Check this simple example</a>.</p>
         </section>
       </div>
     </section>
     <section class="section">
       <div class="container">
-        <h2 class="section__title">Sharing
+        <h2 class="section__title">Configuration installation
         </h2>
         <section class="section__content">
-          <p>So, now you can publish your config or just share it with github.</p><pre class="core"><code class="bash">npm publish</code></pre>
-          <p>Just publish you config and install into your project.</p><pre class="core"><code class="bash">
-            cd my-awesome-project
-            npm install --save-dev my-awesome-config
-            npm install</code></pre>
-          <p>⚠️ You should install new dependencies in "hand" mode!</p>
-          <p>Configuration was applied! 🙌</p>
-        </section>
-      </div>
-    </section>
-    <section class="section">
-      <div class="container">
-        <h2 class="section__title">How it works
-        </h2>
-        <section class="section__content">
-          <p>Sharec flow is really simple. There are some steps:</p>
-          <ol>
-            <li>Copying configs from <strong>config</strong> directory</li>
-            <li>Adding dependencies from <strong>config/package.json</strong></li>
-            <li>Seting inject status as true</li>
-          </ol>
-          <p>If you are already install config it will not be injected into your project and you will see warning message.</p>
+          <p>When you will be ready to share – push your configs or publish at npm-registry. After publishing/pushin you can install new configuration to any project.</p><pre class="core"><code class="shell">npm i --save-dev my-awesome-configs</code></pre>
+          <p>When configuration will be installed you can see a new entry in the project's `package.json` file:</p><pre class="core"><code class="json">
+            "sharec": {
+              "injected": true
+            }</code></pre>
+          <p>It means – configs were injected and on the next `npm install` – `sharec` will not inject configurations again.</p>
         </section>
       </div>
     </section>
