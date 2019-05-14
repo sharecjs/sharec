@@ -7,14 +7,16 @@
 Install **sharec** into your configuration package with npm:
 
 ```
-npm i --save-dev sharec
+npm i --save sharec
 ```
 
 Or with yarn:
 
 ```
-yarn add -D sharec
+yarn add sharec
 ```
+
+Be sure, install **sharec** as **dependency**, **not devDependency**!
 
 ## Usage
 
