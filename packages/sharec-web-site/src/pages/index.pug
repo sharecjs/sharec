@@ -1,79 +1,57 @@
 extends /layouts/default
 
 include /blocks/header/header
-include /blocks/footer/footer
 include /blocks/welcome/welcome
 include /blocks/section/section
 include /blocks/code/code
 
 block content
-  +header
   main
     +welcome
-    +section('Introduction')
+    +section("Introduction")
       p
-        | Sharec – new tool, which will solve headache about configuration. Create it once and reuse everywhere.
+        | #[strong sharec] – is a new tool for sharing bloat and difficult configuration between many projects.
       p
-        | With that tool you can easily create a really "bloat" configs, pack it into extertal package and install as simple npm-package.
+        | With this tool you can place all your configuration files in single repository and install it with #[strong npm] or other package manager. That will make configuration process pretty simple.
+    +section("Installation")
       p
-        | Use our shield to mark your awesome configs as #[strong sharec] user 😏!
-      div(style="text-align: center")
-        img(src="https://img.shields.io/badge/config-sharec-blue.svg")
-    +section('Installation')
+        | You should create new package and install #[strong sharec] into as dependency.
+      +code("shell")
+        | npm i --save sharec # With npm
+        | yarn add sharec     # Or with yarn
       p
-        | If you want to install #[strong sharec] just use your lovely manager:
-      +code('bash')
-        | npm i --save sharec
-      p
-        | Or with #[strong yarn]
-      +code('bash')
-        | yarn add sharec
-      p
-        | ⚠️ Install #[strong sharec] only in your configs directory and as #[strong dependency, not dev]!
-    +section('Configuration')
-      p
-        | When you have installed #[strong sharec] you should modify your configuration #[strong package.json] with:
-      +code('json')
-        | "scripts": {
-        |   "postinstall": "sharec"
+        | Next step – add #[strong sharec] to #[strong postinstall] hook of your configs:
+      +code("json")
+        | {
+        |   "name": "my-awesome-configs",
+        |   "scripts": {
+        |     "postinstall": "sharec"
+        |   },
+        |   "dependencies": {
+        |     "sharec": "1.0.0"
+        |   }
         | }
       p
-        | Then should create #[strong configs] directory and init npm package in it:
-      +code('bash')
+        | All done! You are ready to create configs.
+    +section("Configuration creating")
+      p
+        | After installing you must create #[strong configs] directory and init #[strong npm] here.
+      +code("shell")
         | mkdir configs
         | cd ./configs
         | npm init -y
       p
-        | After initialization you can install #[strong dependencies] right here – in #[strong configs] directory.
+        | Now, you allowed to create sharable configs! #[a(href="https://www.npmjs.com/package/sharec-demo-config") Check this simple example].
+    +section("Configuration installation")
       p
-        | For example, you need to install #[strong eslint]. Exectute that commands in #[strong configs] directory:
-      +code('bash')
-        | npm i --save-dev eslint
-        | eslint --init
+        | When you will be ready to share – push your configs or publish at npm-registry. After publishing/pushin you can install new configuration to any project.
+      +code("shell")
+        | npm i --save-dev my-awesome-configs
       p
-        | Answer on some questions and #[strong eslint] will be ready to share!
-    +section('Sharing')
+        | When configuration will be installed you can see a new entry in the project's `package.json` file:
+      +code("json")
+        | "sharec": {
+        |   "injected": true
+        | }
       p
-        | So, now you can publish your config or just share it with github.
-      +code('bash')
-        | npm publish
-      p
-        | Just publish you config and install into your project.
-      +code('bash')
-        | cd my-awesome-project
-        | npm install --save-dev my-awesome-config
-        | npm install
-      p
-        | ⚠️ You should install new dependencies in "hand" mode!
-      p
-        | Configuration was applied! 🙌
-    +section('How it works')
-      p
-        | Sharec flow is really simple. There are some steps:
-      ol
-        li Copying configs from #[strong config] directory
-        li Adding dependencies from #[strong config/package.json]
-        li Seting inject status as true
-      p
-        | If you are already install config it will not be injected into your project and you will see warning message.
-  +footer
+        | It means – configs were injected and on the next `npm install` – `sharec` will not inject configurations again.

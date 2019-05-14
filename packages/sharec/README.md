@@ -1,74 +1,23 @@
 # Sharec
 
-> 📦 Share your configs between projects without pain
+> 📦 Store your configs in one place and share between projects without any pain
+
+## Introduction
+
+`sharec` – is a new tool for sharing bloat and difficult configuration between many projects.
+
+With this tool you can place all your configuration files in single repository and install it with `npm` or other package manager. That will make configuration process pretty simple.
 
 ## Installation
 
-Install **sharec** into your configuration package with npm:
+You should create new package and install `sharec` into as dependency.
 
-```
-npm i --save sharec
-```
-
-Or with yarn:
-
-```
-yarn add sharec
+```shell
+npm i --save sharec # With npm
+yarn add sharec     # Or with yarn
 ```
 
-Be sure, install **sharec** as **dependency**, **not devDependency**!
-
-## Usage
-
-If you want to share you configs – initialize new package and install `sharec`,
-than you must create `configs` directory and move to it all your configuration
-files with `package.json`. In `package.json` you can define required dependecies,
-`sharec` will install them.
-
-`sharec` implements similar flow:
-
-1. Searching `configs`
-2. Copying configuration files
-3. Merging target project's `package.json` with `package.json` from configuration package
-4. Install dependencies from configuration package's `package.json`
-
-3 and 4 steps possibly only if you create `package.json` file in `configs` directory
-of your configuration package.
-
-## Examples
-
-_You can see example [here](https://www.npmjs.com/package/sharec-demo-config) – install it or just look at sources._
-
-So, you want to share your configuration files between projects.
-
-### 1. Initialize new package
-
-Create new directory and initialize it:
-
-```
-mkdir my-awesome-configs
-cd my-awesome-configs
-npm init -y
-```
-
-### 2. Install `sharec`
-
-Install `sharec` in the created package:
-
-```
-npm i --save sharec
-```
-
-### 3. Add `sharec` to npm `postinstall` stript
-
-You can easily inatall your config with `postinstall` script, just add following
-line into your `package.json` `sciprts` section:
-
-```
-"postinstall": "sharec"
-```
-
-After this it should looks like:
+Next step – add `sharec` to `postinstall` hook of your configs:
 
 ```json
 {
@@ -82,20 +31,40 @@ After this it should looks like:
 }
 ```
 
-### 4. Publish your configs package
+All done! You are ready to create configs.
 
-Congrats, you are ready for starting configuration sharing. You can publish it
-with `npm publish` or just push it to github.
+## Configuration creating
 
-### 5. Share it!
+After installing you must create `configs` directory and init `npm` here.
 
-For example you have publish your `my-awesome-configs` into npm, now you ready
-to install it.
-
-Navigate to your existing or new project and makes:
-
+```shell
+mkdir configs
+cd ./configs
+npm init -y
 ```
+
+Now, you allowed to create sharable configs! [Check this simple example](https://www.npmjs.com/package/sharec-demo-config).
+
+## Configuration installation
+
+When you will be ready to share – push your configs or publish at npm-registry. After publishing/pushin you can install new configuration to any project.
+
+```shell
 npm i --save-dev my-awesome-configs
 ```
 
-Here we are! Configs were successfully installed 🙌
+When configuration will be installed you can see a new entry in the project's `package.json` file:
+
+```json
+"sharec": {
+  "injected": true
+}
+```
+
+It means – configs were injected and on the next `npm install` – `sharec` will not inject configurations again.
+
+## Examples
+
+- [examples.md](https://github.com/lamartire/sharec/blob/master/packages/sharec/docs/examples.md) – example notes about configuration preset creation, publishing and installing
+- [sharec-demo-config](https://www.npmjs.com/package/sharec-demo-config) – official configuration preset example
+- [essential-javascript-config](https://github.com/lamartire/essential-javascript-config) – my personal javascript-configuration preset
