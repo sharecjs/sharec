@@ -22,7 +22,6 @@ afterEach(() => {
 describe('filterConfigs', () => {
   it('should remove from configs list non-actual files', () => {
     const configs = ['.prettierrc', 'package.json', 'package-lock.json']
-
     expect(filterConfigs(configs)).toEqual(['.prettierrc'])
   })
 })
@@ -30,7 +29,6 @@ describe('filterConfigs', () => {
 describe('getConfigs', () => {
   it('should throw an error if configs dir is not exists', async done => {
     mockFs({})
-
     try {
       await getConfigs(process.cwd())
     } catch (err) {
@@ -48,9 +46,7 @@ describe('getConfigs', () => {
         'package.json': '{}',
       },
     })
-
     const configs = await getConfigs(process.cwd())
-
     expect(configs).toEqual(['.eslintrc', '.prettierrc', 'package.json'])
   })
 })
@@ -67,13 +63,9 @@ describe('copyConfigs', () => {
       },
       workDir: {},
     })
-
     const rawConfigs = ['.prettierrc', '.eslintrc', 'package.json']
-
     await copyConfigs('.', './workDir', rawConfigs)
-
     const res = await utils.readDir('./workDir')
-
     expect(res).toEqual(['.eslintrc', '.prettierrc'])
   })
 })
@@ -90,10 +82,8 @@ describe('getDependenciesFromConfigs', () => {
         },
       }),
     })
-
     const configs = ['package.json']
     const res = await getDependenciesFromConfigs(process.cwd(), configs)
-
     expect(res).toEqual({
       dependencies: {
         foo: '^1.0.0',
@@ -106,9 +96,7 @@ describe('getDependenciesFromConfigs', () => {
 
   it('should return empty object if package.json not exists in configs list', async () => {
     mockFs({})
-
     const res = await getDependenciesFromConfigs(process.cwd(), [])
-
     expect(res).toEqual({})
   })
 })
@@ -133,15 +121,12 @@ describe('extractPackageJsonConfigs', () => {
         'js/**/*': ['prettier --write', 'git add'],
       },
     }
-
     mockFs({
       'configs/package.json': JSON.stringify(packageJson),
     })
-
     const configs = await extractPackageJsonConfigs(process.cwd(), [
       'package.json',
     ])
-
     expect(configs).toEqual({
       scripts: packageJson.scripts,
       'lint-staged': packageJson['lint-staged'],
@@ -164,6 +149,12 @@ describe('mergePackageJsonConfigs', () => {
           'pre-push': 'echo "hello!";',
         },
       },
+      dependencies: {
+        react: '1.0.0',
+      },
+      devDependencies: {
+        prettier: '1.0.0',
+      },
     }
     const packageJsonB = {
       scripts: {
@@ -175,9 +166,14 @@ describe('mergePackageJsonConfigs', () => {
           'pre-commit': 'echo "hello!";',
         },
       },
+      dependencies: {
+        vue: '1.0.0',
+      },
+      devDependencies: {
+        eslint: '1.0.0',
+      },
     }
     const packageJsonC = mergePackageJsonConfigs(packageJsonA, packageJsonB)
-
     expect(packageJsonC).toEqual({
       scripts: {
         start: 'bar',
@@ -192,6 +188,14 @@ describe('mergePackageJsonConfigs', () => {
           'pre-commit': 'echo "hello!";',
         },
       },
+      dependencies: {
+        react: '1.0.0',
+        vue: '1.0.0',
+      },
+      devDependencies: {
+        eslint: '1.0.0',
+        prettier: '1.0.0',
+      },
     })
   })
 
@@ -199,9 +203,7 @@ describe('mergePackageJsonConfigs', () => {
     it('should return false if package.json is not exists', async () => {
       expect.assertions(1)
       mockFs({})
-
       const res = await getInjectStatus('.')
-
       expect(res).toBe(false)
     })
 
@@ -210,9 +212,7 @@ describe('mergePackageJsonConfigs', () => {
       mockFs({
         'package.json': JSON.stringify({}),
       })
-
       const res = await getInjectStatus('.')
-
       expect(res).toBe(false)
     })
 
@@ -223,9 +223,7 @@ describe('mergePackageJsonConfigs', () => {
           sharec: {},
         }),
       })
-
       const res = await getInjectStatus('.')
-
       expect(res).toBe(false)
     })
 
@@ -238,9 +236,7 @@ describe('mergePackageJsonConfigs', () => {
           },
         }),
       })
-
       const res = await getInjectStatus('.')
-
       expect(res).toBe(true)
     })
   })
@@ -251,15 +247,10 @@ describe('mergePackageJsonConfigs', () => {
       mockFs({
         'package.json': JSON.stringify({}),
       })
-
       const beforeInject = await getInjectStatus('.')
-
       expect(beforeInject).toBe(false)
-
       await setAsInjected('.')
-
       const afterInject = await getInjectStatus('.')
-
       expect(afterInject).toBe(true)
     })
   })
