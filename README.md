@@ -2,6 +2,12 @@
 
 > 📦 Store your configs in one place and share between projects without any pain
 
+<img align="center" width="800"
+     alt="Sharec demo diff"
+     src="https://lamartire.github.io/sharec/assets/images/diff.jpg">
+
+<p align="center"><i><code>package.json</code> before and after config injection</i></p>
+
 `sharec` – is a new tool for configuration storing and sharing.
 
 Create your-own packages only with configs, share it between projects with
