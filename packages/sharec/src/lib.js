@@ -204,16 +204,23 @@ async function extractPackageJsonConfigs(basePath, configs) {
  */
 function mergePackageJsonConfigs(packageJsonA = {}, packageJsonB = {}) {
   const newPackageJson = { ...packageJsonA }
-  const { scripts, ...newConfigs } = packageJsonB
-
-  if (scripts) {
-    Object.assign(newPackageJson, {
-      scripts: {
-        ...newPackageJson.scripts,
-        ...scripts,
-      },
-    })
+  const { scripts, dependencies, devDependencies, ...newConfigs } = packageJsonB
+  const fieldsToMerge = {
+    scripts,
+    dependencies,
+    devDependencies,
   }
+
+  Object.keys(fieldsToMerge).forEach(key => {
+    if (fieldsToMerge[key]) {
+      Object.assign(newPackageJson, {
+        [key]: {
+          ...(newPackageJson[key] || {}),
+          ...fieldsToMerge[key],
+        },
+      })
+    }
+  })
 
   return Object.assign(newPackageJson, newConfigs)
 }
