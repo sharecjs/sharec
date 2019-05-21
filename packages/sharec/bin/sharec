@@ -1,5 +1,8 @@
 #!/usr/bin/env node
 
+const minimist = require('minimist')
 const sharec = require('../src/index.js')
 
-sharec(process.env.INIT_CWD)
+const argv = minimist(process.argv.slice(2))
+
+sharec(process.env.INIT_CWD, argv)

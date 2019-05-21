@@ -17,6 +17,11 @@
   "homapage": "https://lamartire.github.io/sharec/",
   "author": "",
   "license": "ISC",
+  "prettier": {
+    "semi": false,
+    "trailingComma": "all",
+    "singleQuote": true
+  },
   "jest": {
     "moduleDirectories": [
       "node_modules",
@@ -37,8 +42,10 @@
     "mock-fs": "^4.8.0"
   },
   "dependencies": {
-    "chalk": "^2.4.2",
-    "minimist": "^1.2.0"
+    "lodash": "^4.17.11",
+    "lz-string": "^1.4.4",
+    "minimist": "^1.2.0",
+    "ora": "^3.4.0"
   },
   "gitHead": "8b056dc9aedf49a712b84b4d47ea9fa1cea45b08"
 }

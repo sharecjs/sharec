@@ -1,57 +1,28 @@
-const chalk = require('chalk')
-const minimist = require('minimist')
-const {
-  setAsInjected,
-  getInjectStatus,
-  getConfigs,
-  copyConfigs,
-  getDependenciesFromConfigs,
-  installConfigsDependencies,
-  updatePackageJson,
-} = require('./lib')
+const ora = require('ora')
+const collect = require('./core/collector')
+const execute = require('./core/executor')
 
-/**
- * @param {String} basePath
- * @returns {Promise}
- */
-async function sharec(basePath) {
-  if (basePath === process.env.PWD) return
+async function sharec(configsPath, options) {
+  const targetPath = process.env.PWD
 
-  const isInjected = await getInjectStatus()
+  if (configsPath === targetPath) return
 
-  if (isInjected) {
-    console.warn(
-      chalk.yellow(
-        'sharec: already was injected. You can remove sharec property from your package.json, only if you really shure! ☝️',
-      ),
-    )
-    return
-  }
-
-  console.info(chalk.green('sharec: extracting configs 📦'))
+  const spinner = ora({
+    text: 'checking configuration 🔎',
+    spinner: 'line',
+    prefixText: 'sharec:',
+    interval: 50,
+  }).start()
 
   try {
-    const configs = await getConfigs(process.env.PWD)
-    const deps = await getDependenciesFromConfigs(process.env.PWD, configs)
+    const collectedConfigs = await collect(configsPath, targetPath)
+    spinner.start('applying configuration 🚀')
 
-    await copyConfigs(process.env.PWD, basePath, configs)
-    await updatePackageJson(process.env.PWD, basePath, configs)
-    await setAsInjected(basePath)
-
-    console.info(
-      chalk.green(
-        'sharec: all configs were ejected. Run "npm install" command to install new dependencies! 🙌',
-      ),
-    )
+    await execute(configsPath, targetPath, collectedConfigs)
+    spinner.succeed('configuration applyed, have a nice time! 🌈')
   } catch (err) {
     console.log(err)
-    if (err.message.includes('ENOENT')) {
-      console.error(
-        chalk.red(
-          'sharec: configs dir is not exists in current configuration!',
-        ),
-      )
-    }
+    spinner.fail('something went wrong! 😞')
   }
 }
 
