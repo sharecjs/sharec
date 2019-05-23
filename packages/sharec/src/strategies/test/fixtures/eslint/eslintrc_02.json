@@ -1,0 +1,31 @@
+{
+  "parser": "babel-eslint",
+  "env": {
+    "browser": true,
+    "es6": true,
+    "node": true,
+    "jest": true
+  },
+  "extends": "airbnb",
+  "rules": {
+    "space-before-function-paren": 1,
+    "no-console": 0,
+    "max-len": [
+      "warn",
+      120,
+      4,
+      {
+        "ignoreUrls": false,
+        "ignoreComments": true,
+        "ignoreStrings": false
+      }
+    ]
+  },
+  "parserOptions": {
+    "ecmaVersion": 7,
+    "ecmaFeatures": {
+      "spread": true
+    },
+    "sourceType": "module"
+  }
+}

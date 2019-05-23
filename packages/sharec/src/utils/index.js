@@ -3,6 +3,7 @@ const childProcess = require('child_process')
 const { promisify } = require('util')
 
 const readDir = promisify(fs.readdir)
+const makeDir = promisify(fs.mkdir)
 const readFile = promisify(fs.readFile)
 const copyFile = promisify(fs.copyFile)
 const writeFile = promisify(fs.writeFile)
@@ -12,6 +13,7 @@ const pipe = (...funs) => val => funs.reduce((acc, fun) => fun(acc), null)
 
 module.exports = {
   readDir,
+  makeDir,
   readFile,
   copyFile,
   writeFile,
