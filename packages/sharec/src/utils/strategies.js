@@ -1,50 +1,69 @@
+const last = require('lodash/last')
+const chunk = require('lodash/chunk')
 const pick = require('lodash/pick')
 const omit = require('lodash/omit')
 const deepmerge = require('deepmerge')
 
-const mergeHashes = (a = {}, b = {}) => ({
-  ...a,
-  ...b,
-})
+// Pairs
 
-const mergeHashesWithFields = (a = {}, b = {}, fields = []) => {
-  const pickedA = pick(a, fields)
-  const pickedB = pick(b, fields)
+const toPairs = obj =>
+  Object.keys(obj).reduce((acc, key) => {
+    if (obj[key] instanceof Object && Object.keys(obj[key]).length === 0) {
+      return acc.concat([[key]])
+    }
 
-  return {
-    ...pickedA,
-    ...pickedB,
-  }
+    return acc.concat([[key, obj[key]]])
+  }, [])
+
+const fromPairs = pairs =>
+  pairs.reduce((acc, pair) => {
+    if (pair.length === 1) {
+      return Object.assign(acc, {
+        [pair[0]]: {},
+      })
+    }
+
+    return Object.assign(acc, {
+      [pair[0]]: pair[1],
+    })
+  }, {})
+
+const fillPairs = pairs =>
+  pairs.map(pair => (!(pair instanceof Array) ? [pair, {}] : pair))
+
+const mergePairs = (a = [], b = []) => {
+  const noramlizedHashFromA = fromPairs(fillPairs(a))
+  const normalizedHashFromB = fromPairs(fillPairs(b))
+
+  return toPairs({
+    ...noramlizedHashFromA,
+    ...normalizedHashFromB,
+  })
 }
 
-const deepMergeHashesWithFields = (a = {}, b = {}, fields = []) => {
-  const pickedA = pick(a, fields)
-  const pickedB = pick(b, fields)
+const deepMergePairs = (a = [], b = []) => {
+  const noramlizedHashFromA = fromPairs(fillPairs(a))
+  const normalizedHashFromB = fromPairs(fillPairs(b))
 
-  return deepmerge(pickedA, pickedB)
+  return toPairs(deepmerge(noramlizedHashFromA, normalizedHashFromB))
 }
 
-const mergeHashesWithoutFields = (a = {}, b = {}, fields = []) => {
-  const pickedA = omit(a, fields)
-  const pickedB = omit(b, fields)
+const mergePairsWithKeys = (a = [], b = [], fields = []) => {}
 
-  return {
-    ...pickedA,
-    ...pickedB,
-  }
-}
+const mergePairsWithoutKeys = (a = [], b = [], fields = []) => {}
 
-const deepMergeHashesWithoutFields = (a = {}, b = {}, fields = []) => {
-  const pickedA = omit(a, fields)
-  const pickedB = omit(b, fields)
+const deepMergePairsWithKeys = (a = [], b = [], fields = []) => {}
 
-  return deepmerge(pickedA, pickedB)
-}
+const deepMergePairsWithoutKeys = (a = [], b = [], fields = []) => {}
 
 module.exports = {
-  mergeHashes,
-  mergeHashesWithFields,
-  deepMergeHashesWithFields,
-  mergeHashesWithoutFields,
-  deepMergeHashesWithoutFields,
+  toPairs,
+  fromPairs,
+  fillPairs,
+  mergePairs,
+  deepMergePairs,
+  mergePairsWithKeys,
+  mergePairsWithoutKeys,
+  deepMergePairsWithKeys,
+  deepMergePairsWithoutKeys,
 }

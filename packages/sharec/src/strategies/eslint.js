@@ -3,17 +3,17 @@ const omit = require('lodash/omit')
 const deepmerge = require('deepmerge')
 const {
   mergeHashes,
-  mergeHashesWithFields,
-  deepMergeHashesWithFields,
-  deepMergeHashesWithoutFields,
-} = require('../utils/strategies')
+  mergeHashesWithKeys,
+  deepMergeHashesWithKeys,
+  deepMergeHashesWithoutKeys,
+} = require('../utils/hashes')
 
 const mergeParserOptions = () => {}
 
 const strategy = (a, b) => {
-  const newConfig = deepMergeHashesWithoutFields(a, b, ['rules'])
+  const newConfig = deepMergeHashesWithoutKeys(a, b, ['rules'])
 
-  return Object.assign(newConfig, mergeHashesWithFields(a, b, ['rules']))
+  return Object.assign(newConfig, mergeHashesWithKeys(a, b, ['rules']))
 }
 
 module.exports = strategy

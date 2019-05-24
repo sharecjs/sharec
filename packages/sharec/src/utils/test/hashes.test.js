@@ -1,12 +1,12 @@
 const {
   mergeHashes,
-  mergeHashesWithFields,
-  deepMergeHashesWithFields,
-  mergeHashesWithoutFields,
-  deepMergeHashesWithoutFields,
-} = require('../strategies')
+  mergeHashesWithKeys,
+  deepMergeHashesWithKeys,
+  mergeHashesWithoutKeys,
+  deepMergeHashesWithoutKeys,
+} = require('../hashes')
 
-describe('utils > strategies', () => {
+describe('utils > hashes', () => {
   describe('mergeHashes', () => {
     it('should merge given hashes', () => {
       const foo = {
@@ -23,7 +23,7 @@ describe('utils > strategies', () => {
     })
   })
 
-  describe('mergeHashesWithFields', () => {
+  describe('mergeHashesWithKeys', () => {
     it('should extract given fields from objects and merge to one hash', () => {
       const a = {
         foo: 'bar',
@@ -34,13 +34,13 @@ describe('utils > strategies', () => {
         bar: 'foo',
       }
 
-      expect(mergeHashesWithFields(a, b, ['foo'])).toEqual({
+      expect(mergeHashesWithKeys(a, b, ['foo'])).toEqual({
         foo: 'baz',
       })
     })
   })
 
-  describe('deepMergeHashesWithFields', () => {
+  describe('deepMergeHashesWithKeys', () => {
     it('should extract given fields from objects and merge to one hash deeply', () => {
       const a = {
         foo: 'bar',
@@ -59,7 +59,7 @@ describe('utils > strategies', () => {
         },
       }
 
-      expect(deepMergeHashesWithFields(a, b, ['bar'])).toEqual({
+      expect(deepMergeHashesWithKeys(a, b, ['bar'])).toEqual({
         bar: {
           foo: 'baz',
           bar: 'baz',
@@ -68,7 +68,7 @@ describe('utils > strategies', () => {
     })
   })
 
-  describe('mergeHashesWithoutFields', () => {
+  describe('mergeHashesWithoutKeys', () => {
     it('should omit given fields from passed objects and merge them', () => {
       const a = {
         foo: 'bar',
@@ -79,13 +79,13 @@ describe('utils > strategies', () => {
         bar: 'foo',
       }
 
-      expect(mergeHashesWithoutFields(a, b, ['foo'])).toEqual({
+      expect(mergeHashesWithoutKeys(a, b, ['foo'])).toEqual({
         bar: 'foo',
       })
     })
   })
 
-  describe('deepMergeHashesWithoutFields', () => {
+  describe('deepMergeHashesWithoutKeys', () => {
     it('should omit given fields from passed objects and merge them deeply', () => {
       const a = {
         foo: 'bar',
@@ -104,10 +104,8 @@ describe('utils > strategies', () => {
         },
       }
 
-      expect(deepMergeHashesWithoutFields(a, b, ['bar'])).toEqual({
-        bar: {
-          foo: 'baz',
-        },
+      expect(deepMergeHashesWithoutKeys(a, b, ['bar'])).toEqual({
+        foo: 'baz',
       })
     })
   })
