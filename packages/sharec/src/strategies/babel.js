@@ -5,6 +5,7 @@ const xor = require('lodash/xor')
 const intersection = require('lodash/intersection')
 const deepmerge = require('deepmerge')
 const { pipe } = require('../utils')
+const { withYaml } = require('../utils/strategies')
 const {
   mergeHashes,
   mergeHashesWithKeys,
@@ -93,4 +94,9 @@ const strategy = (a, b) => {
   return newConfig
 }
 
-module.exports = strategy
+const yamlStrategy = withYaml(strategy)
+
+module.exports = {
+  strategy,
+  yamlStrategy,
+}

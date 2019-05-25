@@ -1,3 +1,5 @@
+ignore:
+  - '*.babelrc'
 presets:
   - - env
     - modules: false
@@ -18,5 +20,3 @@ env:
       - stage-2
     plugins:
       - dynamic-import-node
-ignore:
-  - '*.babelrc'

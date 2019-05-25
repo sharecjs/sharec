@@ -7,6 +7,7 @@ const {
   deepMergeHashesWithKeys,
   deepMergeHashesWithoutKeys,
 } = require('../utils/hashes')
+const { withYaml } = require('../utils/strategies')
 
 const mergeParserOptions = () => {}
 
@@ -16,4 +17,9 @@ const strategy = (a, b) => {
   return Object.assign(newConfig, mergeHashesWithKeys(a, b, ['rules']))
 }
 
-module.exports = strategy
+const yamlStrategy = withYaml(strategy)
+
+module.exports = {
+  strategy,
+  yamlStrategy,
+}
