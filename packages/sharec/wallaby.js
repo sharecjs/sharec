@@ -4,6 +4,8 @@ module.exports = wallaby => ({
     '!src/**/*.test.js',
     'src/**/*.js',
     'src/**/*.json',
+    'src/**/*.yml',
+    'src/**/*.yaml',
   ],
   tests: ['!node_modules/**', 'src/**/*.test.js'],
   env: {

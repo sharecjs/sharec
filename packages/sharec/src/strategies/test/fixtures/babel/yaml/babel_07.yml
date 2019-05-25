@@ -1,0 +1,7 @@
+env:
+  test:
+    presets:
+      - env
+  development:
+    presets:
+      - stage-2
