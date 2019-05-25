@@ -2,7 +2,20 @@
 
 > 📦 Store your configs in one place and share between projects without any pain
 
-// TODO:!
+## Supported configs
+
+`sharec` can merge, replace and copy configs.
+
+Merge feature now available for `*.json` and `package.json` based configs. `*.js` based and other types of configs will be just replaced.
+
+### Strategies
+
+`sharec` using strategies for define config merging flow. There are following strategies:
+
+- `eslint`
+- `babel`
+
+Other files will be merged by `common` strategy (shallow merging).
 
 ## Examples
 
