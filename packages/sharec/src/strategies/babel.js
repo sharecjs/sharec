@@ -26,13 +26,20 @@ const {
 
 const mergeEnv = (a, b) => {
   const newEnvConfig = mergeHashes(pick(a, ['ignore']), pick(b, ['ignore']))
+  const mergedPresets = mergePairs(get(a, 'presets', []), get(b, 'presets', []))
+  const mergedPlugins = mergePairs(get(a, 'plugins', []), get(b, 'plugins', []))
 
-  Object.assign(newEnvConfig, {
-    presets: mergePairs(get(a, 'presets', []), get(b, 'presets', [])),
-  })
-  Object.assign(newEnvConfig, {
-    plugins: mergePairs(get(a, 'plugins', []), get(b, 'plugins', [])),
-  })
+  if (mergedPresets.length > 0) {
+    Object.assign(newEnvConfig, {
+      presets: mergePairs(get(a, 'presets', []), get(b, 'presets', [])),
+    })
+  }
+
+  if (mergedPlugins.length > 0) {
+    Object.assign(newEnvConfig, {
+      plugins: mergePairs(get(a, 'plugins', []), get(b, 'plugins', [])),
+    })
+  }
 
   return newEnvConfig
 }
