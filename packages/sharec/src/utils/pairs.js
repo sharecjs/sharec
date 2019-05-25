@@ -1,5 +1,4 @@
 const pick = require('lodash/pick')
-const deepmerge = require('deepmerge')
 const {
   mergeHashes,
   deepMergeHashes,

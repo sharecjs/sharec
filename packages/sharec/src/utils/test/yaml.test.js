@@ -1,7 +1,6 @@
 const path = require('path')
 const { readFileSync } = require('fs')
 const { fromYaml, toYaml } = require('../yaml')
-const { readFile } = require('../index')
 
 const jsonFixture = require('./fixtures/eslintrc_01.json')
 const yamlFixture = readFileSync(

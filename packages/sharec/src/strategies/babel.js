@@ -3,27 +3,9 @@ const pick = require('lodash/pick')
 const omit = require('lodash/omit')
 const xor = require('lodash/xor')
 const intersection = require('lodash/intersection')
-const deepmerge = require('deepmerge')
-const { pipe } = require('../utils')
 const { withYaml } = require('../utils/strategies')
-const {
-  mergeHashes,
-  mergeHashesWithKeys,
-  deepMergeHashesWithKeys,
-  deepMergeHashesWithoutKeys,
-} = require('../utils/hashes')
-const {
-  toPairs,
-  toPairsWithKeys,
-  fromPairs,
-  fillPairs,
-  mergePairs,
-  deepMergePairs,
-  mergePairsWithKeys,
-  mergePairsWithoutKeys,
-  deepMergePairsWithKeys,
-  deepMergePairsWithoutKeys,
-} = require('../utils/pairs')
+const { mergeHashes } = require('../utils/hashes')
+const { mergePairs } = require('../utils/pairs')
 
 const mergeEnv = (a, b) => {
   const newEnvConfig = mergeHashes(pick(a, ['ignore']), pick(b, ['ignore']))

@@ -1,5 +1,3 @@
-const last = require('lodash/last')
-const chunk = require('lodash/chunk')
 const pick = require('lodash/pick')
 const omit = require('lodash/omit')
 const deepmerge = require('deepmerge')

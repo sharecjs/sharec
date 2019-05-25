@@ -1,4 +1,4 @@
-// TODO: cool idea!
+// TODO: cool idea for external package!
 const path = require('path')
 const { readDir, makeDir, readFile, writeFile } = require('./index')
 
