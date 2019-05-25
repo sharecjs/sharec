@@ -1,3 +1,4 @@
+const pick = require('lodash/pick')
 const deepmerge = require('deepmerge')
 const {
   mergeHashes,
@@ -7,19 +8,22 @@ const {
   mergeHashesWithoutKeys,
   deepMergeHashesWithoutKeys,
 } = require('./hashes')
+const { pipe } = require('./index')
 
 const toPairs = obj =>
   Object.keys(obj).reduce((acc, key) => {
     if (obj[key] instanceof Object && Object.keys(obj[key]).length === 0) {
-      return acc.concat([[key]])
+      return acc.concat([key])
     }
 
     return acc.concat([[key, obj[key]]])
   }, [])
 
-const fromPairs = pairs =>
-  pairs.reduce((acc, pair) => {
-    if (pair.length === 1) {
+const toPairsWithKeys = (obj, keys) => toPairs(pick(obj, keys))
+
+const fromPairs = pairs => {
+  return pairs.reduce((acc, pair) => {
+    if (pair.length === 1 || !Array.isArray(pair)) {
       return Object.assign(acc, {
         [pair[0]]: {},
       })
@@ -29,6 +33,7 @@ const fromPairs = pairs =>
       [pair[0]]: pair[1],
     })
   }, {})
+}
 
 const fillPairs = pairs =>
   pairs.map(pair => {
@@ -40,10 +45,19 @@ const fillPairs = pairs =>
   })
 
 const mergePairs = (a = [], b = []) => {
-  const hashedA = fromPairs(a)
-  const hashedB = fromPairs(b)
+  const hashedA = pipe(
+    fillPairs,
+    fromPairs,
+  )(a)
+  const hashedB = pipe(
+    fillPairs,
+    fromPairs,
+  )(b)
 
-  return toPairs(mergeHashes(hashedA, hashedB))
+  return pipe(
+    mergeHashes,
+    toPairs,
+  )(hashedA, hashedB)
 }
 
 const deepMergePairs = (a = [], b = []) => {
@@ -83,6 +97,7 @@ const deepMergePairsWithoutKeys = (a = [], b = [], keys = []) => {
 
 module.exports = {
   toPairs,
+  toPairsWithKeys,
   fromPairs,
   fillPairs,
   mergePairs,

@@ -1,5 +1,6 @@
 const {
   toPairs,
+  toPairsWithKeys,
   fromPairs,
   fillPairs,
   mergePairs,
@@ -10,7 +11,7 @@ const {
   deepMergePairsWithoutKeys,
 } = require('../pairs')
 
-describe('utils > pairs', () => {
+describe('utils > pairs >', () => {
   describe('fillPairs', () => {
     it('should add empty object to pairs only with key', () => {
       const pairs = [
@@ -59,7 +60,28 @@ describe('utils > pairs', () => {
         foo: {},
       }
 
-      expect(toPairs(obj)).toEqual([['foo']])
+      expect(toPairs(obj)).toEqual(['foo'])
+    })
+  })
+
+  describe('toPairsWithKeys', () => {
+    it('should create pairs from object only with given keys', () => {
+      const obj = {
+        foo: {
+          bar: 'baz',
+        },
+        bar: 'baz',
+        baz: ['foo', 'bar', 'baz'],
+      }
+
+      expect(toPairsWithKeys(obj, ['foo'])).toEqual([
+        [
+          'foo',
+          {
+            bar: 'baz',
+          },
+        ],
+      ])
     })
   })
 
@@ -109,6 +131,8 @@ describe('utils > pairs', () => {
             baz: 'foo',
           },
         ],
+        'beep',
+        'boop',
       ]
       const b = [
         [
@@ -121,6 +145,12 @@ describe('utils > pairs', () => {
           'baz',
           {
             foo: 'bar',
+          },
+        ],
+        [
+          'beep',
+          {
+            boop: 'foo',
           },
         ],
       ]
@@ -138,6 +168,13 @@ describe('utils > pairs', () => {
             baz: 'foo',
           },
         ],
+        [
+          'beep',
+          {
+            boop: 'foo',
+          },
+        ],
+        'boop',
         [
           'baz',
           {

@@ -4,8 +4,6 @@ const pick = require('lodash/pick')
 const omit = require('lodash/omit')
 const deepmerge = require('deepmerge')
 
-// Hashes
-
 const mergeHashes = (a = {}, b = {}) => ({
   ...a,
   ...b,

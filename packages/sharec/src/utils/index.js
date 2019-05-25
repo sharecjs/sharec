@@ -9,7 +9,8 @@ const copyFile = promisify(fs.copyFile)
 const writeFile = promisify(fs.writeFile)
 const exec = promisify(childProcess.exec)
 
-const pipe = (...funs) => val => funs.reduce((acc, fun) => fun(acc), null)
+const pipe = (...funs) => (...args) =>
+  funs.reduce((acc, fun, i) => (i === 0 ? fun(...args) : fun(acc)), null)
 
 module.exports = {
   readDir,

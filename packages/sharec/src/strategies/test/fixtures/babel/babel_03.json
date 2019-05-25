@@ -12,13 +12,13 @@
     "stage-2"
   ],
   "plugins": [
-    "dynamic-import-node",
     [
       "syntax-dynamic-import",
       {
         "foo": "bar"
       }
-    ]
+    ],
+    "lodash"
   ],
   "env": {
     "test": {
