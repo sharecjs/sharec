@@ -1,4 +1,4 @@
-const { pipe } = require('../index')
+const { pipe } = require('utils')
 
 describe('pipe', () => {
   it('should pipe functions', () => {

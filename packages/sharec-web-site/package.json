@@ -53,30 +53,6 @@
       "^src/(.*)$": "<rootDir>/src/$1"
     }
   },
-  "eslintConfig": {
-    "parser": "babel-eslint",
-    "env": {
-      "browser": true,
-      "es6": true,
-      "node": true,
-      "jest": true
-    },
-    "extends": "standard",
-    "rules": {
-      "space-before-function-paren": 0
-    },
-    "parserOptions": {
-      "ecmaVersion": 8,
-      "ecmaFeatures": {
-        "spread": true
-      },
-      "sourceType": "module"
-    }
-  },
-  "eslintIgnore": [
-    "/node_modules",
-    "/dist"
-  ],
   "devDependencies": {
     "@babel/core": "^7.0.1",
     "@babel/preset-env": "^7.0.0",
@@ -87,12 +63,6 @@
     "bemto.pug": "git+https://git@github.com/kizu/bemto.git",
     "browser-sync": "^2.23.6",
     "cssnano": "^4.1.0",
-    "eslint": "^5.6.0",
-    "eslint-config-standard": "^12.0.0",
-    "eslint-plugin-import": "^2.9.0",
-    "eslint-plugin-node": "^9.0.0",
-    "eslint-plugin-promise": "^4.0.1",
-    "eslint-plugin-standard": "^4.0.0",
     "gulp": "^3.9.1",
     "gulp-cssnano": "^2.1.2",
     "gulp-filter": "^5.1.0",
@@ -117,7 +87,6 @@
     "postcss-custom-properties": "^8.0.0",
     "postcss-nested": "^4.1.0",
     "postcss-partial-import": "^4.1.0",
-    "prettier": "^1.11.1",
     "require-dir": "^1.0.0",
     "rimraf": "^2.6.2",
     "run-sequence": "^2.2.1",

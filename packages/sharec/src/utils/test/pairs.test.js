@@ -9,7 +9,7 @@ const {
   mergePairsWithoutKeys,
   deepMergePairsWithKeys,
   deepMergePairsWithoutKeys,
-} = require('../pairs')
+} = require('utils/pairs')
 
 describe('utils > pairs >', () => {
   describe('fillPairs', () => {

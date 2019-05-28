@@ -1,6 +1,6 @@
 const path = require('path')
-const { readFileSync } = require('fs')
-const { strategy, yamlStrategy } = require('../eslint')
+const { readFileSync } = require.requireActual('fs')
+const { strategy, yamlStrategy } = require('strategies/eslint')
 
 describe('strategy > eslint', () => {
   const eslint01 = require('./fixtures/eslint/json/eslintrc_01.json')

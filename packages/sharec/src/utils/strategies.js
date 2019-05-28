@@ -1,4 +1,4 @@
-const { transformInput, toYaml } = require('./yaml')
+const { transformInput, toYaml } = require('utils/yaml')
 
 const withYaml = strategy => (yA, yB) => {
   const [a, b] = transformInput(yA, yB)

@@ -1,8 +1,5 @@
-const execute = () =>
-  new Promise(resolve => {
-    setTimeout(() => {
-      return resolve()
-    }, 1500)
-  })
+const execute = (configsPath, targetPath, configs) => {
+  // ?
+}
 
 module.exports = execute

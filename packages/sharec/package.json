@@ -50,18 +50,22 @@
     ],
     "coveragePathIgnorePatterns": [
       "node_modules"
+    ],
+    "setupFiles": [
+      "./jest.setup.js"
     ]
   },
   "devDependencies": {
-    "callsites": "^3.0.0",
+    "callsites": "^3.1.0",
     "husky": "^2.3.0",
-    "jest": "^24.7.1",
-    "jest-cli": "^24.7.1",
+    "jest": "^24.8.0",
+    "jest-cli": "^24.8.0",
     "lint-staged": "^8.1.7",
-    "mock-fs": "^4.8.0"
+    "memfs": "^2.15.2"
   },
   "dependencies": {
     "deepmerge": "^3.2.0",
+    "fast-glob": "^2.2.7",
     "js-yaml": "^3.13.1",
     "lodash": "^4.17.11",
     "lz-string": "^1.4.4",

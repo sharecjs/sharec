@@ -1,6 +1,6 @@
-const fs = require('fs')
+// FIXME: legacy, remove that
 const path = require('path')
-const { readDir, readFile, copyFile, writeFile, exec } = require('./utils')
+const { readDir, readFile, copyFile, writeFile } = require('./utils')
 
 const ignoredFiles = ['yarn.lock', 'package-lock.json', 'node_modules']
 

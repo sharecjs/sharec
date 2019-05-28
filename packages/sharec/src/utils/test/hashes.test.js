@@ -4,7 +4,7 @@ const {
   deepMergeHashesWithKeys,
   mergeHashesWithoutKeys,
   deepMergeHashesWithoutKeys,
-} = require('../hashes')
+} = require('utils/hashes')
 
 describe('utils > hashes', () => {
   describe('mergeHashes', () => {

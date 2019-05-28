@@ -1,14 +1,11 @@
-const mockFs = require('mock-fs')
 const omit = require('lodash/omit')
 const pick = require('lodash/pick')
 const {
   extractDependencies,
   extractConfigs,
   extractMetaData,
-  injectConfigs,
   injectDependencies,
   injectMetaData,
-  ereaseConfigs,
   ereaseDependencies,
   ereaseMetaData,
 } = require('../package')
@@ -83,11 +80,6 @@ const packageJsonFixture = {
 }
 
 describe('core > package', () => {
-  afterEach(() => {
-    jest.clearAllMocks()
-    mockFs.restore()
-  })
-
   describe('extractDependencies', () => {
     it('should extract dependencies from given package.json', () => {
       const extractedDeps = extractDependencies(packageJsonFixture)
@@ -150,7 +142,6 @@ describe('core > package', () => {
     })
 
     it('should merge exist dependencies with given by different types', () => {
-      const deps = pick(packageJsonFixture, ['devDependencies'])
       const res = injectDependencies({
         devDependencies: {
           husky: '^2.2.0',

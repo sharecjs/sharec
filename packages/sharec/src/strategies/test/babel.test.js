@@ -1,6 +1,6 @@
 const path = require('path')
-const { readFileSync } = require('fs')
-const { strategy, yamlStrategy } = require('../babel')
+const { readFileSync } = require.requireActual('fs')
+const { strategy, yamlStrategy } = require('strategies/babel')
 
 describe('strategy > babel', () => {
   describe('json strategy', () => {

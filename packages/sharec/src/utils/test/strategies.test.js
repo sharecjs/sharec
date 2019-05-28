@@ -1,6 +1,6 @@
 const path = require('path')
-const { readFileSync } = require('fs')
-const { withYaml } = require('../strategies')
+const { withYaml } = require('utils/strategies')
+const { readFileSync } = require.requireActual('fs')
 
 const yamlFixture01 = readFileSync(
   path.resolve(__dirname, './fixtures/withYaml_01.yml'),

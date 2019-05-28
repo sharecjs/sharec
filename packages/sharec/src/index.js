@@ -16,8 +16,8 @@ async function sharec(configsPath, options) {
 
   try {
     const collectedConfigs = await collect(configsPath, targetPath)
-    spinner.start('applying configuration 🚀')
 
+    spinner.start('applying configuration 🚀')
     await execute(configsPath, targetPath, collectedConfigs)
     spinner.succeed('configuration applyed, have a nice time! 🌈')
   } catch (err) {

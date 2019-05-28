@@ -6,7 +6,14 @@
 
 Minify and support your big configs with extraction to external package with `share`.
 
-Just move all configuration (include file) to another package, install `sharec` and distribute it through projects!
+Just move all configuration (with files) to another package, install `sharec` and distribute it through projects!
+
+What is `sharec` key features:
+
+- **Simple** – you can create you configs package in a few minutes
+- **Sharable** – configuration now is a external package which can be installed anywhere
+- **Maintainable** – you can install, update and remove configs without any pain
+- **Smart** – diffucult configs will be merged with special strategies
 
 ```diff
 {
