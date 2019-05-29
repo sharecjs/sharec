@@ -1,16 +1,35 @@
-const strategies = require('../strategies')
+const path = require('path')
+const { readFile, writeFile, makeDir } = require('utils/fs')
+const { determineConfigStrategy } = require('./strategist')
 
-const detectConfigs = () => {}
+// TODO: split that to process, copy and merge
+const processConfig = async (configsPath, targetPath, filePath) => {
+  const targetStrategy = determineConfigStrategy(filePath)
+  const targetConfigPath = path.join(targetPath, filePath)
+  const targetConfigDirName = path.dirname(targetConfigPath)
+  let newConfig = await readFile(path.join('/configs', filePath), 'utf8')
+  let targetConfig = null
 
-const readConfigs = () => {}
+  try {
+    targetConfig = await readFile(targetConfigPath, 'utf8')
+  } catch (err) {}
 
-const copyConfig = () => {}
+  if (targetConfig && targetStrategy) {
+    newConfig = targetStrategy(targetConfig, newConfig)
+  }
 
-const mergeConfig = () => {}
+  await makeDir(targetConfigDirName, {
+    recursive: true,
+  })
+  await writeFile(
+    targetConfigPath,
+    newConfig instanceof Object
+      ? JSON.stringify(newConfig, null, 2)
+      : newConfig,
+    'utf8',
+  )
+}
 
 module.exports = {
-  detectConfigs,
-  readConfigs,
-  copyConfig,
-  mergeConfig,
+  processConfig,
 }

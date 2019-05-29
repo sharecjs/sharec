@@ -3,7 +3,6 @@ const pick = require('lodash/pick')
 const omit = require('lodash/omit')
 const xor = require('lodash/xor')
 const intersection = require('lodash/intersection')
-const { withYaml } = require('../utils/strategies')
 const { mergeHashes } = require('../utils/hashes')
 const { mergePairs } = require('../utils/pairs')
 
@@ -27,7 +26,10 @@ const mergeEnv = (a, b) => {
   return newEnvConfig
 }
 
-const strategy = (a, b) => {
+const strategy = (rawA, rawB) => {
+  const [a, b] = [rawA, rawB].map(config =>
+    typeof config === 'string' ? JSON.parse(config) : config,
+  )
   const newConfig = mergeEnv(omit(a, ['env']), omit(b, ['env']))
   const envConfigsA = get(a, ['env'], null)
   const envConfigsB = get(b, ['env'], null)
@@ -76,9 +78,6 @@ const strategy = (a, b) => {
   return newConfig
 }
 
-const yamlStrategy = withYaml(strategy)
-
 module.exports = {
   strategy,
-  yamlStrategy,
 }

@@ -6,7 +6,7 @@ module.exports = wallaby => ({
     'jest.setup.js',
     'src/**/*.js',
     'src/**/*.json',
-    '**/fixtures/**',
+    '**/fixtures/**/*',
   ],
 
   tests: ['!node_modules/**', '!**/fixtures/**/*', 'src/**/*.test.js'],

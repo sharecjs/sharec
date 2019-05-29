@@ -23,7 +23,7 @@ describe('core > collector >', () => {
     )
   })
 
-  afterEach(() => {
+  beforeEach(() => {
     vol.reset()
   })
 

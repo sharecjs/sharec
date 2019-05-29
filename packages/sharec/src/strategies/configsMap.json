@@ -1,4 +1,0 @@
-{
-  "eslint": [".eslintrc", "eslintrc.json", "eslintrc.yml", "eslintrc.yaml"],
-  "babel": [".babelrc", ".babelrc.json"]
-}
