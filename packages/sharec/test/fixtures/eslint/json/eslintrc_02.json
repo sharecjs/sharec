@@ -1,5 +1,4 @@
 {
-  "parser": "babel-eslint",
   "env": {
     "browser": true,
     "es6": true,
@@ -22,6 +21,7 @@
     ]
   },
   "parserOptions": {
+    "parser": "babel-eslint",
     "ecmaVersion": 7,
     "ecmaFeatures": {
       "spread": true

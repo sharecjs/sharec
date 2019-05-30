@@ -1,5 +1,4 @@
 {
-  "parser": "babel-eslint",
   "env": {
     "browser": true,
     "es6": true,
@@ -7,6 +6,10 @@
     "jest": true
   },
   "extends": "airbnb",
+  "globals": {
+    "foo": true,
+    "bar": true
+  },
   "rules": {
     "space-before-function-paren": 1,
     "no-console": 0,
@@ -22,6 +25,7 @@
     ]
   },
   "parserOptions": {
+    "parser": "babel-eslint",
     "ecmaVersion": 7,
     "ecmaFeatures": {
       "spread": true

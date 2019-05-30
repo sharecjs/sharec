@@ -1,5 +1,7 @@
-parser: babel-eslint
-env:
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`strategies withYaml should process yaml input with strategy 1`] = `
+"env:
   browser: true
   es6: true
   node: true
@@ -8,11 +10,6 @@ globals:
   foo: true
   bar: true
 extends: airbnb
-parserOptions:
-  ecmaVersion: 7
-  ecmaFeatures:
-    spread: true
-  sourceType: module
 rules:
   space-before-function-paren: 1
   no-console: 0
@@ -23,3 +20,11 @@ rules:
     - ignoreUrls: false
       ignoreComments: true
       ignoreStrings: false
+parserOptions:
+  parser: babel-eslint
+  ecmaVersion: 7
+  ecmaFeatures:
+    spread: true
+  sourceType: module
+"
+`;

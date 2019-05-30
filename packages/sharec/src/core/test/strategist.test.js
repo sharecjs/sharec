@@ -32,7 +32,7 @@ describe('core > strategist >', () => {
         fakeStrategiesMap.common.strategy,
       )
       expect(
-        determineConfigStrategy('anoter/example/dir/exmaple-config.yml'),
+        determineConfigStrategy('anoter/example/dir/exmaple-config.yaml'),
       ).toBe(fakeStrategiesMap.common.yamlStrategy)
     })
 
@@ -61,7 +61,7 @@ describe('core > strategist >', () => {
       expect(determineConfigStrategy('example/dir/.eslintrc')).toBe(
         fakeStrategiesMap.eslint.strategy,
       )
-      expect(determineConfigStrategy('anoter/example/dir/eslintrc.yml')).toBe(
+      expect(determineConfigStrategy('anoter/example/dir/eslintrc.yaml')).toBe(
         fakeStrategiesMap.eslint.yamlStrategy,
       )
     })

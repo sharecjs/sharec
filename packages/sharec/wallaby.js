@@ -6,10 +6,18 @@ module.exports = wallaby => ({
     'jest.setup.js',
     'src/**/*.js',
     'src/**/*.json',
-    '**/fixtures/**/*',
+    'test/fixtures/**/*.json',
+    'test/fixtures/**/*.yml',
+    'test/fixtures/**/*.yaml',
   ],
 
-  tests: ['!node_modules/**', '!**/fixtures/**/*', 'src/**/*.test.js'],
+  tests: [
+    '!node_modules/**',
+    '!test/fixtures/**/*.json',
+    '!test/fixtures/**/*.yml',
+    '!test/fixtures/**/*.yaml',
+    'src/**/*.test.js',
+  ],
 
   env: {
     type: 'node',

@@ -1,31 +1,31 @@
 const path = require('path')
-const { readDir, readFile, lstat } = require('../utils/fs')
+const { readDir, lstat } = require('../utils/fs')
 
-const collectConfigs = async (configsPath, subPath = '') => {
+const collectConfigsPaths = async (configsPath, subPath = '') => {
   const fullConfigsPath = !subPath
     ? configsPath
     : path.join(configsPath, subPath)
   const filesList = await readDir(fullConfigsPath)
 
-  if (filesList.length === 0) return {}
+  if (filesList.length === 0) return []
 
-  const files = {}
+  const files = []
 
   for (const fileName of filesList) {
     const filePath = path.join(fullConfigsPath, fileName)
     const stats = await lstat(filePath)
 
     if (stats.isDirectory()) {
-      const subDirectoryFiles = await collectConfigs(fullConfigsPath, fileName)
+      const subDirectoryFiles = await collectConfigsPaths(
+        fullConfigsPath,
+        fileName,
+      )
 
-      Object.assign(files, subDirectoryFiles)
+      files.push(...subDirectoryFiles)
     } else {
-      const file = await readFile(filePath, 'utf8')
       const fileKey = !subPath ? fileName : path.join(subPath, fileName)
 
-      Object.assign(files, {
-        [fileKey]: file,
-      })
+      files.push(fileKey)
     }
   }
 
@@ -33,5 +33,5 @@ const collectConfigs = async (configsPath, subPath = '') => {
 }
 
 module.exports = {
-  collectConfigs,
+  collectConfigsPaths,
 }

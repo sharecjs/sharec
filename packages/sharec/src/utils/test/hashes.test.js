@@ -104,8 +104,11 @@ describe('utils > hashes', () => {
         },
       }
 
-      expect(deepMergeHashesWithoutKeys(a, b, ['bar'])).toEqual({
-        foo: 'baz',
+      expect(deepMergeHashesWithoutKeys(a, b, ['foo'])).toEqual({
+        bar: {
+          foo: 'baz',
+          bar: 'baz',
+        },
       })
     })
   })

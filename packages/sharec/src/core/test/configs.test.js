@@ -1,10 +1,25 @@
+const path = require('path')
+const { readFileSync } = require.requireActual('fs')
 const { vol } = require('memfs')
 const { processConfig } = require('core/configs')
 
-describe('core > collector >', () => {
-  const eslint01 = require('./fixtures/eslint/json/eslintrc_01.json')
-  const eslint02 = require('./fixtures/eslint/json/eslintrc_02.json')
-  const eslint03 = require('./fixtures/eslint/json/eslintrc_03.json')
+describe('core > configs >', () => {
+  const eslint01 = require('fixtures/eslint/json/eslintrc_01.json')
+  const eslint02 = require('fixtures/eslint/json/eslintrc_02.json')
+  const yamlEslint01 = readFileSync(
+    path.resolve(
+      __dirname,
+      '../../../test/fixtures/eslint/yaml/eslintrc_01.yml',
+    ),
+    'utf8',
+  )
+  const yamlEslint02 = readFileSync(
+    path.resolve(
+      __dirname,
+      '../../../test/fixtures/eslint/yaml/eslintrc_02.yml',
+    ),
+    'utf8',
+  )
 
   beforeEach(() => {
     vol.reset()
@@ -24,7 +39,23 @@ describe('core > collector >', () => {
 
       const res = await vol.readFileSync('/target/.eslintrc', 'utf8')
 
-      expect(JSON.parse(res)).toEqual(eslint03)
+      expect(JSON.parse(res)).toMatchSnapshot()
+    })
+
+    it('should merge YAML configs', async () => {
+      expect.assertions(1)
+
+      const dir = {
+        '/target/.eslintrc.yaml': yamlEslint01,
+        '/configs/.eslintrc.yaml': yamlEslint02,
+      }
+      vol.fromJSON(dir, '/')
+
+      await processConfig('/configs', '/target', '.eslintrc.yaml')
+
+      const res = await vol.readFileSync('/target/.eslintrc.yaml', 'utf8')
+
+      expect(res).toMatchSnapshot()
     })
 
     it('should copy all non-mergeable configs', async () => {

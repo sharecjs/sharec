@@ -1,105 +1,68 @@
-const path = require('path')
-const { readFileSync } = require.requireActual('fs')
 const { vol } = require('memfs')
-const { collectConfigs } = require('core/collector')
+const { collectConfigsPaths } = require('core/collector')
 
 describe('core > collector >', () => {
-  let template01
-  let template02
-  let template03
-
-  beforeAll(async () => {
-    template01 = await readFileSync(
-      path.resolve(__dirname, './fixtures/templates/exampleCss.ejs.t'),
-      'utf8',
-    )
-    template02 = await readFileSync(
-      path.resolve(__dirname, './fixtures/templates/exampleHtml.ejs.t'),
-      'utf8',
-    )
-    template03 = await readFileSync(
-      path.resolve(__dirname, './fixtures/templates/exampleJs.ejs.t'),
-      'utf8',
-    )
-  })
-
   beforeEach(() => {
     vol.reset()
   })
 
-  describe('collectConfigs', () => {
+  describe('collectConfigsPaths', () => {
     it('should collect all files from config package', async () => {
       expect.assertions(1)
 
       const dir = {
-        'package.json': JSON.stringify(
-          {
-            foo: 'bar',
-          },
-          null,
-          2,
-        ),
-        '.eslintrc': JSON.stringify(
-          {
-            rules: {
-              'no-console': 0,
-            },
-          },
-          null,
-          2,
-        ),
+        'package.json': 'foo',
+        '.eslintrc': 'bar',
       }
       vol.fromJSON(dir, '/configs')
 
-      const files = await collectConfigs('/configs')
+      const files = await collectConfigsPaths('/configs')
 
-      expect(files).toEqual(dir)
+      expect(files).toEqual(['.eslintrc', 'package.json'])
     })
 
     it('should collect all files from config package with nested directories', async () => {
       expect.assertions(1)
 
       const dir = {
-        '_templates/exampleCss.ejs.t': template01,
-        '_templates/exampleHtml.ejs.t': template02,
-        '_templates/exampleJs.ejs.t': template03,
+        '_templates/exampleCss.ejs.t': 'foo',
+        '_templates/exampleHtml.ejs.t': 'bar',
+        '_templates/exampleJs.ejs.t': 'baz',
       }
       vol.fromJSON(dir, '/configs')
 
-      const files = await collectConfigs('/configs')
+      const files = await collectConfigsPaths('/configs')
 
-      expect(files).toEqual(dir)
+      expect(files).toEqual([
+        '_templates/exampleCss.ejs.t',
+        '_templates/exampleHtml.ejs.t',
+        '_templates/exampleJs.ejs.t',
+      ])
     })
 
     it('should collect mixed files and directories from config package', async () => {
       expect.assertions(1)
 
       const dir = {
-        '_templates/exampleCss.ejs.t': template01,
-        '_templates/exampleHtml.ejs.t': template02,
-        '_templates/exampleJs.ejs.t': template03,
-        'package.json': JSON.stringify(
-          {
-            foo: 'bar',
-          },
-          null,
-          2,
-        ),
-        '.eslintrc': JSON.stringify(
-          {
-            rules: {
-              'no-console': 0,
-            },
-          },
-          null,
-          2,
-        ),
+        '.editorconfig': 'foo',
+        '.eslintrc': '5',
+        '_templates/exampleCss.ejs.t': '1',
+        '_templates/exampleHtml.ejs.t': '2',
+        '_templates/exampleJs.ejs.t': '3',
+        'package.json': '4',
       }
       vol.fromJSON(dir, '/configs')
 
-      const files = await collectConfigs('/configs')
+      const files = await collectConfigsPaths('/configs')
 
-      expect(files).toEqual(dir)
+      expect(files).toEqual([
+        '.editorconfig',
+        '.eslintrc',
+        '_templates/exampleCss.ejs.t',
+        '_templates/exampleHtml.ejs.t',
+        '_templates/exampleJs.ejs.t',
+        'package.json',
+      ])
     })
 
     it('should return empty object if configs dir does not contains any files', async () => {
@@ -110,9 +73,9 @@ describe('core > collector >', () => {
         '/',
       )
 
-      const files = await collectConfigs('/configs')
+      const files = await collectConfigsPaths('/configs')
 
-      expect(files).toEqual({})
+      expect(files).toEqual([])
     })
   })
 })

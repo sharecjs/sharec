@@ -5,7 +5,7 @@ const strategiesMap = require('../strategies/strategiesMap.json')
 const determineConfigStrategy = filePath => {
   const fileName = path.basename(filePath)
   const fileExt = path.extname(filePath)
-  const isYaml = /\.yma?l/.test(fileExt)
+  const isYaml = /\.ya?ml/.test(fileExt)
   const isJson = /\.json/.test(fileExt)
   const target = strategiesMap.find(strategy => strategy[1].includes(fileName))
 

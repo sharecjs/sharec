@@ -1,4 +1,15 @@
 [
-  ["eslint", [".eslintrc", "eslintrc.json", "eslintrc.yml", "eslintrc.yaml"]],
-  ["babel", [".babelrc", ".babelrc.json"]]
+  [
+    "eslint",
+    [
+      "eslintConfig",
+      ".eslintrc",
+      "eslintrc.json",
+      "eslintrc.yml",
+      "eslintrc.yaml",
+      ".eslintrc.yml",
+      ".eslintrc.yaml"
+    ]
+  ],
+  ["babel", ["babel", ".babelrc", ".babelrc.json"]]
 ]

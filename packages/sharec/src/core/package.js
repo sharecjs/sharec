@@ -1,5 +1,6 @@
 const omit = require('lodash/omit')
 const pick = require('lodash/pick')
+const { determineConfigStrategy } = require('./strategist')
 
 const DEPENDENCIES_FIELDS = [
   'dependencies',
@@ -24,10 +25,7 @@ const IGNORED_FIELDS = [
   'preferGlobal',
   'private',
   'author',
-  'dependencies',
-  'devDependencies',
-  'peerDependencies',
-  'optionalDependencies',
+  ...DEPENDENCIES_FIELDS,
 ]
 
 // Extraction
@@ -41,7 +39,21 @@ const extractMetaData = packageJson => packageJson.sharec || null
 
 // Inject
 
-const injectConfigs = configs => packageJson => {}
+const injectConfigs = configs => packageJson => {
+  const updatedPackageJson = { ...packageJson }
+
+  Object.keys(configs).forEach(key => {
+    const strategy = determineConfigStrategy(key)
+
+    Object.assign(updatedPackageJson, {
+      [key]: strategy
+        ? strategy(updatedPackageJson[key], configs[key])
+        : configs[key],
+    })
+  })
+
+  return updatedPackageJson
+}
 
 const injectDependencies = dependencies => packageJson => {
   const updatedPackageJson = { ...packageJson }
