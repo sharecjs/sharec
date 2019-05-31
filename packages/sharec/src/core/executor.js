@@ -1,7 +1,6 @@
 const path = require('path')
 const { pipe } = require('utils')
 const { readFile, writeFile } = require('utils/fs')
-const { collectConfigsPaths } = require('./collector')
 const { processConfig } = require('./configs')
 /* eslint-disable */
 const {
@@ -18,8 +17,7 @@ const {
 /* eslint-enable */
 
 // TODO: move package.json logic to external function
-const execute = async (configsPath, targetPath) => {
-  const configs = await collectConfigsPaths(configsPath)
+const execute = async (configsPath, targetPath, configs) => {
   const standaloneConfigs = configs.filter(
     filePath => !/(package\.json)/.test(filePath),
   )
@@ -34,26 +32,17 @@ const execute = async (configsPath, targetPath) => {
 
   const targetPackageJsonPath = path.resolve(targetPath, 'package.json')
   const packageJsonPath = path.resolve(configsPath, 'package.json')
+
+  // PackageJson
   const rawPackageJson = await readFile(packageJsonPath, 'utf8')
   const packageJson = JSON.parse(rawPackageJson)
-  let targetPackageJson = null
-
-  try {
-    const rawTargetPackageJson = await readFile(targetPackageJsonPath)
-    targetPackageJson = JSON.parse(rawTargetPackageJson)
-  } catch (err) {}
-
-  if (!targetPackageJson) {
-    return writeFile(targetPackageJsonPath, packageJson, 'utf8')
-  }
-
-  // const metaData = extractMetaData(targetPackageJson)
-  const dependencies = extractDependencies(packageJson)
+  const rawTargetPackageJson = await readFile(targetPackageJsonPath)
+  const targetPackageJson = JSON.parse(rawTargetPackageJson)
+  const newDependencies = extractDependencies(packageJson)
   const newConfigs = extractConfigs(packageJson)
-
-  targetPackageJson = pipe(
+  const newPackageJson = pipe(
     injectConfigs(newConfigs),
-    injectDependencies(dependencies),
+    injectDependencies(newDependencies),
     injectMetaData({
       injected: true,
     }),
@@ -61,7 +50,7 @@ const execute = async (configsPath, targetPath) => {
 
   await writeFile(
     targetPackageJsonPath,
-    JSON.stringify(targetPackageJson, null, 2),
+    JSON.stringify(newPackageJson, null, 2),
     'utf8',
   )
 }

@@ -42,7 +42,12 @@ describe('core > executor >', () => {
       }
       vol.fromJSON(dir, '/')
 
-      await execute('/configs', '/target')
+      await execute('/configs', '/target', [
+        '.eslintrc',
+        '.eslintrc.yaml',
+        '.editorconfig',
+        'babelrc.js',
+      ])
 
       expect(
         vol.readFileSync('/target/.editorconfig', 'utf8'),
@@ -65,7 +70,7 @@ describe('core > executor >', () => {
       }
       vol.fromJSON(dir, '/')
 
-      await execute('/configs', '/target')
+      await execute('/configs', '/target', ['package.json'])
 
       expect(vol.readFileSync('/target/package.json', 'utf8')).toMatchSnapshot()
     })
@@ -86,7 +91,13 @@ describe('core > executor >', () => {
       }
       vol.fromJSON(dir, '/')
 
-      await execute('/configs', '/target')
+      await execute('/configs', '/target', [
+        '.eslintrc',
+        '.eslintrc.yaml',
+        '.editorconfig',
+        'babelrc.js',
+        'package.json',
+      ])
 
       expect(
         vol.readFileSync('/target/.editorconfig', 'utf8'),

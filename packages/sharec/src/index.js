@@ -1,5 +1,6 @@
 const ora = require('ora')
 const execute = require('./core/executor')
+const { collectConfigsPaths } = require('./collector')
 
 async function sharec(configsPath, options) {
   const targetPath = process.env.PWD
@@ -14,8 +15,10 @@ async function sharec(configsPath, options) {
   }).start()
 
   try {
+    const configs = await collectConfigsPaths(configsPath)
+
     spinner.start('applying configuration 🚀')
-    await execute(configsPath, targetPath)
+    await execute(configsPath, targetPath, configs)
     spinner.succeed('configuration applyed, have a nice time! 🌈')
   } catch (err) {
     console.log(err)
