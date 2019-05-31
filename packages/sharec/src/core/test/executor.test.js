@@ -1,7 +1,7 @@
 const path = require('path')
 const { readFileSync } = require.requireActual('fs')
 const { vol } = require('memfs')
-const { execute } = require('../executor')
+const { execute } = require('core/executor')
 
 describe('core > executor >', () => {
   const packageJson01 = require('fixtures/package/package_01.json')

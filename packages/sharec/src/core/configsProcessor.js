@@ -2,7 +2,6 @@ const path = require('path')
 const { readFile, writeFile, makeDir } = require('utils/fs')
 const { determineConfigStrategy } = require('./strategist')
 
-// TODO: split that to process, copy and merge
 const processConfig = async (configsPath, targetPath, filePath) => {
   const targetStrategy = determineConfigStrategy(filePath)
 

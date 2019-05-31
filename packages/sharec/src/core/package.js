@@ -29,7 +29,6 @@ const IGNORED_FIELDS = [
 ]
 
 // Extraction
-
 const extractDependencies = packageJson =>
   pick(packageJson, DEPENDENCIES_FIELDS)
 
@@ -38,7 +37,6 @@ const extractConfigs = packageJson => omit(packageJson, IGNORED_FIELDS)
 const extractMetaData = packageJson => packageJson.sharec || null
 
 // Inject
-
 const injectConfigs = configs => packageJson => {
   const updatedPackageJson = { ...packageJson }
 
@@ -77,7 +75,6 @@ const injectMetaData = metaData => packageJson => ({
 })
 
 // Ereasing
-
 const ereaseConfigs = configs => packageJson => {}
 
 const ereaseDependenciesFrom = (dependencies, target) => {

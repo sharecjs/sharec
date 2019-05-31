@@ -1,9 +1,9 @@
 const path = require('path')
 const { readFileSync } = require.requireActual('fs')
 const { vol } = require('memfs')
-const { processConfig } = require('core/configs')
+const { processConfig } = require('core/configsProcessor')
 
-describe('core > configs >', () => {
+describe('core > configsProcessor >', () => {
   const eslint01 = require('fixtures/eslint/json/eslintrc_01.json')
   const eslint02 = require('fixtures/eslint/json/eslintrc_02.json')
   const yamlEslint01 = readFileSync(
