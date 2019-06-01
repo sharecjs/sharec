@@ -4,7 +4,7 @@
     "packages/sharec",
     "packages/sharec-demo-config"
   ],
-  "version": "2.0.0-alpha",
+  "version": "2.0.1-alpha",
   "command": {
     "bootstrap": {
       "ignore": "sharec-demo-*"
