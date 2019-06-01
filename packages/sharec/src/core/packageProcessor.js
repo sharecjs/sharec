@@ -4,7 +4,7 @@ const { readFile, writeFile } = require('utils/fs')
 const {
   extractDependencies,
   extractConfigs,
-  // extractMetaData,
+  extractMetaData,
   injectConfigs,
   injectDependencies,
   injectMetaData,
@@ -12,6 +12,14 @@ const {
   // ereaseDependencies,
   // ereaseMetaData,
 } = require('./package')
+
+const getCurrentPackageJsonMetaData = async targetPath => {
+  const targetPackageJsonPath = path.resolve(targetPath, 'package.json')
+  const rawTargetPackageJson = await readFile(targetPackageJsonPath)
+  const targetPackageJson = JSON.parse(rawTargetPackageJson)
+
+  return extractMetaData(targetPackageJson)
+}
 
 const processPackageJson = async (configsPath, targetPath) => {
   const targetPackageJsonPath = path.resolve(targetPath, 'package.json')
@@ -40,5 +48,6 @@ const processPackageJson = async (configsPath, targetPath) => {
 }
 
 module.exports = {
+  getCurrentPackageJsonMetaData,
   processPackageJson,
 }

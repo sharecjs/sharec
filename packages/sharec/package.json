@@ -11,7 +11,7 @@
   "homapage": "https://lamartire.github.io/sharec/",
   "author": "",
   "license": "ISC",
-  "main": "./src/index.js",
+  "main": "./src/sharec.js",
   "bin": "./bin/sharec",
   "scripts": {
     "test": "jest",
