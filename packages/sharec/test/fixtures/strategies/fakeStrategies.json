@@ -1,0 +1,13 @@
+{
+  "common": {
+    "strategy": "commonStrategy",
+    "yamlStrategy": "commonYamlStrategy"
+  },
+  "babel": {
+    "strategy": "babelStrategy"
+  },
+  "eslint": {
+    "strategy": "eslintStrategy",
+    "yamlStrategy": "eslintYamlStrategy"
+  }
+}

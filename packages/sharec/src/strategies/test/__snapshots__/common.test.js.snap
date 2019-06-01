@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`strategy > common json strategy should merge objects by one deep level 1`] = `
+Object {
+  "bar": Object {
+    "foo": "foo",
+  },
+  "baz": Object {
+    "bar": "baz",
+    "foo": "bar",
+  },
+  "foo": "baz",
+}
+`;
+
+exports[`strategy > common yaml strategy should merge objects by one deep level 1`] = `
+"foo: baz
+bar:
+  - foo: foo
+baz:
+  - foo: bar
+    bar: baz
+"
+`;

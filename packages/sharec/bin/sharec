@@ -1,5 +1,15 @@
 #!/usr/bin/env node
 
-const sharec = require('../src/index.js')
+const minimist = require('minimist')
+const sharec = require('../src/sharec')
 
-sharec(process.env.INIT_CWD)
+const argv = minimist(process.argv.slice(2))
+
+try {
+  sharec(process.env.PWD, process.env.INIT_CWD, argv)
+} catch (err) {
+  console.error(err)
+  process.exit(1)
+}
+
+process.exit(0)

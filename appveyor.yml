@@ -1,8 +1,8 @@
 environment:
   nodejs_version: '10'
 branches:
-  except:
-    - gh-pages
+  only:
+    - master
 image:
   - Visual Studio 2017
 build: off
