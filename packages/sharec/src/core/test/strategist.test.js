@@ -1,17 +1,10 @@
-const fakeStrategiesMap = {
-  common: {
-    strategy: 'commonStrategy',
-    yamlStrategy: 'commonYamlStrategy',
-  },
-  babel: {
-    strategy: 'babelStrategy',
-  },
-  eslint: {
-    strategy: 'eslintStrategy',
-    yamlStrategy: 'eslintYamlStrategy',
-  },
-}
-jest.mock('strategies', () => fakeStrategiesMap)
+const fakeStrategiesMap = require('fixtures/strategies/fakeStrategies.json')
+
+jest.mock('strategies', () => {
+  const fakeStrategies = require('fixtures/strategies/fakeStrategies.json')
+
+  return fakeStrategies
+})
 
 const { determineConfigStrategy } = require('core/strategist')
 
