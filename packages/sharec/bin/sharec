@@ -8,6 +8,7 @@ const argv = minimist(process.argv.slice(2))
 try {
   sharec(process.env.PWD, process.env.INIT_CWD, argv)
 } catch (err) {
+  console.error(err)
   process.exit(1)
 }
 

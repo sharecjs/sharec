@@ -35,8 +35,21 @@ async function sharec(targetPath, configsPath, options) {
       ].join('\n'),
     )
   } catch (err) {
-    console.log(err)
     spinner.fail('something went wrong! 😞')
+
+    if (err.message.includes('ENOENT')) {
+      throw new Error(
+        'sharec: configs directory is not exists in your configuration package!',
+      )
+    } else {
+      throw new Error(
+        [
+          'sharec: unexpected error:',
+          err.message,
+          'If it is potentially problem in sharec – feel free to open issue! 🙌',
+        ].join('\n'),
+      )
+    }
   }
 }
 
