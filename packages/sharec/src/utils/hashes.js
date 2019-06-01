@@ -7,7 +7,6 @@ const mergeHashes = (a = {}, b = {}) => ({
   ...b,
 })
 
-// TODO: add test
 const deepMergeHashes = (a = {}, b = {}) => deepmerge(a, b)
 
 const mergeHashesWithKeys = (a = {}, b = {}, keys = []) => {

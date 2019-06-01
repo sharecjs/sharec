@@ -6,8 +6,8 @@ const {
   deepMergeHashesWithKeys,
   mergeHashesWithoutKeys,
   deepMergeHashesWithoutKeys,
-} = require('utils/hashes')
-const { pipe } = require('utils')
+} = require('./hashes')
+const { pipe } = require('./index')
 
 const toPairs = obj =>
   Object.keys(obj).reduce((acc, key) => {

@@ -1,6 +1,6 @@
 const path = require('path')
-const { pipe } = require('utils')
-const { readFile, writeFile } = require('utils/fs')
+const { pipe } = require('../utils')
+const { readFile, writeFile } = require('../utils/fs')
 const {
   extractDependencies,
   extractConfigs,
