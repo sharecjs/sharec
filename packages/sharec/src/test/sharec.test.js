@@ -88,19 +88,4 @@ describe('sharec base', () => {
       expect(vol.readFileSync('/target/package.json', 'utf8')).toMatchSnapshot()
     })
   })
-
-  describe('errors handling', () => {
-    it('should print error if configs dir is not exists in configuration package', () => {
-      const dir = {
-        '/target/package.json': JSON.stringify({}),
-        '/target/.editorconfig': 'foo',
-        '/configuration-package/.editorconfig': 'bar',
-      }
-      vol.fromJSON(dir, '/')
-
-      expect(sharec('/target', '/configuration-package')).rejects.toEqual(
-        'sharec: configs directory is not exists in your configuration package!',
-      )
-    })
-  })
 })

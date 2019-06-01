@@ -43,11 +43,9 @@ async function sharec(targetPath, configsPath, options) {
       )
     } else {
       throw new Error(
-        [
-          'sharec: unexpected error:',
-          err.message,
-          'If it is potentially problem in sharec – feel free to open issue! 🙌',
-        ].join('\n'),
+        `sharec: unexpected error: ${
+          err.message
+        }. If it is potentially problem in sharec – feel free to open issue! 🙌`,
       )
     }
   }

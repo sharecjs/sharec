@@ -1,5 +1,8 @@
 const path = require('path')
+const slash = require('slash')
 const { readDir, lstat } = require('../utils/fs')
+
+const normalizePathSlashes = paths => paths.map(el => slash(el))
 
 const collectConfigsPaths = async (configsPath, subPath = '') => {
   const fullConfigsPath = !subPath
@@ -21,11 +24,11 @@ const collectConfigsPaths = async (configsPath, subPath = '') => {
         fileName,
       )
 
-      files.push(...subDirectoryFiles)
+      files.push(...normalizePathSlashes(subDirectoryFiles))
     } else {
       const fileKey = !subPath ? fileName : path.join(subPath, fileName)
 
-      files.push(fileKey)
+      files.push(...normalizePathSlashes([fileKey]))
     }
   }
 
@@ -33,5 +36,6 @@ const collectConfigsPaths = async (configsPath, subPath = '') => {
 }
 
 module.exports = {
+  normalizePathSlashes,
   collectConfigsPaths,
 }
