@@ -39,11 +39,15 @@ describe('sharec base', () => {
     }
     const dir = {
       '/target/package.json': JSON.stringify(packageJson, null, 2),
-      '/configs/package.json': JSON.stringify(packageJson01, null, 2),
+      '/configuration-package/configs/package.json': JSON.stringify(
+        packageJson01,
+        null,
+        2,
+      ),
     }
     vol.fromJSON(dir, '/')
 
-    await sharec('/target', '/configs')
+    await sharec('/target', '/configuration-package')
 
     expect(
       JSON.parse(vol.readFileSync('/target/package.json', 'utf8')),
@@ -56,15 +60,19 @@ describe('sharec base', () => {
       '/target/babelrc.js': 'foo',
       '/target/.eslintrc.yaml': yamlEslint01,
       '/target/package.json': JSON.stringify(packageJson01, null, 2),
-      '/configs/.eslintrc': JSON.stringify(eslint02),
-      '/configs/.eslintrc.yaml': yamlEslint02,
-      '/configs/.editorconfig': 'bar',
-      '/configs/babelrc.js': 'baz',
-      '/configs/package.json': JSON.stringify(packageJson02, null, 2),
+      '/configuration-package/configs/.eslintrc': JSON.stringify(eslint02),
+      '/configuration-package/configs/.eslintrc.yaml': yamlEslint02,
+      '/configuration-package/configs/.editorconfig': 'bar',
+      '/configuration-package/configs/babelrc.js': 'baz',
+      '/configuration-package/configs/package.json': JSON.stringify(
+        packageJson02,
+        null,
+        2,
+      ),
     }
     vol.fromJSON(dir, '/')
 
-    await sharec('/target', '/configs')
+    await sharec('/target', '/configuration-package')
 
     expect(vol.readFileSync('/target/.editorconfig', 'utf8')).toMatchSnapshot()
     expect(vol.readFileSync('/target/babelrc.js', 'utf8')).toMatchSnapshot()

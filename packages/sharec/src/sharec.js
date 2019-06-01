@@ -1,4 +1,5 @@
 const ora = require('ora')
+const path = require('path')
 const { execute } = require('./core/executor')
 const { getCurrentPackageJsonMetaData } = require('./core/packageProcessor')
 const { collectConfigsPaths } = require('./core/collector')
@@ -14,7 +15,8 @@ async function sharec(targetPath, configsPath, options) {
   }).start()
 
   try {
-    const configs = await collectConfigsPaths(configsPath)
+    const fullConfigsPath = path.join(configsPath, './configs')
+    const configs = await collectConfigsPaths(fullConfigsPath)
     const metaData = await getCurrentPackageJsonMetaData(targetPath)
 
     if (metaData && metaData.injected) {
@@ -23,7 +25,7 @@ async function sharec(targetPath, configsPath, options) {
     }
 
     spinner.start('applying configuration 🚀')
-    await execute(configsPath, targetPath, configs)
+    await execute(fullConfigsPath, targetPath, configs)
     spinner.succeed('configuration applyed, have a nice time! 🌈')
     console.info(
       [
