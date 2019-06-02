@@ -6,9 +6,10 @@
     "postinstall": "sharec"
   },
   "homapage": "https://lamartire.github.io/sharec/",
+  "author": "Konstantin Epishev <lamartire@gmail.com>",
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "sharec": "^2.0.3-alpha"
   },

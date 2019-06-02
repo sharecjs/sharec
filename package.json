@@ -1,5 +1,7 @@
 {
   "homapage": "https://lamartire.github.io/sharec/",
+  "author": "Konstantin Epishev <lamartire@gmail.com>",
+  "license": "MIT",
   "prettier": {
     "semi": false,
     "singleQuote": true,

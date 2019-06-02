@@ -1,0 +1,21 @@
+{
+  "name": "sharec-essential-config",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "sharec"
+  },
+  "homapage": "https://lamartire.github.io/sharec/",
+  "author": "Konstantin Epishev <lamartire@gmail.com>",
+  "keywords": [],
+  "author": "lamartire",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lamartire/essential-javascript-config/issues"
+  },
+  "homepage": "https://github.com/lamartire/essential-javascript-config#readme",
+  "dependencies": {
+    "sharec": "^2.0.3-alpha"
+  }
+}
