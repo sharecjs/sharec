@@ -14,6 +14,12 @@ const executeInjection = async (configsPath, targetPath, configs) => {
   await processPackageJson(configsPath, targetPath)
 }
 
+const executeUninstall = async (configsPath, targetPath) => {}
+
+const executeUpdate = async (configsPath, targetPath) => {}
+
 module.exports = {
   executeInjection,
+  executeUninstall,
+  executeUpdate,
 }
