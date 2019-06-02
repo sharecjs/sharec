@@ -1,7 +1,7 @@
 const { processConfig } = require('./configsProcessor')
 const { processPackageJson } = require('./packageProcessor')
 
-const execute = async (configsPath, targetPath, configs) => {
+const executeInjection = async (configsPath, targetPath, configs) => {
   const standaloneConfigs = configs.filter(
     filePath => !/(package\.json)/.test(filePath),
   )
@@ -15,5 +15,5 @@ const execute = async (configsPath, targetPath, configs) => {
 }
 
 module.exports = {
-  execute,
+  executeInjection,
 }

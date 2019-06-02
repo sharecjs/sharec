@@ -1,6 +1,6 @@
 const ora = require('ora')
 const path = require('path')
-const { execute } = require('./core/executor')
+const { executeInjection } = require('./core/executor')
 const { getCurrentPackageJsonMetaData } = require('./core/packageProcessor')
 const { collectConfigsPaths } = require('./core/collector')
 
@@ -32,7 +32,7 @@ async function sharec(configsPath, targetPath, options) {
   }
 
   spinner.start('applying configuration 🚀')
-  await execute(fullConfigsPath, targetPath, configs)
+  await executeInjection(fullConfigsPath, targetPath, configs)
   spinner.succeed('configuration applyed, have a nice time! 🌈')
 
   console.info(

@@ -1,7 +1,7 @@
 const path = require('path')
 const { readFileSync } = require.requireActual('fs')
 const { vol } = require('memfs')
-const { execute } = require('core/executor')
+const { executeInjection } = require('core/executor')
 
 describe('core > executor >', () => {
   const packageJson01 = require('fixtures/package/package_01.json')
@@ -23,7 +23,7 @@ describe('core > executor >', () => {
     'utf8',
   )
 
-  describe('execute', () => {
+  describe('executeInjection', () => {
     beforeEach(() => {
       vol.reset()
     })
@@ -43,7 +43,7 @@ describe('core > executor >', () => {
       }
       vol.fromJSON(dir, '/')
 
-      await execute('/configs', '/target', [
+      await executeInjection('/configs', '/target', [
         '.eslintrc',
         '.eslintrc.yaml',
         '.editorconfig',
@@ -72,7 +72,7 @@ describe('core > executor >', () => {
       }
       vol.fromJSON(dir, '/')
 
-      await execute('/configs', '/target', ['package.json'])
+      await executeInjection('/configs', '/target', ['package.json'])
 
       expect(vol.readFileSync('/target/package.json', 'utf8')).toMatchSnapshot()
     })
@@ -93,7 +93,7 @@ describe('core > executor >', () => {
       }
       vol.fromJSON(dir, '/')
 
-      await execute('/configs', '/target', [
+      await executeInjection('/configs', '/target', [
         '.eslintrc',
         '.eslintrc.yaml',
         '.editorconfig',
