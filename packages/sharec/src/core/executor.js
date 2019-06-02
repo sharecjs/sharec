@@ -11,9 +11,6 @@ const execute = async (configsPath, targetPath, configs) => {
       processConfig(configsPath, targetPath, configPath),
     ),
   )
-
-  if (!configs.find(filePath => /(package\.json)/.test(filePath))) return
-
   await processPackageJson(configsPath, targetPath)
 }
 

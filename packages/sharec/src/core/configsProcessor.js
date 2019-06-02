@@ -20,9 +20,12 @@ const processConfig = async (configsPath, targetPath, filePath) => {
     newConfig = targetStrategy(targetConfig, newConfig)
   }
 
-  await makeDir(targetConfigDirName, {
-    recursive: true,
-  })
+  try {
+    await makeDir(targetConfigDirName, {
+      recursive: true,
+    })
+  } catch (err) {}
+
   await writeFile(
     targetConfigPath,
     newConfig instanceof Object

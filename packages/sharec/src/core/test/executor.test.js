@@ -29,9 +29,10 @@ describe('core > executor >', () => {
     })
 
     it('should collect and apply all configs to target project (without package.json)', async () => {
-      expect.assertions(4)
+      expect.assertions(5)
 
       const dir = {
+        '/target/package.json': JSON.stringify({}),
         '/target/.eslintrc': JSON.stringify(eslint01),
         '/target/babelrc.js': 'foo',
         '/target/.eslintrc.yaml': yamlEslint01,
@@ -49,6 +50,7 @@ describe('core > executor >', () => {
         'babelrc.js',
       ])
 
+      expect(vol.readFileSync('/target/package.json', 'utf8')).toMatchSnapshot()
       expect(
         vol.readFileSync('/target/.editorconfig', 'utf8'),
       ).toMatchSnapshot()
