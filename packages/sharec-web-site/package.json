@@ -21,9 +21,8 @@
     ]
   },
   "homapage": "https://lamartire.github.io/sharec/",
-  "author": "lamartire",
+  "author": "Konstantin Epishev <lamartire@gmail.com>",
   "license": "MIT",
-  "repository": "https://github.com/lamartire/poehali",
   "browserslist": [
     "last 2 version",
     "> 1%"

@@ -9,8 +9,8 @@
     "reusable code"
   ],
   "homapage": "https://lamartire.github.io/sharec/",
-  "author": "",
-  "license": "ISC",
+  "author": "Konstantin Epishev <lamartire@gmail.com>",
+  "license": "MIT",
   "main": "./src/sharec.js",
   "bin": "./bin/sharec",
   "scripts": {
