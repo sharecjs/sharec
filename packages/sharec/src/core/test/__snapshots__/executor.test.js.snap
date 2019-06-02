@@ -245,11 +245,19 @@ exports[`core > executor > execute should collect and apply all configs to targe
 }"
 `;
 
-exports[`core > executor > execute should collect and apply all configs to target project (without package.json) 1`] = `"bar"`;
+exports[`core > executor > execute should collect and apply all configs to target project (without package.json) 1`] = `
+"{
+  \\"sharec\\": {
+    \\"injected\\": true
+  }
+}"
+`;
 
-exports[`core > executor > execute should collect and apply all configs to target project (without package.json) 2`] = `"baz"`;
+exports[`core > executor > execute should collect and apply all configs to target project (without package.json) 2`] = `"bar"`;
 
-exports[`core > executor > execute should collect and apply all configs to target project (without package.json) 3`] = `
+exports[`core > executor > execute should collect and apply all configs to target project (without package.json) 3`] = `"baz"`;
+
+exports[`core > executor > execute should collect and apply all configs to target project (without package.json) 4`] = `
 Object {
   "env": Object {
     "browser": true,
@@ -287,7 +295,7 @@ Object {
 }
 `;
 
-exports[`core > executor > execute should collect and apply all configs to target project (without package.json) 4`] = `
+exports[`core > executor > execute should collect and apply all configs to target project (without package.json) 5`] = `
 "env:
   browser: true
   es6: true

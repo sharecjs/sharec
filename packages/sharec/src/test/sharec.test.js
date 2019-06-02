@@ -32,6 +32,37 @@ describe('sharec base', () => {
       ).toEqual(packageJson)
     })
 
+    it('should not do anything if configs path is not passed', async () => {
+      const packageJson = {}
+      const dir = {
+        '/target/package.json': JSON.stringify(packageJson),
+      }
+      vol.fromJSON(dir, '/')
+
+      await sharec(undefined, '/target')
+
+      expect(
+        JSON.parse(vol.readFileSync('/target/package.json', 'utf8')),
+      ).toEqual(packageJson)
+    })
+
+    it('should stops if configuration directory is not exists', async () => {
+      expect.assertions(1)
+
+      const packageJson = {}
+      const dir = {
+        '/target/package.json': JSON.stringify(packageJson),
+        '/configuration-package/.editorconfig': 'bar',
+      }
+      vol.fromJSON(dir, '/')
+
+      await sharec('/configuration-package', '/target')
+
+      expect(
+        JSON.parse(vol.readFileSync('/target/package.json', 'utf8')),
+      ).toEqual(packageJson)
+    })
+
     it('should not do anything if config already injected', async () => {
       const packageJson = {
         sharec: {
@@ -48,7 +79,7 @@ describe('sharec base', () => {
       }
       vol.fromJSON(dir, '/')
 
-      await sharec('/target', '/configuration-package')
+      await sharec('/configuration-package', '/target')
 
       expect(
         JSON.parse(vol.readFileSync('/target/package.json', 'utf8')),
@@ -73,7 +104,7 @@ describe('sharec base', () => {
       }
       vol.fromJSON(dir, '/')
 
-      await sharec('/target', '/configuration-package')
+      await sharec('/configuration-package', '/target')
 
       expect(
         vol.readFileSync('/target/.editorconfig', 'utf8'),

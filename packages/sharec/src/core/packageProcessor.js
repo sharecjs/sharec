@@ -23,22 +23,30 @@ const getCurrentPackageJsonMetaData = async targetPath => {
 
 const processPackageJson = async (configsPath, targetPath) => {
   const targetPackageJsonPath = path.resolve(targetPath, 'package.json')
-  const packageJsonPath = path.resolve(configsPath, 'package.json')
-
-  // PackageJson
-  const rawPackageJson = await readFile(packageJsonPath, 'utf8')
-  const packageJson = JSON.parse(rawPackageJson)
   const rawTargetPackageJson = await readFile(targetPackageJsonPath)
   const targetPackageJson = JSON.parse(rawTargetPackageJson)
-  const newDependencies = extractDependencies(packageJson)
-  const newConfigs = extractConfigs(packageJson)
-  const newPackageJson = pipe(
-    injectConfigs(newConfigs),
-    injectDependencies(newDependencies),
-    injectMetaData({
-      injected: true,
-    }),
-  )(targetPackageJson)
+  let newPackageJson = { ...targetPackageJson }
+
+  try {
+    const packageJsonPath = path.resolve(configsPath, 'package.json')
+    const rawPackageJson = await readFile(packageJsonPath, 'utf8')
+    const packageJson = JSON.parse(rawPackageJson)
+    const newDependencies = extractDependencies(packageJson)
+    const newConfigs = extractConfigs(packageJson)
+    newPackageJson = pipe(
+      injectConfigs(newConfigs),
+      injectDependencies(newDependencies),
+      injectMetaData({
+        injected: true,
+      }),
+    )(targetPackageJson)
+  } catch (err) {
+    newPackageJson = pipe(
+      injectMetaData({
+        injected: true,
+      }),
+    )(targetPackageJson)
+  }
 
   await writeFile(
     targetPackageJsonPath,
