@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`sharec base configuration processing should backup origin configuration to sharec.lock file 1`] = `
+exports[`commands > inject > configuration processing should backup origin configuration to sharec.lock file 1`] = `
 "{
   \\".editorconfig\\": \\"626172\\",
   \\".eslintrc\\": \\"7b22656e76223a7b2262726f77736572223a747275652c22657336223a747275652c226e6f6465223a747275652c226a657374223a747275657d2c22676c6f62616c73223a7b22666f6f223a747275652c22626172223a747275657d2c22657874656e6473223a227374616e64617264222c2272756c6573223a7b226d61782d6c656e223a5b227761726e222c38302c322c7b2269676e6f726555726c73223a747275652c2269676e6f7265436f6d6d656e7473223a66616c73652c2269676e6f7265537472696e6773223a747275652c2269676e6f726554656d706c6174654c69746572616c73223a66616c73657d5d7d2c227061727365724f7074696f6e73223a7b22706172736572223a22626162656c2d65736c696e74222c2265636d6156657273696f6e223a382c2265636d614665617475726573223a7b22737072656164223a747275657d2c22736f7572636554797065223a226d6f64756c65227d7d\\",
@@ -10,11 +10,11 @@ exports[`sharec base configuration processing should backup origin configuration
 }"
 `;
 
-exports[`sharec base configuration processing should merge all configs from target path 1`] = `"bar"`;
+exports[`commands > inject > configuration processing should merge all configs from target path 1`] = `"bar"`;
 
-exports[`sharec base configuration processing should merge all configs from target path 2`] = `"baz"`;
+exports[`commands > inject > configuration processing should merge all configs from target path 2`] = `"baz"`;
 
-exports[`sharec base configuration processing should merge all configs from target path 3`] = `
+exports[`commands > inject > configuration processing should merge all configs from target path 3`] = `
 Object {
   "env": Object {
     "browser": true,
@@ -52,7 +52,7 @@ Object {
 }
 `;
 
-exports[`sharec base configuration processing should merge all configs from target path 4`] = `
+exports[`commands > inject > configuration processing should merge all configs from target path 4`] = `
 "env:
   browser: true
   es6: true
@@ -81,7 +81,7 @@ rules:
 "
 `;
 
-exports[`sharec base configuration processing should merge all configs from target path 5`] = `
+exports[`commands > inject > configuration processing should merge all configs from target path 5`] = `
 "{
   \\"name\\": \\"my-awesome-package\\",
   \\"scripts\\": {

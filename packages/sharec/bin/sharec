@@ -1,10 +1,15 @@
 #!/usr/bin/env node
 
 const minimist = require('minimist')
-const sharec = require('../src/sharec')
+// const sharec = require('../src')
 
-const argv = minimist(process.argv.slice(2))
+const { _, ...options } = minimist(process.argv.slice(2))
 
-;(async () => {
-  await sharec(process.env.PWD, process.env.INIT_CWD, argv)
-})()
+ ;(async () => {
+   await sharec({
+     configsPath: process.env.PWD,
+     targetPath: process.env.INIT_CWD,
+     command: _[0] || 'inject',
+     options,
+   })
+ })()

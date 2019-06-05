@@ -1,11 +1,11 @@
 const ora = require('ora')
 const path = require('path')
-const { executeInjection } = require('./core/executor')
-const { getCurrentPackageJsonMetaData } = require('./core/packageProcessor')
-const { collectConfigsPaths } = require('./core/collector')
-const { backupConfigs } = require('./core/backuper')
+const { executeInjection } = require('../core/executor')
+const { getCurrentPackageJsonMetaData } = require('../core/packageProcessor')
+const { collectConfigsPaths } = require('../core/collector')
+const { backupConfigs } = require('../core/backuper')
 
-async function sharec(configsPath, targetPath, options) {
+async function inject({ configsPath, targetPath, options }) {
   if (!configsPath || configsPath === targetPath) return
 
   const spinner = ora({
@@ -47,4 +47,4 @@ async function sharec(configsPath, targetPath, options) {
   )
 }
 
-module.exports = sharec
+module.exports = inject
