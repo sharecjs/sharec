@@ -33,7 +33,7 @@ async function inject({ configsPath, targetPath, options }) {
   }
 
   spinner.start('backuping origin configs 💾')
-  await backupConfigs(targetPath, configs)
+  await backupConfigs({ targetPath, configs })
   spinner.start('applying configuration 🚀')
   await executeInjection(fullConfigsPath, targetPath, configs)
   spinner.succeed('configuration applyed, have a nice time! 🌈')

@@ -29,7 +29,10 @@ describe('core > backuper >', () => {
       }
       vol.fromJSON(dir, '/')
 
-      const backup = await createBackup('/', Object.keys(dir))
+      const backup = await createBackup({
+        targetPath: '/',
+        configs: Object.keys(dir),
+      })
 
       expect(backup).toMatchSnapshot()
     })
@@ -44,7 +47,10 @@ describe('core > backuper >', () => {
       }
       vol.fromJSON({}, '/')
 
-      await writeBackup('/', backup)
+      await writeBackup({
+        targetPath: '/',
+        backup,
+      })
 
       expect(JSON.parse(vol.readFileSync('/sharec.lock'))).toEqual(backup)
     })
@@ -73,7 +79,9 @@ describe('core > backuper >', () => {
       const dir = {}
       vol.fromJSON(dir, '/')
 
-      const res = await readBackup('/')
+      const res = await readBackup({
+        targetPath: '/',
+      })
 
       expect(res).toBeNull()
     })
@@ -87,7 +95,10 @@ describe('core > backuper >', () => {
       }
       vol.fromJSON(dir, '/')
 
-      await backupConfigs('/', Object.keys(dir))
+      await backupConfigs({
+        targetPath: '/',
+        configs: Object.keys(dir),
+      })
       expect(JSON.parse(vol.readFileSync('/sharec.lock'))).toMatchSnapshot()
     })
 
@@ -97,7 +108,10 @@ describe('core > backuper >', () => {
       const dir = {}
       vol.fromJSON(dir, '/')
 
-      await backupConfigs('/', ['.eslintrc'])
+      await backupConfigs({
+        targetPath: '/',
+        configs: ['.eslintrc'],
+      })
 
       try {
         vol.readFileSync('/sharec.lock', 'utf8')

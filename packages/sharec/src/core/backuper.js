@@ -1,7 +1,7 @@
 const path = require('path')
 const { readFile, writeFile } = require('utils/fs')
 
-const createBackup = async (targetPath, configs) => {
+const createBackup = async ({ targetPath, configs }) => {
   const backup = {}
 
   for (const filePath of configs) {
@@ -19,7 +19,7 @@ const createBackup = async (targetPath, configs) => {
   return backup
 }
 
-const writeBackup = async (targetPath, backup) => {
+const writeBackup = async ({ targetPath, backup }) => {
   const backupFilePath = path.join(targetPath, 'sharec.lock')
 
   await writeFile(backupFilePath, JSON.stringify(backup, null, 2), 'utf8')
@@ -43,12 +43,12 @@ const readBackup = async targetPath => {
   }
 }
 
-const backupConfigs = async (targetPath, configs) => {
-  const backup = await createBackup(targetPath, configs)
+const backupConfigs = async ({ targetPath, configs = [] }) => {
+  const backup = await createBackup({ targetPath, configs })
 
   if (Object.keys(backup).length === 0) return
 
-  await writeBackup(targetPath, backup)
+  await writeBackup({ targetPath, backup })
 }
 
 module.exports = {

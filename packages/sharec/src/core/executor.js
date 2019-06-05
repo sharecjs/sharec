@@ -1,6 +1,7 @@
 const { processConfig } = require('./configsProcessor')
 const { processPackageJson } = require('./packageProcessor')
 
+// TODO: may be move it on the command level?
 const executeInjection = async (configsPath, targetPath, configs) => {
   const standaloneConfigs = configs.filter(
     filePath => !/(package\.json)/.test(filePath),
