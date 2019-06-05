@@ -3,6 +3,7 @@ const path = require('path')
 const { executeInjection } = require('./core/executor')
 const { getCurrentPackageJsonMetaData } = require('./core/packageProcessor')
 const { collectConfigsPaths } = require('./core/collector')
+const { backupConfigs } = require('./core/backuper')
 
 async function sharec(configsPath, targetPath, options) {
   if (!configsPath || configsPath === targetPath) return
@@ -27,10 +28,12 @@ async function sharec(configsPath, targetPath, options) {
   const metaData = await getCurrentPackageJsonMetaData(targetPath)
 
   if (metaData && metaData.injected) {
-    spinner.start('configs already injected! ✨')
+    spinner.succeed('configs already injected! ✨')
     return
   }
 
+  spinner.start('backuping origin configs 💾')
+  await backupConfigs(targetPath, configs)
   spinner.start('applying configuration 🚀')
   await executeInjection(fullConfigsPath, targetPath, configs)
   spinner.succeed('configuration applyed, have a nice time! 🌈')

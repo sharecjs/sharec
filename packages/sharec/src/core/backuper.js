@@ -43,8 +43,17 @@ const readBackup = async targetPath => {
   }
 }
 
+const backupConfigs = async (targetPath, configs) => {
+  const backup = await createBackup(targetPath, configs)
+
+  if (Object.keys(backup).length === 0) return
+
+  await writeBackup(targetPath, backup)
+}
+
 module.exports = {
   createBackup,
   writeBackup,
   readBackup,
+  backupConfigs,
 }

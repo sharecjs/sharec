@@ -3,6 +3,7 @@ const { readFileSync } = require.requireActual('fs')
 const { vol } = require('memfs')
 const sharec = require('../sharec')
 
+// TODO: backups test
 describe('sharec base', () => {
   const packageJson01 = require('fixtures/package/package_01.json')
   const packageJson02 = require('fixtures/package/package_02.json')
@@ -19,6 +20,8 @@ describe('sharec base', () => {
 
   describe('configuration processing', () => {
     it('should not do anything if target path equals to configs path', async () => {
+      expect.assertions(1)
+
       const packageJson = {}
       const dir = {
         '/target/package.json': JSON.stringify(packageJson),
@@ -33,6 +36,8 @@ describe('sharec base', () => {
     })
 
     it('should not do anything if configs path is not passed', async () => {
+      expect.assertions(1)
+
       const packageJson = {}
       const dir = {
         '/target/package.json': JSON.stringify(packageJson),
@@ -64,6 +69,8 @@ describe('sharec base', () => {
     })
 
     it('should not do anything if config already injected', async () => {
+      expect.assertions(1)
+
       const packageJson = {
         sharec: {
           injected: true,
@@ -87,6 +94,8 @@ describe('sharec base', () => {
     })
 
     it('should merge all configs from target path', async () => {
+      expect.assertions(5)
+
       const dir = {
         '/target/.eslintrc': JSON.stringify(eslint01),
         '/target/babelrc.js': 'foo',
@@ -117,6 +126,31 @@ describe('sharec base', () => {
         vol.readFileSync('/target/.eslintrc.yaml', 'utf8'),
       ).toMatchSnapshot()
       expect(vol.readFileSync('/target/package.json', 'utf8')).toMatchSnapshot()
+    })
+
+    it('should backup origin configuration to sharec.lock file', async () => {
+      expect.assertions(1)
+
+      const dir = {
+        '/target/.eslintrc': JSON.stringify(eslint01),
+        '/target/babelrc.js': 'foo',
+        '/target/.eslintrc.yaml': yamlEslint01,
+        '/target/package.json': JSON.stringify(packageJson01, null, 2),
+        '/configuration-package/configs/.eslintrc': JSON.stringify(eslint02),
+        '/configuration-package/configs/.eslintrc.yaml': yamlEslint02,
+        '/configuration-package/configs/.editorconfig': 'bar',
+        '/configuration-package/configs/babelrc.js': 'baz',
+        '/configuration-package/configs/package.json': JSON.stringify(
+          packageJson02,
+          null,
+          2,
+        ),
+      }
+      vol.fromJSON(dir, '/')
+
+      await sharec('/configuration-package', '/target')
+
+      expect(vol.readFileSync('/target/sharec.lock', 'utf8')).toMatchSnapshot()
     })
   })
 })

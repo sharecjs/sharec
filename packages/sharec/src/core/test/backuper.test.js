@@ -1,7 +1,12 @@
 const path = require('path')
 const { readFileSync } = require.requireActual('fs')
 const { vol } = require('memfs')
-const { createBackup, writeBackup, readBackup } = require('core/backuper')
+const {
+  createBackup,
+  writeBackup,
+  readBackup,
+  backupConfigs,
+} = require('core/backuper')
 
 describe('core > backuper >', () => {
   const lock01 = require('fixtures/lock/lockFile_01.json')
@@ -71,6 +76,35 @@ describe('core > backuper >', () => {
       const res = await readBackup('/')
 
       expect(res).toBeNull()
+    })
+  })
+
+  describe('backupConfigs', () => {
+    it('should create configs backup from target path', async () => {
+      const dir = {
+        'package.json': JSON.stringify(packageJson01, null, 2),
+        '.eslintrc.yml': eslint01.toString(),
+      }
+      vol.fromJSON(dir, '/')
+
+      await backupConfigs('/', Object.keys(dir))
+      expect(JSON.parse(vol.readFileSync('/sharec.lock'))).toMatchSnapshot()
+    })
+
+    it('should not create configs backup if configs are not exists', async done => {
+      expect.assertions(1)
+
+      const dir = {}
+      vol.fromJSON(dir, '/')
+
+      await backupConfigs('/', ['.eslintrc'])
+
+      try {
+        vol.readFileSync('/sharec.lock', 'utf8')
+      } catch (err) {
+        expect(err.message).toContain('ENOENT')
+        done()
+      }
     })
   })
 })
