@@ -1,4 +1,4 @@
-const { strategy } = require('strategies/babel')
+const { babelStrategy } = require('strategies/babel')
 
 describe('strategy > babel', () => {
   describe('json strategy', () => {
@@ -13,14 +13,20 @@ describe('strategy > babel', () => {
     const babel08 = require('fixtures/babel/json/babel_08.json')
 
     it('should merge babel json configs', () => {
-      expect(strategy(babel01, babel02)).toMatchSnapshot()
+      expect(babelStrategy.mergeJSON(babel01, babel02)).toMatchSnapshot()
     })
 
     it('should handle unique env cases during merging', () => {
-      expect(strategy(babel04, babel05)).toMatchSnapshot()
-      expect(strategy(babel05, babel04)).toMatchSnapshot()
-      expect(strategy(babel07, babel08)).toMatchSnapshot()
-      expect(strategy(babel08, babel07)).toMatchSnapshot()
+      expect(
+        babelStrategy.merge('.babelrc')(babel04, babel05),
+      ).toMatchSnapshot()
+      expect(
+        babelStrategy.merge('.babelrc.json')(babel05, babel04),
+      ).toMatchSnapshot()
+      expect(
+        babelStrategy.merge('.babelrc')(babel07, babel08),
+      ).toMatchSnapshot()
+      expect(babelStrategy.merge('babel')(babel08, babel07)).toMatchSnapshot()
     })
   })
 })

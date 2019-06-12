@@ -4,7 +4,6 @@ const { determineConfigStrategy } = require('./strategist')
 
 const processConfig = async (configsPath, targetPath, filePath) => {
   const targetStrategy = determineConfigStrategy(filePath)
-
   const targetConfigPath = path.join(targetPath, filePath)
   const targetConfigDirName = path.dirname(targetConfigPath)
   let targetConfig = null
@@ -17,7 +16,7 @@ const processConfig = async (configsPath, targetPath, filePath) => {
   } catch (err) {}
 
   if (targetConfig && targetStrategy) {
-    newConfig = targetStrategy(targetConfig, newConfig)
+    newConfig = targetStrategy.merge(filePath)(targetConfig, newConfig)
   }
 
   try {

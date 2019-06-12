@@ -1,26 +1,18 @@
 const path = require('path')
 const strategies = require('../strategies')
-const strategiesMap = require('../strategies/strategiesMap.json')
 
 const determineConfigStrategy = filePath => {
   const fileName = path.basename(filePath)
-  const fileExt = path.extname(filePath)
-  const isYaml = /\.ya?ml/.test(fileExt)
-  const isJson = /\.json/.test(fileExt)
-  const target = strategiesMap.find(strategy => strategy[1].includes(fileName))
+  const { commonStrategy, ...specialStrategies } = strategies
+  const targetStrategyKey = Object.keys(specialStrategies).find(key =>
+    specialStrategies[key].isExpectedStrategy(fileName),
+  )
 
-  switch (true) {
-    case Boolean(target) && isYaml:
-      return strategies[target[0]].yamlStrategy
-    case Boolean(target):
-      return strategies[target[0]].strategy
-    case isYaml:
-      return strategies.common.yamlStrategy
-    case isJson:
-      return strategies.common.strategy
-    default:
-      return null
+  if (targetStrategyKey) {
+    return specialStrategies[targetStrategyKey]
   }
+
+  return commonStrategy
 }
 
 module.exports = {

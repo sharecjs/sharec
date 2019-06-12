@@ -89,7 +89,49 @@ exports[`core > executor > executeInjection should collect and apply all configs
 
 exports[`core > executor > executeInjection should collect and apply all configs to target project (with package.json) 1`] = `"bar"`;
 
-exports[`core > executor > executeInjection should collect and apply all configs to target project (with package.json) 2`] = `"baz"`;
+exports[`core > executor > executeInjection should collect and apply all configs to target project (with package.json) 2`] = `
+"{
+  \\"ignore\\": [
+    \\"*.babelrc\\"
+  ],
+  \\"presets\\": [
+    [
+      \\"env\\",
+      {
+        \\"modules\\": false,
+        \\"targets\\": {
+          \\"browsers\\": [
+            \\"> 1%\\",
+            \\"last 2 versions\\",
+            \\"not ie > 0\\"
+          ]
+        }
+      }
+    ],
+    \\"stage-2\\"
+  ],
+  \\"plugins\\": [
+    [
+      \\"syntax-dynamic-import\\",
+      {
+        \\"foo\\": \\"bar\\"
+      }
+    ],
+    \\"lodash\\"
+  ],
+  \\"env\\": {
+    \\"test\\": {
+      \\"presets\\": [
+        \\"env\\",
+        \\"stage-2\\"
+      ],
+      \\"plugins\\": [
+        \\"dynamic-import-node\\"
+      ]
+    }
+  }
+}"
+`;
 
 exports[`core > executor > executeInjection should collect and apply all configs to target project (with package.json) 3`] = `
 Object {
@@ -255,7 +297,49 @@ exports[`core > executor > executeInjection should collect and apply all configs
 
 exports[`core > executor > executeInjection should collect and apply all configs to target project (without package.json) 2`] = `"bar"`;
 
-exports[`core > executor > executeInjection should collect and apply all configs to target project (without package.json) 3`] = `"baz"`;
+exports[`core > executor > executeInjection should collect and apply all configs to target project (without package.json) 3`] = `
+"{
+  \\"ignore\\": [
+    \\"*.babelrc\\"
+  ],
+  \\"presets\\": [
+    [
+      \\"env\\",
+      {
+        \\"modules\\": false,
+        \\"targets\\": {
+          \\"browsers\\": [
+            \\"> 1%\\",
+            \\"last 2 versions\\",
+            \\"not ie > 0\\"
+          ]
+        }
+      }
+    ],
+    \\"stage-2\\"
+  ],
+  \\"plugins\\": [
+    [
+      \\"syntax-dynamic-import\\",
+      {
+        \\"foo\\": \\"bar\\"
+      }
+    ],
+    \\"lodash\\"
+  ],
+  \\"env\\": {
+    \\"test\\": {
+      \\"presets\\": [
+        \\"env\\",
+        \\"stage-2\\"
+      ],
+      \\"plugins\\": [
+        \\"dynamic-import-node\\"
+      ]
+    }
+  }
+}"
+`;
 
 exports[`core > executor > executeInjection should collect and apply all configs to target project (without package.json) 4`] = `
 Object {

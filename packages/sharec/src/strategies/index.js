@@ -1,9 +1,9 @@
-const common = require('./common')
-const babel = require('./babel')
-const eslint = require('./eslint')
+const { commonStrategy } = require('./common')
+const { babelStrategy } = require('./babel')
+const { eslintStrategy } = require('./eslint')
 
 module.exports = {
-  common,
-  babel,
-  eslint,
+  commonStrategy,
+  babelStrategy,
+  eslintStrategy,
 }

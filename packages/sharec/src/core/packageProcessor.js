@@ -33,6 +33,7 @@ const processPackageJson = async (configsPath, targetPath) => {
     const packageJson = JSON.parse(rawPackageJson)
     const newDependencies = extractDependencies(packageJson)
     const newConfigs = extractConfigs(packageJson)
+
     newPackageJson = pipe(
       injectConfigs(newConfigs),
       injectDependencies(newDependencies),

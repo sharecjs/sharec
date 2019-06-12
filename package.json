@@ -51,5 +51,6 @@
     "eslint-plugin-standard": "^4.0.0",
     "lerna": "^3.13.4",
     "prettier": "^1.17.0"
-  }
+  },
+  "dependencies": {}
 }

@@ -6,6 +6,8 @@ const inject = require('../inject')
 describe('commands > inject >', () => {
   const packageJson01 = require('fixtures/package/package_01.json')
   const packageJson02 = require('fixtures/package/package_02.json')
+  const babel01 = require('fixtures/babel/json/babel_01.json')
+  const babel02 = require('fixtures/babel/json/babel_02.json')
   const eslint01 = require('fixtures/eslint/json/eslintrc_01.json')
   const eslint02 = require('fixtures/eslint/json/eslintrc_02.json')
   const yamlEslint01 = readFileSync(
@@ -109,13 +111,13 @@ describe('commands > inject >', () => {
 
       const dir = {
         '/target/.eslintrc': JSON.stringify(eslint01),
-        '/target/babelrc.js': 'foo',
+        '/target/babelrc.js': JSON.stringify(babel01),
         '/target/.eslintrc.yaml': yamlEslint01,
         '/target/package.json': JSON.stringify(packageJson01, null, 2),
         '/configuration-package/configs/.eslintrc': JSON.stringify(eslint02),
         '/configuration-package/configs/.eslintrc.yaml': yamlEslint02,
         '/configuration-package/configs/.editorconfig': 'bar',
-        '/configuration-package/configs/babelrc.js': 'baz',
+        '/configuration-package/configs/babelrc.js': JSON.stringify(babel02),
         '/configuration-package/configs/package.json': JSON.stringify(
           packageJson02,
           null,
@@ -147,13 +149,13 @@ describe('commands > inject >', () => {
 
       const dir = {
         '/target/.eslintrc': JSON.stringify(eslint01),
-        '/target/babelrc.js': 'foo',
+        '/target/babelrc.js': JSON.stringify(babel01),
         '/target/.eslintrc.yaml': yamlEslint01,
         '/target/package.json': JSON.stringify(packageJson01, null, 2),
         '/configuration-package/configs/.eslintrc': JSON.stringify(eslint02),
         '/configuration-package/configs/.eslintrc.yaml': yamlEslint02,
         '/configuration-package/configs/.editorconfig': 'bar',
-        '/configuration-package/configs/babelrc.js': 'baz',
+        '/configuration-package/configs/babelrc.js': JSON.stringify(babel02),
         '/configuration-package/configs/package.json': JSON.stringify(
           packageJson02,
           null,

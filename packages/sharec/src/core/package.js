@@ -43,11 +43,15 @@ const injectConfigs = configs => packageJson => {
   Object.keys(configs).forEach(key => {
     const strategy = determineConfigStrategy(key)
 
-    Object.assign(updatedPackageJson, {
-      [key]: strategy
-        ? strategy(updatedPackageJson[key], configs[key])
-        : configs[key],
-    })
+    if (strategy) {
+      Object.assign(updatedPackageJson, {
+        [key]: strategy.merge(key)(updatedPackageJson[key], configs[key]),
+      })
+    } else {
+      Object.assign(updatedPackageJson, {
+        [key]: configs[key],
+      })
+    }
   })
 
   return updatedPackageJson
