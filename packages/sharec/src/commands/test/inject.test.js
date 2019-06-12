@@ -114,6 +114,9 @@ describe('commands > inject >', () => {
         '/target/babelrc.js': JSON.stringify(babel01),
         '/target/.eslintrc.yaml': yamlEslint01,
         '/target/package.json': JSON.stringify(packageJson01, null, 2),
+        '/configuration-package/package.json': JSON.stringify({
+          version: '1.0.0',
+        }),
         '/configuration-package/configs/.eslintrc': JSON.stringify(eslint02),
         '/configuration-package/configs/.eslintrc.yaml': yamlEslint02,
         '/configuration-package/configs/.editorconfig': 'bar',
@@ -144,7 +147,7 @@ describe('commands > inject >', () => {
       expect(vol.readFileSync('/target/package.json', 'utf8')).toMatchSnapshot()
     })
 
-    it('should backup origin configuration to sharec.lock file', async () => {
+    it('should backup origin configuration to sharec-lock.json file', async () => {
       expect.assertions(1)
 
       const dir = {
@@ -152,6 +155,9 @@ describe('commands > inject >', () => {
         '/target/babelrc.js': JSON.stringify(babel01),
         '/target/.eslintrc.yaml': yamlEslint01,
         '/target/package.json': JSON.stringify(packageJson01, null, 2),
+        '/configuration-package/package.json': JSON.stringify({
+          version: '1.0.0',
+        }),
         '/configuration-package/configs/.eslintrc': JSON.stringify(eslint02),
         '/configuration-package/configs/.eslintrc.yaml': yamlEslint02,
         '/configuration-package/configs/.editorconfig': 'bar',
@@ -169,7 +175,9 @@ describe('commands > inject >', () => {
         targetPath: '/target',
       })
 
-      expect(vol.readFileSync('/target/sharec.lock', 'utf8')).toMatchSnapshot()
+      expect(
+        vol.readFileSync('/target/sharec-lock.json', 'utf8'),
+      ).toMatchSnapshot()
     })
   })
 })

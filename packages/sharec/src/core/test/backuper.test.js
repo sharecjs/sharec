@@ -31,6 +31,7 @@ describe('core > backuper >', () => {
 
       const backup = await createBackup({
         targetPath: '/',
+        version: '1.0.0',
         configs: Object.keys(dir),
       })
 
@@ -52,7 +53,7 @@ describe('core > backuper >', () => {
         backup,
       })
 
-      expect(JSON.parse(vol.readFileSync('/sharec.lock'))).toEqual(backup)
+      expect(JSON.parse(vol.readFileSync('/sharec-lock.json'))).toEqual(backup)
     })
   })
 
@@ -61,15 +62,18 @@ describe('core > backuper >', () => {
       expect.assertions(1)
 
       const dir = {
-        'sharec.lock': JSON.stringify(lock01, null, 2),
+        'sharec-lock.json': JSON.stringify(lock01, null, 2),
       }
       vol.fromJSON(dir, '/')
 
       const res = await readBackup('/')
 
       expect(res).toEqual({
-        'package.json': JSON.stringify(packageJson01, null, 2),
-        '.eslintrc.yml': eslint01.toString(),
+        version: '1.0.0',
+        files: {
+          'package.json': JSON.stringify(packageJson01, null, 2),
+          '.eslintrc.yml': eslint01.toString(),
+        },
       })
     })
 
@@ -97,9 +101,12 @@ describe('core > backuper >', () => {
 
       await backupConfigs({
         targetPath: '/',
+        version: '1.0.0',
         configs: Object.keys(dir),
       })
-      expect(JSON.parse(vol.readFileSync('/sharec.lock'))).toMatchSnapshot()
+      expect(
+        JSON.parse(vol.readFileSync('/sharec-lock.json')),
+      ).toMatchSnapshot()
     })
 
     it('should not create configs backup if configs are not exists', async done => {
@@ -110,11 +117,12 @@ describe('core > backuper >', () => {
 
       await backupConfigs({
         targetPath: '/',
+        version: '1.0.0',
         configs: ['.eslintrc'],
       })
 
       try {
-        vol.readFileSync('/sharec.lock', 'utf8')
+        vol.readFileSync('/sharec-lock.json', 'utf8')
       } catch (err) {
         expect(err.message).toContain('ENOENT')
         done()

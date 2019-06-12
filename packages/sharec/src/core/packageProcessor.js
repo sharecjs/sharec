@@ -15,7 +15,7 @@ const {
 
 const getCurrentPackageJsonMetaData = async targetPath => {
   const targetPackageJsonPath = path.resolve(targetPath, 'package.json')
-  const rawTargetPackageJson = await readFile(targetPackageJsonPath)
+  const rawTargetPackageJson = await readFile(targetPackageJsonPath, 'utf8')
   const targetPackageJson = JSON.parse(rawTargetPackageJson)
 
   return extractMetaData(targetPackageJson)
