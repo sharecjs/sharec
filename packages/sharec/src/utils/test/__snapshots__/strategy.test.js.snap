@@ -10,6 +10,17 @@ baz:
 "
 `;
 
+exports[`strategy Strategy class should automatically determine and apply unapply method to given file 1`] = `
+Object {
+  "baz": "foo",
+}
+`;
+
+exports[`strategy Strategy class should automatically determine and apply unapply method to given file 2`] = `
+"baz: foo
+"
+`;
+
 exports[`strategy Strategy class should merge JSON configs 1`] = `
 Object {
   "bar": Object {
@@ -31,4 +42,15 @@ baz:
   - foo: bar
     bar: baz
 "
+`;
+
+exports[`strategy Strategy class should return YAML string without applied properties from second YAML 1`] = `
+"baz: foo
+"
+`;
+
+exports[`strategy Strategy class should return object without applied properties from second object 1`] = `
+Object {
+  "baz": "foo",
+}
 `;

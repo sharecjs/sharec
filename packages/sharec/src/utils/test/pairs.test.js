@@ -9,6 +9,8 @@ const {
   mergePairsWithoutKeys,
   deepMergePairsWithKeys,
   deepMergePairsWithoutKeys,
+  intersectPairs,
+  removePairsIntersection,
 } = require('utils/pairs')
 
 describe('utils > pairs >', () => {
@@ -419,6 +421,24 @@ describe('utils > pairs >', () => {
           },
         ],
       ])
+    })
+  })
+
+  describe('intersectPairs', () => {
+    it('should get instersected properties with values from given pairs', () => {
+      const a = [['foo', 'foo'], ['bar', 'baz']]
+      const b = [['foo', 'bar'], ['bar', 'baz']]
+
+      expect(intersectPairs(a, b)).toEqual([['bar', 'baz']])
+    })
+  })
+
+  describe('removePairsIntersection', () => {
+    it('should remove intersected pairs', () => {
+      const a = [['foo', 'foo'], ['bar', 'baz']]
+      const b = [['foo', 'bar'], ['bar', 'baz']]
+
+      expect(removePairsIntersection(a, b)).toEqual([['foo', 'foo']])
     })
   })
 })

@@ -2,10 +2,7 @@ const ora = require('ora')
 const path = require('path')
 const { executeInjection } = require('../core/executor')
 const { getCurrentPackageJsonMetaData } = require('../core/packageProcessor')
-const {
-  collectConfigVersion,
-  collectConfigsPaths,
-} = require('../core/collector')
+const { collectConfigsPaths } = require('../core/collector')
 const { backupConfigs } = require('../core/backuper')
 
 async function inject({ configsPath, targetPath, options }) {
@@ -34,11 +31,8 @@ async function inject({ configsPath, targetPath, options }) {
     return
   }
 
-  const configsVersion = await collectConfigVersion(configsPath)
-
   spinner.start('backuping origin configs 💾')
   await backupConfigs({
-    version: configsVersion,
     targetPath,
     configs,
   })

@@ -31,7 +31,6 @@ describe('core > backuper >', () => {
 
       const backup = await createBackup({
         targetPath: '/',
-        version: '1.0.0',
         configs: Object.keys(dir),
       })
 
@@ -69,7 +68,6 @@ describe('core > backuper >', () => {
       const res = await readBackup('/')
 
       expect(res).toEqual({
-        version: '1.0.0',
         files: {
           'package.json': JSON.stringify(packageJson01, null, 2),
           '.eslintrc.yml': eslint01.toString(),
@@ -101,7 +99,6 @@ describe('core > backuper >', () => {
 
       await backupConfigs({
         targetPath: '/',
-        version: '1.0.0',
         configs: Object.keys(dir),
       })
       expect(
@@ -117,7 +114,6 @@ describe('core > backuper >', () => {
 
       await backupConfigs({
         targetPath: '/',
-        version: '1.0.0',
         configs: ['.eslintrc'],
       })
 

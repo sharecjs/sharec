@@ -114,9 +114,6 @@ describe('commands > inject >', () => {
         '/target/babelrc.js': JSON.stringify(babel01),
         '/target/.eslintrc.yaml': yamlEslint01,
         '/target/package.json': JSON.stringify(packageJson01, null, 2),
-        '/configuration-package/package.json': JSON.stringify({
-          version: '1.0.0',
-        }),
         '/configuration-package/configs/.eslintrc': JSON.stringify(eslint02),
         '/configuration-package/configs/.eslintrc.yaml': yamlEslint02,
         '/configuration-package/configs/.editorconfig': 'bar',
@@ -155,9 +152,6 @@ describe('commands > inject >', () => {
         '/target/babelrc.js': JSON.stringify(babel01),
         '/target/.eslintrc.yaml': yamlEslint01,
         '/target/package.json': JSON.stringify(packageJson01, null, 2),
-        '/configuration-package/package.json': JSON.stringify({
-          version: '1.0.0',
-        }),
         '/configuration-package/configs/.eslintrc': JSON.stringify(eslint02),
         '/configuration-package/configs/.eslintrc.yaml': yamlEslint02,
         '/configuration-package/configs/.editorconfig': 'bar',

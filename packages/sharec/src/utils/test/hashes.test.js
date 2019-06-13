@@ -4,6 +4,8 @@ const {
   deepMergeHashesWithKeys,
   mergeHashesWithoutKeys,
   deepMergeHashesWithoutKeys,
+  intersectHashes,
+  removeHashesIntersection,
 } = require('utils/hashes')
 
 describe('utils > hashes', () => {
@@ -109,6 +111,40 @@ describe('utils > hashes', () => {
           foo: 'baz',
           bar: 'baz',
         },
+      })
+    })
+  })
+
+  describe('intersectHashes', () => {
+    it('should get instersected properties with values from given hashes', () => {
+      const a = {
+        foo: 'foo',
+        bar: 'baz',
+      }
+      const b = {
+        foo: 'bar',
+        bar: 'baz',
+      }
+
+      expect(intersectHashes(a, b)).toEqual({
+        bar: 'baz',
+      })
+    })
+  })
+
+  describe('removeHashesIntersection', () => {
+    it('should remove intersected properties', () => {
+      const a = {
+        foo: 'foo',
+        bar: 'baz',
+      }
+      const b = {
+        foo: 'bar',
+        bar: 'baz',
+      }
+
+      expect(removeHashesIntersection(a, b)).toEqual({
+        foo: 'foo',
       })
     })
   })

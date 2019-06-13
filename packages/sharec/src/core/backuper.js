@@ -1,10 +1,9 @@
 const path = require('path')
 const { readFile, writeFile } = require('utils/fs')
 
-const createBackup = async ({ targetPath, version, configs }) => {
+const createBackup = async ({ targetPath, configs }) => {
   const backup = {
     files: {},
-    version,
   }
 
   for (const filePath of configs) {
@@ -32,10 +31,9 @@ const readBackup = async targetPath => {
   try {
     const backupFilePath = path.join(targetPath, 'sharec-lock.json')
     const backupFile = await readFile(backupFilePath, 'utf8')
-    const { version, files } = JSON.parse(backupFile)
+    const { files } = JSON.parse(backupFile)
 
     return {
-      version,
       files: Object.keys(files).reduce(
         (acc, key) =>
           Object.assign(acc, {
@@ -49,8 +47,8 @@ const readBackup = async targetPath => {
   }
 }
 
-const backupConfigs = async ({ targetPath, version, configs = [] }) => {
-  const backup = await createBackup({ targetPath, version, configs })
+const backupConfigs = async ({ targetPath, configs = [] }) => {
+  const backup = await createBackup({ targetPath, configs })
 
   if (Object.keys(backup.files).length === 0) return
 

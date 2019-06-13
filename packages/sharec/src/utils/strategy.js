@@ -1,5 +1,6 @@
 const path = require('path')
-const { transformInput, toYaml } = require('./yaml')
+const { removeHashesIntersection } = require('./hashes')
+const { transformInputToYAML, toYaml } = require('./yaml')
 
 class Strategy {
   constructor(matchers) {
@@ -48,6 +49,19 @@ class Strategy {
     }
   }
 
+  determineUnapplyMethod(fileName) {
+    const matcherKey = this.getExpectedMatcherKey(fileName)
+
+    switch (matcherKey) {
+      case 'json':
+        return this.unapplyJSON
+      case 'yaml':
+        return this.unapplyYAML
+      default:
+        return null
+    }
+  }
+
   mergeJSON(a, b) {
     return {
       ...a,
@@ -56,7 +70,7 @@ class Strategy {
   }
 
   mergeYAML(rawA, rawB) {
-    const [a, b] = transformInput(rawA, rawB)
+    const [a, b] = transformInputToYAML(rawA, rawB)
     const newConfig = this.mergeJSON(a, b)
 
     return toYaml(newConfig)
@@ -67,6 +81,29 @@ class Strategy {
 
     return (a, b) => {
       if (!matchedMethod) return b
+
+      const res = matchedMethod.bind(this)(a, b)
+
+      return res
+    }
+  }
+
+  unapplyJSON(a, b) {
+    return removeHashesIntersection(a, b)
+  }
+
+  unapplyYAML(rawA, rawB) {
+    const [a, b] = transformInputToYAML(rawA, rawB)
+    const clearedConfig = removeHashesIntersection(a, b)
+
+    return toYaml(clearedConfig)
+  }
+
+  unapply(fileName) {
+    const matchedMethod = this.determineUnapplyMethod(fileName)
+
+    return (a, b) => {
+      if (!matchedMethod) return a
 
       const res = matchedMethod.bind(this)(a, b)
 

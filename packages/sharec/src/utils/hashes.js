@@ -43,6 +43,26 @@ const deepMergeHashesWithoutKeys = (a = {}, b = {}, keys = []) => {
   return deepmerge(pickedA, pickedB)
 }
 
+const intersectHashes = (a, b) => {
+  const hashesIntersection = {}
+
+  Object.keys(b).forEach(key => {
+    if (a[key] && a[key] === b[key]) {
+      Object.assign(hashesIntersection, {
+        [key]: b[key],
+      })
+    }
+  })
+
+  return hashesIntersection
+}
+
+const removeHashesIntersection = (a, b) => {
+  const intersection = intersectHashes(a, b)
+
+  return omit(a, Object.keys(intersection))
+}
+
 module.exports = {
   mergeHashes,
   deepMergeHashes,
@@ -50,4 +70,6 @@ module.exports = {
   deepMergeHashesWithKeys,
   mergeHashesWithoutKeys,
   deepMergeHashesWithoutKeys,
+  intersectHashes,
+  removeHashesIntersection,
 }

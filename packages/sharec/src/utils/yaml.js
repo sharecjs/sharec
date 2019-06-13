@@ -4,10 +4,10 @@ const fromYaml = data => yaml.safeLoad(data)
 
 const toYaml = data => yaml.safeDump(data)
 
-const transformInput = (...args) => args.map(arg => fromYaml(arg))
+const transformInputToYAML = (...args) => args.map(arg => fromYaml(arg))
 
 module.exports = {
   fromYaml,
   toYaml,
-  transformInput,
+  transformInputToYAML,
 }
