@@ -3,6 +3,12 @@ const omit = require('lodash/omit')
 const xor = require('lodash/xor')
 const deepmerge = require('deepmerge')
 
+const withKeys = (fun, keys) => (a, b) =>
+  fun(...[a, b].map(param => pick(param, keys)))
+
+const withoutKeys = (fun, keys) => (a, b) =>
+  fun(...[a, b].map(param => omit(param, keys)))
+
 const mergeHashes = (a = {}, b = {}) => ({
   ...a,
   ...b,
@@ -10,39 +16,17 @@ const mergeHashes = (a = {}, b = {}) => ({
 
 const deepMergeHashes = (a = {}, b = {}) => deepmerge(a, b)
 
-const mergeHashesWithKeys = (a = {}, b = {}, keys = []) => {
-  const pickedA = pick(a, keys)
-  const pickedB = pick(b, keys)
+const mergeHashesWithKeys = (a = {}, b = {}, keys = []) =>
+  withKeys(mergeHashes, keys)(a, b)
 
-  return {
-    ...pickedA,
-    ...pickedB,
-  }
-}
+const deepMergeHashesWithKeys = (a = {}, b = {}, keys = []) =>
+  withKeys(deepmerge, keys)(a, b)
 
-const deepMergeHashesWithKeys = (a = {}, b = {}, keys = []) => {
-  const pickedA = pick(a, keys)
-  const pickedB = pick(b, keys)
+const mergeHashesWithoutKeys = (a = {}, b = {}, keys = []) =>
+  withoutKeys(mergeHashes, keys)(a, b)
 
-  return deepmerge(pickedA, pickedB)
-}
-
-const mergeHashesWithoutKeys = (a = {}, b = {}, keys = []) => {
-  const pickedA = omit(a, keys)
-  const pickedB = omit(b, keys)
-
-  return {
-    ...pickedA,
-    ...pickedB,
-  }
-}
-
-const deepMergeHashesWithoutKeys = (a = {}, b = {}, keys = []) => {
-  const pickedA = omit(a, keys)
-  const pickedB = omit(b, keys)
-
-  return deepmerge(pickedA, pickedB)
-}
+const deepMergeHashesWithoutKeys = (a = {}, b = {}, keys = []) =>
+  withoutKeys(deepmerge, keys)(a, b)
 
 const intersectHashes = (a, b) => {
   const hashesIntersection = {}
@@ -137,6 +121,8 @@ const deepRemoveHashesIntersection = (a = {}, b = {}) => {
 }
 
 module.exports = {
+  withKeys,
+  withoutKeys,
   mergeHashes,
   deepMergeHashes,
   mergeHashesWithKeys,
