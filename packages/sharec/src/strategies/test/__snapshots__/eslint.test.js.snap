@@ -67,6 +67,73 @@ rules:
 "
 `;
 
+exports[`strategy > eslint auto unapply should automatically unapply configs 1`] = `
+Object {
+  "env": Object {
+    "browser": true,
+    "es6": true,
+    "jest": true,
+    "node": true,
+  },
+  "extends": "airbnb",
+  "globals": Object {
+    "bar": true,
+    "foo": true,
+  },
+  "parserOptions": Object {
+    "ecmaFeatures": Object {
+      "spread": true,
+    },
+    "ecmaVersion": 7,
+    "parser": "babel-eslint",
+    "sourceType": "module",
+  },
+  "rules": Object {
+    "max-len": Array [
+      "warn",
+      120,
+      4,
+      Object {
+        "ignoreComments": true,
+        "ignoreStrings": false,
+        "ignoreUrls": false,
+      },
+    ],
+    "no-console": 0,
+    "space-before-function-paren": 1,
+  },
+}
+`;
+
+exports[`strategy > eslint auto unapply should automatically unapply configs 2`] = `
+"env:
+  browser: true
+  es6: true
+  node: true
+  jest: true
+globals:
+  foo: true
+  bar: true
+extends: airbnb
+parserOptions:
+  parser: babel-eslint
+  ecmaVersion: 7
+  ecmaFeatures:
+    spread: true
+  sourceType: module
+rules:
+  space-before-function-paren: 1
+  no-console: 0
+  max-len:
+    - warn
+    - 120
+    - 4
+    - ignoreUrls: false
+      ignoreComments: true
+      ignoreStrings: false
+"
+`;
+
 exports[`strategy > eslint json strategy should merge eslint json configs 1`] = `
 Object {
   "env": Object {
@@ -103,6 +170,73 @@ Object {
     "space-before-function-paren": 1,
   },
 }
+`;
+
+exports[`strategy > eslint uapplying JSON should remove applyed JSON config 1`] = `
+Object {
+  "env": Object {
+    "browser": true,
+    "es6": true,
+    "jest": true,
+    "node": true,
+  },
+  "extends": "airbnb",
+  "globals": Object {
+    "bar": true,
+    "foo": true,
+  },
+  "parserOptions": Object {
+    "ecmaFeatures": Object {
+      "spread": true,
+    },
+    "ecmaVersion": 7,
+    "parser": "babel-eslint",
+    "sourceType": "module",
+  },
+  "rules": Object {
+    "max-len": Array [
+      "warn",
+      120,
+      4,
+      Object {
+        "ignoreComments": true,
+        "ignoreStrings": false,
+        "ignoreUrls": false,
+      },
+    ],
+    "no-console": 0,
+    "space-before-function-paren": 1,
+  },
+}
+`;
+
+exports[`strategy > eslint uapplying YAML should remove applyed YAML config 1`] = `
+"env:
+  browser: true
+  es6: true
+  node: true
+  jest: true
+globals:
+  foo: true
+  bar: true
+extends: airbnb
+parserOptions:
+  parser: babel-eslint
+  ecmaVersion: 7
+  ecmaFeatures:
+    spread: true
+  sourceType: module
+rules:
+  space-before-function-paren: 1
+  no-console: 0
+  max-len:
+    - warn
+    - 120
+    - 4
+    - ignoreUrls: false
+      ignoreComments: true
+      ignoreStrings: false
+"
 `;
 
 exports[`strategy > eslint yaml strategy should merge eslint yaml configs 1`] = `

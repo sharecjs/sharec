@@ -6,8 +6,7 @@ const {
   deepMergeHashesWithKeys,
   mergeHashesWithoutKeys,
   deepMergeHashesWithoutKeys,
-  intersectHashes,
-  removeHashesIntersection,
+  hashesChangesDiff,
 } = require('./hashes')
 const { pipe } = require('./index')
 
@@ -96,18 +95,11 @@ const deepMergePairsWithoutKeys = (a = [], b = [], keys = []) => {
   return toPairs(deepMergeHashesWithoutKeys(hashedA, hashedB, keys))
 }
 
-const intersectPairs = (a, b) => {
+const pairsChangesDiff = (a, b) => {
   const hashedA = fromPairs(a)
   const hashedB = fromPairs(b)
 
-  return toPairs(intersectHashes(hashedA, hashedB))
-}
-
-const removePairsIntersection = (a, b) => {
-  const hashedA = fromPairs(a)
-  const hashedB = fromPairs(b)
-
-  return toPairs(removeHashesIntersection(hashedA, hashedB))
+  return toPairs(hashesChangesDiff(hashedA, hashedB))
 }
 
 module.exports = {
@@ -121,6 +113,5 @@ module.exports = {
   mergePairsWithoutKeys,
   deepMergePairsWithKeys,
   deepMergePairsWithoutKeys,
-  intersectPairs,
-  removePairsIntersection,
+  pairsChangesDiff,
 }

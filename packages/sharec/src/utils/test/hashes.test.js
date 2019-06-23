@@ -1,19 +1,73 @@
 const {
+  withKeys,
+  withoutKeys,
   mergeHashes,
   mergeHashesWithKeys,
   deepMergeHashesWithKeys,
   mergeHashesWithoutKeys,
   deepMergeHashesWithoutKeys,
-  intersectHashes,
-  removeHashesIntersection,
-  deepIntersectHashes,
-  deepRemoveHashesIntersection,
-  createIntersectionMap,
-  withKeys,
-  withoutKeys,
+  hashesChangesDiff,
 } = require('utils/hashes')
 
 describe('utils > hashes', () => {
+  describe('withKeys', () => {
+    it('should leave only matched properties to given keys from given function parameters ', () => {
+      const handler = (a, b) => [a, b]
+      const withKeysHandler = withKeys(handler, ['foo'])
+
+      expect(
+        withKeysHandler(
+          {
+            foo: 'bar',
+            bar: 'baz',
+            baz: 'foo',
+          },
+          {
+            foo: 'foo',
+            bar: 'bar',
+            baz: 'baz',
+          },
+        ),
+      ).toEqual([
+        {
+          foo: 'bar',
+        },
+        {
+          foo: 'foo',
+        },
+      ])
+    })
+  })
+
+  describe('withoutKeys', () => {
+    it('should remove from given function parameters properties matched to given keys', () => {
+      const handler = (a, b) => [a, b]
+      const withoutKeysHandler = withoutKeys(handler, ['bar', 'baz'])
+
+      expect(
+        withoutKeysHandler(
+          {
+            foo: 'bar',
+            bar: 'baz',
+            baz: 'foo',
+          },
+          {
+            foo: 'foo',
+            bar: 'bar',
+            baz: 'baz',
+          },
+        ),
+      ).toEqual([
+        {
+          foo: 'bar',
+        },
+        {
+          foo: 'foo',
+        },
+      ])
+    })
+  })
+
   describe('mergeHashes', () => {
     it('should merge given hashes', () => {
       const foo = {
@@ -120,42 +174,8 @@ describe('utils > hashes', () => {
     })
   })
 
-  describe('intersectHashes', () => {
-    it('should get instersected properties with values from given hashes', () => {
-      const a = {
-        foo: 'foo',
-        bar: 'baz',
-      }
-      const b = {
-        foo: 'bar',
-        bar: 'baz',
-      }
-
-      expect(intersectHashes(a, b)).toEqual({
-        bar: 'baz',
-      })
-    })
-  })
-
-  describe('removeHashesIntersection', () => {
-    it('should remove intersected properties', () => {
-      const a = {
-        foo: 'foo',
-        bar: 'baz',
-      }
-      const b = {
-        foo: 'bar',
-        bar: 'baz',
-      }
-
-      expect(removeHashesIntersection(a, b)).toEqual({
-        foo: 'foo',
-      })
-    })
-  })
-
-  describe('deepIntersectHashes', () => {
-    it('should get instersected properties with values from given hashes deeply', () => {
+  describe('hashesChangesDiff', () => {
+    it('should get changes diff from hashes', () => {
       const a = {
         foo: 'foo',
         bar: 'baz',
@@ -181,144 +201,15 @@ describe('utils > hashes', () => {
         },
       }
 
-      expect(deepIntersectHashes(a, b)).toEqual({
-        bar: 'baz',
-        baz: {
-          bar: 'baz',
-          baz: {
-            bar: 'baz',
-          },
-        },
-      })
-    })
-  })
-
-  describe('createIntersectionMap', () => {
-    it('should return hash with intersected key by levels', () => {
-      const a = {
-        foo: 'bar',
-        bar: 'baz',
-        baz: 'foo',
-      }
-      const b = {
-        bar: 'baz',
-        baz: {
-          bar: 'baz',
-          baz: {
-            bar: 'baz',
-          },
-        },
-      }
-
-      expect(createIntersectionMap(a)).toEqual({
-        $$root: ['foo', 'bar', 'baz'],
-      })
-      expect(createIntersectionMap(b)).toEqual({
-        $$root: ['bar'],
-        baz: {
-          $$root: ['bar'],
-          baz: {
-            $$root: ['bar'],
-          },
-        },
-      })
-    })
-  })
-
-  describe('deepRemoveHashesIntersection', () => {
-    it('should remove intersected properties deeply', () => {
-      const a = {
-        foo: 'foo',
-        bar: 'baz',
-        baz: {
-          foo: 'foo',
-          bar: 'baz',
-          baz: {
-            foo: 'foo',
-            bar: 'baz',
-          },
-        },
-      }
-      const b = {
+      expect(hashesChangesDiff(a, b)).toEqual({
         foo: 'baz',
-        bar: 'baz',
         baz: {
           foo: 'baz',
-          bar: 'baz',
           baz: {
             foo: 'baz',
-            bar: 'baz',
-          },
-        },
-      }
-
-      expect(deepRemoveHashesIntersection(a, b)).toEqual({
-        foo: 'foo',
-        baz: {
-          foo: 'foo',
-          baz: {
-            foo: 'foo',
           },
         },
       })
-    })
-  })
-
-  describe('withKeys', () => {
-    it('should leave only matched properties to given keys from given function parameters ', () => {
-      const handler = (a, b) => [a, b]
-      const withKeysHandler = withKeys(handler, ['foo'])
-
-      expect(
-        withKeysHandler(
-          {
-            foo: 'bar',
-            bar: 'baz',
-            baz: 'foo',
-          },
-          {
-            foo: 'foo',
-            bar: 'bar',
-            baz: 'baz',
-          },
-        ),
-      ).toEqual([
-        {
-          foo: 'bar',
-        },
-        {
-          foo: 'foo',
-        },
-      ])
-    })
-  })
-
-  describe('withoutKeys', () => {
-    it('should remove from given function parameters properties matched to given keys', () => {
-      const handler = (a, b) => [a, b]
-      const withoutKeysHandler = withoutKeys(handler, ['bar', 'baz'])
-
-      expect(
-        withoutKeysHandler(
-          {
-            foo: 'bar',
-            bar: 'baz',
-            baz: 'foo',
-          },
-          {
-            foo: 'foo',
-            bar: 'bar',
-            baz: 'baz',
-          },
-        ),
-      ).toEqual([
-        {
-          foo: 'bar',
-        },
-        {
-          foo: 'foo',
-        },
-      ])
     })
   })
 })
