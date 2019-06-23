@@ -6,6 +6,9 @@ const {
   deepMergeHashesWithoutKeys,
   intersectHashes,
   removeHashesIntersection,
+  deepIntersectHashes,
+  deepRemoveHashesIntersection,
+  createIntersectionMap,
 } = require('utils/hashes')
 
 describe('utils > hashes', () => {
@@ -145,6 +148,116 @@ describe('utils > hashes', () => {
 
       expect(removeHashesIntersection(a, b)).toEqual({
         foo: 'foo',
+      })
+    })
+  })
+
+  describe('deepIntersectHashes', () => {
+    it('should get instersected properties with values from given hashes deeply', () => {
+      const a = {
+        foo: 'foo',
+        bar: 'baz',
+        baz: {
+          foo: 'foo',
+          bar: 'baz',
+          baz: {
+            foo: 'foo',
+            bar: 'baz',
+          },
+        },
+      }
+      const b = {
+        foo: 'baz',
+        bar: 'baz',
+        baz: {
+          foo: 'baz',
+          bar: 'baz',
+          baz: {
+            foo: 'baz',
+            bar: 'baz',
+          },
+        },
+      }
+
+      expect(deepIntersectHashes(a, b)).toEqual({
+        bar: 'baz',
+        baz: {
+          bar: 'baz',
+          baz: {
+            bar: 'baz',
+          },
+        },
+      })
+    })
+  })
+
+  describe('createIntersectionMap', () => {
+    it('should return hash with intersected key by levels', () => {
+      const a = {
+        foo: 'bar',
+        bar: 'baz',
+        baz: 'foo',
+      }
+      const b = {
+        bar: 'baz',
+        baz: {
+          bar: 'baz',
+          baz: {
+            bar: 'baz',
+          },
+        },
+      }
+
+      expect(createIntersectionMap(a)).toEqual({
+        $$root: ['foo', 'bar', 'baz'],
+      })
+      expect(createIntersectionMap(b)).toEqual({
+        $$root: ['bar'],
+        baz: {
+          $$root: ['bar'],
+          baz: {
+            $$root: ['bar'],
+          },
+        },
+      })
+    })
+  })
+
+  describe('deepRemoveHashesIntersection', () => {
+    it('should remove intersected properties deeply', () => {
+      const a = {
+        foo: 'foo',
+        bar: 'baz',
+        baz: {
+          foo: 'foo',
+          bar: 'baz',
+          baz: {
+            foo: 'foo',
+            bar: 'baz',
+          },
+        },
+      }
+      const b = {
+        foo: 'baz',
+        bar: 'baz',
+        baz: {
+          foo: 'baz',
+          bar: 'baz',
+          baz: {
+            foo: 'baz',
+            bar: 'baz',
+          },
+        },
+      }
+
+      expect(deepRemoveHashesIntersection(a, b)).toEqual({
+        foo: 'foo',
+        baz: {
+          foo: 'foo',
+          baz: {
+            foo: 'foo',
+          },
+        },
       })
     })
   })

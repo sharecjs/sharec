@@ -1,5 +1,5 @@
 const path = require('path')
-const { removeHashesIntersection } = require('./hashes')
+const { deepRemoveHashesIntersection } = require('./hashes')
 const { transformInputToYAML, toYaml } = require('./yaml')
 
 class Strategy {
@@ -89,12 +89,12 @@ class Strategy {
   }
 
   unapplyJSON(a, b) {
-    return removeHashesIntersection(a, b)
+    return deepRemoveHashesIntersection(a, b)
   }
 
   unapplyYAML(rawA, rawB) {
     const [a, b] = transformInputToYAML(rawA, rawB)
-    const clearedConfig = removeHashesIntersection(a, b)
+    const clearedConfig = deepRemoveHashesIntersection(a, b)
 
     return toYaml(clearedConfig)
   }
