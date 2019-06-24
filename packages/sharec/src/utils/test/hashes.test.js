@@ -6,6 +6,7 @@ const {
   deepMergeHashesWithKeys,
   mergeHashesWithoutKeys,
   deepMergeHashesWithoutKeys,
+  shallowHashesChangesDiff,
   hashesChangesDiff,
 } = require('utils/hashes')
 
@@ -169,6 +170,41 @@ describe('utils > hashes', () => {
         bar: {
           foo: 'baz',
           bar: 'baz',
+        },
+      })
+    })
+  })
+
+  describe('shallowHashesChangesDiff', () => {
+    it('should get changes diff from first level of given hashes', () => {
+      const a = {
+        foo: 'foo',
+        bar: 'baz',
+        baz: {
+          foo: 'foo',
+          bar: {
+            foo: 'foo',
+          },
+        },
+      }
+      const b = {
+        foo: 'baz',
+        bar: 'baz',
+        baz: {
+          foo: 'baz',
+          bar: {
+            foo: 'foo',
+          },
+        },
+      }
+
+      expect(shallowHashesChangesDiff(a, b)).toEqual({
+        foo: 'baz',
+        baz: {
+          foo: 'baz',
+          bar: {
+            foo: 'foo',
+          },
         },
       })
     })

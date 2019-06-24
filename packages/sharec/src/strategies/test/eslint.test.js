@@ -1,7 +1,6 @@
 const path = require('path')
 const { readFileSync } = require.requireActual('fs')
 const { eslintStrategy } = require('strategies/eslint')
-const { detailedDiff } = require('deep-object-diff')
 
 describe('strategy > eslint', () => {
   const eslint01 = require('fixtures/eslint/json/eslintrc_01.json')
@@ -22,27 +21,20 @@ describe('strategy > eslint', () => {
     ),
     'utf8',
   )
-  // const eslintYaml03 = readFileSync(
-  //   path.resolve(
-  //     __dirname,
-  //     '../../../test/fixtures/eslint/yaml/eslintrc_03.yml',
-  //   ),
-  //   'utf8',
-  // )
-  // const eslintYaml04 = readFileSync(
-  //   path.resolve(
-  //     __dirname,
-  //     '../../../test/fixtures/eslint/yaml/eslintrc_04.yml',
-  //   ),
-  //   'utf8',
-  // )
-  // const eslintYaml05 = readFileSync(
-  //   path.resolve(
-  //     __dirname,
-  //     '../../../test/fixtures/eslint/yaml/eslintrc_05.yml',
-  //   ),
-  //   'utf8',
-  // )
+  const eslintYaml04 = readFileSync(
+    path.resolve(
+      __dirname,
+      '../../../test/fixtures/eslint/yaml/eslintrc_04.yml',
+    ),
+    'utf8',
+  )
+  const eslintYaml05 = readFileSync(
+    path.resolve(
+      __dirname,
+      '../../../test/fixtures/eslint/yaml/eslintrc_05.yml',
+    ),
+    'utf8',
+  )
 
   describe('json strategy', () => {
     it('should merge eslint json configs', () => {
@@ -71,26 +63,26 @@ describe('strategy > eslint', () => {
 
   describe('uapplying JSON', () => {
     it('should remove applyed JSON config', () => {
-      // expect(eslintStrategy.unapplyJSON(eslint04, eslint05)).toEqual({})
-
-      detailedDiff(eslint04, eslint05) // ?
+      expect(eslintStrategy.unapplyJSON(eslint04, eslint05)).toMatchSnapshot()
     })
   })
 
   describe('uapplying YAML', () => {
     it('should remove applyed YAML config', () => {
-      // expect(eslintStrategy.unapplyYAML(eslintYaml04, eslintYaml05)).toEqual({})
+      expect(
+        eslintStrategy.unapplyYAML(eslintYaml04, eslintYaml05),
+      ).toMatchSnapshot()
     })
   })
 
   describe('auto unapply', () => {
     it('should automatically unapply configs', () => {
-      // expect(eslintStrategy.unapply('.eslintrc')(eslint04, eslint05)).toEqual(
-      //   {},
-      // )
-      // expect(
-      //   eslintStrategy.unapply('eslintrc.yml')(eslintYaml04, eslintYaml05),
-      // ).toEqual({})
+      expect(
+        eslintStrategy.unapply('.eslintrc')(eslint04, eslint05),
+      ).toMatchSnapshot()
+      expect(
+        eslintStrategy.unapply('eslintrc.yml')(eslintYaml04, eslintYaml05),
+      ).toMatchSnapshot()
     })
   })
 })

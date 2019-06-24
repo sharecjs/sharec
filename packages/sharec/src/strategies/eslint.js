@@ -1,9 +1,10 @@
 const { Strategy } = require('../utils/strategy')
 const {
+  withoutKeys,
   mergeHashesWithKeys,
   deepMergeHashesWithoutKeys,
-  deepRemoveHashesIntersectionWithKeys,
-  deepRemoveHashesIntersectionWithoutKeys,
+  hashesChangesDiff,
+  shallowHashesChangesDiff,
 } = require('../utils/hashes')
 
 class EslintStrategy extends Strategy {
@@ -20,12 +21,14 @@ class EslintStrategy extends Strategy {
     const [a, b] = [rawA, rawB].map(config =>
       typeof config === 'string' ? JSON.parse(config) : config,
     )
-    const clearedConfig = deepRemoveHashesIntersectionWithoutKeys(a, b, [
-      'rules',
-    ])
-    const clearedRules = deepRemoveHashesIntersectionWithKeys(a, b, ['rules'])
+    const restoredConfig = withoutKeys(hashesChangesDiff, ['rules'])(a, b)
+    const rulesA = a.rules || {}
+    const rulesB = b.rules || {}
+    const restoredRules = shallowHashesChangesDiff(rulesA, rulesB)
 
-    return Object.assign(clearedConfig, clearedRules)
+    return Object.assign(restoredConfig, {
+      rules: restoredRules,
+    })
   }
 }
 
