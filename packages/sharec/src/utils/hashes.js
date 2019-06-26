@@ -1,6 +1,7 @@
 const pick = require('lodash/pick')
 const omit = require('lodash/omit')
-const isEmpty = require('lodash/isEmpty')
+const isObject = require('lodash/isObject')
+const isEqual = require('lodash/isEqual')
 const deepmerge = require('deepmerge')
 const { addedDiff, updatedDiff } = require('deep-object-diff')
 
@@ -38,17 +39,10 @@ const shallowHashesChangesDiff = (a = {}, b = {}) => {
   const hashesDiff = {}
 
   Object.keys(b).forEach(key => {
-    const isComparingObjects =
-      a[key] instanceof Object && b[key] instanceof Object
-    let hasDiff = false
-
-    if (isComparingObjects) {
-      hasDiff = !isEmpty(hashesChangesDiff(a[key], b[key]))
-    }
-
-    if (!hasDiff) {
-      hasDiff = !a[key] || a[key] !== b[key]
-    }
+    const isComparingObjects = isObject(a[key]) && isObject(b[key])
+    const hasDiff = isComparingObjects
+      ? !isEqual(a[key], b[key])
+      : !a[key] || a[key] !== b[key]
 
     if (hasDiff) {
       Object.assign(hashesDiff, {

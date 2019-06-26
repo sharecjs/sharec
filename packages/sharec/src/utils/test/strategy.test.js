@@ -120,10 +120,10 @@ describe('strategy', () => {
 
     it('should automatically determine and apply unapply method to given file', () => {
       expect(
-        strategy.unapply('common.json')(common04, common05),
+        strategy.unapply('common.json')(common05, common04),
       ).toMatchSnapshot()
       expect(
-        strategy.unapply('common.yaml')(commonYaml04, commonYaml05),
+        strategy.unapply('common.yaml')(commonYaml05, commonYaml04),
       ).toMatchSnapshot()
     })
   })

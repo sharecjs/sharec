@@ -76,9 +76,18 @@ class Strategy {
     return toYaml(newConfig)
   }
 
+  /**
+   * @param {String} fileName
+   * @returns {Function} Merge function
+   */
   merge(fileName) {
     const matchedMethod = this.determineMergeMethod(fileName)
 
+    /**
+     * @param {Object|String} a
+     * @param {Object|String} b
+     * @returns {[type]}
+     */
     return (a, b) => {
       if (!matchedMethod) return b
 
@@ -99,13 +108,22 @@ class Strategy {
     return toYaml(clearedConfig)
   }
 
+  /**
+   * @param {String} fileName
+   * @returns {Function} Unapply function
+   */
   unapply(fileName) {
     const matchedMethod = this.determineUnapplyMethod(fileName)
 
+    /**
+     * @param {Object|String} a Package config
+     * @param {Object|String} b Current config
+     * @returns {Object|String}
+     */
     return (a, b) => {
       if (!matchedMethod) return a
 
-      const res = matchedMethod.bind(this)(a, b)
+      const res = matchedMethod.bind(this)(b, a)
 
       return res
     }

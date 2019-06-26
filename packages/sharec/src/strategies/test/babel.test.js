@@ -12,6 +12,10 @@ describe('strategy > babel', () => {
     const babel07 = require('fixtures/babel/json/babel_07.json')
     const babel08 = require('fixtures/babel/json/babel_08.json')
 
+    // Uapply features
+    const babel10 = require('fixtures/babel/json/babel_10.json')
+    const babel11 = require('fixtures/babel/json/babel_11.json')
+
     it('should merge babel json configs', () => {
       expect(babelStrategy.mergeJSON(babel01, babel02)).toMatchSnapshot()
     })
@@ -27,6 +31,16 @@ describe('strategy > babel', () => {
         babelStrategy.merge('.babelrc')(babel07, babel08),
       ).toMatchSnapshot()
       expect(babelStrategy.merge('babel')(babel08, babel07)).toMatchSnapshot()
+    })
+
+    it('should unapply babel JSON config', () => {
+      expect(babelStrategy.unapplyJSON(babel10, babel11)).toMatchSnapshot()
+    })
+
+    it('should unapply babel config by file', () => {
+      expect(
+        babelStrategy.unapply('.babelrc')(babel11, babel10),
+      ).toMatchSnapshot()
     })
   })
 })

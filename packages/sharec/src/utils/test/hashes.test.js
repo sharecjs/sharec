@@ -176,29 +176,31 @@ describe('utils > hashes', () => {
   })
 
   describe('shallowHashesChangesDiff', () => {
-    it('should get changes diff from first level of given hashes', () => {
-      const a = {
-        foo: 'foo',
-        bar: 'baz',
-        baz: {
-          foo: 'foo',
-          bar: {
+    it('should get changes diff from the first level of given hashes', () => {
+      expect(
+        shallowHashesChangesDiff(
+          {
             foo: 'foo',
+            bar: 'baz',
+            baz: {
+              foo: 'foo',
+              bar: {
+                foo: 'foo',
+              },
+            },
           },
-        },
-      }
-      const b = {
-        foo: 'baz',
-        bar: 'baz',
-        baz: {
-          foo: 'baz',
-          bar: {
-            foo: 'foo',
+          {
+            foo: 'baz',
+            bar: 'baz',
+            baz: {
+              foo: 'baz',
+              bar: {
+                foo: 'foo',
+              },
+            },
           },
-        },
-      }
-
-      expect(shallowHashesChangesDiff(a, b)).toEqual({
+        ),
+      ).toEqual({
         foo: 'baz',
         baz: {
           foo: 'baz',
@@ -207,6 +209,34 @@ describe('utils > hashes', () => {
           },
         },
       })
+      expect(
+        shallowHashesChangesDiff(
+          {
+            bar: 'baz',
+            baz: {},
+            foo: 'foo',
+          },
+          {
+            bar: 'baz',
+            baz: {},
+            foo: 'baz',
+          },
+        ),
+      ).toEqual({
+        foo: 'baz',
+      })
+      expect(
+        shallowHashesChangesDiff(
+          {
+            foo: {},
+            baz: {},
+          },
+          {
+            foo: {},
+            baz: {},
+          },
+        ),
+      ).toEqual({})
     })
   })
 
