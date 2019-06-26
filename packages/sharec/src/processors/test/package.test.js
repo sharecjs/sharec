@@ -2,9 +2,9 @@ const { vol } = require('memfs')
 const {
   processPackageJson,
   getCurrentPackageJsonMetaData,
-} = require('core/packageProcessor')
+} = require('../package')
 
-describe('core > packageProcessor >', () => {
+describe('processors > package >', () => {
   const packageJson01 = require('fixtures/package/package_01.json')
   const packageJson02 = require('fixtures/package/package_02.json')
 

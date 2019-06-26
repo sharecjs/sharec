@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`core > packageProcessor > processPackageJson should merge exist package.json with upcoming from configs 1`] = `
+exports[`processors > package > processPackageJson should merge exist package.json with upcoming from configs 1`] = `
 Object {
   "config": Object {
     "commitizen": Object {

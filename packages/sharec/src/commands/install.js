@@ -1,10 +1,12 @@
 const ora = require('ora')
 const path = require('path')
-const { getCurrentPackageJsonMetaData } = require('../core/packageProcessor')
 const { collectConfigsPaths } = require('../core/collector')
 const { backupConfigs } = require('../core/backuper')
-const { processConfig } = require('../core/configsProcessor')
-const { processPackageJson } = require('../core/packageProcessor')
+const { processConfig } = require('../processors/configs')
+const {
+  getCurrentPackageJsonMetaData,
+  processPackageJson,
+} = require('../processors/package')
 
 async function install({ configsPath, targetPath, options }) {
   if (!configsPath || configsPath === targetPath) return

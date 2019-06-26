@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`core > configsProcessor > processConfig should merge JSON configs 1`] = `
+exports[`processors > configs > processConfig should merge JSON configs 1`] = `
 Object {
   "env": Object {
     "browser": true,
@@ -38,7 +38,7 @@ Object {
 }
 `;
 
-exports[`core > configsProcessor > processConfig should merge YAML configs 1`] = `
+exports[`processors > configs > processConfig should merge YAML configs 1`] = `
 "env:
   browser: true
   es6: true

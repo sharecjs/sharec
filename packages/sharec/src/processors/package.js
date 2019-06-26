@@ -11,7 +11,7 @@ const {
   // ereaseConfigs,
   // ereaseDependencies,
   // ereaseMetaData,
-} = require('./package')
+} = require('../core/package')
 
 const getCurrentPackageJsonMetaData = async targetPath => {
   const targetPackageJsonPath = path.resolve(targetPath, 'package.json')
