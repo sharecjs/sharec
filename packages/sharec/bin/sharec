@@ -8,7 +8,7 @@ const { _, ...options } = minimist(process.argv.slice(2))
    await sharec({
      configsPath: process.env.PWD,
      targetPath: process.env.INIT_CWD,
-     command: _[0] || 'inject',
+     command: _[0] || 'install',
      options,
    })
  })()

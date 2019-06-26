@@ -1,11 +1,11 @@
-const { inject } = require('./commands')
+const { install } = require('./commands')
 
 async function sharec({ configsPath, targetPath, command, options }) {
   if (!configsPath || configsPath === targetPath) return
 
   switch (command) {
-    case 'inject':
-      await inject({ configsPath, targetPath, options })
+    case 'install':
+      await install({ configsPath, targetPath, options })
       break
     default:
       throw new Error(`sharec: unsupported command ${command}.`)

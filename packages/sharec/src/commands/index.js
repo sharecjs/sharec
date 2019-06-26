@@ -1,5 +1,5 @@
-const inject = require('./inject')
+const install = require('./install')
 
 module.exports = {
-  inject,
+  install,
 }

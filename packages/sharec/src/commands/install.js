@@ -5,7 +5,7 @@ const { getCurrentPackageJsonMetaData } = require('../core/packageProcessor')
 const { collectConfigsPaths } = require('../core/collector')
 const { backupConfigs } = require('../core/backuper')
 
-async function inject({ configsPath, targetPath, options }) {
+async function install({ configsPath, targetPath, options }) {
   if (!configsPath || configsPath === targetPath) return
 
   const spinner = ora({
@@ -50,4 +50,4 @@ async function inject({ configsPath, targetPath, options }) {
   )
 }
 
-module.exports = inject
+module.exports = install
