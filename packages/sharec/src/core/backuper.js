@@ -1,5 +1,5 @@
 const path = require('path')
-const { readFile, writeFile } = require('utils/fs')
+const { readFile, writeFile } = require('../utils/fs')
 
 const createBackup = async ({ targetPath, configs }) => {
   const backup = {
