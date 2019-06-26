@@ -1,8 +1,7 @@
 #!/usr/bin/env node
-
+/* eslint-disable  */
 const minimist = require('minimist')
-// const sharec = require('../src')
-
+const sharec = require('../src')
 const { _, ...options } = minimist(process.argv.slice(2))
 
  ;(async () => {
