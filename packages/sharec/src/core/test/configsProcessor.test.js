@@ -35,7 +35,11 @@ describe('core > configsProcessor >', () => {
       }
       vol.fromJSON(dir, '/')
 
-      await processConfig('/configs', '/target', '.eslintrc')
+      await processConfig({
+        configsPath: '/configs',
+        targetPath: '/target',
+        filePath: '.eslintrc',
+      })
 
       const res = await vol.readFileSync('/target/.eslintrc', 'utf8')
 
@@ -51,7 +55,11 @@ describe('core > configsProcessor >', () => {
       }
       vol.fromJSON(dir, '/')
 
-      await processConfig('/configs', '/target', '.eslintrc.yaml')
+      await processConfig({
+        configsPath: '/configs',
+        targetPath: '/target',
+        filePath: '.eslintrc.yaml',
+      })
 
       const res = await vol.readFileSync('/target/.eslintrc.yaml', 'utf8')
 
@@ -66,7 +74,11 @@ describe('core > configsProcessor >', () => {
       }
       vol.fromJSON(dir, '/')
 
-      await processConfig('/configs', '/target', '.editorconfig')
+      await processConfig({
+        configsPath: '/configs',
+        targetPath: '/target',
+        filePath: '.editorconfig',
+      })
 
       const res = await vol.readFileSync('/target/.editorconfig', 'utf8')
 
@@ -81,7 +93,11 @@ describe('core > configsProcessor >', () => {
       }
       vol.fromJSON(dir, '/')
 
-      await processConfig('/configs', '/target', 'foo/bar/.editorconfig')
+      await processConfig({
+        configsPath: '/configs',
+        targetPath: '/target',
+        filePath: 'foo/bar/.editorconfig',
+      })
 
       const res = await vol.readFileSync(
         '/target/foo/bar/.editorconfig',

@@ -1,9 +1,10 @@
 const ora = require('ora')
 const path = require('path')
-const { executeInjection } = require('../core/executor')
 const { getCurrentPackageJsonMetaData } = require('../core/packageProcessor')
 const { collectConfigsPaths } = require('../core/collector')
 const { backupConfigs } = require('../core/backuper')
+const { processConfig } = require('../core/configsProcessor')
+const { processPackageJson } = require('../core/packageProcessor')
 
 async function install({ configsPath, targetPath, options }) {
   if (!configsPath || configsPath === targetPath) return
@@ -37,8 +38,21 @@ async function install({ configsPath, targetPath, options }) {
     configs,
   })
   spinner.start('applying configuration 🚀')
-  // TODO: make this function unary
-  await executeInjection(fullConfigsPath, targetPath, configs)
+
+  const standaloneConfigs = configs.filter(
+    filePath => !/(package\.json)/.test(filePath),
+  )
+
+  await Promise.all(
+    standaloneConfigs.map(configPath =>
+      processConfig({
+        configsPath: fullConfigsPath,
+        filePath: configPath,
+        targetPath,
+      }),
+    ),
+  )
+  await processPackageJson(configsPath, targetPath)
   spinner.succeed('configuration applyed, have a nice time! 🌈')
 
   console.info(

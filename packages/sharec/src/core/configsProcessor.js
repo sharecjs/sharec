@@ -2,7 +2,7 @@ const path = require('path')
 const { readFile, writeFile, makeDir } = require('../utils/fs')
 const { determineConfigStrategy } = require('./strategist')
 
-const processConfig = async (configsPath, targetPath, filePath) => {
+const processConfig = async ({ configsPath, targetPath, filePath }) => {
   const targetStrategy = determineConfigStrategy(filePath)
   const targetConfigPath = path.join(targetPath, filePath)
   const targetConfigDirName = path.dirname(targetConfigPath)

@@ -1,9 +1,9 @@
 const path = require('path')
 const { readFileSync } = require.requireActual('fs')
 const { vol } = require('memfs')
-const inject = require('../inject')
+const install = require('../install')
 
-describe('commands > inject >', () => {
+describe('commands > install >', () => {
   const packageJson01 = require('fixtures/package/package_01.json')
   const packageJson02 = require('fixtures/package/package_02.json')
   const babel01 = require('fixtures/babel/json/babel_01.json')
@@ -35,7 +35,7 @@ describe('commands > inject >', () => {
       }
       vol.fromJSON(dir, '/')
 
-      await inject('/target', '/target')
+      await install('/target', '/target')
 
       expect(
         JSON.parse(vol.readFileSync('/target/package.json', 'utf8')),
@@ -51,7 +51,7 @@ describe('commands > inject >', () => {
       }
       vol.fromJSON(dir, '/')
 
-      await inject({
+      await install({
         configsPath: undefined,
         targetPath: '/target',
       })
@@ -71,7 +71,7 @@ describe('commands > inject >', () => {
       }
       vol.fromJSON(dir, '/')
 
-      await inject('/configuration-package', '/target')
+      await install('/configuration-package', '/target')
 
       expect(
         JSON.parse(vol.readFileSync('/target/package.json', 'utf8')),
@@ -96,7 +96,7 @@ describe('commands > inject >', () => {
       }
       vol.fromJSON(dir, '/')
 
-      await inject({
+      await install({
         configsPath: '/configuration-package',
         targetPath: '/target',
       })
@@ -126,7 +126,7 @@ describe('commands > inject >', () => {
       }
       vol.fromJSON(dir, '/')
 
-      await inject({
+      await install({
         configsPath: '/configuration-package',
         targetPath: '/target',
       })
@@ -164,7 +164,7 @@ describe('commands > inject >', () => {
       }
       vol.fromJSON(dir, '/')
 
-      await inject({
+      await install({
         configsPath: '/configuration-package',
         targetPath: '/target',
       })
