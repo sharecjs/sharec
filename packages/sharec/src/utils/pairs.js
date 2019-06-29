@@ -6,7 +6,7 @@ const {
   deepMergeHashesWithKeys,
   mergeHashesWithoutKeys,
   deepMergeHashesWithoutKeys,
-  hashesChangesDiff,
+  hashesDiff,
   shallowHashesChangesDiff,
 } = require('./hashes')
 const { pipe } = require('./index')
@@ -104,7 +104,7 @@ const pairsChangesDiff = (a, b) => {
   const hashedA = fromPairs(a)
   const hashedB = fromPairs(b)
 
-  return toPairs(hashesChangesDiff(hashedA, hashedB))
+  return toPairs(hashesDiff(hashedA, hashedB))
 }
 
 const shallowPairsChangesDiff = (a, b) => {

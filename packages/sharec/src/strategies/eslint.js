@@ -1,9 +1,10 @@
+const isEmpty = require('lodash/isEmpty')
 const { Strategy } = require('../utils/strategy')
 const {
   withoutKeys,
   mergeHashesWithKeys,
   deepMergeHashesWithoutKeys,
-  hashesChangesDiff,
+  hashesDiff,
   shallowHashesChangesDiff,
 } = require('../utils/hashes')
 
@@ -21,14 +22,16 @@ class EslintStrategy extends Strategy {
     const [a, b] = [rawA, rawB].map(config =>
       typeof config === 'string' ? JSON.parse(config) : config,
     )
-    const restoredConfig = withoutKeys(hashesChangesDiff, ['rules'])(a, b)
+    const restoredConfig = withoutKeys(hashesDiff, ['rules'])(a, b)
     const rulesA = a.rules || {}
     const rulesB = b.rules || {}
     const restoredRules = shallowHashesChangesDiff(rulesA, rulesB)
 
-    return Object.assign(restoredConfig, {
-      rules: restoredRules,
-    })
+    return isEmpty(restoredRules)
+      ? restoredConfig
+      : Object.assign(restoredConfig, {
+          rules: restoredRules,
+        })
   }
 }
 

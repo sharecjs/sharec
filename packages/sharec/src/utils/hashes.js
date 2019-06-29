@@ -1,9 +1,10 @@
+const set = require('lodash/set')
 const pick = require('lodash/pick')
 const omit = require('lodash/omit')
 const isObject = require('lodash/isObject')
-const isEqual = require('lodash/isEqual')
+const isNil = require('lodash/isNil')
 const deepmerge = require('deepmerge')
-const { addedDiff, updatedDiff } = require('deep-object-diff')
+const { diff } = require('deep-diff')
 
 const withKeys = (fun, keys) => (a, b) =>
   fun(...[a, b].map(param => pick(param, keys)))
@@ -30,28 +31,44 @@ const mergeHashesWithoutKeys = (a = {}, b = {}, keys = []) =>
 const deepMergeHashesWithoutKeys = (a = {}, b = {}, keys = []) =>
   withoutKeys(deepmerge, keys)(a, b)
 
-const hashesChangesDiff = (a, b) => ({
-  ...addedDiff(a, b),
-  ...updatedDiff(a, b),
-})
+const hashesDiff = (a = {}, b = {}) => {
+  const resultDiff = {}
+  const changes = diff(a, b)
+
+  if (!changes) return {}
+
+  changes.forEach(change => {
+    if (change.kind === 'A') {
+      // TODO:
+      // change // ?
+      // console.log(change.kind)
+    } else if (change.kind !== 'D') {
+      const { path, rhs } = change
+
+      set(resultDiff, path, rhs)
+    }
+  })
+
+  return resultDiff
+}
 
 const shallowHashesChangesDiff = (a = {}, b = {}) => {
-  const hashesDiff = {}
+  const resultDiff = {}
 
   Object.keys(b).forEach(key => {
     const isComparingObjects = isObject(a[key]) && isObject(b[key])
     const hasDiff = isComparingObjects
-      ? !isEqual(a[key], b[key])
-      : !a[key] || a[key] !== b[key]
+      ? !!diff(a[key], b[key])
+      : isNil(a[key]) || a[key] !== b[key]
 
     if (hasDiff) {
-      Object.assign(hashesDiff, {
+      Object.assign(resultDiff, {
         [key]: b[key],
       })
     }
   })
 
-  return hashesDiff
+  return resultDiff
 }
 
 module.exports = {
@@ -63,6 +80,8 @@ module.exports = {
   deepMergeHashesWithKeys,
   mergeHashesWithoutKeys,
   deepMergeHashesWithoutKeys,
+
+  hashesDiff,
+
   shallowHashesChangesDiff,
-  hashesChangesDiff,
 }

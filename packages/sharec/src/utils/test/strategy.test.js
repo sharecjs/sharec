@@ -110,21 +110,37 @@ describe('strategy', () => {
       )
     })
 
-    it('should return object without applied properties from second object', () => {
-      expect(strategy.unapplyJSON(common04, common05)).toMatchSnapshot()
+    describe('unapply JSON', () => {
+      it('should return object without applied properties from second object', () => {
+        expect(strategy.unapplyJSON(common04, common05)).toMatchSnapshot()
+      })
+
+      it('should return empty object if objects have not difference', () => {
+        expect(strategy.unapplyJSON(common04, common04)).toEqual({})
+      })
     })
 
-    it('should return YAML string without applied properties from second YAML', () => {
-      expect(strategy.unapplyYAML(commonYaml04, commonYaml05)).toMatchSnapshot()
+    describe('unapply YAML', () => {
+      it('should return YAML string without applied properties from second YAML', () => {
+        expect(
+          strategy.unapplyYAML(commonYaml04, commonYaml05),
+        ).toMatchSnapshot()
+      })
+
+      it('should return empty string if YAML string have not difference', () => {
+        expect(strategy.unapplyYAML(commonYaml04, commonYaml04)).toBe('')
+      })
     })
 
-    it('should automatically determine and apply unapply method to given file', () => {
-      expect(
-        strategy.unapply('common.json')(common05, common04),
-      ).toMatchSnapshot()
-      expect(
-        strategy.unapply('common.yaml')(commonYaml05, commonYaml04),
-      ).toMatchSnapshot()
+    describe('auto unapply', () => {
+      it('should automatically determine and apply unapply method to given file', () => {
+        expect(
+          strategy.unapply('common.json')(common05, common04),
+        ).toMatchSnapshot()
+        expect(
+          strategy.unapply('common.yaml')(commonYaml05, commonYaml04),
+        ).toMatchSnapshot()
+      })
     })
   })
 })

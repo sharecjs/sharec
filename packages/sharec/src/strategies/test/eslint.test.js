@@ -65,6 +65,10 @@ describe('strategy > eslint', () => {
     it('should remove applyed JSON config', () => {
       expect(eslintStrategy.unapplyJSON(eslint04, eslint05)).toMatchSnapshot()
     })
+
+    it('should fully unapply JSON config and return empty object', () => {
+      expect(eslintStrategy.unapplyJSON(eslint04, eslint04)).toEqual({})
+    })
   })
 
   describe('uapplying YAML', () => {
@@ -72,6 +76,10 @@ describe('strategy > eslint', () => {
       expect(
         eslintStrategy.unapplyYAML(eslintYaml04, eslintYaml05),
       ).toMatchSnapshot()
+    })
+
+    it('should fully unapply YAML config and return empty object', () => {
+      expect(eslintStrategy.unapplyYAML(eslintYaml04, eslintYaml04)).toEqual('')
     })
   })
 

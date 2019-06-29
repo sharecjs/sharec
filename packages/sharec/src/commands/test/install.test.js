@@ -25,153 +25,169 @@ describe('commands > install >', () => {
     'utf8',
   )
 
+  beforeEach(() => {
+    vol.reset()
+  })
+
   describe('configuration processing', () => {
-    it('should not do anything if target path equals to configs path', async () => {
-      expect.assertions(1)
+    describe('invalid cases', () => {
+      it('should not do anything if target path equals to configs path', async () => {
+        expect.assertions(1)
 
-      const packageJson = {}
-      const dir = {
-        '/target/package.json': JSON.stringify(packageJson),
-      }
-      vol.fromJSON(dir, '/')
+        const packageJson = {}
+        const dir = {
+          '/target/package.json': JSON.stringify(packageJson),
+        }
 
-      await install('/target', '/target')
+        vol.fromJSON(dir, '/')
 
-      expect(
-        JSON.parse(vol.readFileSync('/target/package.json', 'utf8')),
-      ).toEqual(packageJson)
-    })
+        await install('/target', '/target')
 
-    it('should not do anything if configs path is not passed', async () => {
-      expect.assertions(1)
-
-      const packageJson = {}
-      const dir = {
-        '/target/package.json': JSON.stringify(packageJson),
-      }
-      vol.fromJSON(dir, '/')
-
-      await install({
-        configsPath: undefined,
-        targetPath: '/target',
+        expect(
+          JSON.parse(vol.readFileSync('/target/package.json', 'utf8')),
+        ).toEqual(packageJson)
       })
 
-      expect(
-        JSON.parse(vol.readFileSync('/target/package.json', 'utf8')),
-      ).toEqual(packageJson)
-    })
+      it('should not do anything if configs path is not passed', async () => {
+        expect.assertions(1)
 
-    it('should stops if configuration directory is not exists', async () => {
-      expect.assertions(1)
+        const packageJson = {}
+        const dir = {
+          '/target/package.json': JSON.stringify(packageJson),
+        }
 
-      const packageJson = {}
-      const dir = {
-        '/target/package.json': JSON.stringify(packageJson),
-        '/configuration-package/.editorconfig': 'bar',
-      }
-      vol.fromJSON(dir, '/')
+        vol.fromJSON(dir, '/')
 
-      await install('/configuration-package', '/target')
+        await install({
+          configsPath: undefined,
+          targetPath: '/target',
+        })
 
-      expect(
-        JSON.parse(vol.readFileSync('/target/package.json', 'utf8')),
-      ).toEqual(packageJson)
-    })
-
-    it('should not do anything if config already injected', async () => {
-      expect.assertions(1)
-
-      const packageJson = {
-        sharec: {
-          injected: true,
-        },
-      }
-      const dir = {
-        '/target/package.json': JSON.stringify(packageJson, null, 2),
-        '/configuration-package/configs/package.json': JSON.stringify(
-          packageJson01,
-          null,
-          2,
-        ),
-      }
-      vol.fromJSON(dir, '/')
-
-      await install({
-        configsPath: '/configuration-package',
-        targetPath: '/target',
+        expect(
+          JSON.parse(vol.readFileSync('/target/package.json', 'utf8')),
+        ).toEqual(packageJson)
       })
 
-      expect(
-        JSON.parse(vol.readFileSync('/target/package.json', 'utf8')),
-      ).toEqual(packageJson)
-    })
+      it('should stops if configuration directory is not exists', async () => {
+        expect.assertions(1)
 
-    it('should merge all configs from target path', async () => {
-      expect.assertions(5)
+        const packageJson = {}
+        const dir = {
+          '/target/package.json': JSON.stringify(packageJson),
+          '/configuration-package/.editorconfig': 'bar',
+        }
 
-      const dir = {
-        '/target/.eslintrc': JSON.stringify(eslint01),
-        '/target/babelrc.js': JSON.stringify(babel01),
-        '/target/.eslintrc.yaml': yamlEslint01,
-        '/target/package.json': JSON.stringify(packageJson01, null, 2),
-        '/configuration-package/configs/.eslintrc': JSON.stringify(eslint02),
-        '/configuration-package/configs/.eslintrc.yaml': yamlEslint02,
-        '/configuration-package/configs/.editorconfig': 'bar',
-        '/configuration-package/configs/babelrc.js': JSON.stringify(babel02),
-        '/configuration-package/configs/package.json': JSON.stringify(
-          packageJson02,
-          null,
-          2,
-        ),
-      }
-      vol.fromJSON(dir, '/')
+        vol.fromJSON(dir, '/')
 
-      await install({
-        configsPath: '/configuration-package',
-        targetPath: '/target',
+        await install('/configuration-package', '/target')
+
+        expect(
+          JSON.parse(vol.readFileSync('/target/package.json', 'utf8')),
+        ).toEqual(packageJson)
       })
 
-      expect(
-        vol.readFileSync('/target/.editorconfig', 'utf8'),
-      ).toMatchSnapshot()
-      expect(vol.readFileSync('/target/babelrc.js', 'utf8')).toMatchSnapshot()
-      expect(
-        JSON.parse(vol.readFileSync('/target/.eslintrc', 'utf8')),
-      ).toMatchSnapshot()
-      expect(
-        vol.readFileSync('/target/.eslintrc.yaml', 'utf8'),
-      ).toMatchSnapshot()
-      expect(vol.readFileSync('/target/package.json', 'utf8')).toMatchSnapshot()
+      it('should not do anything if config already injected', async () => {
+        expect.assertions(1)
+
+        const packageJson = {
+          sharec: {
+            injected: true,
+          },
+        }
+        const dir = {
+          '/target/package.json': JSON.stringify(packageJson, null, 2),
+          '/configuration-package/configs/package.json': JSON.stringify(
+            packageJson01,
+            null,
+            2,
+          ),
+        }
+
+        vol.fromJSON(dir, '/')
+
+        await install({
+          configsPath: '/configuration-package',
+          targetPath: '/target',
+        })
+
+        expect(
+          JSON.parse(vol.readFileSync('/target/package.json', 'utf8')),
+        ).toEqual(packageJson)
+      })
     })
 
-    it('should backup origin configuration to sharec-lock.json file', async () => {
-      expect.assertions(1)
+    describe('valid cases', () => {
+      it('should merge all configs from target path', async () => {
+        expect.assertions(5)
 
-      const dir = {
-        '/target/.eslintrc': JSON.stringify(eslint01),
-        '/target/babelrc.js': JSON.stringify(babel01),
-        '/target/.eslintrc.yaml': yamlEslint01,
-        '/target/package.json': JSON.stringify(packageJson01, null, 2),
-        '/configuration-package/configs/.eslintrc': JSON.stringify(eslint02),
-        '/configuration-package/configs/.eslintrc.yaml': yamlEslint02,
-        '/configuration-package/configs/.editorconfig': 'bar',
-        '/configuration-package/configs/babelrc.js': JSON.stringify(babel02),
-        '/configuration-package/configs/package.json': JSON.stringify(
-          packageJson02,
-          null,
-          2,
-        ),
-      }
-      vol.fromJSON(dir, '/')
+        const dir = {
+          '/target/.eslintrc': JSON.stringify(eslint01),
+          '/target/babelrc.js': JSON.stringify(babel01),
+          '/target/.eslintrc.yaml': yamlEslint01,
+          '/target/package.json': JSON.stringify(packageJson01, null, 2),
+          '/configuration-package/configs/.eslintrc': JSON.stringify(eslint02),
+          '/configuration-package/configs/.eslintrc.yaml': yamlEslint02,
+          '/configuration-package/configs/.editorconfig': 'bar',
+          '/configuration-package/configs/babelrc.js': JSON.stringify(babel02),
+          '/configuration-package/configs/package.json': JSON.stringify(
+            packageJson02,
+            null,
+            2,
+          ),
+        }
 
-      await install({
-        configsPath: '/configuration-package',
-        targetPath: '/target',
+        vol.fromJSON(dir, '/')
+
+        await install({
+          configsPath: '/configuration-package',
+          targetPath: '/target',
+        })
+
+        expect(
+          vol.readFileSync('/target/.editorconfig', 'utf8'),
+        ).toMatchSnapshot()
+        expect(vol.readFileSync('/target/babelrc.js', 'utf8')).toMatchSnapshot()
+        expect(
+          JSON.parse(vol.readFileSync('/target/.eslintrc', 'utf8')),
+        ).toMatchSnapshot()
+        expect(
+          vol.readFileSync('/target/.eslintrc.yaml', 'utf8'),
+        ).toMatchSnapshot()
+        expect(
+          vol.readFileSync('/target/package.json', 'utf8'),
+        ).toMatchSnapshot()
       })
 
-      expect(
-        vol.readFileSync('/target/sharec-lock.json', 'utf8'),
-      ).toMatchSnapshot()
+      it('should backup origin configuration to sharec-lock.json file', async () => {
+        expect.assertions(1)
+
+        const dir = {
+          '/target/.eslintrc': JSON.stringify(eslint01),
+          '/target/babelrc.js': JSON.stringify(babel01),
+          '/target/.eslintrc.yaml': yamlEslint01,
+          '/target/package.json': JSON.stringify(packageJson01, null, 2),
+          '/configuration-package/configs/.eslintrc': JSON.stringify(eslint02),
+          '/configuration-package/configs/.eslintrc.yaml': yamlEslint02,
+          '/configuration-package/configs/.editorconfig': 'bar',
+          '/configuration-package/configs/babelrc.js': JSON.stringify(babel02),
+          '/configuration-package/configs/package.json': JSON.stringify(
+            packageJson02,
+            null,
+            2,
+          ),
+        }
+
+        vol.fromJSON(dir, '/')
+
+        await install({
+          configsPath: '/configuration-package',
+          targetPath: '/target',
+        })
+
+        expect(
+          vol.readFileSync('/target/sharec-lock.json', 'utf8'),
+        ).toMatchSnapshot()
+      })
     })
   })
 })

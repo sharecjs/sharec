@@ -1,11 +1,12 @@
 const get = require('lodash/get')
+const unset = require('lodash/unset')
 const pick = require('lodash/pick')
 const omit = require('lodash/omit')
 const xor = require('lodash/xor')
 const isEmpty = require('lodash/isEmpty')
 const intersection = require('lodash/intersection')
 const { Strategy } = require('../utils/strategy')
-const { withKeys, mergeHashes, hashesChangesDiff } = require('../utils/hashes')
+const { withKeys, mergeHashes, hashesDiff } = require('../utils/hashes')
 const { mergePairs, shallowPairsChangesDiff } = require('../utils/pairs')
 
 class BabelStrategy extends Strategy {
@@ -36,7 +37,7 @@ class BabelStrategy extends Strategy {
   }
 
   unapplyEnv(a, b) {
-    const restoredEnvConfig = withKeys(hashesChangesDiff, ['ignore'])(a, b)
+    const restoredEnvConfig = withKeys(hashesDiff, ['ignore'])(a, b)
     const restoredPresets = shallowPairsChangesDiff(
       get(a, 'presets', []),
       get(b, 'presets', []),
@@ -143,6 +144,10 @@ class BabelStrategy extends Strategy {
         [key]: restoredEnv,
       })
     })
+
+    if (isEmpty(restoredConfig.env)) {
+      unset(restoredConfig, 'env')
+    }
 
     return restoredConfig
   }

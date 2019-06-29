@@ -1,4 +1,5 @@
 const {
+  hashesDiff,
   withKeys,
   withoutKeys,
   mergeHashes,
@@ -7,7 +8,6 @@ const {
   mergeHashesWithoutKeys,
   deepMergeHashesWithoutKeys,
   shallowHashesChangesDiff,
-  hashesChangesDiff,
 } = require('utils/hashes')
 
 describe('utils > hashes', () => {
@@ -238,41 +238,105 @@ describe('utils > hashes', () => {
         ),
       ).toEqual({})
     })
+    expect(
+      shallowHashesChangesDiff(
+        {
+          'space-before-function-paren': 1,
+          'no-console': 0,
+          'max-len': [
+            'warn',
+            120,
+            4,
+            {
+              ignoreUrls: false,
+              ignoreComments: true,
+              ignoreStrings: false,
+            },
+          ],
+        },
+        {
+          'space-before-function-paren': 1,
+          'no-console': 0,
+          'max-len': [
+            'warn',
+            120,
+            4,
+            {
+              ignoreUrls: false,
+              ignoreComments: true,
+              ignoreStrings: false,
+            },
+          ],
+        },
+      ),
+    ).toEqual({})
   })
 
-  describe('hashesChangesDiff', () => {
-    it('should get changes diff from hashes', () => {
-      const a = {
-        foo: 'foo',
-        bar: 'baz',
-        baz: {
-          foo: 'foo',
-          bar: 'baz',
-          baz: {
+  describe('hashesDiff', () => {
+    it('should correclty get diff from two objects', () => {
+      expect(
+        hashesDiff(
+          {
             foo: 'foo',
             bar: 'baz',
+            baz: {
+              foo: 'foo',
+              bar: 'baz',
+              baz: {
+                foo: 'foo',
+                bar: 'baz',
+              },
+            },
           },
-        },
-      }
-      const b = {
-        foo: 'baz',
-        bar: 'baz',
-        baz: {
-          foo: 'baz',
-          bar: 'baz',
-          baz: {
+          {
             foo: 'baz',
             bar: 'baz',
+            baz: {
+              foo: 'baz',
+              bar: 'baz',
+              baz: {
+                foo: 'baz',
+                bar: 'baz',
+              },
+            },
           },
-        },
-      }
-
-      expect(hashesChangesDiff(a, b)).toEqual({
+        ),
+      ).toEqual({
         foo: 'baz',
         baz: {
           foo: 'baz',
           baz: {
             foo: 'baz',
+          },
+        },
+      })
+      expect(
+        hashesDiff(
+          {
+            foo: 'foo',
+            baz: {
+              foo: 'foo',
+              baz: {
+                foo: [1, 2, 3],
+              },
+            },
+          },
+          {
+            foo: 'baz',
+            baz: {
+              foo: 'baz',
+              baz: {
+                foo: [3, 2, 1],
+              },
+            },
+          },
+        ),
+      ).toEqual({
+        foo: 'baz',
+        baz: {
+          foo: 'baz',
+          baz: {
+            foo: [3, undefined, 1],
           },
         },
       })

@@ -16,31 +16,39 @@ describe('strategy > babel', () => {
     const babel10 = require('fixtures/babel/json/babel_10.json')
     const babel11 = require('fixtures/babel/json/babel_11.json')
 
-    it('should merge babel json configs', () => {
-      expect(babelStrategy.mergeJSON(babel01, babel02)).toMatchSnapshot()
+    describe('merge JSON configs', () => {
+      it('should merge babel json configs', () => {
+        expect(babelStrategy.mergeJSON(babel01, babel02)).toMatchSnapshot()
+      })
+
+      it('should handle unique env cases during merging', () => {
+        expect(
+          babelStrategy.merge('.babelrc')(babel04, babel05),
+        ).toMatchSnapshot()
+        expect(
+          babelStrategy.merge('.babelrc.json')(babel05, babel04),
+        ).toMatchSnapshot()
+        expect(
+          babelStrategy.merge('.babelrc')(babel07, babel08),
+        ).toMatchSnapshot()
+        expect(babelStrategy.merge('babel')(babel08, babel07)).toMatchSnapshot()
+      })
     })
 
-    it('should handle unique env cases during merging', () => {
-      expect(
-        babelStrategy.merge('.babelrc')(babel04, babel05),
-      ).toMatchSnapshot()
-      expect(
-        babelStrategy.merge('.babelrc.json')(babel05, babel04),
-      ).toMatchSnapshot()
-      expect(
-        babelStrategy.merge('.babelrc')(babel07, babel08),
-      ).toMatchSnapshot()
-      expect(babelStrategy.merge('babel')(babel08, babel07)).toMatchSnapshot()
-    })
+    describe('unapply JSON', () => {
+      it('should unapply babel JSON config', () => {
+        expect(babelStrategy.unapplyJSON(babel10, babel11)).toMatchSnapshot()
+      })
 
-    it('should unapply babel JSON config', () => {
-      expect(babelStrategy.unapplyJSON(babel10, babel11)).toMatchSnapshot()
-    })
+      it('should fully unapply babel JSON config', () => {
+        expect(babelStrategy.unapplyJSON(babel10, babel10)).toEqual({})
+      })
 
-    it('should unapply babel config by file', () => {
-      expect(
-        babelStrategy.unapply('.babelrc')(babel11, babel10),
-      ).toMatchSnapshot()
+      it('should unapply babel config by file', () => {
+        expect(
+          babelStrategy.unapply('.babelrc')(babel11, babel10),
+        ).toMatchSnapshot()
+      })
     })
   })
 })

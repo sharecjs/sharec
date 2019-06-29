@@ -88,11 +88,11 @@ Object {
 `;
 
 exports[`strategy > eslint auto unapply should automatically unapply configs 2`] = `
-"globals:
-  baz: true
-env:
+"env:
   node: false
 extends: standard
+globals:
+  baz: true
 rules:
   max-len:
     - warn
@@ -160,12 +160,27 @@ Object {
 }
 `;
 
-exports[`strategy > eslint uapplying YAML should remove applyed YAML config 1`] = `
+exports[`strategy > eslint uapplying YAML should fully unapply YAML config and return empty object 1`] = `
 "globals:
   baz: true
 env:
   node: false
 extends: standard
+rules:
+  max-len:
+    - warn
+    - 80
+    - 2
+  sort-imports: 0
+"
+`;
+
+exports[`strategy > eslint uapplying YAML should remove applyed YAML config 1`] = `
+"env:
+  node: false
+extends: standard
+globals:
+  baz: true
 rules:
   max-len:
     - warn

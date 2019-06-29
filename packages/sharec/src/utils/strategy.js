@@ -1,5 +1,5 @@
 const path = require('path')
-const { hashesChangesDiff } = require('./hashes')
+const { hashesDiff } = require('./hashes')
 const { transformInputToYAML, toYaml } = require('./yaml')
 
 class Strategy {
@@ -98,7 +98,7 @@ class Strategy {
   }
 
   unapplyJSON(a, b) {
-    return hashesChangesDiff(b, a)
+    return hashesDiff(b, a)
   }
 
   unapplyYAML(rawA, rawB) {
@@ -123,9 +123,7 @@ class Strategy {
     return (a, b) => {
       if (!matchedMethod) return a
 
-      const res = matchedMethod.bind(this)(b, a)
-
-      return res
+      return matchedMethod.bind(this)(b, a)
     }
   }
 }
