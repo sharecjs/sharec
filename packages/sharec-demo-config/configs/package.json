@@ -9,7 +9,7 @@
     ]
   },
   "devDependencies": {
-    "lint-staged": "^8.1.5",
+    "lint-staged": "^9.0.0",
     "prettier": "^1.16.4"
   }
 }
