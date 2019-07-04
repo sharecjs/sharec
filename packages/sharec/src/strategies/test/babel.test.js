@@ -46,7 +46,7 @@ describe('strategy > babel', () => {
 
       it('should unapply babel config by file', () => {
         expect(
-          babelStrategy.unapply('.babelrc')(babel11, babel10),
+          babelStrategy.unapply('.babelrc')(babel10, babel11),
         ).toMatchSnapshot()
       })
     })

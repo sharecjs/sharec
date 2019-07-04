@@ -1,32 +1,35 @@
 const path = require('path')
-const { readFile, writeFile, makeDir } = require('../utils/fs')
+const isEmpty = require('lodash/isEmpty')
+const { readFile, writeFile, makeDir, removeFile } = require('../utils/fs')
 const { determineConfigStrategy } = require('../core/strategist')
 
+// TODO: rename to inject
+// TODO: May be targetPath must be in filePath?
 const processConfig = async ({ configsPath, targetPath, filePath }) => {
   const targetStrategy = determineConfigStrategy(filePath)
-  const targetConfigPath = path.join(targetPath, filePath)
-  const targetConfigDirName = path.dirname(targetConfigPath)
-  let targetConfig = null
+  const localConfigPath = path.join(targetPath, filePath)
+  const localConfigDirName = path.dirname(localConfigPath)
+  let localConfig = null
 
   const newConfigPath = path.join(configsPath, filePath)
   let newConfig = await readFile(newConfigPath, 'utf8')
 
   try {
-    targetConfig = await readFile(targetConfigPath, 'utf8')
+    localConfig = await readFile(localConfigPath, 'utf8')
   } catch (err) {}
 
-  if (targetConfig && targetStrategy) {
-    newConfig = targetStrategy.merge(filePath)(targetConfig, newConfig)
+  if (localConfig && targetStrategy) {
+    newConfig = targetStrategy.merge(filePath)(localConfig, newConfig)
   }
 
   try {
-    await makeDir(targetConfigDirName, {
+    await makeDir(localConfigDirName, {
       recursive: true,
     })
   } catch (err) {}
 
   await writeFile(
-    targetConfigPath,
+    localConfigPath,
     newConfig instanceof Object
       ? JSON.stringify(newConfig, null, 2)
       : newConfig,
@@ -34,6 +37,30 @@ const processConfig = async ({ configsPath, targetPath, filePath }) => {
   )
 }
 
+const removeConfig = async ({ configsPath, targetPath, filePath }) => {
+  const targetStrategy = determineConfigStrategy(filePath)
+  const localConfigPath = path.join(targetPath, filePath)
+  const localConfig = await readFile(localConfigPath, 'utf8')
+  const configPath = path.join(configsPath, filePath)
+  const config = await readFile(configPath, 'utf8')
+
+  if (!targetStrategy) return
+
+  const restoredConfig = targetStrategy.unapply(filePath)(localConfig, config)
+
+  if (isEmpty(restoredConfig)) {
+    await removeFile(localConfigPath)
+  } else {
+    const restoredConfigToWrite =
+      restoredConfig instanceof Object
+        ? JSON.stringify(restoredConfig, null, 2)
+        : restoredConfig
+
+    await writeFile(localConfigPath, restoredConfigToWrite)
+  }
+}
+
 module.exports = {
   processConfig,
+  removeConfig,
 }

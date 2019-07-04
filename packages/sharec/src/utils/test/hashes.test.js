@@ -201,9 +201,9 @@ describe('utils > hashes', () => {
           },
         ),
       ).toEqual({
-        foo: 'baz',
+        foo: 'foo',
         baz: {
-          foo: 'baz',
+          foo: 'foo',
           bar: {
             foo: 'foo',
           },
@@ -223,7 +223,7 @@ describe('utils > hashes', () => {
           },
         ),
       ).toEqual({
-        foo: 'baz',
+        foo: 'foo',
       })
       expect(
         shallowHashesChangesDiff(
@@ -270,24 +270,25 @@ describe('utils > hashes', () => {
         },
       ),
     ).toEqual({})
+    expect(
+      shallowHashesChangesDiff(
+        {
+          foo: 'bar',
+          bar: 'baz',
+        },
+        {
+          bar: 'baz',
+        },
+      ),
+    ).toEqual({
+      foo: 'bar',
+    })
   })
 
   describe('hashesDiff', () => {
     it('should correclty get diff from two objects', () => {
       expect(
         hashesDiff(
-          {
-            foo: 'foo',
-            bar: 'baz',
-            baz: {
-              foo: 'foo',
-              bar: 'baz',
-              baz: {
-                foo: 'foo',
-                bar: 'baz',
-              },
-            },
-          },
           {
             foo: 'baz',
             bar: 'baz',
@@ -296,6 +297,18 @@ describe('utils > hashes', () => {
               bar: 'baz',
               baz: {
                 foo: 'baz',
+                bar: 'baz',
+              },
+            },
+          },
+          {
+            foo: 'foo',
+            bar: 'baz',
+            baz: {
+              foo: 'foo',
+              bar: 'baz',
+              baz: {
+                foo: 'foo',
                 bar: 'baz',
               },
             },
@@ -313,20 +326,20 @@ describe('utils > hashes', () => {
       expect(
         hashesDiff(
           {
-            foo: 'foo',
-            baz: {
-              foo: 'foo',
-              baz: {
-                foo: [1, 2, 3],
-              },
-            },
-          },
-          {
             foo: 'baz',
             baz: {
               foo: 'baz',
               baz: {
                 foo: [3, 2, 1],
+              },
+            },
+          },
+          {
+            foo: 'foo',
+            baz: {
+              foo: 'foo',
+              baz: {
+                foo: [1, 2, 3],
               },
             },
           },
@@ -339,6 +352,47 @@ describe('utils > hashes', () => {
             foo: [3, undefined, 1],
           },
         },
+      })
+      expect(
+        hashesDiff(
+          {
+            foo: 'baz',
+            bar: 'baz',
+            baz: {
+              foo: 'baz',
+              bar: 'baz',
+              baz: {
+                foo: 'baz',
+                bar: 'baz',
+              },
+            },
+          },
+          {
+            foo: 'baz',
+            bar: 'baz',
+            baz: {
+              foo: 'baz',
+              bar: 'baz',
+              baz: {
+                foo: 'baz',
+                bar: 'baz',
+              },
+            },
+          },
+        ),
+      ).toEqual({})
+      expect(
+        hashesDiff(
+          {
+            foo: 'bar',
+            bar: 'baz',
+          },
+          {
+            bar: 'baz',
+          },
+        ),
+      ).toEqual({
+        foo: 'bar',
       })
     })
   })

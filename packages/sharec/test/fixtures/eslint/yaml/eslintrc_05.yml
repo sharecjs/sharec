@@ -1,17 +1,25 @@
 env:
   browser: true
   es6: true
-  node: false
+  node: true
   jest: true
-extends: standard
+extends: airbnb
 globals:
   foo: true
   bar: true
-  baz: true
 rules:
   space-before-function-paren: 1
+  no-console: 0
   max-len:
     - warn
-    - 80
-    - 2
-  sort-imports: 0
+    - 120
+    - 4
+    - ignoreUrls: false
+      ignoreComments: true
+      ignoreStrings: false
+parserOptions:
+  parser: babel-eslint
+  ecmaVersion: 7
+  ecmaFeatures:
+    spread: true
+  sourceType: module

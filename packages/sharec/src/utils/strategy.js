@@ -84,21 +84,21 @@ class Strategy {
     const matchedMethod = this.determineMergeMethod(fileName)
 
     /**
-     * @param {Object|String} a
-     * @param {Object|String} b
-     * @returns {[type]}
+     * @param {Object|String} localConfig
+     * @param {Object|String} config
+     * @returns {Object|String}
      */
-    return (a, b) => {
-      if (!matchedMethod) return b
+    return (localConfig, config) => {
+      if (!matchedMethod) return config
 
-      const res = matchedMethod.bind(this)(a, b)
+      const res = matchedMethod.bind(this)(localConfig, config)
 
       return res
     }
   }
 
   unapplyJSON(a, b) {
-    return hashesDiff(b, a)
+    return hashesDiff(a, b)
   }
 
   unapplyYAML(rawA, rawB) {
@@ -116,14 +116,14 @@ class Strategy {
     const matchedMethod = this.determineUnapplyMethod(fileName)
 
     /**
-     * @param {Object|String} a Package config
-     * @param {Object|String} b Current config
+     * @param {Object|String} localConfig
+     * @param {Object|String} config
      * @returns {Object|String}
      */
-    return (a, b) => {
-      if (!matchedMethod) return a
+    return (localConfig, config) => {
+      if (!matchedMethod) return localConfig
 
-      return matchedMethod.bind(this)(b, a)
+      return matchedMethod.bind(this)(localConfig, config)
     }
   }
 }

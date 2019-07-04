@@ -439,7 +439,7 @@ describe('utils > pairs >', () => {
       const a = [['foo', 'foo'], ['bar', 'baz']]
       const b = [['foo', 'bar'], ['bar', 'baz']]
 
-      expect(pairsChangesDiff(a, b)).toEqual([['foo', 'bar']])
+      expect(pairsChangesDiff(a, b)).toEqual([['foo', 'foo']])
     })
   })
 
@@ -468,7 +468,7 @@ describe('utils > pairs >', () => {
         [
           'bar',
           {
-            bar: 'foo',
+            bar: 'baz',
           },
         ],
       ])
@@ -477,7 +477,6 @@ describe('utils > pairs >', () => {
     it('should handle cases without values', () => {
       expect(
         shallowPairsChangesDiff(
-          ['foo', 'bar'],
           [
             ['foo', 'foo'],
             [
@@ -487,6 +486,7 @@ describe('utils > pairs >', () => {
               },
             ],
           ],
+          ['foo', 'bar'],
         ),
       ).toEqual([
         ['foo', 'foo'],
@@ -499,6 +499,7 @@ describe('utils > pairs >', () => {
       ])
       expect(
         shallowPairsChangesDiff(
+          ['foo', 'bar'],
           [
             ['foo', 'foo'],
             [
@@ -508,7 +509,6 @@ describe('utils > pairs >', () => {
               },
             ],
           ],
-          ['foo', 'bar'],
         ),
       ).toEqual(['foo', 'bar'])
       expect(
@@ -518,7 +518,7 @@ describe('utils > pairs >', () => {
             [
               'bar',
               {
-                bar: 'foo',
+                bar: 'baz',
               },
             ],
           ],
@@ -527,7 +527,7 @@ describe('utils > pairs >', () => {
             [
               'bar',
               {
-                bar: 'baz',
+                bar: 'foo',
               },
             ],
           ],

@@ -39,13 +39,12 @@ const hashesDiff = (a = {}, b = {}) => {
 
   changes.forEach(change => {
     if (change.kind === 'A') {
-      // TODO:
       // change // ?
       // console.log(change.kind)
-    } else if (change.kind !== 'D') {
-      const { path, rhs } = change
+    } else if (change.kind !== 'N') {
+      const { path, lhs } = change
 
-      set(resultDiff, path, rhs)
+      set(resultDiff, path, lhs)
     }
   })
 
@@ -55,7 +54,7 @@ const hashesDiff = (a = {}, b = {}) => {
 const shallowHashesChangesDiff = (a = {}, b = {}) => {
   const resultDiff = {}
 
-  Object.keys(b).forEach(key => {
+  Object.keys(a).forEach(key => {
     const isComparingObjects = isObject(a[key]) && isObject(b[key])
     const hasDiff = isComparingObjects
       ? !!diff(a[key], b[key])
@@ -63,7 +62,7 @@ const shallowHashesChangesDiff = (a = {}, b = {}) => {
 
     if (hasDiff) {
       Object.assign(resultDiff, {
-        [key]: b[key],
+        [key]: a[key],
       })
     }
   })

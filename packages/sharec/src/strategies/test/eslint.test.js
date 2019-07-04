@@ -86,10 +86,10 @@ describe('strategy > eslint', () => {
   describe('auto unapply', () => {
     it('should automatically unapply configs', () => {
       expect(
-        eslintStrategy.unapply('.eslintrc')(eslint05, eslint04),
+        eslintStrategy.unapply('.eslintrc')(eslint04, eslint05),
       ).toMatchSnapshot()
       expect(
-        eslintStrategy.unapply('eslintrc.yml')(eslintYaml05, eslintYaml04),
+        eslintStrategy.unapply('eslintrc.yml')(eslintYaml04, eslintYaml05),
       ).toMatchSnapshot()
     })
   })
