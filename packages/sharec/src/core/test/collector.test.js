@@ -1,5 +1,9 @@
 const { vol } = require('memfs')
-const { normalizePathSlashes, collectConfigsPaths } = require('core/collector')
+const {
+  normalizePathSlashes,
+  collectConfigVersion,
+  collectConfigsPaths,
+} = require('core/collector')
 
 describe('core > collector >', () => {
   beforeEach(() => {
@@ -12,6 +16,23 @@ describe('core > collector >', () => {
         'foo/bar.js',
         'bar/baz.js',
       ])
+    })
+  })
+
+  describe('collectConfigVersion', () => {
+    it('should return configuration package version', async () => {
+      expect.assertions(1)
+
+      const dir = {
+        'package.json': JSON.stringify({
+          version: '1.0.0',
+        }),
+      }
+      vol.fromJSON(dir, '/configs')
+
+      const version = await collectConfigVersion('/configs')
+
+      expect(version).toBe('1.0.0')
     })
   })
 

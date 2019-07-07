@@ -1,13 +1,9 @@
-const { withYaml } = require('../utils/strategies')
+const { Strategy } = require('../utils/strategy')
 
-const strategy = (a, b) => ({
-  ...a,
-  ...b,
-})
-
-const yamlStrategy = withYaml(strategy)
+class CommonStrategy extends Strategy {}
+const commonStrategy = new CommonStrategy()
 
 module.exports = {
-  strategy,
-  yamlStrategy,
+  CommonStrategy,
+  commonStrategy,
 }

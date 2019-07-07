@@ -1,6 +1,16 @@
+const set = require('lodash/set')
 const pick = require('lodash/pick')
 const omit = require('lodash/omit')
+const isObject = require('lodash/isObject')
+const isNil = require('lodash/isNil')
 const deepmerge = require('deepmerge')
+const { diff } = require('deep-diff')
+
+const withKeys = (fun, keys) => (a, b) =>
+  fun(...[a, b].map(param => pick(param, keys)))
+
+const withoutKeys = (fun, keys) => (a, b) =>
+  fun(...[a, b].map(param => omit(param, keys)))
 
 const mergeHashes = (a = {}, b = {}) => ({
   ...a,
@@ -9,45 +19,68 @@ const mergeHashes = (a = {}, b = {}) => ({
 
 const deepMergeHashes = (a = {}, b = {}) => deepmerge(a, b)
 
-const mergeHashesWithKeys = (a = {}, b = {}, keys = []) => {
-  const pickedA = pick(a, keys)
-  const pickedB = pick(b, keys)
+const mergeHashesWithKeys = (a = {}, b = {}, keys = []) =>
+  withKeys(mergeHashes, keys)(a, b)
 
-  return {
-    ...pickedA,
-    ...pickedB,
-  }
+const deepMergeHashesWithKeys = (a = {}, b = {}, keys = []) =>
+  withKeys(deepmerge, keys)(a, b)
+
+const mergeHashesWithoutKeys = (a = {}, b = {}, keys = []) =>
+  withoutKeys(mergeHashes, keys)(a, b)
+
+const deepMergeHashesWithoutKeys = (a = {}, b = {}, keys = []) =>
+  withoutKeys(deepmerge, keys)(a, b)
+
+const hashesDiff = (a = {}, b = {}) => {
+  const resultDiff = {}
+  const changes = diff(a, b)
+
+  if (!changes) return {}
+
+  changes.forEach(change => {
+    if (change.kind === 'A') {
+      // change // ?
+      // console.log(change.kind)
+    } else if (change.kind !== 'N') {
+      const { path, lhs } = change
+
+      set(resultDiff, path, lhs)
+    }
+  })
+
+  return resultDiff
 }
 
-const deepMergeHashesWithKeys = (a = {}, b = {}, keys = []) => {
-  const pickedA = pick(a, keys)
-  const pickedB = pick(b, keys)
+const shallowHashesChangesDiff = (a = {}, b = {}) => {
+  const resultDiff = {}
 
-  return deepmerge(pickedA, pickedB)
-}
+  Object.keys(a).forEach(key => {
+    const isComparingObjects = isObject(a[key]) && isObject(b[key])
+    const hasDiff = isComparingObjects
+      ? !!diff(a[key], b[key])
+      : isNil(a[key]) || a[key] !== b[key]
 
-const mergeHashesWithoutKeys = (a = {}, b = {}, keys = []) => {
-  const pickedA = omit(a, keys)
-  const pickedB = omit(b, keys)
+    if (hasDiff) {
+      Object.assign(resultDiff, {
+        [key]: a[key],
+      })
+    }
+  })
 
-  return {
-    ...pickedA,
-    ...pickedB,
-  }
-}
-
-const deepMergeHashesWithoutKeys = (a = {}, b = {}, keys = []) => {
-  const pickedA = omit(a, keys)
-  const pickedB = omit(b, keys)
-
-  return deepmerge(pickedA, pickedB)
+  return resultDiff
 }
 
 module.exports = {
+  withKeys,
+  withoutKeys,
   mergeHashes,
   deepMergeHashes,
   mergeHashesWithKeys,
   deepMergeHashesWithKeys,
   mergeHashesWithoutKeys,
   deepMergeHashesWithoutKeys,
+
+  hashesDiff,
+
+  shallowHashesChangesDiff,
 }

@@ -1,16 +1,17 @@
 {
   "name": "sharec-demo-config",
-  "version": "2.0.4-alpha",
+  "version": "2.3.0-alpha",
   "description": "",
   "scripts": {
-    "postinstall": "sharec"
+    "postinstall": "sharec install",
+    "preuninstall": "sharec remove"
   },
   "homapage": "https://lamartire.github.io/sharec/",
   "author": "",
   "keywords": [],
   "license": "MIT",
   "dependencies": {
-    "sharec": "^2.0.4-alpha"
+    "sharec": "^2.3.0-alpha"
   },
   "gitHead": "8b056dc9aedf49a712b84b4d47ea9fa1cea45b08"
 }

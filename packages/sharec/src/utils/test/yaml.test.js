@@ -19,5 +19,9 @@ describe('utils > yaml', () => {
     it('should convert json or js-object to yaml string', () => {
       expect(toYaml(jsonFixture)).toMatchSnapshot()
     })
+
+    it('should convert empty object to an empty string', () => {
+      expect(toYaml({})).toBe('')
+    })
   })
 })

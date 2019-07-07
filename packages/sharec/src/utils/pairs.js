@@ -6,6 +6,8 @@ const {
   deepMergeHashesWithKeys,
   mergeHashesWithoutKeys,
   deepMergeHashesWithoutKeys,
+  hashesDiff,
+  shallowHashesChangesDiff,
 } = require('./hashes')
 const { pipe } = require('./index')
 
@@ -22,7 +24,11 @@ const toPairsWithKeys = (obj, keys) => toPairs(pick(obj, keys))
 
 const fromPairs = pairs => {
   return pairs.reduce((acc, pair) => {
-    if (pair.length === 1 || !Array.isArray(pair)) {
+    if (!Array.isArray(pair)) {
+      return Object.assign(acc, {
+        [pair]: {},
+      })
+    } else if (pair.length === 1) {
       return Object.assign(acc, {
         [pair[0]]: {},
       })
@@ -94,6 +100,20 @@ const deepMergePairsWithoutKeys = (a = [], b = [], keys = []) => {
   return toPairs(deepMergeHashesWithoutKeys(hashedA, hashedB, keys))
 }
 
+const pairsChangesDiff = (a, b) => {
+  const hashedA = fromPairs(a)
+  const hashedB = fromPairs(b)
+
+  return toPairs(hashesDiff(hashedA, hashedB))
+}
+
+const shallowPairsChangesDiff = (a, b) => {
+  const hashedA = fromPairs(a)
+  const hashedB = fromPairs(b)
+
+  return toPairs(shallowHashesChangesDiff(hashedA, hashedB))
+}
+
 module.exports = {
   toPairs,
   toPairsWithKeys,
@@ -105,4 +125,6 @@ module.exports = {
   mergePairsWithoutKeys,
   deepMergePairsWithKeys,
   deepMergePairsWithoutKeys,
+  pairsChangesDiff,
+  shallowPairsChangesDiff,
 }

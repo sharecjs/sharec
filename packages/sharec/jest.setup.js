@@ -8,5 +8,6 @@ jest.mock('utils/fs', () => {
     copyFile: fs.copyFile,
     writeFile: fs.writeFile,
     lstat: fs.lstat,
+    removeFile: fs.unlink,
   }
 })
