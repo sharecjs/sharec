@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`hooks > postinstall > should inject postinstall and uninstall hooks to the target project package.json 1`] = `
+Object {
+  "name": "awesome-project",
+  "scripts": Object {
+    "postinstall": "sharec install",
+    "preuninstall": "sharec remove",
+  },
+}
+`;
+
+exports[`hooks > postinstall > should not do anything if hooks already injected 1`] = `
+Object {
+  "name": "awesome-project",
+  "scripts": Object {
+    "postinstall": "sharec install",
+    "preuninstall": "sharec remove",
+  },
+}
+`;
+
+exports[`hooks > postinstall > should not do anything if target path is not passed 1`] = `
+Object {
+  "name": "awesome-project",
+}
+`;

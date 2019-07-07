@@ -1,10 +1,18 @@
 #!/usr/bin/env node
-
+/* eslint-disable */
 const minimist = require('minimist')
-const sharec = require('../src/sharec')
-
-const argv = minimist(process.argv.slice(2))
+const sharec = require('../src')
+const { _, ...options } = minimist(process.argv.slice(2))
 
 ;(async () => {
-  await sharec(process.env.PWD, process.env.INIT_CWD, argv)
+  if (!process.env.PWD || process.env.PWD === process.env.INIT_CWD) return
+
+  const [command = 'install'] = _
+
+  await sharec({
+    configsPath: process.env.PWD,
+    targetPath: process.env.INIT_CWD,
+    command,
+    options,
+  })
 })()

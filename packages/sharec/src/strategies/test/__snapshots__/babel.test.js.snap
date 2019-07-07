@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`strategy > babel json strategy should handle unique env cases during merging 1`] = `
+exports[`strategy > babel json strategy merge JSON configs should handle unique env cases during merging 1`] = `
 Object {
   "env": Object {
     "test": Object {
@@ -12,7 +12,7 @@ Object {
 }
 `;
 
-exports[`strategy > babel json strategy should handle unique env cases during merging 2`] = `
+exports[`strategy > babel json strategy merge JSON configs should handle unique env cases during merging 2`] = `
 Object {
   "env": Object {
     "test": Object {
@@ -24,24 +24,7 @@ Object {
 }
 `;
 
-exports[`strategy > babel json strategy should handle unique env cases during merging 3`] = `
-Object {
-  "env": Object {
-    "development": Object {
-      "presets": Array [
-        "stage-2",
-      ],
-    },
-    "test": Object {
-      "presets": Array [
-        "env",
-      ],
-    },
-  },
-}
-`;
-
-exports[`strategy > babel json strategy should handle unique env cases during merging 4`] = `
+exports[`strategy > babel json strategy merge JSON configs should handle unique env cases during merging 3`] = `
 Object {
   "env": Object {
     "development": Object {
@@ -58,7 +41,24 @@ Object {
 }
 `;
 
-exports[`strategy > babel json strategy should merge babel json configs 1`] = `
+exports[`strategy > babel json strategy merge JSON configs should handle unique env cases during merging 4`] = `
+Object {
+  "env": Object {
+    "development": Object {
+      "presets": Array [
+        "stage-2",
+      ],
+    },
+    "test": Object {
+      "presets": Array [
+        "env",
+      ],
+    },
+  },
+}
+`;
+
+exports[`strategy > babel json strategy merge JSON configs should merge babel json configs 1`] = `
 Object {
   "env": Object {
     "test": Object {
@@ -98,6 +98,76 @@ Object {
       },
     ],
     "stage-2",
+  ],
+}
+`;
+
+exports[`strategy > babel json strategy unapply JSON should unapply babel JSON config 1`] = `
+Object {
+  "env": Object {
+    "test": Object {
+      "presets": Array [
+        "stage-3",
+      ],
+    },
+  },
+  "plugins": Array [
+    Array [
+      "syntax-dynamic-import",
+      Object {
+        "foo": "baz",
+      },
+    ],
+  ],
+  "presets": Array [
+    Array [
+      "env",
+      Object {
+        "modules": false,
+        "targets": Object {
+          "browsers": Array [
+            "> 1%",
+            "last 2 versions",
+            "not ie > 0",
+          ],
+        },
+      },
+    ],
+  ],
+}
+`;
+
+exports[`strategy > babel json strategy unapply JSON should unapply babel config by file 1`] = `
+Object {
+  "env": Object {
+    "test": Object {
+      "presets": Array [
+        "stage-3",
+      ],
+    },
+  },
+  "plugins": Array [
+    Array [
+      "syntax-dynamic-import",
+      Object {
+        "foo": "baz",
+      },
+    ],
+  ],
+  "presets": Array [
+    Array [
+      "env",
+      Object {
+        "modules": false,
+        "targets": Object {
+          "browsers": Array [
+            "> 1%",
+            "last 2 versions",
+            "not ie > 0",
+          ],
+        },
+      },
+    ],
   ],
 }
 `;

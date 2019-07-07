@@ -1,5 +1,7 @@
+const isEmpty = require('lodash/isEmpty')
 const omit = require('lodash/omit')
 const pick = require('lodash/pick')
+const unset = require('lodash/unset')
 const { determineConfigStrategy } = require('./strategist')
 
 const DEPENDENCIES_FIELDS = [
@@ -43,11 +45,15 @@ const injectConfigs = configs => packageJson => {
   Object.keys(configs).forEach(key => {
     const strategy = determineConfigStrategy(key)
 
-    Object.assign(updatedPackageJson, {
-      [key]: strategy
-        ? strategy(updatedPackageJson[key], configs[key])
-        : configs[key],
-    })
+    if (strategy) {
+      Object.assign(updatedPackageJson, {
+        [key]: strategy.merge(key)(updatedPackageJson[key], configs[key]),
+      })
+    } else {
+      Object.assign(updatedPackageJson, {
+        [key]: configs[key],
+      })
+    }
   })
 
   return updatedPackageJson
@@ -74,8 +80,30 @@ const injectMetaData = metaData => packageJson => ({
   sharec: metaData,
 })
 
-// Ereasing
-const ereaseConfigs = configs => packageJson => {}
+const ereaseConfigs = configs => packageJson => {
+  const restoredPackageJson = { ...packageJson }
+
+  Object.keys(configs).forEach(key => {
+    if (!packageJson[key]) return
+
+    const strategy = determineConfigStrategy(key)
+
+    if (!strategy) return
+
+    const restoredConfig = strategy.unapply(key)(
+      restoredPackageJson[key],
+      configs[key],
+    )
+
+    if (isEmpty(restoredConfig)) {
+      unset(restoredPackageJson, key)
+    } else {
+      restoredPackageJson[key] = restoredConfig
+    }
+  })
+
+  return restoredPackageJson
+}
 
 const ereaseDependenciesFrom = (dependencies, target) => {
   const mismatchedDeps = {}

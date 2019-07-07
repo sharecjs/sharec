@@ -1,67 +1,51 @@
-const fakeStrategiesMap = require('fixtures/strategies/fakeStrategies.json')
-
-jest.mock('strategies', () => {
-  const fakeStrategies = require('fixtures/strategies/fakeStrategies.json')
-
-  return fakeStrategies
-})
-
 const { determineConfigStrategy } = require('core/strategist')
+const { CommonStrategy } = require('strategies/common')
+const { BabelStrategy } = require('strategies/babel')
+const { EslintStrategy } = require('strategies/eslint')
 
 describe('core > strategist >', () => {
   describe('determineConfigStrategy', () => {
-    afterAll(() => {
-      jest.unmock('strategies')
-    })
-
     it('should correctly determine common strategies by fileName', () => {
-      expect(determineConfigStrategy('sample-config.json')).toBe(
-        fakeStrategiesMap.common.strategy,
+      expect(determineConfigStrategy('sample-config.json')).toBeInstanceOf(
+        CommonStrategy,
       )
-      expect(determineConfigStrategy('exmaple-config.yml')).toBe(
-        fakeStrategiesMap.common.yamlStrategy,
-      )
-      expect(determineConfigStrategy('example/dir/exmaple-config.json')).toBe(
-        fakeStrategiesMap.common.strategy,
+      expect(determineConfigStrategy('exmaple-config.yml')).toBeInstanceOf(
+        CommonStrategy,
       )
       expect(
+        determineConfigStrategy('example/dir/exmaple-config.json'),
+      ).toBeInstanceOf(CommonStrategy)
+      expect(
         determineConfigStrategy('anoter/example/dir/exmaple-config.yaml'),
-      ).toBe(fakeStrategiesMap.common.yamlStrategy)
+      ).toBeInstanceOf(CommonStrategy)
     })
 
     it('should correctly determine babel strategies by fileName', () => {
-      expect(determineConfigStrategy('.babelrc')).toBe(
-        fakeStrategiesMap.babel.strategy,
+      expect(determineConfigStrategy('.babelrc')).toBeInstanceOf(BabelStrategy)
+      expect(determineConfigStrategy('.babelrc.json')).toBeInstanceOf(
+        BabelStrategy,
       )
-      expect(determineConfigStrategy('.babelrc.json')).toBe(
-        fakeStrategiesMap.babel.strategy,
-      )
-      expect(determineConfigStrategy('example/dir/.babelrc')).toBe(
-        fakeStrategiesMap.babel.strategy,
+      expect(determineConfigStrategy('example/dir/.babelrc')).toBeInstanceOf(
+        BabelStrategy,
       )
     })
 
     it('should correctly determine eslint strategies by fileName', () => {
-      expect(determineConfigStrategy('.eslintrc')).toBe(
-        fakeStrategiesMap.eslint.strategy,
+      expect(determineConfigStrategy('.eslintrc')).toBeInstanceOf(
+        EslintStrategy,
       )
-      expect(determineConfigStrategy('eslintrc.json')).toBe(
-        fakeStrategiesMap.eslint.strategy,
+      expect(determineConfigStrategy('eslintrc.json')).toBeInstanceOf(
+        EslintStrategy,
       )
-      expect(determineConfigStrategy('eslintrc.yml')).toBe(
-        fakeStrategiesMap.eslint.yamlStrategy,
+      expect(determineConfigStrategy('eslintrc.yml')).toBeInstanceOf(
+        EslintStrategy,
       )
-      expect(determineConfigStrategy('example/dir/.eslintrc')).toBe(
-        fakeStrategiesMap.eslint.strategy,
+      expect(determineConfigStrategy('example/dir/.eslintrc')).toBeInstanceOf(
+        EslintStrategy,
       )
-      expect(determineConfigStrategy('anoter/example/dir/eslintrc.yaml')).toBe(
-        fakeStrategiesMap.eslint.yamlStrategy,
-      )
-    })
-
-    it('should return null if file is not have defined special strategy or it not json or yaml', () => {
-      expect(determineConfigStrategy('.editorconfig')).toBeNull()
-      expect(determineConfigStrategy('example/dir/.gitkeep')).toBeNull()
+      expect(
+        determineConfigStrategy('anoter/example/dir/eslintrc.yaml'),
+      ).toBeInstanceOf(EslintStrategy)
     })
   })
 })

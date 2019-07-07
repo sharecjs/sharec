@@ -9,6 +9,8 @@ const {
   mergePairsWithoutKeys,
   deepMergePairsWithKeys,
   deepMergePairsWithoutKeys,
+  pairsChangesDiff,
+  shallowPairsChangesDiff,
 } = require('utils/pairs')
 
 describe('utils > pairs >', () => {
@@ -35,15 +37,15 @@ describe('utils > pairs >', () => {
 
   describe('toPairs', () => {
     it('should transform object to array of arrays', () => {
-      const obj = {
-        foo: {
+      expect(
+        toPairs({
+          foo: {
+            bar: 'baz',
+          },
           bar: 'baz',
-        },
-        bar: 'baz',
-        baz: ['foo', 'bar', 'baz'],
-      }
-
-      expect(toPairs(obj)).toEqual([
+          baz: ['foo', 'bar', 'baz'],
+        }),
+      ).toEqual([
         [
           'foo',
           {
@@ -53,6 +55,12 @@ describe('utils > pairs >', () => {
         ['bar', 'baz'],
         ['baz', ['foo', 'bar', 'baz']],
       ])
+      expect(
+        toPairs({
+          foo: {},
+          bar: {},
+        }),
+      ).toEqual(['foo', 'bar'])
     })
 
     it('should transform empty key with object to single element array', () => {
@@ -87,23 +95,27 @@ describe('utils > pairs >', () => {
 
   describe('fromPairs', () => {
     it('should transform array of arrays to object', () => {
-      const pairs = [
-        [
-          'foo',
-          {
-            bar: 'baz',
-          },
-        ],
-        ['bar', 'baz'],
-        ['baz', ['foo', 'bar', 'baz']],
-      ]
-
-      expect(fromPairs(pairs)).toEqual({
+      expect(
+        fromPairs([
+          [
+            'foo',
+            {
+              bar: 'baz',
+            },
+          ],
+          ['bar', 'baz'],
+          ['baz', ['foo', 'bar', 'baz']],
+        ]),
+      ).toEqual({
         foo: {
           bar: 'baz',
         },
         bar: 'baz',
         baz: ['foo', 'bar', 'baz'],
+      })
+      expect(fromPairs(['foo', 'bar'])).toEqual({
+        foo: {},
+        bar: {},
       })
     })
 
@@ -416,6 +428,115 @@ describe('utils > pairs >', () => {
           'baz',
           {
             foo: 'bar',
+          },
+        ],
+      ])
+    })
+  })
+
+  describe('pairsChangesDiff', () => {
+    it('should get changes diff from pairs', () => {
+      const a = [['foo', 'foo'], ['bar', 'baz']]
+      const b = [['foo', 'bar'], ['bar', 'baz']]
+
+      expect(pairsChangesDiff(a, b)).toEqual([['foo', 'foo']])
+    })
+  })
+
+  describe('shallowPairsChangesDiff', () => {
+    it('should get changes diff from the first level of given pairs', () => {
+      const a = [
+        ['foo', 'foo'],
+        [
+          'bar',
+          {
+            bar: 'baz',
+          },
+        ],
+      ]
+      const b = [
+        ['foo', 'foo'],
+        [
+          'bar',
+          {
+            bar: 'foo',
+          },
+        ],
+      ]
+
+      expect(shallowPairsChangesDiff(a, b)).toEqual([
+        [
+          'bar',
+          {
+            bar: 'baz',
+          },
+        ],
+      ])
+    })
+
+    it('should handle cases without values', () => {
+      expect(
+        shallowPairsChangesDiff(
+          [
+            ['foo', 'foo'],
+            [
+              'bar',
+              {
+                bar: 'foo',
+              },
+            ],
+          ],
+          ['foo', 'bar'],
+        ),
+      ).toEqual([
+        ['foo', 'foo'],
+        [
+          'bar',
+          {
+            bar: 'foo',
+          },
+        ],
+      ])
+      expect(
+        shallowPairsChangesDiff(
+          ['foo', 'bar'],
+          [
+            ['foo', 'foo'],
+            [
+              'bar',
+              {
+                bar: 'foo',
+              },
+            ],
+          ],
+        ),
+      ).toEqual(['foo', 'bar'])
+      expect(
+        shallowPairsChangesDiff(
+          [
+            'foo',
+            [
+              'bar',
+              {
+                bar: 'baz',
+              },
+            ],
+          ],
+          [
+            'foo',
+            [
+              'bar',
+              {
+                bar: 'foo',
+              },
+            ],
+          ],
+        ),
+      ).toEqual([
+        [
+          'bar',
+          {
+            bar: 'baz',
           },
         ],
       ])

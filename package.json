@@ -2,54 +2,7 @@
   "homapage": "https://lamartire.github.io/sharec/",
   "author": "Konstantin Epishev <lamartire@gmail.com>",
   "license": "MIT",
-  "prettier": {
-    "semi": false,
-    "singleQuote": true,
-    "trailingComma": "all"
-  },
-  "eslintConfig": {
-    "env": {
-      "browser": true,
-      "commonjs": true,
-      "es6": true,
-      "jest": true
-    },
-    "extends": [
-      "standard",
-      "prettier",
-      "prettier/standard"
-    ],
-    "plugins": [
-      "prettier"
-    ],
-    "parserOptions": {
-      "ecmaVersion": 2018
-    },
-    "rules": {
-      "prettier/prettier": [
-        "error",
-        {
-          "semi": false,
-          "singleQuote": true,
-          "trailingComma": "all"
-        }
-      ]
-    }
-  },
-  "eslintIgnore": [
-    "**/node_modules/*",
-    "**/dist/*"
-  ],
   "devDependencies": {
-    "eslint": "^6.0.0",
-    "eslint-config-prettier": "^6.0.0",
-    "eslint-config-standard": "^12.0.0",
-    "eslint-plugin-import": "^2.17.3",
-    "eslint-plugin-node": "^9.1.0",
-    "eslint-plugin-prettier": "^3.1.0",
-    "eslint-plugin-promise": "^4.1.1",
-    "eslint-plugin-standard": "^4.0.0",
-    "lerna": "^3.13.4",
-    "prettier": "^1.17.0"
+    "lerna": "^3.13.4"
   }
 }

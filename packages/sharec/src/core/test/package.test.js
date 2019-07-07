@@ -129,7 +129,7 @@ describe('core > package', () => {
   })
 
   // TODO: need strategies
-  describe('injectConfigs', () => {})
+  // describe('injectConfigs', () => {})
 
   describe('injectDependencies', () => {
     it('should inject dependencies of different types', () => {
@@ -188,7 +188,11 @@ describe('core > package', () => {
   })
 
   // TODO: need strategies
-  describe('ereaseConfigs', () => {})
+  // describe('ereaseConfigs', () => {
+  //   it('should remove given configs from package.json file', () => {
+  //     expect(1 + 1).toBe(2)
+  //   })
+  // })
 
   describe('ereaseDependencies', () => {
     it('should remove all injected configs in package.json from target path', () => {

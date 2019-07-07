@@ -1,8 +1,16 @@
 const path = require('path')
 const slash = require('slash')
-const { readDir, lstat } = require('../utils/fs')
+const { readFile, readDir, lstat } = require('../utils/fs')
 
 const normalizePathSlashes = paths => paths.map(el => slash(el))
+
+const collectConfigVersion = async configsPath => {
+  const configPackageJsonPath = path.resolve(configsPath, 'package.json')
+  const rawConfigsPackageJson = await readFile(configPackageJsonPath, 'utf8')
+  const { version } = JSON.parse(rawConfigsPackageJson)
+
+  return version
+}
 
 const collectConfigsPaths = async (configsPath, subPath = '') => {
   const fullConfigsPath = !subPath
@@ -37,5 +45,6 @@ const collectConfigsPaths = async (configsPath, subPath = '') => {
 
 module.exports = {
   normalizePathSlashes,
+  collectConfigVersion,
   collectConfigsPaths,
 }

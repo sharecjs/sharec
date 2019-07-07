@@ -7,6 +7,7 @@ const readFile = promisify(fs.readFile)
 const copyFile = promisify(fs.copyFile)
 const writeFile = promisify(fs.writeFile)
 const lstat = promisify(fs.lstat)
+const removeFile = promisify(fs.unlink)
 
 module.exports = {
   readDir,
@@ -15,4 +16,5 @@ module.exports = {
   copyFile,
   writeFile,
   lstat,
+  removeFile,
 }
