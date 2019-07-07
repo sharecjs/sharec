@@ -4,11 +4,13 @@ const minimist = require('minimist')
 const sharec = require('../src')
 const { _, ...options } = minimist(process.argv.slice(2))
 
- ;(async () => {
-   await sharec({
-     configsPath: process.env.PWD,
-     targetPath: process.env.INIT_CWD,
-     command: _[0] || 'install',
-     options,
-   })
- })()
+;(async () => {
+  const [command = 'install'] = _
+
+  await sharec({
+    configsPath: process.env.PWD,
+    targetPath: process.env.INIT_CWD,
+    command,
+    options,
+  })
+})()

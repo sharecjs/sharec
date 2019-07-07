@@ -11,20 +11,10 @@ async function postinstall(targetPath) {
     preuninstall: 'sharec remove',
   }
 
-  if (!scripts) {
-    updatedPackageJson.scripts = hooks
-  } else if (
-    !scripts.postinstall ||
-    scripts.postinstall !== hooks.postinstall
-  ) {
-    updatedPackageJson.scripts.postinstall = hooks.postinstall
-  } else if (
-    !scripts.preuninstall ||
-    scripts.preuninstall !== hooks.preuninstall
-  ) {
-    updatedPackageJson.scripts.preuninstall = hooks.preuninstall
-  } else {
-    return
+  // TODO: optimize this moment
+  updatedPackageJson.scripts = {
+    ...scripts,
+    ...hooks,
   }
 
   await writeFile(

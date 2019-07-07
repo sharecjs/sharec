@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "postinstall": "sharec"
+    "postinstall": "sharec install",
+    "preuninstall": "sharec remove"
   },
   "homapage": "https://lamartire.github.io/sharec/",
   "author": "lamartire",

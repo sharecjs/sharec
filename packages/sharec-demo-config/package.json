@@ -3,7 +3,8 @@
   "version": "2.0.4-alpha",
   "description": "",
   "scripts": {
-    "postinstall": "sharec"
+    "postinstall": "sharec install",
+    "preuninstall": "sharec remove"
   },
   "homapage": "https://lamartire.github.io/sharec/",
   "author": "",
