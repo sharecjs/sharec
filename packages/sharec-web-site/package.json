@@ -43,9 +43,43 @@
     }
   },
   "prettier": {
+    "semi": false,
     "singleQuote": true,
-    "semi": false
+    "trailingComma": "all"
   },
+  "eslintConfig": {
+    "env": {
+      "browser": true,
+      "commonjs": true,
+      "es6": true,
+      "jest": true
+    },
+    "extends": [
+      "standard",
+      "prettier",
+      "prettier/standard"
+    ],
+    "plugins": [
+      "prettier"
+    ],
+    "parserOptions": {
+      "ecmaVersion": 2018
+    },
+    "rules": {
+      "prettier/prettier": [
+        "error",
+        {
+          "semi": false,
+          "singleQuote": true,
+          "trailingComma": "all"
+        }
+      ]
+    }
+  },
+  "eslintIgnore": [
+    "**/node_modules/*",
+    "**/dist/*"
+  ],
   "jest": {
     "testURL": "http://localhost/",
     "moduleNameMapper": {
@@ -62,6 +96,14 @@
     "bemto.pug": "git+https://git@github.com/kizu/bemto.git",
     "browser-sync": "^2.23.6",
     "cssnano": "^4.1.0",
+    "eslint": "^6.0.1",
+    "eslint-config-prettier": "^6.0.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.18.0",
+    "eslint-plugin-node": "^9.1.0",
+    "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.0",
     "gulp": "^3.9.1",
     "gulp-cssnano": "^2.1.2",
     "gulp-filter": "^5.1.0",
@@ -86,6 +128,7 @@
     "postcss-custom-properties": "^8.0.0",
     "postcss-nested": "^4.1.0",
     "postcss-partial-import": "^4.1.0",
+    "prettier": "^1.18.2",
     "require-dir": "^1.0.0",
     "rimraf": "^2.6.2",
     "run-sequence": "^2.2.1",

@@ -37,9 +37,42 @@
   },
   "prettier": {
     "semi": false,
-    "trailingComma": "all",
-    "singleQuote": true
+    "singleQuote": true,
+    "trailingComma": "all"
   },
+  "eslintConfig": {
+    "env": {
+      "browser": true,
+      "commonjs": true,
+      "es6": true,
+      "jest": true
+    },
+    "extends": [
+      "standard",
+      "prettier",
+      "prettier/standard"
+    ],
+    "plugins": [
+      "prettier"
+    ],
+    "parserOptions": {
+      "ecmaVersion": 2018
+    },
+    "rules": {
+      "prettier/prettier": [
+        "error",
+        {
+          "semi": false,
+          "singleQuote": true,
+          "trailingComma": "all"
+        }
+      ]
+    }
+  },
+  "eslintIgnore": [
+    "**/node_modules/*",
+    "**/dist/*"
+  ],
   "jest": {
     "moduleDirectories": [
       "node_modules",
@@ -59,11 +92,20 @@
   },
   "devDependencies": {
     "callsites": "^3.1.0",
+    "eslint": "^6.0.1",
+    "eslint-config-prettier": "^6.0.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.18.0",
+    "eslint-plugin-node": "^9.1.0",
+    "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.0",
     "husky": "^2.3.0",
     "jest": "^24.8.0",
     "jest-cli": "^24.8.0",
     "lint-staged": "^8.1.7",
-    "memfs": "^2.15.2"
+    "memfs": "^2.15.2",
+    "prettier": "^1.18.2"
   },
   "dependencies": {
     "deep-diff": "^1.0.2",
