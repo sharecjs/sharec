@@ -51,7 +51,7 @@ async function remove({ configsPath, targetPath }) {
 
   if (modifiedDeps) {
     const depsModificationMessage = [
-      'some dependencies were not removed because have been modified by user:\n',
+      'some dependencies were not removed because have been modified by user:',
     ]
 
     depsModificationMessage.push(

@@ -102,42 +102,6 @@ Object {
 }
 `;
 
-exports[`strategy > babel json strategy unapply JSON should fully unapply babel JSON config 1`] = `
-Object {
-  "env": Object {
-    "test": Object {
-      "presets": Array [
-        "stage-2",
-      ],
-    },
-  },
-  "plugins": Array [
-    Array [
-      "syntax-dynamic-import",
-      Object {
-        "foo": "bar",
-      },
-    ],
-  ],
-  "presets": Array [
-    Array [
-      "env",
-      Object {
-        "modules": false,
-        "targets": Object {
-          "browsers": Array [
-            "> 1%",
-            "last 2 versions",
-            "not ie > 10",
-            "not ie > 0",
-          ],
-        },
-      },
-    ],
-  ],
-}
-`;
-
 exports[`strategy > babel json strategy unapply JSON should unapply babel JSON config 1`] = `
 Object {
   "env": Object {

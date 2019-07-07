@@ -21,17 +21,6 @@ baz:
 "
 `;
 
-exports[`strategy Strategy class should automatically determine and apply unapply method to given file 1`] = `
-Object {
-  "baz": "foo",
-}
-`;
-
-exports[`strategy Strategy class should automatically determine and apply unapply method to given file 2`] = `
-"baz: foo
-"
-`;
-
 exports[`strategy Strategy class should merge JSON configs 1`] = `
 Object {
   "bar": Object {
@@ -55,42 +44,7 @@ baz:
 "
 `;
 
-exports[`strategy Strategy class should return YAML string without applied properties from second YAML 1`] = `
-"baz: foo
-"
-`;
-
-exports[`strategy Strategy class should return object without applied properties from second object 1`] = `
-Object {
-  "baz": "foo",
-}
-`;
-
-exports[`strategy Strategy class unapply JSON should return empty object if objects have not difference 1`] = `
-Object {
-  "baz": "foo",
-}
-`;
-
 exports[`strategy Strategy class unapply JSON should return object without applied properties from second object 1`] = `
-Object {
-  "baz": "foo",
-}
-`;
-
-exports[`strategy Strategy class unapply JSON should u 1`] = `
-Object {
-  "baz": "foo",
-}
-`;
-
-exports[`strategy Strategy class unapply JSON should un 1`] = `
-Object {
-  "baz": "foo",
-}
-`;
-
-exports[`strategy Strategy class unapply JSON should unapply 1`] = `
 Object {
   "baz": "foo",
 }
