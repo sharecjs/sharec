@@ -1,12 +1,15 @@
 const { vol } = require('memfs')
 const {
   processPackageJson,
+  clearPackageJson,
   getCurrentPackageJsonMetaData,
 } = require('../package')
 
 describe('processors > package >', () => {
   const packageJson01 = require('fixtures/package/package_01.json')
   const packageJson02 = require('fixtures/package/package_02.json')
+  const packageJson5 = require('../../../test/fixtures/package/package_05.json')
+  const packageJson6 = require('../../../test/fixtures/package/package_06.json')
 
   beforeEach(() => {
     vol.reset()
@@ -64,6 +67,23 @@ describe('processors > package >', () => {
       const receivedMetaData = await getCurrentPackageJsonMetaData('/target')
 
       expect(receivedMetaData).toEqual(null)
+    })
+  })
+
+  describe('clearPackageJson', () => {
+    it('should remove configs from package json and injection status', async () => {
+      const dir = {
+        '/target/package.json': JSON.stringify(packageJson5),
+        '/configuration-package/package.json': JSON.stringify(packageJson6),
+      }
+
+      vol.fromJSON(dir)
+
+      await clearPackageJson('/configuration-package', '/target')
+
+      expect(
+        JSON.parse(vol.readFileSync('/target/package.json', 'utf8')),
+      ).toMatchSnapshot()
     })
   })
 })

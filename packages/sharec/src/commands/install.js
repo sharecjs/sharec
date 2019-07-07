@@ -61,7 +61,7 @@ async function install({ configsPath, targetPath, options }) {
     [
       'sharec: for install injected dependencies run:',
       'npm i',
-      'Have a nice time! – Your config 😉',
+      'Have a nice time!',
     ].join('\n'),
   )
 }

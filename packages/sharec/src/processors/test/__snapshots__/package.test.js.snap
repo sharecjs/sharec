@@ -1,5 +1,64 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`processors > package > clearPackageJson should remove configs from package json and injection status 1`] = `
+Object {
+  "config": Object {
+    "commitizen": Object {
+      "path": "cz-conventional-changelog",
+    },
+  },
+  "devDependencies": Object {
+    "@commitlint/cli": "^7.6.1",
+    "cz-conventional-changelog": "^2.1.0",
+    "eslint-config-prettier": "^4.2.0",
+  },
+  "eslintConfig": Object {
+    "env": Object {
+      "node": false,
+    },
+    "extends": "standard",
+    "globals": Object {
+      "baz": true,
+    },
+    "rules": Object {
+      "max-len": Array [
+        "warn",
+        80,
+        2,
+      ],
+      "sort-imports": 0,
+    },
+  },
+  "eslintIgnore": Array [
+    "/node_modules",
+  ],
+  "husky": Object {
+    "hooks": Object {
+      "commit-msg": "commitlint -E",
+      "pre-commit": "lint-staged",
+    },
+  },
+  "lint-staged": Object {
+    "src/**/*.{js,json}": Array [
+      "eslint --fix",
+      "prettier --write",
+      "git add",
+    ],
+  },
+  "name": "awesome-project",
+  "prettier": Object {
+    "semi": false,
+    "singleQuote": true,
+    "trailingComma": "all",
+  },
+  "scripts": Object {
+    "commit": "git-cz",
+    "lint": "eslint 'src/**/*.{jsx,json}'",
+    "lint-staged": "lint-staged",
+  },
+}
+`;
+
 exports[`processors > package > processPackageJson should merge exist package.json with upcoming from configs 1`] = `
 Object {
   "config": Object {
