@@ -7,6 +7,8 @@ describe('hooks > postinstall >', () => {
   })
 
   it('should inject postinstall and uninstall hooks to the target project package.json', async () => {
+    expect.assertions(2)
+
     const packageJson = {
       name: 'awesome-project',
     }
@@ -20,9 +22,12 @@ describe('hooks > postinstall >', () => {
     expect(
       JSON.parse(vol.readFileSync('/target/package.json', 'utf8')),
     ).toMatchSnapshot()
+    expect(vol.readdirSync('/target')).toContain('configs')
   })
 
   it('should not do anything if hooks already injected', async () => {
+    expect.assertions(2)
+
     const packageJson = {
       name: 'awesome-project',
       scripts: {
@@ -40,5 +45,6 @@ describe('hooks > postinstall >', () => {
     expect(
       JSON.parse(vol.readFileSync('/target/package.json', 'utf8')),
     ).toMatchSnapshot()
+    expect(vol.readdirSync('/target')).toContain('configs')
   })
 })
