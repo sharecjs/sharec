@@ -17,7 +17,7 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "lint-staged": "lint-staged",
-    "postinstall": "./hooks/postinstall"
+    "postinstall": "node ./hooks/postinstall"
   },
   "lint-staged": {
     "*.js": [

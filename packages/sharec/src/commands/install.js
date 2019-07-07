@@ -9,8 +9,6 @@ const {
 } = require('../processors/package')
 
 async function install({ configsPath, targetPath, options }) {
-  if (!configsPath || configsPath === targetPath) return
-
   const spinner = ora({
     text: 'checking configuration 🔎',
     spinner: 'line',

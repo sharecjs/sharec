@@ -3,10 +3,6 @@
   "version": "2.0.4-alpha",
   "description": "",
   "main": "index.js",
-  "scripts": {
-    "postinstall": "sharec install",
-    "preuninstall": "sharec remove"
-  },
   "homapage": "https://lamartire.github.io/sharec/",
   "author": "lamartire",
   "keywords": [],
@@ -17,5 +13,9 @@
   "homepage": "https://github.com/lamartire/essential-javascript-config#readme",
   "dependencies": {
     "sharec": "^2.0.4-alpha"
+  },
+  "scripts": {
+    "postinstall": "sharec install",
+    "preuninstall": "sharec remove"
   }
 }

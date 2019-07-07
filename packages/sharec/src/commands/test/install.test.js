@@ -31,43 +31,6 @@ describe('commands > install >', () => {
 
   describe('configuration processing', () => {
     describe('invalid cases', () => {
-      it('should not do anything if target path equals to configs path', async () => {
-        expect.assertions(1)
-
-        const packageJson = {}
-        const dir = {
-          '/target/package.json': JSON.stringify(packageJson),
-        }
-
-        vol.fromJSON(dir, '/')
-
-        await install('/target', '/target')
-
-        expect(
-          JSON.parse(vol.readFileSync('/target/package.json', 'utf8')),
-        ).toEqual(packageJson)
-      })
-
-      it('should not do anything if configs path is not passed', async () => {
-        expect.assertions(1)
-
-        const packageJson = {}
-        const dir = {
-          '/target/package.json': JSON.stringify(packageJson),
-        }
-
-        vol.fromJSON(dir, '/')
-
-        await install({
-          configsPath: undefined,
-          targetPath: '/target',
-        })
-
-        expect(
-          JSON.parse(vol.readFileSync('/target/package.json', 'utf8')),
-        ).toEqual(packageJson)
-      })
-
       it('should stops if configuration directory is not exists', async () => {
         expect.assertions(1)
 
@@ -79,7 +42,10 @@ describe('commands > install >', () => {
 
         vol.fromJSON(dir, '/')
 
-        await install('/configuration-package', '/target')
+        await install({
+          configsPath: '/configuration-package',
+          targetPath: '/target',
+        })
 
         expect(
           JSON.parse(vol.readFileSync('/target/package.json', 'utf8')),

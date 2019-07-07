@@ -1,8 +1,10 @@
 #!/usr/bin/env node
 /* eslint-disable */
 const minimist = require('minimist')
-const postinstall = require('../src/hooks/postinstall')
+const postinstall = require('../src/commands/postinstall')
 
 ;(async () => {
-  await postinstall(process.env.INIT_CWD)
+  if (!process.env.PWD || process.env.PWD === process.env.INIT_CWD) return
+
+   await postinstall(process.env.INIT_CWD)
 })()

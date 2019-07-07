@@ -5,6 +5,8 @@ const sharec = require('../src')
 const { _, ...options } = minimist(process.argv.slice(2))
 
 ;(async () => {
+  if (!process.env.PWD || process.env.PWD === process.env.INIT_CWD) return
+
   const [command = 'install'] = _
 
   await sharec({

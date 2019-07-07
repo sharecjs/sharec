@@ -19,3 +19,9 @@ Object {
   },
 }
 `;
+
+exports[`hooks > postinstall > should not do anything if target path is not passed 1`] = `
+Object {
+  "name": "awesome-project",
+}
+`;

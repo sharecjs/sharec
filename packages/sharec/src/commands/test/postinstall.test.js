@@ -47,4 +47,22 @@ describe('hooks > postinstall >', () => {
     ).toMatchSnapshot()
     expect(vol.readdirSync('/target')).toContain('configs')
   })
+
+  it('should not do anything if target path is not passed', async () => {
+    expect.assertions(1)
+
+    const packageJson = {
+      name: 'awesome-project',
+    }
+    const dir = {
+      '/target/package.json': JSON.stringify(packageJson),
+    }
+    vol.fromJSON(dir)
+
+    await postinstall(undefined)
+
+    expect(
+      JSON.parse(vol.readFileSync('/target/package.json', 'utf8')),
+    ).toMatchSnapshot()
+  })
 })

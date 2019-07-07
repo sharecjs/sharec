@@ -2,6 +2,8 @@ const path = require('path')
 const { readDir, readFile, writeFile, makeDir } = require('../utils/fs')
 
 async function postinstall(targetPath) {
+  if (!targetPath) return
+
   const targetPackageJsonPath = path.join(targetPath, 'package.json')
   const rawTargetPackageJson = await readFile(targetPackageJsonPath, 'utf8')
   const { scripts, ...targetPackageJson } = JSON.parse(rawTargetPackageJson)
