@@ -1,71 +1,52 @@
 const ora = require('ora')
-const path = require('path')
-const { collectConfigsPaths } = require('../core/configs/collect')
-const { removeConfig } = require('../core/configs/remove')
-const { clearPackageJson } = require('../core/package/remove')
-const { getCurrentPackageJsonMetaData } = require('../core/package/extract')
+const removeTask = require('../tasks/remove')
 
 async function remove({ configsPath, targetPath }) {
   if (!configsPath || configsPath === targetPath) return
 
   const spinner = ora({
-    text: 'checking configuration 🔎',
+    text: 'removing configuration... 🗑',
     spinner: 'line',
     prefixText: 'sharec:',
     interval: 50,
   }).start()
-  const metaData = await getCurrentPackageJsonMetaData(targetPath)
-
-  if (!metaData || !metaData.injected) {
-    spinner.fail('configs is not injected! ⛔️')
-    return
-  }
-
-  const fullConfigsPath = path.join(configsPath, './configs')
-  let configs = null
 
   try {
-    configs = await collectConfigsPaths(fullConfigsPath)
-  } catch (err) {
-    spinner.fail('configs directory was not found! ⛔️')
-    return
-  }
-  spinner.start('removing configuration 🗑')
+    const { deps } = await removeTask({ configsPath, targetPath })
 
-  const standaloneConfigs = configs.filter(
-    filePath => !/(package\.json)/.test(filePath),
-  )
+    if (deps) {
+      const depsModificationMessage = [
+        'some dependencies were not removed because have been modified by user:',
+      ]
 
-  await Promise.all(
-    standaloneConfigs.map(configPath =>
-      removeConfig({
-        configsPath: fullConfigsPath,
-        filePath: configPath,
-        targetPath,
-      }),
-    ),
-  )
-  const modifiedDeps = await clearPackageJson(fullConfigsPath, targetPath)
+      depsModificationMessage.push(
+        ...Object.keys(deps).map(key => `${key}   ${deps[key]}`),
+      )
 
-  if (modifiedDeps) {
-    const depsModificationMessage = [
-      'some dependencies were not removed because have been modified by user:',
-    ]
+      spinner.warn(depsModificationMessage.join('\n'))
+    } else {
+      spinner.succeed('configuration removed, have a nice time! 🌈')
+    }
 
-    depsModificationMessage.push(
-      ...Object.keys(modifiedDeps).map(key => `${key}   ${modifiedDeps[key]}`),
+    console.info(
+      [
+        'sharec: for update dependencies run:',
+        'npm i',
+        'Have a nice time!',
+      ].join('\n'),
     )
+  } catch (err) {
+    const { message } = err
 
-    spinner.warn(depsModificationMessage.join('\n'))
-  } else {
-    spinner.succeed('configuration removed, have a nice time! 🌈')
+    if (message.includes('not installed')) {
+      spinner.fail('configs is not injected! ⛔️')
+    } else if (message.includes('ENOENT')) {
+      spinner.fail('configs directory was not found! ⛔️')
+    } else {
+      spinner.fail('unhandeled error! 💥')
+      console.error(err)
+    }
   }
-
-  console.info(
-    ['sharec: for update dependencies run:', 'npm i', 'Have a nice time!'].join(
-      '\n',
-    ),
-  )
 }
 
 module.exports = remove

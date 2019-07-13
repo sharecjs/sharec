@@ -140,6 +140,8 @@ describe('commands > remove >', () => {
     })
 
     it('should remove configuration from package.json', async () => {
+      expect.assertions(1)
+
       const dir = {
         '/target/package.json': JSON.stringify(packageJson5),
         '/configuration-package/configs/package.json': JSON.stringify(
@@ -159,6 +161,8 @@ describe('commands > remove >', () => {
     })
 
     it('should remove configuration from package.json and other matched files', async () => {
+      expect.assertions(3)
+
       const dir = {
         '/target/package.json': JSON.stringify(packageJson5),
         '/target/.eslintrc.yml': yamlEslint04,
