@@ -1,14 +1,12 @@
 const ora = require('ora')
 const path = require('path')
-const { collectConfigsPaths } = require('../core/collector')
-const { backupConfigs } = require('../core/backuper')
-const { processConfig } = require('../processors/configs')
-const {
-  getCurrentPackageJsonMetaData,
-  processPackageJson,
-} = require('../processors/package')
+const { collectConfigsPaths } = require('../core/configs/collect')
+// const { backupConfigs } = require('../core/backuper')
+const { installConfig } = require('../core/configs/install')
+const { getCurrentPackageJsonMetaData } = require('../core/package/extract')
+const { processPackageJson } = require('../core/package/install')
 
-async function install({ configsPath, targetPath, options }) {
+async function install({ configsPath, targetPath, options, version }) {
   const spinner = ora({
     text: 'checking configuration 🔎',
     spinner: 'line',
@@ -32,11 +30,12 @@ async function install({ configsPath, targetPath, options }) {
     return
   }
 
-  spinner.start('backuping origin configs 💾')
-  await backupConfigs({
-    targetPath,
-    configs,
-  })
+  // TODO: return that or remove
+  // spinner.start('backuping origin configs 💾')
+  // await backupConfigs({
+  //   targetPath,
+  //   configs,
+  // })
   spinner.start('applying configuration 🚀')
 
   const standaloneConfigs = configs.filter(
@@ -45,7 +44,7 @@ async function install({ configsPath, targetPath, options }) {
 
   await Promise.all(
     standaloneConfigs.map(configPath =>
-      processConfig({
+      installConfig({
         configsPath: fullConfigsPath,
         filePath: configPath,
         targetPath,

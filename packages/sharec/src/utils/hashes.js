@@ -38,10 +38,8 @@ const hashesDiff = (a = {}, b = {}) => {
   if (!changes) return {}
 
   changes.forEach(change => {
-    if (change.kind === 'A') {
-      // change // ?
-      // console.log(change.kind)
-    } else if (change.kind !== 'N') {
+    // TODO: handle changes with kind A
+    if (change.kind !== 'N' && change.kind !== 'A') {
       const { path, lhs } = change
 
       set(resultDiff, path, lhs)
@@ -79,8 +77,6 @@ module.exports = {
   deepMergeHashesWithKeys,
   mergeHashesWithoutKeys,
   deepMergeHashesWithoutKeys,
-
   hashesDiff,
-
   shallowHashesChangesDiff,
 }

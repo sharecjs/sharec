@@ -1,0 +1,68 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`processors > configs > installConfig should merge JSON configs 1`] = `
+Object {
+  "env": Object {
+    "browser": true,
+    "es6": true,
+    "jest": true,
+    "node": true,
+  },
+  "extends": "airbnb",
+  "globals": Object {
+    "bar": true,
+    "foo": true,
+  },
+  "parserOptions": Object {
+    "ecmaFeatures": Object {
+      "spread": true,
+    },
+    "ecmaVersion": 7,
+    "parser": "babel-eslint",
+    "sourceType": "module",
+  },
+  "rules": Object {
+    "max-len": Array [
+      "warn",
+      120,
+      4,
+      Object {
+        "ignoreComments": true,
+        "ignoreStrings": false,
+        "ignoreUrls": false,
+      },
+    ],
+    "no-console": 0,
+    "space-before-function-paren": 1,
+  },
+}
+`;
+
+exports[`processors > configs > installConfig should merge YAML configs 1`] = `
+"env:
+  browser: true
+  es6: true
+  node: true
+  jest: true
+globals:
+  foo: true
+  bar: true
+extends: airbnb
+parserOptions:
+  parser: babel-eslint
+  ecmaVersion: 7
+  ecmaFeatures:
+    spread: true
+  sourceType: module
+rules:
+  space-before-function-paren: 1
+  no-console: 0
+  max-len:
+    - warn
+    - 120
+    - 4
+    - ignoreUrls: false
+      ignoreComments: true
+      ignoreStrings: false
+"
+`;

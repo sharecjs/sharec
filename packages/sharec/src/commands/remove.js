@@ -1,11 +1,9 @@
 const ora = require('ora')
 const path = require('path')
-const { collectConfigsPaths } = require('../core/collector')
-const { removeConfig } = require('../processors/configs')
-const {
-  getCurrentPackageJsonMetaData,
-  clearPackageJson,
-} = require('../processors/package')
+const { collectConfigsPaths } = require('../core/configs/collect')
+const { removeConfig } = require('../core/configs/remove')
+const { clearPackageJson } = require('../core/package/remove')
+const { getCurrentPackageJsonMetaData } = require('../core/package/extract')
 
 async function remove({ configsPath, targetPath }) {
   if (!configsPath || configsPath === targetPath) return
