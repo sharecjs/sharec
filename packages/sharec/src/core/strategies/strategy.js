@@ -62,7 +62,7 @@ class Strategy {
     }
   }
 
-  mergeJSON(a, b) {
+  mergeJSON(a = {}, b = {}) {
     return {
       ...a,
       ...b,

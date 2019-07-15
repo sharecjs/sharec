@@ -84,7 +84,7 @@ describe('commands > install >', () => {
 
     describe('valid cases', () => {
       it('should merge all configs from target path', async () => {
-        expect.assertions(5)
+        expect.assertions(6)
 
         const dir = {
           '/target/.eslintrc': JSON.stringify(eslint01),
@@ -94,6 +94,13 @@ describe('commands > install >', () => {
           '/configuration-package/configs/.eslintrc': JSON.stringify(eslint02),
           '/configuration-package/configs/.eslintrc.yaml': yamlEslint02,
           '/configuration-package/configs/.editorconfig': 'bar',
+          '/configuration-package/configs/.foo': JSON.stringify({
+            foo: 'bar',
+            bar: {
+              foo: 'bar',
+              bar: ['foo', 'bar'],
+            },
+          }),
           '/configuration-package/configs/babelrc.js': JSON.stringify(babel02),
           '/configuration-package/configs/package.json': JSON.stringify(
             packageJson02,
@@ -121,6 +128,9 @@ describe('commands > install >', () => {
         ).toMatchSnapshot()
         expect(
           vol.readFileSync('/target/package.json', 'utf8'),
+        ).toMatchSnapshot()
+        expect(
+          JSON.parse(vol.readFileSync('/target/.foo', 'utf8')),
         ).toMatchSnapshot()
       })
 
