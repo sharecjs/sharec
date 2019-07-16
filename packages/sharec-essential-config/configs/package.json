@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "commit": "",
+    "commit": "git-cz",
     "lint": "eslint 'src/**/*.{js,jsx,json}'",
     "lint-staged": "lint-staged"
   },
