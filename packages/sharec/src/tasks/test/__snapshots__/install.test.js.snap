@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`commands > install > configuration processing valid cases should merge all configs from target path 1`] = `"bar"`;
+exports[`tasks > install > should install configuration to the target project 1`] = `"bar"`;
 
-exports[`commands > install > configuration processing valid cases should merge all configs from target path 2`] = `
+exports[`tasks > install > should install configuration to the target project 2`] = `
 "{
   \\"ignore\\": [
     \\"*.babelrc\\"
@@ -46,7 +46,7 @@ exports[`commands > install > configuration processing valid cases should merge 
 }"
 `;
 
-exports[`commands > install > configuration processing valid cases should merge all configs from target path 3`] = `
+exports[`tasks > install > should install configuration to the target project 3`] = `
 Object {
   "env": Object {
     "browser": true,
@@ -84,7 +84,7 @@ Object {
 }
 `;
 
-exports[`commands > install > configuration processing valid cases should merge all configs from target path 4`] = `
+exports[`tasks > install > should install configuration to the target project 4`] = `
 "env:
   browser: true
   es6: true
@@ -113,7 +113,7 @@ rules:
 "
 `;
 
-exports[`commands > install > configuration processing valid cases should merge all configs from target path 5`] = `
+exports[`tasks > install > should install configuration to the target project 5`] = `
 "{
   \\"name\\": \\"my-awesome-package\\",
   \\"scripts\\": {
@@ -126,17 +126,4 @@ exports[`commands > install > configuration processing valid cases should merge 
     \\"injected\\": true
   }
 }"
-`;
-
-exports[`commands > install > configuration processing valid cases should merge all configs from target path 6`] = `
-Object {
-  "bar": Object {
-    "bar": Array [
-      "foo",
-      "bar",
-    ],
-    "foo": "bar",
-  },
-  "foo": "bar",
-}
 `;

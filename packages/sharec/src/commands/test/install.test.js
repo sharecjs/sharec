@@ -84,7 +84,7 @@ describe('commands > install >', () => {
 
     describe('valid cases', () => {
       it('should merge all configs from target path', async () => {
-        expect.assertions(5)
+        expect.assertions(6)
 
         const dir = {
           '/target/.eslintrc': JSON.stringify(eslint01),
@@ -94,6 +94,13 @@ describe('commands > install >', () => {
           '/configuration-package/configs/.eslintrc': JSON.stringify(eslint02),
           '/configuration-package/configs/.eslintrc.yaml': yamlEslint02,
           '/configuration-package/configs/.editorconfig': 'bar',
+          '/configuration-package/configs/.foo': JSON.stringify({
+            foo: 'bar',
+            bar: {
+              foo: 'bar',
+              bar: ['foo', 'bar'],
+            },
+          }),
           '/configuration-package/configs/babelrc.js': JSON.stringify(babel02),
           '/configuration-package/configs/package.json': JSON.stringify(
             packageJson02,
@@ -122,38 +129,41 @@ describe('commands > install >', () => {
         expect(
           vol.readFileSync('/target/package.json', 'utf8'),
         ).toMatchSnapshot()
-      })
-
-      it('should backup origin configuration to sharec-lock.json file', async () => {
-        expect.assertions(1)
-
-        const dir = {
-          '/target/.eslintrc': JSON.stringify(eslint01),
-          '/target/babelrc.js': JSON.stringify(babel01),
-          '/target/.eslintrc.yaml': yamlEslint01,
-          '/target/package.json': JSON.stringify(packageJson01, null, 2),
-          '/configuration-package/configs/.eslintrc': JSON.stringify(eslint02),
-          '/configuration-package/configs/.eslintrc.yaml': yamlEslint02,
-          '/configuration-package/configs/.editorconfig': 'bar',
-          '/configuration-package/configs/babelrc.js': JSON.stringify(babel02),
-          '/configuration-package/configs/package.json': JSON.stringify(
-            packageJson02,
-            null,
-            2,
-          ),
-        }
-
-        vol.fromJSON(dir, '/')
-
-        await install({
-          configsPath: '/configuration-package',
-          targetPath: '/target',
-        })
-
         expect(
-          vol.readFileSync('/target/sharec-lock.json', 'utf8'),
+          JSON.parse(vol.readFileSync('/target/.foo', 'utf8')),
         ).toMatchSnapshot()
       })
+
+      //       it('should backup origin configuration to sharec-lock.json file', async () => {
+      //         expect.assertions(1)
+      //
+      //         const dir = {
+      //           '/target/.eslintrc': JSON.stringify(eslint01),
+      //           '/target/babelrc.js': JSON.stringify(babel01),
+      //           '/target/.eslintrc.yaml': yamlEslint01,
+      //           '/target/package.json': JSON.stringify(packageJson01, null, 2),
+      //           '/configuration-package/configs/.eslintrc': JSON.stringify(eslint02),
+      //           '/configuration-package/configs/.eslintrc.yaml': yamlEslint02,
+      //           '/configuration-package/configs/.editorconfig': 'bar',
+      //           '/configuration-package/configs/babelrc.js': JSON.stringify(babel02),
+      //           '/configuration-package/configs/package.json': JSON.stringify(
+      //             packageJson02,
+      //             null,
+      //             2,
+      //           ),
+      //         }
+      //
+      //         vol.fromJSON(dir, '/')
+      //
+      //         await install({
+      //           configsPath: '/configuration-package',
+      //           targetPath: '/target',
+      //         })
+      //
+      //         expect(
+      //           vol.readFileSync('/target/sharec-lock.json', 'utf8'),
+      //         ).toMatchSnapshot()
+      //       })
     })
   })
 })

@@ -1,4 +1,5 @@
 jest.mock('utils/fs', () => {
+  const slash = require('slash')
   const fs = require('memfs').promises
 
   return {
@@ -9,5 +10,7 @@ jest.mock('utils/fs', () => {
     writeFile: fs.writeFile,
     lstat: fs.lstat,
     removeFile: fs.unlink,
+    // TODO: replace with actual function
+    normalizePathSlashes: paths => paths.map(el => slash(el)),
   }
 })
