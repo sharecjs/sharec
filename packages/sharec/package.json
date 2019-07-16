@@ -1,12 +1,14 @@
 {
   "name": "sharec",
   "version": "2.0.0-beta",
-  "description": "",
+  "description": "The secret weapon against bloat configuration",
   "keywords": [
     "configuration",
     "sharec",
     "sharing",
-    "reusable code"
+    "reusable code",
+    "codemods",
+    "codegeneration"
   ],
   "homapage": "https://lamartire.github.io/sharec/",
   "author": "Konstantin Epishev <lamartire@gmail.com>",
