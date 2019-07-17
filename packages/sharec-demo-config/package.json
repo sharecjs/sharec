@@ -1,6 +1,6 @@
 {
   "name": "sharec-demo-config",
-  "version": "2.0.2-beta",
+  "version": "2.0.3-beta",
   "description": "",
   "scripts": {
     "postinstall": "sharec install",
