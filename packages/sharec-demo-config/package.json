@@ -11,7 +11,7 @@
   "keywords": [],
   "license": "MIT",
   "dependencies": {
-    "sharec": "^2.0.1-beta"
+    "sharec": "^2.0.3-beta"
   },
   "gitHead": "8b056dc9aedf49a712b84b4d47ea9fa1cea45b08"
 }
