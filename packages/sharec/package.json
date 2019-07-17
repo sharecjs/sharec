@@ -1,6 +1,6 @@
 {
   "name": "sharec",
-  "version": "2.0.1-beta",
+  "version": "2.0.2-beta",
   "description": "The secret weapon against bloat configuration",
   "keywords": [
     "configuration",
@@ -18,8 +18,7 @@
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch",
-    "lint-staged": "lint-staged",
-    "postinstall": "node ./bin/postinstall"
+    "lint-staged": "lint-staged"
   },
   "lint-staged": {
     "*.js": [
