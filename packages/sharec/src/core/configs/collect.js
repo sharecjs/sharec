@@ -42,7 +42,7 @@ const collectConfigsPaths = async (configsPath, subPath = '') => {
     }
   }
 
-  return files
+  return files.filter(file => !/(\.?lock)(\S+)?$/.test(file))
 }
 
 module.exports = {

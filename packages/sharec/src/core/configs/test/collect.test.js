@@ -94,5 +94,22 @@ describe('core > collector >', () => {
 
       expect(files).toEqual([])
     })
+
+    it('should ignore lock files', async () => {
+      expect.assertions(2)
+
+      const dir = {
+        'package.json': 'foo',
+        '.eslintrc': 'bar',
+        'package-lock.json': 'baz',
+        'yarn.lock': 'foo',
+      }
+      vol.fromJSON(dir, '/configs')
+
+      const files = await collectConfigsPaths('/configs')
+
+      expect(files).not.toContain('package-lock.json')
+      expect(files).not.toContain('yarn.lock')
+    })
   })
 })
