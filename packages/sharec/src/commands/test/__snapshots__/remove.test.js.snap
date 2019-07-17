@@ -189,38 +189,3 @@ Object {
   },
 }
 `;
-
-exports[`commands > remove > valid cases should remove configuration from target all files and delete all empty 3`] = `
-Object {
-  "env": Object {
-    "test": Object {
-      "presets": Array [
-        "stage-3",
-      ],
-    },
-  },
-  "plugins": Array [
-    Array [
-      "syntax-dynamic-import",
-      Object {
-        "foo": "baz",
-      },
-    ],
-  ],
-  "presets": Array [
-    Array [
-      "env",
-      Object {
-        "modules": false,
-        "targets": Object {
-          "browsers": Array [
-            "> 1%",
-            "last 2 versions",
-            "not ie > 0",
-          ],
-        },
-      },
-    ],
-  ],
-}
-`;

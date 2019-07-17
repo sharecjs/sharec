@@ -118,7 +118,7 @@ describe('commands > remove >', () => {
       const dir = {
         '/target/package.json': JSON.stringify(packageJson),
         '/target/.eslintrc': JSON.stringify(eslint04),
-        '/target/.babelrc': JSON.stringify(babel10),
+        '/target/.babelrc': JSON.stringify(babel11),
         '/configuration-package/configs/.eslintrc': JSON.stringify(eslint05),
         '/configuration-package/configs/.babelrc': JSON.stringify(babel11),
       }
@@ -136,7 +136,7 @@ describe('commands > remove >', () => {
       expect(
         JSON.parse(vol.readFileSync('/target/.eslintrc', 'utf8')),
       ).toMatchSnapshot()
-      expect(JSON.parse(vol.readFileSync('/target/.babelrc'))).toMatchSnapshot()
+      expect(vol.readdirSync('/target')).not.toContain('.babelrc')
     })
 
     it('should remove configuration from package.json', async () => {
@@ -161,7 +161,7 @@ describe('commands > remove >', () => {
     })
 
     it('should remove configuration from package.json and other matched files', async () => {
-      expect.assertions(3)
+      expect.assertions(4)
 
       const dir = {
         '/target/package.json': JSON.stringify(packageJson5),
@@ -170,6 +170,7 @@ describe('commands > remove >', () => {
         '/configuration-package/configs/package.json': JSON.stringify(
           packageJson6,
         ),
+        '/configuration-package/package-lock.json': 'foo',
         '/configuration-package/configs/.eslintrc.yml': yamlEslint05,
         '/configuration-package/configs/.babelrc': JSON.stringify(babel11),
       }
@@ -187,6 +188,7 @@ describe('commands > remove >', () => {
       expect(
         JSON.parse(vol.readFileSync('/target/package.json')),
       ).toMatchSnapshot()
+      expect(vol.readdirSync('/target')).not.toContain('package-lock.json')
     })
   })
 })
