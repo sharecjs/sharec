@@ -6,7 +6,7 @@
     "postinstall": "sharec install",
     "preuninstall": "sharec remove"
   },
-  "homapage": "https://lamartire.github.io/sharec/",
+  "homapage": "https://github.com/lamartire/sharec/tree/master/packages/sharec-demo-config",
   "author": "",
   "keywords": [],
   "license": "MIT",
