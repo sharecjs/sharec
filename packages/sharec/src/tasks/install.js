@@ -26,7 +26,7 @@ async function install({ configsPath, targetPath, options }) {
       }),
     ),
   )
-  await processPackageJson(configsPath, targetPath)
+  await processPackageJson(fullConfigsPath, targetPath)
 }
 
 module.exports = install

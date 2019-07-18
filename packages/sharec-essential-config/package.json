@@ -8,9 +8,9 @@
   "keywords": [],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/lamartire/essential-javascript-config/issues"
+    "url": "https://github.com/lamartire/sharec"
   },
-  "homepage": "https://github.com/lamartire/essential-javascript-config#readme",
+  "homepage": "https://github.com/lamartire/sharec/tree/master/packages/sharec-essential-config",
   "dependencies": {
     "sharec": "^2.1.0-beta"
   },
