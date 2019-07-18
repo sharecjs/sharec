@@ -1,6 +1,6 @@
 {
   "name": "sharec-demo-config",
-  "version": "2.2.0-beta",
+  "version": "2.2.1-beta",
   "description": "",
   "scripts": {
     "postinstall": "sharec install",
@@ -11,7 +11,7 @@
   "keywords": [],
   "license": "MIT",
   "dependencies": {
-    "sharec": "^2.2.0-beta"
+    "sharec": "^2.2.1-beta"
   },
   "gitHead": "8b056dc9aedf49a712b84b4d47ea9fa1cea45b08"
 }
