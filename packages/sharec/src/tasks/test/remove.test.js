@@ -108,24 +108,6 @@ describe('tasks > remove >', () => {
     ).toMatchSnapshot()
   })
 
-  it('should throw an error if configuration was not installed', async () => {
-    expect.assertions(1)
-
-    const dir = {
-      '/target/package.json': JSON.stringify({}, null, 2),
-    }
-    vol.fromJSON(dir, '/')
-
-    try {
-      await remove({
-        targetPath: '/target',
-        configsPath: '/configuration-package',
-      })
-    } catch (err) {
-      expect(err.message).toBe('Configs is not installed!')
-    }
-  })
-
   it('should throw an error if configuration package was not found', async () => {
     expect.assertions(1)
 
