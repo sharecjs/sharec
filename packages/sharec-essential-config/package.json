@@ -1,6 +1,6 @@
 {
   "name": "sharec-essential-config",
-  "version": "2.3.0-beta",
+  "version": "2.4.0-beta",
   "description": "",
   "main": "index.js",
   "homapage": "https://lamartire.github.io/sharec/",
@@ -12,7 +12,7 @@
   },
   "homepage": "https://github.com/lamartire/sharec/tree/master/packages/sharec-essential-config",
   "dependencies": {
-    "sharec": "^2.3.0-beta"
+    "sharec": "^2.4.0-beta"
   },
   "scripts": {
     "postinstall": "sharec install",
