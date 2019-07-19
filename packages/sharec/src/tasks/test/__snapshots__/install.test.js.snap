@@ -195,7 +195,7 @@ exports[`tasks > install > should install configuration to the target project 5`
     \\"prettier\\": \\"^1.17.1\\"
   },
   \\"sharec\\": {
-    \\"injected\\": true
+    \\"version\\": \\"1.0.0\\"
   }
 }"
 `;

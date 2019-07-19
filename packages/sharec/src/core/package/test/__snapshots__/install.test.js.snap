@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`core > package > install > processPackageJson should merge exist package.json with upcoming from configs 1`] = `
+exports[`core > package > install > installPackageJson should merge exist package.json with upcoming from configs 1`] = `
 Object {
   "config": Object {
     "commitizen": Object {
@@ -82,7 +82,7 @@ Object {
     "lint-staged": "lint-staged",
   },
   "sharec": Object {
-    "injected": true,
+    "version": "1.0.0",
   },
 }
 `;

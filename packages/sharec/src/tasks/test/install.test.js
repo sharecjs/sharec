@@ -52,6 +52,7 @@ describe('tasks > install >', () => {
     await install({
       configsPath: '/configuration-package',
       targetPath: '/target',
+      configsVersion: '1.0.0',
     })
 
     expect(vol.readFileSync('/target/.editorconfig', 'utf8')).toMatchSnapshot()
@@ -63,19 +64,15 @@ describe('tasks > install >', () => {
     expect(vol.readFileSync('/target/package.json', 'utf8')).toMatchSnapshot()
   })
 
-  it('should throw an error if configuration already installed', async () => {
+  it('should throw an error if configuration with the same version already installed', async () => {
     expect.assertions(1)
 
     const dir = {
-      '/target/package.json': JSON.stringify(
-        {
-          sharec: {
-            injected: true,
-          },
+      '/target/package.json': JSON.stringify({
+        sharec: {
+          version: '1.0.0',
         },
-        null,
-        2,
-      ),
+      }),
       '/configuration-package/configs/.editorconfig': 'bar',
     }
     vol.fromJSON(dir, '/')
@@ -84,6 +81,7 @@ describe('tasks > install >', () => {
       await install({
         configsPath: '/configuration-package',
         targetPath: '/target',
+        configsVersion: '1.0.0',
       })
     } catch (err) {
       expect(err.message).toBe('Configs already installed!')
@@ -94,15 +92,7 @@ describe('tasks > install >', () => {
     expect.assertions(1)
 
     const dir = {
-      '/target/package.json': JSON.stringify(
-        {
-          sharec: {
-            injected: true,
-          },
-        },
-        null,
-        2,
-      ),
+      '/target/package.json': JSON.stringify({}),
     }
     vol.fromJSON(dir, '/')
 
