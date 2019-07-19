@@ -5,11 +5,10 @@ const { clearPackageJson } = require('../core/package/remove')
 const { getCurrentPackageJsonMetaData } = require('../core/package/extract')
 
 async function remove({ configsPath, targetPath }) {
-  const res = {}
   const metaData = await getCurrentPackageJsonMetaData(targetPath)
 
-  if (!metaData || !metaData.injected) {
-    throw new Error('Configs is not installed!')
+  if (!metaData) {
+    return
   }
 
   const fullConfigsPath = path.join(configsPath, './configs')
@@ -18,24 +17,18 @@ async function remove({ configsPath, targetPath }) {
     filePath => !/(package\.json)/.test(filePath),
   )
 
-  await Promise.all(
-    standaloneConfigs.map(configPath =>
-      removeConfig({
-        configsPath: fullConfigsPath,
-        filePath: configPath,
-        targetPath,
-      }),
-    ),
-  )
-  const modifiedDeps = await clearPackageJson(fullConfigsPath, targetPath)
-
-  if (modifiedDeps) {
-    Object.assign(res, {
-      deps: modifiedDeps,
-    })
-  }
-
-  return res
+  try {
+    await Promise.all(
+      standaloneConfigs.map(configPath =>
+        removeConfig({
+          configsPath: fullConfigsPath,
+          filePath: configPath,
+          targetPath,
+        }),
+      ),
+    )
+    await clearPackageJson(fullConfigsPath, targetPath)
+  } catch (err) {}
 }
 
 module.exports = remove
