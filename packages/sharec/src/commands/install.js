@@ -1,5 +1,6 @@
 const ora = require('ora')
 const installTask = require('../tasks/install')
+const installedMessage = require('../messages/installed')
 
 async function install({ configsPath, targetPath, options, version }) {
   const spinner = ora({
@@ -13,14 +14,7 @@ async function install({ configsPath, targetPath, options, version }) {
     await installTask({ configsPath, targetPath, options })
 
     spinner.succeed('configuration applyed, have a nice time! 🌈')
-
-    console.info(
-      [
-        'sharec: for install injected dependencies run:',
-        'npm i',
-        'Have a nice time!',
-      ].join('\n'),
-    )
+    installedMessage()
   } catch (err) {
     const { message } = err
 

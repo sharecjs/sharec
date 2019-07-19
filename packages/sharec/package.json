@@ -109,6 +109,8 @@
     "prettier": "^1.18.2"
   },
   "dependencies": {
+    "boxen": "^4.1.0",
+    "chalk": "^2.4.2",
     "deep-diff": "^1.0.2",
     "deepmerge": "^3.2.0",
     "fast-glob": "^3.0.0",

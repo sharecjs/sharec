@@ -12,29 +12,9 @@ async function remove({ configsPath, targetPath }) {
   }).start()
 
   try {
-    const { deps } = await removeTask({ configsPath, targetPath })
+    await removeTask({ configsPath, targetPath })
 
-    if (deps) {
-      const depsModificationMessage = [
-        'some dependencies were not removed because have been modified by user:',
-      ]
-
-      depsModificationMessage.push(
-        ...Object.keys(deps).map(key => `${key}   ${deps[key]}`),
-      )
-
-      spinner.warn(depsModificationMessage.join('\n'))
-    } else {
-      spinner.succeed('configuration removed, have a nice time! 🌈')
-    }
-
-    console.info(
-      [
-        'sharec: for update dependencies run:',
-        'npm i',
-        'Have a nice time!',
-      ].join('\n'),
-    )
+    spinner.succeed('configuration removed, have a nice time! 🌈')
   } catch (err) {
     const { message } = err
 
