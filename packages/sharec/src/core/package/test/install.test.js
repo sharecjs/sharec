@@ -2,7 +2,7 @@ const { vol } = require('memfs')
 const omit = require('lodash/omit')
 const pick = require('lodash/pick')
 const {
-  processPackageJson,
+  installPackageJson,
   injectDependencies,
   injectMetaData,
 } = require('../install')
@@ -16,7 +16,7 @@ describe('core > package > install >', () => {
     vol.reset()
   })
 
-  describe('processPackageJson', () => {
+  describe('installPackageJson', () => {
     it('should merge exist package.json with upcoming from configs', async () => {
       expect.assertions(1)
 
@@ -26,7 +26,11 @@ describe('core > package > install >', () => {
       }
       vol.fromJSON(dir, '/')
 
-      await processPackageJson('/configs', '/target')
+      await installPackageJson({
+        configsPath: '/configs',
+        targetPath: '/target',
+        configsVersion: '1.0.0',
+      })
 
       expect(
         JSON.parse(vol.readFileSync('/target/package.json', 'utf8')),

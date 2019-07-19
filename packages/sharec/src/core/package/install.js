@@ -4,7 +4,11 @@ const { readFile, writeFile } = require('../../utils/fs')
 const { resolveConfigStrategy } = require('../strategies/resolve')
 const { extractDependencies, extractConfigs } = require('./extract')
 
-const processPackageJson = async (configsPath, targetPath) => {
+const installPackageJson = async ({
+  configsPath,
+  configsVersion,
+  targetPath,
+}) => {
   const targetPackageJsonPath = path.resolve(targetPath, 'package.json')
   const rawTargetPackageJson = await readFile(targetPackageJsonPath)
   const targetPackageJson = JSON.parse(rawTargetPackageJson)
@@ -21,13 +25,13 @@ const processPackageJson = async (configsPath, targetPath) => {
       injectConfigs(newConfigs),
       injectDependencies(newDependencies),
       injectMetaData({
-        injected: true,
+        version: configsVersion,
       }),
     )(targetPackageJson)
   } catch (err) {
     newPackageJson = pipe(
       injectMetaData({
-        injected: true,
+        version: configsVersion,
       }),
     )(targetPackageJson)
   }
@@ -81,7 +85,7 @@ const injectMetaData = metaData => packageJson => ({
 })
 
 module.exports = {
-  processPackageJson,
+  installPackageJson,
   injectDependencies,
   injectConfigs,
   injectMetaData,

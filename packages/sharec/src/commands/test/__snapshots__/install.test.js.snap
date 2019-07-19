@@ -195,7 +195,7 @@ exports[`commands > install > configuration processing valid cases should merge 
     \\"prettier\\": \\"^1.17.1\\"
   },
   \\"sharec\\": {
-    \\"injected\\": true
+    \\"version\\": \\"1.0.0\\"
   }
 }"
 `;

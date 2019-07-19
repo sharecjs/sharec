@@ -37,6 +37,9 @@ describe('commands > install >', () => {
         const packageJson = {}
         const dir = {
           '/target/package.json': JSON.stringify(packageJson),
+          '/configuration-package/package.json': JSON.stringify({
+            version: '1.0.0',
+          }),
           '/configuration-package/.editorconfig': 'bar',
         }
 
@@ -52,20 +55,21 @@ describe('commands > install >', () => {
         ).toEqual(packageJson)
       })
 
-      it('should not do anything if config already injected', async () => {
+      it('should not do anything if configs versions are equal already injected', async () => {
         expect.assertions(1)
 
         const packageJson = {
           sharec: {
-            injected: true,
+            version: '1.0.0',
           },
         }
         const dir = {
           '/target/package.json': JSON.stringify(packageJson, null, 2),
+          '/configuration-package/package.json': JSON.stringify({
+            version: '1.0.0',
+          }),
           '/configuration-package/configs/package.json': JSON.stringify(
             packageJson01,
-            null,
-            2,
           ),
         }
 
@@ -91,6 +95,9 @@ describe('commands > install >', () => {
           '/target/babelrc.js': JSON.stringify(babel01),
           '/target/.eslintrc.yaml': yamlEslint01,
           '/target/package.json': JSON.stringify(packageJson01, null, 2),
+          '/configuration-package/package.json': JSON.stringify({
+            version: '1.0.0',
+          }),
           '/configuration-package/configs/.eslintrc': JSON.stringify(eslint02),
           '/configuration-package/configs/.eslintrc.yaml': yamlEslint02,
           '/configuration-package/configs/.editorconfig': 'bar',
@@ -105,8 +112,6 @@ describe('commands > install >', () => {
           '/configuration-package/configs/package-lock.json': 'bar',
           '/configuration-package/configs/package.json': JSON.stringify(
             packageJson02,
-            null,
-            2,
           ),
         }
 
