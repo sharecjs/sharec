@@ -2,15 +2,17 @@
   "name": "sharec-essential-config",
   "version": "2.4.0-beta",
   "description": "",
-  "main": "index.js",
-  "homapage": "https://lamartire.github.io/sharec/",
-  "author": "lamartire",
+  "author": "Konstantin Epishev <lamartire@gmail.com>",
   "keywords": [],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/lamartire/sharec"
   },
   "homepage": "https://github.com/lamartire/sharec/tree/master/packages/sharec-essential-config",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lamartire/sharec"
+  },
   "dependencies": {
     "sharec": "^2.4.0-beta"
   },

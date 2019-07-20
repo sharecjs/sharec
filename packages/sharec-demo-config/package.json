@@ -1,13 +1,17 @@
 {
   "name": "sharec-demo-config",
   "version": "2.4.0-beta",
-  "description": "",
+  "description": "Sharec example config for core functionality demonstration",
   "scripts": {
     "postinstall": "sharec install",
     "preuninstall": "sharec remove"
   },
-  "homapage": "https://github.com/lamartire/sharec/tree/master/packages/sharec-demo-config",
-  "author": "",
+  "homepage": "https://github.com/lamartire/sharec/tree/master/packages/sharec-demo-config",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lamartire/sharec"
+  },
+  "author": "Konstantin Epishev <lamartire@gmail.com>",
   "keywords": [],
   "license": "MIT",
   "dependencies": {

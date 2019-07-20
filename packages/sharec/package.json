@@ -10,7 +10,11 @@
     "codemods",
     "codegeneration"
   ],
-  "homapage": "https://lamartire.github.io/sharec/",
+  "homepage": "https://lamartire.github.io/sharec/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lamartire/sharec"
+  },
   "author": "Konstantin Epishev <lamartire@gmail.com>",
   "license": "MIT",
   "main": "./src/sharec.js",
