@@ -14,8 +14,22 @@ projects, keep your code up to date and starts new projects in one command.
 
 ## Usage
 
-Check README in [sharec](packages/sharec) package or examine [official demo config](packages/sharec-demo-config)
-with some clear installation manual.
+1. Create configuration project and init `npm` inside.
+2. Add `posintall` and `uninstall` scripts to root `package.json` file:
+```json
+"scripts": {
+  "postinstall": "sharec install",
+  "preuninstall": "sharec remove"
+}
+```
+3. Create `configs` directory.
+4. Place some configuration files to the created `configs` directory.
+5. Create `package.json` file inside `configs` directory and add required dependencies for tool what you need.
+6. Publish configuration with `npm publish` command or just push it.
+7. Install it wherever you want with `npm install` command.
+
+If you want read more detailed manual – look at [official demo config](packages/sharec-demo-config)
+and check [sharec](packages/sharec) package if you looking for API reference.
 
 ## Example
 
@@ -119,5 +133,3 @@ To this:
   }
 }
 ```
-
-And forever forgot about configs-hell!
