@@ -1,38 +1,69 @@
 # Sharec [![Build Status](https://travis-ci.org/lamartire/sharec.svg?branch=master)](https://travis-ci.org/lamartire/sharec) [![Build status](https://ci.appveyor.com/api/projects/status/mjtiauhp4xmvr9w7/branch/master?svg=true)](https://ci.appveyor.com/project/lamartire/sharec/branch/master)
 
-> 📦 Store your configs in one place and share between projects without any pain
+Sharec allows you install configuration via CLI with short and friendly commands.
+Use it in your configuration packages.
 
 ## Supported configs
 
-`sharec` can merge, replace and copy configs.
+Sharec can merge `.yaml` and `.json`. Other files manages with just copying or deleting.
 
-Merge feature now available for `*.json` and `package.json` based configs. `*.js` based and other types of configs will be just replaced.
+Some tools have difficult and very specific configuration files (`eslint`, `babel` etc.),
+and sharec provide strategies for this purposes.
 
-### Strategies
-
-`sharec` using strategies for define config merging flow. There are following strategies:
+For this moment, sharec provides strategies for following tools:
 
 - `eslint`
 - `babel`
+- `yaspeller`
 
-Other files will be merged by `common` strategy (shallow merging).
+You can create your own strategy and open pull request, or request it in the project issues.
+
+## Sharec-powered configuration lifecycle
+
+Sharec uses a very simple and serial flow:
+
+1. Check current configuration state
+2. Removing old configuration
+3. Installing new configuration
+
+All changes, which you made in `.json` or `.yaml` files – will be saved.
+
+**`.js` and other files would be fully rewrited**! Update it on the configuration-level!
+
+## Configuration updating
+
+If you want to update configuration in project to the definite version, just install
+it, sharec will use the common flow.
 
 ## Commands
 
-### `install`
+**`install`** - installs all configuration to the target project.
 
-Installs all configuration to the target project.
+Example:
 
-| Option   | Default | Description                                          |
-| -------- | ------- | ---------------------------------------------------- |
-| `silent` | `false` | Configuration will be installed without any messages |
+```json
+{
+  "scripts": {
+    "postinstall": "sharec install"
+  }
+}
+```
 
-### `remove`
+**`remove`** - removes installed configuration from target project. Modified fields will be saved.
 
-Removes installed configuration from target project. Modified fields will be saved.
+Example:
 
-## Examples
+```json
+{
+  "scripts": {
+    "preuninstall": "sharec remove"
+  }
+}
+```
 
-- [examples.md](https://github.com/lamartire/sharec/blob/master/packages/sharec/docs/examples.md) – example notes about configuration preset creation, publishing and installing
-- [sharec-demo-config](https://github.com/lamartire/sharec/blob/master/packages/sharec-demo-config) – official configuration preset example
-- [essential-javascript-config](https://github.com/lamartire/sharec/blob/master/packages/sharec-essential-config) – my personal javascript-configuration preset
+## Potential use-cases
+
+You can use sharec not only for configuration management, you can also use it for:
+
+* Create boilerplates, like `create-react-app`
+* Deliver other files to your projects

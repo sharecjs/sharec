@@ -1,3 +1,4 @@
+const chalk = require('chalk')
 const path = require('path')
 const { readFile, writeFile, makeDir } = require('../../utils/fs')
 const { resolveConfigStrategy } = require('../strategies/resolve')
@@ -16,7 +17,18 @@ const installConfig = async ({ configsPath, targetPath, filePath }) => {
   } catch (err) {}
 
   if (localConfig && targetStrategy) {
-    newConfig = targetStrategy.merge(filePath)(localConfig, newConfig)
+    try {
+      newConfig = targetStrategy.merge(filePath)(localConfig, newConfig)
+    } catch (err) {
+      const errorMessage = [
+        chalk.bold(
+          `sharec: an error occured during merging ${localConfigPath}`,
+        ),
+        err.message,
+      ]
+
+      console.error(errorMessage.join('\n\t'))
+    }
   }
 
   try {

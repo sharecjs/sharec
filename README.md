@@ -1,19 +1,43 @@
 # Sharec [![Build Status](https://travis-ci.org/lamartire/sharec.svg?branch=master)](https://travis-ci.org/lamartire/sharec) [![Build status](https://ci.appveyor.com/api/projects/status/mjtiauhp4xmvr9w7/branch/master?svg=true)](https://ci.appveyor.com/project/lamartire/sharec/branch/master)
 
-> 📦 Store your configs in one place and share between projects without any pain
+<img src="public/logo.svg" align="right" alt="Sharec logo by Ivashkina Xenia" width="200">
 
-# Sharec – the secret weapon against "bloat" configs
+Sharec – is a new minimalistic tool for boilerplating and configuration versioning,
+which can copy, merge and delete files.
 
-Minify and support your big configs with extraction to external package with `share`.
+You can use that tool for share and management bloat configuration between different
+projects, keep your code up to date and starts new projects in one command.
 
-Just move all configuration (with files) to another package, install `sharec` and distribute it through projects!
+* **Integrity**. Pack all your configs in the one package and save time on support.
+* **Distribution**. Publish configuration with npm or distribute it via repositories.
+* **Simplicity**. Install packages just as dependency and forget about headache  related to configs.
 
-What is `sharec` key features:
+## Usage
 
-- **Simple** – you can create you configs package in a few minutes
-- **Sharable** – configuration now is a external package which can be installed anywhere
-- **Maintainable** – you can install, update and remove configs without any pain
-- **Smart** – diffucult configs will be merged with special strategies
+1. Create configuration project and init `npm` inside.
+2. Install `sharec` as dependency:
+```shell
+npm add sharec
+```
+3. Add `posintall` and `uninstall` scripts to root `package.json` file:
+```json
+"scripts": {
+  "postinstall": "sharec install",
+  "preuninstall": "sharec remove"
+}
+```
+4. Create `configs` directory.
+5. Place some configuration files to the created `configs` directory.
+6. Create `package.json` file inside `configs` directory and add required dependencies for tool what you need.
+7. Publish configuration with `npm publish` command or just push it.
+8. Install it wherever you want with `npm install` command.
+
+If you want read more detailed manual – look at [official demo config](packages/sharec-demo-config)
+and check [sharec](packages/sharec) package if you looking for API reference.
+
+## Example
+
+With sharec you can transform this:
 
 ```diff
 {
@@ -98,7 +122,7 @@ What is `sharec` key features:
 }
 ```
 
-Before config extraction your `package.json` will be look like this:
+To this:
 
 ```diff
 {
@@ -113,12 +137,3 @@ Before config extraction your `package.json` will be look like this:
   }
 }
 ```
-
-Run `npm i --save-dev my-awesome-config` and solve once and for all "bloat" configs problem!
-
-With `sharec` you also allowed to easily create boilerplates: both big public (like `create-react-app` or `vue-cli`) and inner small starters and bootstraps.
-
-## Links
-
-See [sharec](https://github.com/lamartire/sharec/tree/master/packages/sharec)
-package or [official demo config](https://github.com/lamartire/sharec/tree/master/packages/sharec-demo-config).
