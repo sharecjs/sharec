@@ -1,4 +1,5 @@
 const path = require('path')
+const { diffLines } = require('diff')
 const { hashesDiff } = require('../../utils/hashes')
 const { transformInputToYAML, toYaml } = require('../../utils/yaml')
 
@@ -128,4 +129,45 @@ class Strategy {
   }
 }
 
-module.exports = { Strategy }
+class LinearStrategy extends Strategy {
+  /**
+   * @param {String} a
+   * @param {String} b
+   * @returns {String}
+   */
+  merge(a, b) {
+    return diffLines(a, b).reduce((acc, line) => {
+      if (line.added) {
+        return [acc, line.value].join('')
+      }
+
+      return acc
+    }, a)
+  }
+
+  /**
+   * @param {String} a
+   * @param {String} b
+   * @returns {String}
+   */
+  unapply(a, b) {
+    const aLines = a.split('\n')
+    const restoredConfig = []
+
+    diffLines(a, b).forEach(line => {
+      const lineIdx = aLines.indexOf(line.value.replace(/\n$/, ''))
+
+      if (line.removed && lineIdx !== -1) {
+        restoredConfig.push(line.value)
+      }
+    })
+
+    if (restoredConfig.length === 0) {
+      return ''
+    }
+
+    return restoredConfig.join('\n')
+  }
+}
+
+module.exports = { Strategy, LinearStrategy }

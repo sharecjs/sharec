@@ -1,6 +1,6 @@
 const path = require('path')
-const { Strategy } = require('../strategy')
 const { readFileSync } = require.requireActual('fs')
+const { Strategy, LinearStrategy } = require('../strategy')
 
 describe('strategy', () => {
   const common01 = require('fixtures/common/json/common_01.json')
@@ -153,6 +153,52 @@ describe('strategy', () => {
           strategy.unapply('common.yaml')(commonYaml04, commonYaml05),
         ).toMatchSnapshot()
       })
+    })
+  })
+
+  describe('LinearStrategy class', () => {
+    let strategy
+
+    const gitignoreCurrent = readFileSync(
+      path.resolve(
+        __dirname,
+        '../../../../test/fixtures/gitignore/01/current.txt',
+      ),
+      'utf8',
+    )
+    const gitignoreNew = readFileSync(
+      path.resolve(__dirname, '../../../../test/fixtures/gitignore/01/new.txt'),
+      'utf8',
+    )
+    const gitignoreResult = readFileSync(
+      path.resolve(
+        __dirname,
+        '../../../../test/fixtures/gitignore/01/result.txt',
+      ),
+      'utf8',
+    )
+    const gitignoreRestored = readFileSync(
+      path.resolve(
+        __dirname,
+        '../../../../test/fixtures/gitignore/01/restored.txt',
+      ),
+      'utf8',
+    )
+
+    beforeEach(() => {
+      strategy = new LinearStrategy()
+    })
+
+    it('should merge linear text files', () => {
+      expect(strategy.merge(gitignoreCurrent, gitignoreNew)).toEqual(
+        gitignoreResult,
+      )
+    })
+
+    it('should unapply upcoming changes from linear text files', () => {
+      expect(strategy.unapply(gitignoreResult, gitignoreNew)).toEqual(
+        gitignoreRestored,
+      )
     })
   })
 })
