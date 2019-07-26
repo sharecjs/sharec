@@ -129,7 +129,23 @@ class Strategy {
   }
 }
 
-class LinearStrategy extends Strategy {
+class LinearStrategy {
+  constructor(matchers) {
+    this.matchers = matchers || []
+  }
+
+  isExpectedStrategy(fileName) {
+    const baseFileName = path.basename(fileName)
+
+    return !!this.matchers.find(match => {
+      if (match instanceof RegExp) {
+        return match.test(baseFileName)
+      }
+
+      return match === baseFileName
+    })
+  }
+
   /**
    * @param {String} a
    * @param {String} b

@@ -3,41 +3,41 @@ const { readFileSync } = require.requireActual('fs')
 const { Strategy, LinearStrategy } = require('../strategy')
 
 describe('strategy', () => {
-  const common01 = require('fixtures/common/json/common_01.json')
-  const common02 = require('fixtures/common/json/common_02.json')
-  const common04 = require('fixtures/common/json/common_04.json')
-  const common05 = require('fixtures/common/json/common_05.json')
-  const commonYaml01 = readFileSync(
-    path.resolve(
-      __dirname,
-      '../../../../test/fixtures/common/yaml/common_01.yml',
-    ),
-    'utf8',
-  )
-  const commonYaml02 = readFileSync(
-    path.resolve(
-      __dirname,
-      '../../../../test/fixtures/common/yaml/common_02.yml',
-    ),
-    'utf8',
-  )
-  const commonYaml04 = readFileSync(
-    path.resolve(
-      __dirname,
-      '../../../../test/fixtures/common/yaml/common_04.yml',
-    ),
-    'utf8',
-  )
-  const commonYaml05 = readFileSync(
-    path.resolve(
-      __dirname,
-      '../../../../test/fixtures/common/yaml/common_05.yml',
-    ),
-    'utf8',
-  )
+  let strategy
 
   describe('Strategy class', () => {
-    let strategy
+    const common01 = require('fixtures/common/json/common_01.json')
+    const common02 = require('fixtures/common/json/common_02.json')
+    const common04 = require('fixtures/common/json/common_04.json')
+    const common05 = require('fixtures/common/json/common_05.json')
+    const commonYaml01 = readFileSync(
+      path.resolve(
+        __dirname,
+        '../../../../test/fixtures/common/yaml/common_01.yml',
+      ),
+      'utf8',
+    )
+    const commonYaml02 = readFileSync(
+      path.resolve(
+        __dirname,
+        '../../../../test/fixtures/common/yaml/common_02.yml',
+      ),
+      'utf8',
+    )
+    const commonYaml04 = readFileSync(
+      path.resolve(
+        __dirname,
+        '../../../../test/fixtures/common/yaml/common_04.yml',
+      ),
+      'utf8',
+    )
+    const commonYaml05 = readFileSync(
+      path.resolve(
+        __dirname,
+        '../../../../test/fixtures/common/yaml/common_05.yml',
+      ),
+      'utf8',
+    )
 
     beforeEach(() => {
       strategy = new Strategy()
@@ -157,8 +157,6 @@ describe('strategy', () => {
   })
 
   describe('LinearStrategy class', () => {
-    let strategy
-
     const gitignoreCurrent = readFileSync(
       path.resolve(
         __dirname,
@@ -187,6 +185,14 @@ describe('strategy', () => {
 
     beforeEach(() => {
       strategy = new LinearStrategy()
+    })
+
+    it('should check given filename on matching and return boolean result', () => {
+      strategy = new LinearStrategy(['.gitignore', '.npmignore'])
+
+      expect(strategy.isExpectedStrategy('.gitignore')).toBe(true)
+      expect(strategy.isExpectedStrategy('.npmignore')).toBe(true)
+      expect(strategy.isExpectedStrategy('.babelrc')).toBe(false)
     })
 
     it('should merge linear text files', () => {
