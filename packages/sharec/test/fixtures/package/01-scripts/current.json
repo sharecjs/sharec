@@ -1,0 +1,7 @@
+{
+  "scripts": {
+    "foo": "bar",
+    "bar": "baz",
+    "start": "foo bar baz"
+  }
+}

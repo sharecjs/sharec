@@ -24,6 +24,42 @@ describe('commands > install >', () => {
     ),
     'utf8',
   )
+  const npmignoreCurrent = readFileSync(
+    path.resolve(
+      __dirname,
+      '../../../test/fixtures/npmignore/01-base/current.txt',
+    ),
+    'utf8',
+  )
+  const npmignoreNew = readFileSync(
+    path.resolve(__dirname, '../../../test/fixtures/npmignore/01-base/new.txt'),
+    'utf8',
+  )
+  const npmignoreResult = readFileSync(
+    path.resolve(
+      __dirname,
+      '../../../test/fixtures/npmignore/01-base/result.txt',
+    ),
+    'utf8',
+  )
+  const gitignoreCurrent = readFileSync(
+    path.resolve(
+      __dirname,
+      '../../../test/fixtures/gitignore/01-base/current.txt',
+    ),
+    'utf8',
+  )
+  const gitignoreNew = readFileSync(
+    path.resolve(__dirname, '../../../test/fixtures/gitignore/01-base/new.txt'),
+    'utf8',
+  )
+  const gitignoreResult = readFileSync(
+    path.resolve(
+      __dirname,
+      '../../../test/fixtures/gitignore/01-base/result.txt',
+    ),
+    'utf8',
+  )
 
   beforeEach(() => {
     vol.reset()
@@ -88,13 +124,15 @@ describe('commands > install >', () => {
 
     describe('valid cases', () => {
       it('should merge all configs from target path', async () => {
-        expect.assertions(7)
+        expect.assertions(9)
 
         const dir = {
           '/target/.eslintrc': JSON.stringify(eslint01),
           '/target/babelrc.js': JSON.stringify(babel01),
           '/target/.eslintrc.yaml': yamlEslint01,
           '/target/package.json': JSON.stringify(packageJson01, null, 2),
+          '/target/.gitignore': gitignoreCurrent,
+          '/target/.npmignore': npmignoreCurrent,
           '/configuration-package/package.json': JSON.stringify({
             version: '1.0.0',
           }),
@@ -113,6 +151,8 @@ describe('commands > install >', () => {
           '/configuration-package/configs/package.json': JSON.stringify(
             packageJson02,
           ),
+          '/configuration-package/configs/.gitignore': gitignoreNew,
+          '/configuration-package/configs/.npmignore': npmignoreNew,
         }
 
         vol.fromJSON(dir, '/')
@@ -122,6 +162,7 @@ describe('commands > install >', () => {
           targetPath: '/target',
         })
 
+        expect(vol.readdirSync('/target')).not.toContain('package-lock.json')
         expect(
           vol.readFileSync('/target/.editorconfig', 'utf8'),
         ).toMatchSnapshot()
@@ -138,7 +179,12 @@ describe('commands > install >', () => {
         expect(
           JSON.parse(vol.readFileSync('/target/.foo', 'utf8')),
         ).toMatchSnapshot()
-        expect(vol.readdirSync('/target')).not.toContain('package-lock.json')
+        expect(vol.readFileSync('/target/.gitignore', 'utf8')).toEqual(
+          gitignoreResult,
+        )
+        expect(vol.readFileSync('/target/.npmignore', 'utf8')).toEqual(
+          npmignoreResult,
+        )
       })
     })
   })

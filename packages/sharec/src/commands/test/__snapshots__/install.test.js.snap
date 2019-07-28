@@ -117,6 +117,7 @@ exports[`commands > install > configuration processing valid cases should merge 
 "{
   \\"name\\": \\"my-awesome-package\\",
   \\"scripts\\": {
+    \\"start\\": \\"start-script\\",
     \\"commit\\": \\"\\",
     \\"lint\\": \\"eslint 'src/**/*.{js,jsx,json}'\\",
     \\"lint-staged\\": \\"lint-staged\\"

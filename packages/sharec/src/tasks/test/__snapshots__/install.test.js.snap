@@ -117,6 +117,7 @@ exports[`tasks > install > should install configuration to the target project 5`
 "{
   \\"name\\": \\"my-awesome-package\\",
   \\"scripts\\": {
+    \\"start\\": \\"start-script\\",
     \\"commit\\": \\"\\",
     \\"lint\\": \\"eslint 'src/**/*.{js,jsx,json}'\\",
     \\"lint-staged\\": \\"lint-staged\\"

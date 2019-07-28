@@ -2,7 +2,6 @@ const { vol } = require('memfs')
 const pick = require('lodash/pick')
 const {
   getCurrentPackageJsonMetaData,
-  extractDependencies,
   extractConfigs,
   extractMetaData,
 } = require('../extract')
@@ -51,22 +50,6 @@ describe('core > package > extract >', () => {
     })
   })
 
-  describe('extractDependencies', () => {
-    it('should extract dependencies from given package.json', () => {
-      const extractedDeps = extractDependencies(packageJsonFixture)
-
-      expect(extractedDeps).toEqual(
-        pick(packageJsonFixture, ['devDependencies']),
-      )
-    })
-
-    it('should return empty object if dependencies is empty', () => {
-      const extractedDeps = extractDependencies({})
-
-      expect(extractedDeps).toEqual({})
-    })
-  })
-
   describe('extractConfigs', () => {
     it('should return all configs from package.json except dependencies, sharec meta-data and other standard package fields', () => {
       const extractedConfigs = extractConfigs(packageJsonFixture)
@@ -80,6 +63,7 @@ describe('core > package > extract >', () => {
           'prettier',
           'eslintConfig',
           'eslintIgnore',
+          'devDependencies',
         ]),
       )
     })

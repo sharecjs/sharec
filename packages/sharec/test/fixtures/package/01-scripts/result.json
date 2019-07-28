@@ -1,0 +1,10 @@
+{
+  "scripts": {
+    "foo": "baz",
+    "bar": "baz",
+    "start": "baz bar foo"
+  },
+  "sharec": {
+    "version": "1.0.0"
+  }
+}
