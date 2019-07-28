@@ -2,7 +2,7 @@ const path = require('path')
 const { readFileSync } = require.requireActual('fs')
 const { gitIgnoreStrategy } = require('../gitignore')
 
-describe('strategy > eslint', () => {
+describe('strategy > gitignore', () => {
   const gitignoreCurrent = readFileSync(
     path.resolve(
       __dirname,
@@ -34,7 +34,7 @@ describe('strategy > eslint', () => {
 
   describe('merge', () => {
     it('should correctly merge configs', () => {
-      expect(gitIgnoreStrategy.merge(gitignoreCurrent, gitignoreNew)).toEqual(
+      expect(gitIgnoreStrategy.merge()(gitignoreCurrent, gitignoreNew)).toEqual(
         gitignoreResult,
       )
     })
@@ -42,9 +42,9 @@ describe('strategy > eslint', () => {
 
   describe('uapplying', () => {
     it('should correctly unapply configs', () => {
-      expect(gitIgnoreStrategy.unapply(gitignoreResult, gitignoreNew)).toEqual(
-        gitignoreRestored,
-      )
+      expect(
+        gitIgnoreStrategy.unapply()(gitignoreResult, gitignoreNew),
+      ).toEqual(gitignoreRestored)
     })
   })
 })

@@ -80,6 +80,7 @@ Object {
     "commit": "",
     "lint": "eslint 'src/**/*.{js,jsx,json}'",
     "lint-staged": "lint-staged",
+    "start": "start-script",
   },
   "sharec": Object {
     "version": "1.0.0",

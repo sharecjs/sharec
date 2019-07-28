@@ -2,7 +2,7 @@ const path = require('path')
 const { readFileSync } = require.requireActual('fs')
 const { npmIgnoreStrategy } = require('../npmignore')
 
-describe('strategy > eslint', () => {
+describe('strategy > npmignore', () => {
   const npmignoreCurrent = readFileSync(
     path.resolve(
       __dirname,
@@ -34,7 +34,7 @@ describe('strategy > eslint', () => {
 
   describe('merge', () => {
     it('should correctly merge configs', () => {
-      expect(npmIgnoreStrategy.merge(npmignoreCurrent, npmignoreNew)).toEqual(
+      expect(npmIgnoreStrategy.merge()(npmignoreCurrent, npmignoreNew)).toEqual(
         npmignoreResult,
       )
     })
@@ -42,9 +42,9 @@ describe('strategy > eslint', () => {
 
   describe('uapplying', () => {
     it('should correctly unapply configs', () => {
-      expect(npmIgnoreStrategy.unapply(npmignoreResult, npmignoreNew)).toEqual(
-        npmignoreRestored,
-      )
+      expect(
+        npmIgnoreStrategy.unapply()(npmignoreResult, npmignoreNew),
+      ).toEqual(npmignoreRestored)
     })
   })
 })

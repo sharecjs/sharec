@@ -196,13 +196,13 @@ describe('strategy', () => {
     })
 
     it('should merge linear text files', () => {
-      expect(strategy.merge(gitignoreCurrent, gitignoreNew)).toEqual(
+      expect(strategy.merge()(gitignoreCurrent, gitignoreNew)).toEqual(
         gitignoreResult,
       )
     })
 
     it('should unapply upcoming changes from linear text files', () => {
-      expect(strategy.unapply(gitignoreResult, gitignoreNew)).toEqual(
+      expect(strategy.unapply()(gitignoreResult, gitignoreNew)).toEqual(
         gitignoreRestored,
       )
     })

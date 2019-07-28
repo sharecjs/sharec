@@ -52,9 +52,7 @@ Object {
     "trailingComma": "all",
   },
   "scripts": Object {
-    "commit": "git-cz",
     "lint": "eslint 'src/**/*.{jsx,json}'",
-    "lint-staged": "lint-staged",
   },
 }
 `;
