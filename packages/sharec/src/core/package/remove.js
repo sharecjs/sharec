@@ -4,7 +4,7 @@ const omit = require('lodash/omit')
 const isEmpty = require('lodash/isEmpty')
 const { pipe } = require('../../utils')
 const { readFile, writeFile } = require('../../utils/fs')
-const { extractDependencies, extractConfigs } = require('../package/extract')
+const { extractConfigs } = require('../package/extract')
 const { resolveConfigStrategy } = require('../strategies/resolve')
 
 const clearPackageJson = async (configsPath, targetPath) => {
@@ -16,24 +16,17 @@ const clearPackageJson = async (configsPath, targetPath) => {
     const packageJsonPath = path.resolve(configsPath, 'package.json')
     const rawPackageJson = await readFile(packageJsonPath, 'utf8')
     const packageJson = JSON.parse(rawPackageJson)
-    const newDependencies = extractDependencies(packageJson)
     const newConfigs = extractConfigs(packageJson)
     const restoredPackageJson = pipe(
       ereaseConfigs(newConfigs),
       ereaseMetaData,
     )(targetPackageJson)
-    const [
-      restoredPackageJsonWithoutDependencies,
-      modifiedDeps,
-    ] = ereaseDependencies(newDependencies)(restoredPackageJson)
 
     await writeFile(
       targetPackageJsonPath,
-      JSON.stringify(restoredPackageJsonWithoutDependencies, null, 2),
+      JSON.stringify(restoredPackageJson, null, 2),
       'utf8',
     )
-
-    return modifiedDeps
   } catch (err) {
     const restoredPackageJson = pipe(ereaseMetaData)(targetPackageJson)
 

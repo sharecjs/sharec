@@ -1,14 +1,7 @@
 const omit = require('lodash/omit')
-const pick = require('lodash/pick')
 const path = require('path')
 const { readFile } = require('../../utils/fs')
 
-const DEPENDENCIES_FIELDS = [
-  'dependencies',
-  'devDependencies',
-  'peerDependencies',
-  'optionalDependencies',
-]
 const IGNORED_FIELDS = [
   'sharec',
   'name',
@@ -26,7 +19,6 @@ const IGNORED_FIELDS = [
   'preferGlobal',
   'private',
   'author',
-  ...DEPENDENCIES_FIELDS,
 ]
 
 const getCurrentPackageJsonMetaData = async targetPath => {
@@ -37,16 +29,12 @@ const getCurrentPackageJsonMetaData = async targetPath => {
   return extractMetaData(targetPackageJson)
 }
 
-const extractDependencies = packageJson =>
-  pick(packageJson, DEPENDENCIES_FIELDS)
-
 const extractConfigs = packageJson => omit(packageJson, IGNORED_FIELDS)
 
 const extractMetaData = packageJson => packageJson.sharec || null
 
 module.exports = {
   getCurrentPackageJsonMetaData,
-  extractDependencies,
   extractConfigs,
   extractMetaData,
 }

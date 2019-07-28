@@ -90,6 +90,10 @@ class Strategy {
      * @returns {Object|String}
      */
     return (localConfig, config) => {
+      if (fileName === 'dependencies') {
+        console.log(localConfig, config)
+      }
+
       if (!matchedMethod) return config
 
       const res = matchedMethod.bind(this)(localConfig, config)

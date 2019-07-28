@@ -6,28 +6,28 @@ describe('strategy > gitignore', () => {
   const gitignoreCurrent = readFileSync(
     path.resolve(
       __dirname,
-      '../../../../../test/fixtures/gitignore/01/current.txt',
+      '../../../../../test/fixtures/gitignore/01-base/current.txt',
     ),
     'utf8',
   )
   const gitignoreNew = readFileSync(
     path.resolve(
       __dirname,
-      '../../../../../test/fixtures/gitignore/01/new.txt',
+      '../../../../../test/fixtures/gitignore/01-base/new.txt',
     ),
     'utf8',
   )
   const gitignoreResult = readFileSync(
     path.resolve(
       __dirname,
-      '../../../../../test/fixtures/gitignore/01/result.txt',
+      '../../../../../test/fixtures/gitignore/01-base/result.txt',
     ),
     'utf8',
   )
   const gitignoreRestored = readFileSync(
     path.resolve(
       __dirname,
-      '../../../../../test/fixtures/gitignore/01/restored.txt',
+      '../../../../../test/fixtures/gitignore/01-base/restored.txt',
     ),
     'utf8',
   )

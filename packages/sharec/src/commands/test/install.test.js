@@ -25,27 +25,39 @@ describe('commands > install >', () => {
     'utf8',
   )
   const npmignoreCurrent = readFileSync(
-    path.resolve(__dirname, '../../../test/fixtures/npmignore/01/current.txt'),
+    path.resolve(
+      __dirname,
+      '../../../test/fixtures/npmignore/01-base/current.txt',
+    ),
     'utf8',
   )
   const npmignoreNew = readFileSync(
-    path.resolve(__dirname, '../../../test/fixtures/npmignore/01/new.txt'),
+    path.resolve(__dirname, '../../../test/fixtures/npmignore/01-base/new.txt'),
     'utf8',
   )
   const npmignoreResult = readFileSync(
-    path.resolve(__dirname, '../../../test/fixtures/npmignore/01/result.txt'),
+    path.resolve(
+      __dirname,
+      '../../../test/fixtures/npmignore/01-base/result.txt',
+    ),
     'utf8',
   )
   const gitignoreCurrent = readFileSync(
-    path.resolve(__dirname, '../../../test/fixtures/gitignore/01/current.txt'),
+    path.resolve(
+      __dirname,
+      '../../../test/fixtures/gitignore/01-base/current.txt',
+    ),
     'utf8',
   )
   const gitignoreNew = readFileSync(
-    path.resolve(__dirname, '../../../test/fixtures/gitignore/01/new.txt'),
+    path.resolve(__dirname, '../../../test/fixtures/gitignore/01-base/new.txt'),
     'utf8',
   )
   const gitignoreResult = readFileSync(
-    path.resolve(__dirname, '../../../test/fixtures/gitignore/01/result.txt'),
+    path.resolve(
+      __dirname,
+      '../../../test/fixtures/gitignore/01-base/result.txt',
+    ),
     'utf8',
   )
 

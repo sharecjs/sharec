@@ -1,10 +1,10 @@
 const { yaspellerStrategy } = require('../yaspeller')
 
 describe('strategy > yaspeller', () => {
-  const yaspellerCurrent = require('fixtures/yaspeller/01/current.json')
-  const yaspellerNew = require('fixtures/yaspeller/01/new.json')
-  const yaspellerResult = require('fixtures/yaspeller/01/result.json')
-  const yaspellerRestored = require('fixtures/yaspeller/01/restored.json')
+  const yaspellerCurrent = require('fixtures/yaspeller/01-base/current.json')
+  const yaspellerNew = require('fixtures/yaspeller/01-base/new.json')
+  const yaspellerResult = require('fixtures/yaspeller/01-base/result.json')
+  const yaspellerRestored = require('fixtures/yaspeller/01-base/restored.json')
 
   describe('json strategy', () => {
     it('should merge yaspeller json configs', () => {

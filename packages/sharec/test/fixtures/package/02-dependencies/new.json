@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "foo": "2.0.0"
+  },
+  "devDependencies": {
+    "bar": "2.0.0"
+  },
+  "peerDependencies": {
+    "baz": "1.0.0"
+  }
+}

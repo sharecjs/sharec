@@ -6,28 +6,28 @@ describe('strategy > npmignore', () => {
   const npmignoreCurrent = readFileSync(
     path.resolve(
       __dirname,
-      '../../../../../test/fixtures/npmignore/01/current.txt',
+      '../../../../../test/fixtures/npmignore/01-base/current.txt',
     ),
     'utf8',
   )
   const npmignoreNew = readFileSync(
     path.resolve(
       __dirname,
-      '../../../../../test/fixtures/npmignore/01/new.txt',
+      '../../../../../test/fixtures/npmignore/01-base/new.txt',
     ),
     'utf8',
   )
   const npmignoreResult = readFileSync(
     path.resolve(
       __dirname,
-      '../../../../../test/fixtures/npmignore/01/result.txt',
+      '../../../../../test/fixtures/npmignore/01-base/result.txt',
     ),
     'utf8',
   )
   const npmignoreRestored = readFileSync(
     path.resolve(
       __dirname,
-      '../../../../../test/fixtures/npmignore/01/restored.txt',
+      '../../../../../test/fixtures/npmignore/01-base/restored.txt',
     ),
     'utf8',
   )
