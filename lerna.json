@@ -3,7 +3,8 @@
   "packages": [
     "packages/sharec",
     "packages/sharec-demo-config",
-    "packages/sharec-essential-config"
+    "packages/sharec-essential-config",
+    "packages/sharec-extractor"
   ],
   "version": "2.7.0-beta"
 }
