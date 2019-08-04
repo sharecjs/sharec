@@ -45,9 +45,9 @@ async function tester({ initPath, targetPath, fixturesPath }) {
 
     const outputDiff = filesDiff.reduce((acc, part) => {
       if (part.added) {
-        return acc + chalk.green(part.value)
+        return acc + chalk.bgGreen(chalk.black(part.value))
       } else if (part.removed) {
-        return acc + chalk.red(part.value)
+        return acc + chalk.bgRed(chalk.black(part.value))
       }
 
       return acc + part.value
@@ -60,18 +60,20 @@ async function tester({ initPath, targetPath, fixturesPath }) {
   })
 
   if (configsDiff.length === 0) {
-    console.info(chalk.green('All configs matched.'))
+    console.info(chalk.green('All configs matched'))
     process.exit(0)
   }
 
-  console.error(
-    chalk.red('Some config were not matched to expected. See output below:\n'),
-  )
+  console.error(chalk.red(`${configsDiff.length} failed\n`))
 
-  configsDiff.forEach(config => {
-    const parts = [`Config path: ${config.fullPath}\n`, config.output]
+  configsDiff.forEach((config, i) => {
+    console.info(`${chalk.underline(config.fullPath)}\n`)
+    console.info('Difference:\n')
+    console.info(config.output)
 
-    console.error(parts.map(part => `${chalk.red(part)}`).join('\n'))
+    if (i !== configsDiff.length - 1) {
+      console.log('\n')
+    }
   })
 
   process.exit(1)
