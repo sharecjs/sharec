@@ -1,6 +1,6 @@
 {
   "name": "sharec-tester",
-  "version": "2.7.0-beta",
+  "version": "2.8.0-beta",
   "description": "Tool for sharec-based configuration testing",
   "keywords": [
     "configuration",
@@ -38,7 +38,7 @@
     "husky": "^2.2.0",
     "lint-staged": "^8.1.6",
     "prettier": "^1.17.1",
-    "sharec-essential-config": "^2.7.0-beta"
+    "sharec-essential-config": "^2.8.0-beta"
   },
   "scripts": {
     "commit": "git-cz",

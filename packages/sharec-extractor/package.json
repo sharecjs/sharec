@@ -1,6 +1,6 @@
 {
   "name": "sharec-extractor",
-  "version": "2.7.0-beta",
+  "version": "2.8.0-beta",
   "description": "Tool for sharec-based configuration extraction (needed for tests)",
   "keywords": [
     "configuration",
