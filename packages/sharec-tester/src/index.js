@@ -2,6 +2,7 @@ const path = require('path')
 const fg = require('fast-glob')
 const chalk = require('chalk')
 const diff = require('diff')
+const createSpinner = require('./core/messages/spinner')
 const { readFile } = require('./utils/fs')
 
 async function collectFiles(targetPath) {
@@ -27,11 +28,17 @@ async function collectFiles(targetPath) {
 }
 
 async function tester({ initPath, targetPath, fixturesPath }) {
+  const spinner = createSpinner('collecting files...')
+
+  spinner.start()
+
   const targetFullPath = path.join(initPath, targetPath)
   const fixturesFullPath = path.join(initPath, fixturesPath)
   const targetFiles = await collectFiles(targetFullPath)
   const fixturesFiles = await collectFiles(fixturesFullPath)
   const configsDiff = []
+
+  spinner.frame('collecting diff from files...')
 
   Object.keys(fixturesFiles).forEach(key => {
     if (!targetFiles[key]) return
@@ -60,11 +67,13 @@ async function tester({ initPath, targetPath, fixturesPath }) {
   })
 
   if (configsDiff.length === 0) {
-    console.info(chalk.green('All configs matched'))
+    spinner.succeed('all configs matched.')
     process.exit(0)
   }
 
-  console.error(chalk.red(`${configsDiff.length} failed\n`))
+  spinner.fail(`${configsDiff.length} failed!`)
+
+  console.log('\n')
 
   configsDiff.forEach((config, i) => {
     console.info(`${chalk.underline(config.fullPath)}\n`)

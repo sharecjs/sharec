@@ -1,27 +1,27 @@
 BOLD=$(tput bold)
 REGULAR=$(tput sgr0)
-PREFIX="${BOLD}sharec-extractor:${REGULAR}"
+PREFIX="sharec-extractor:"
 
 init_target() {
   CHECKER_SOURCES_DIR_CONTENT=$(find "$1/target" -name "package.json")
 
   if [ -r "$CHECKER_SOURCES_DIR_CONTENT" ]
   then
-    echo "$PREFIX target package already has initialized! ✨"
+    echo "$PREFIX target package already has initialized!"
   else
-    echo "$PREFIX initializing target package... 📦"
+    echo "$PREFIX initializing target package..."
     mkdir "$1/target"
     cd "$1/target"
     npm init -y
-    echo "$PREFIX target package has initialized! 🌈"
+    echo "$PREFIX target package has initialized!"
   fi
 }
 
 install_config() {
-  echo "$PREFIX installing local config... 📦"
+  echo "$PREFIX installing local config..."
   cd "$1/target"
   npm add -D ../..
-  echo "$PREFIX local config has installed! 🌈"
+  echo "$PREFIX local config has installed!"
 }
 
 extract() {
