@@ -1,0 +1,15 @@
+#!/usr/bin/env node
+const minimist = require('minimist')
+const tester = require('../src')
+const { _, ...options } = minimist(process.argv.slice(2))
+
+;(async () => {
+  const targetPath = options.t || options.target
+  const fixturesPath = options.f || options.fixtures
+
+  await tester({
+    initPath: process.env.INIT_CWD,
+    targetPath,
+    fixturesPath,
+  })
+})()

@@ -1,0 +1,33 @@
+{
+  "name": "sharec-extractor",
+  "version": "2.7.0-beta",
+  "description": "Tool for sharec-based configuration extraction (needed for tests)",
+  "keywords": [
+    "configuration",
+    "sharec",
+    "sharing",
+    "reusable code",
+    "codemods",
+    "codegeneration"
+  ],
+  "homepage": "https://lamartire.github.io/sharec/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lamartire/sharec"
+  },
+  "author": "Konstantin Epishev <lamartire@gmail.com>",
+  "bin": {
+    "sharec-extractor": "./bin/sharec-extractor.sh"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@commitlint/cli": "^7.6.1",
+    "@commitlint/config-conventional": "^7.6.0",
+    "husky": "^2.2.0"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  }
+}

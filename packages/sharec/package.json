@@ -22,22 +22,21 @@
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch",
+    "commit": "git-cz",
+    "lint": "eslint 'src/**/*.{js,jsx,json}'",
     "lint-staged": "lint-staged"
   },
   "lint-staged": {
-    "*.js": [
-      "prettier --write",
-      "eslint",
-      "git add"
-    ],
-    "*.{json,yml,yaml}": [
+    "src/**/*.{js,jsx,json}": [
+      "eslint --fix",
       "prettier --write",
       "git add"
     ]
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   },
   "prettier": {
@@ -50,8 +49,13 @@
       "browser": true,
       "commonjs": true,
       "es6": true,
-      "jest": true
+      "jest": true,
+      "node": true
     },
+    "parserOptions": {
+      "ecmaVersion": 2018
+    },
+    "parser": "babel-eslint",
     "extends": [
       "standard",
       "prettier",
@@ -60,9 +64,6 @@
     "plugins": [
       "prettier"
     ],
-    "parserOptions": {
-      "ecmaVersion": 2018
-    },
     "rules": {
       "prettier/prettier": [
         "error",
@@ -75,8 +76,7 @@
     }
   },
   "eslintIgnore": [
-    "**/node_modules/*",
-    "**/dist/*"
+    "/node_modules"
   ],
   "jest": {
     "moduleDirectories": [
@@ -96,21 +96,28 @@
     ]
   },
   "devDependencies": {
+    "@commitlint/cli": "^7.6.1",
+    "@commitlint/config-conventional": "^7.6.0",
+    "babel-eslint": "^10.0.1",
     "callsites": "^3.1.0",
-    "eslint": "^6.0.1",
-    "eslint-config-prettier": "^6.0.0",
-    "eslint-config-standard": "^13.0.1",
-    "eslint-plugin-import": "^2.18.0",
-    "eslint-plugin-node": "^9.1.0",
+    "commitizen": "^3.1.1",
+    "cz-conventional-changelog": "^2.1.0",
+    "eslint": "^5.16.0",
+    "eslint-config-prettier": "^4.2.0",
+    "eslint-config-prettier-standard": "^2.0.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.17.2",
+    "eslint-plugin-node": "^9.0.1",
     "eslint-plugin-prettier": "^3.1.0",
-    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-promise": "^4.1.1",
     "eslint-plugin-standard": "^4.0.0",
-    "husky": "^3.0.0",
+    "husky": "^2.2.0",
     "jest": "^24.8.0",
     "jest-cli": "^24.8.0",
-    "lint-staged": "^8.1.7",
+    "lint-staged": "^8.1.6",
     "memfs": "^2.15.2",
-    "prettier": "^1.18.2"
+    "prettier": "^1.17.1",
+    "sharec-essential-config": "^2.7.0-beta"
   },
   "dependencies": {
     "boxen": "^4.1.0",
@@ -125,5 +132,13 @@
     "ora": "^3.4.0",
     "slash": "^3.0.0"
   },
-  "gitHead": "8b056dc9aedf49a712b84b4d47ea9fa1cea45b08"
+  "gitHead": "8b056dc9aedf49a712b84b4d47ea9fa1cea45b08",
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
+  },
+  "sharec": {
+    "version": "2.7.0-beta"
+  }
 }
