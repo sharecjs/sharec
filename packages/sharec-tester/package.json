@@ -69,8 +69,7 @@
     "jest-cli": "^24.8.0",
     "lint-staged": "^8.1.6",
     "memfs": "^2.15.5",
-    "prettier": "^1.17.1",
-    "sharec-essential-config": "^2.8.0-beta"
+    "prettier": "^1.17.1"
   },
   "lint-staged": {
     "src/**/*.{js,jsx,json}": [
@@ -132,8 +131,5 @@
         }
       ]
     }
-  },
-  "sharec": {
-    "version": "2.8.0-beta"
   }
 }
