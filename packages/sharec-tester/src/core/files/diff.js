@@ -9,18 +9,17 @@ function fitSourceLines({lines, fitCount}) {
 
 function fuseDiffShards(shards) {
   let result = {
-    isChanged: false,
+    isAdded: false,
+    isRemoved: false,
     value: ''
   }
 
   shards.forEach(shard => {
-    if (shard.added || shard.removed) {
-      result.isChanged = true
-    }
-
     if (shard.added) {
+      result.isAdded = true
       result.value += chalk`{bgGreen {black ${shard.value}}}`
     } else if (shard.removed) {
+      result.isRemoved = true
       result.value += chalk`{bgRed {black ${shard.value}}}`
     } else {
       result.value += shard.value
@@ -39,9 +38,17 @@ function createFilesDiff({ fixtureFile, targetFile }) {
 
   for (let i = 0; i < fittedFixtureLines.length; i++) {
     const currentLinesDiff = diff.diffChars(fittedFixtureLines[i], fittedTargetLines[i])
-    const { value, isChanged } = fuseDiffShards(currentLinesDiff)
+    const { value, isAdded, isRemoved } = fuseDiffShards(currentLinesDiff)
 
-    linesWithDiff.push(`  ${i}:  ${value}`)
+    if (isAdded && isRemoved) {
+      linesWithDiff.push(chalk` {yellow ±} ${i}:  ${value}`)
+    } else if (isAdded) {
+      linesWithDiff.push(chalk` {green +} ${i}:  ${value}`)
+    } else if (isRemoved) {
+      linesWithDiff.push(chalk` {red -} ${i}:  ${value}`)
+    } else {
+      linesWithDiff.push(`   ${i}:  ${value}`)
+    }
   }
 
   return {
