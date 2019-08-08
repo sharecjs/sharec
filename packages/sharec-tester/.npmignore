@@ -1,0 +1,4 @@
+src/**/*.test.js
+test/**/*
+wallaby.js
+public
