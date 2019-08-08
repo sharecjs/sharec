@@ -37,14 +37,9 @@ async function tester({ initPath, targetPath, fixturesPath }) {
 
   spinner.fail(`${configsDiff.length} failed!`)
 
-  console.log('\n')
-
   configsDiff.forEach((config, i) => {
     printConfigDiff(config)
-
-    if (i !== configsDiff.length - 1) {
-      console.log('\n')
-    }
+    console.log('\n')
   })
 
   process.exit(1)

@@ -19,6 +19,11 @@
   "license": "MIT",
   "main": "./src/sharec.js",
   "bin": "./bin/sharec",
+  "files": [
+    "bin/*",
+    "src/**/*.js",
+    "!src/**/*.test.js"
+  ],
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch",
@@ -46,9 +51,7 @@
   },
   "eslintConfig": {
     "env": {
-      "browser": true,
       "commonjs": true,
-      "es6": true,
       "jest": true,
       "node": true
     },
@@ -116,8 +119,7 @@
     "jest-cli": "^24.8.0",
     "lint-staged": "^8.1.6",
     "memfs": "^2.15.2",
-    "prettier": "^1.17.1",
-    "sharec-essential-config": "^2.8.0-beta"
+    "prettier": "^1.17.1"
   },
   "dependencies": {
     "boxen": "^4.1.0",
@@ -137,8 +139,5 @@
     "commitizen": {
       "path": "cz-conventional-changelog"
     }
-  },
-  "sharec": {
-    "version": "2.7.0-beta"
   }
 }
