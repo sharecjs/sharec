@@ -19,11 +19,6 @@
   "bin": {
     "sharec-tester": "./bin/sharec-tester"
   },
-  "files": [
-    "bin/*",
-    "src/**/*.js",
-    "!src/**/*.test.js"
-  ],
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch",
