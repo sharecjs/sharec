@@ -1,25 +1,12 @@
-const path = require('path')
-const { readFileSync } = require.requireActual('fs')
+const { fixture } = require('testUtils')
 const { vol } = require('memfs')
 const { installConfig } = require('../install')
 
 describe('processors > configs >', () => {
-  const eslint01 = require('fixtures/eslint/json/eslintrc_01.json')
-  const eslint02 = require('fixtures/eslint/json/eslintrc_02.json')
-  const yamlEslint01 = readFileSync(
-    path.resolve(
-      __dirname,
-      '../../../../test/fixtures/eslint/yaml/eslintrc_01.yml',
-    ),
-    'utf8',
-  )
-  const yamlEslint02 = readFileSync(
-    path.resolve(
-      __dirname,
-      '../../../../test/fixtures/eslint/yaml/eslintrc_02.yml',
-    ),
-    'utf8',
-  )
+  const eslint01 = fixture('eslint/json/eslintrc_01.json', 'json')
+  const eslint02 = fixture('eslint/json/eslintrc_02.json', 'json')
+  const yamlEslint01 = fixture('eslint/yaml/eslintrc_01.yml')
+  const yamlEslint02 = fixture('eslint/yaml/eslintrc_02.yml')
 
   beforeEach(() => {
     vol.reset()

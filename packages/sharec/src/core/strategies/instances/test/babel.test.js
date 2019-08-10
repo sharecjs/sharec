@@ -1,20 +1,21 @@
+const { fixture } = require('testUtils')
 const { babelStrategy } = require('../babel')
 
 describe('strategy > babel', () => {
   describe('json strategy', () => {
     // Base merge case
-    const babel01 = require('fixtures/babel/json/babel_01.json')
-    const babel02 = require('fixtures/babel/json/babel_02.json')
+    const babel01 = fixture('babel/json/babel_01.json', 'json')
+    const babel02 = fixture('babel/json/babel_02.json', 'json')
 
     // Env merging features
-    const babel04 = require('fixtures/babel/json/babel_04.json')
-    const babel05 = require('fixtures/babel/json/babel_05.json')
-    const babel07 = require('fixtures/babel/json/babel_07.json')
-    const babel08 = require('fixtures/babel/json/babel_08.json')
+    const babel04 = fixture('babel/json/babel_04.json', 'json')
+    const babel05 = fixture('babel/json/babel_05.json', 'json')
+    const babel07 = fixture('babel/json/babel_07.json', 'json')
+    const babel08 = fixture('babel/json/babel_08.json', 'json')
 
     // Uapply features
-    const babel10 = require('fixtures/babel/json/babel_10.json')
-    const babel11 = require('fixtures/babel/json/babel_11.json')
+    const babel10 = fixture('babel/json/babel_10.json', 'json')
+    const babel11 = fixture('babel/json/babel_11.json', 'json')
 
     describe('merge JSON configs', () => {
       it('should merge babel json configs', () => {
@@ -26,7 +27,7 @@ describe('strategy > babel', () => {
           babelStrategy.merge('.babelrc')(babel04, babel05),
         ).toMatchSnapshot()
         expect(
-          babelStrategy.merge('.babelrc.json')(babel05, babel04),
+          babelStrategy.merge('.babelrc.json', 'json')(babel05, babel04),
         ).toMatchSnapshot()
         expect(
           babelStrategy.merge('.babelrc')(babel07, babel08),

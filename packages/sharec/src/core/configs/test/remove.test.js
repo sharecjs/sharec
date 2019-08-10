@@ -1,25 +1,12 @@
-const path = require('path')
-const { readFileSync } = require.requireActual('fs')
+const { fixture } = require('testUtils')
 const { vol } = require('memfs')
 const { removeConfig } = require('../remove')
 
 describe('processors > configs >', () => {
-  const eslint04 = require('fixtures/eslint/json/eslintrc_04.json')
-  const eslint05 = require('fixtures/eslint/json/eslintrc_05.json')
-  const yamlEslint04 = readFileSync(
-    path.resolve(
-      __dirname,
-      '../../../../test/fixtures/eslint/yaml/eslintrc_04.yml',
-    ),
-    'utf8',
-  )
-  const yamlEslint05 = readFileSync(
-    path.resolve(
-      __dirname,
-      '../../../../test/fixtures/eslint/yaml/eslintrc_05.yml',
-    ),
-    'utf8',
-  )
+  const eslint04 = fixture('eslint/json/eslintrc_04.json', 'json')
+  const eslint05 = fixture('eslint/json/eslintrc_05.json', 'json')
+  const yamlEslint04 = fixture('eslint/yaml/eslintrc_04.yml')
+  const yamlEslint05 = fixture('eslint/yaml/eslintrc_05.yml')
 
   beforeEach(() => {
     vol.reset()

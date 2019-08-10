@@ -1,5 +1,6 @@
 const { vol } = require('memfs')
 const pick = require('lodash/pick')
+const { fixture } = require('testUtils')
 const {
   getCurrentPackageJsonMetaData,
   extractConfigs,
@@ -7,7 +8,7 @@ const {
 } = require('../extract')
 
 describe('core > package > extract >', () => {
-  const packageJsonFixture = require('fixtures/package/package_07.json')
+  const packageJsonFixture = fixture('package/package_07.json', 'json')
 
   beforeEach(() => {
     vol.reset()

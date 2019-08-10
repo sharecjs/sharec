@@ -1,24 +1,11 @@
-const path = require('path')
-const { readFileSync } = require.requireActual('fs')
+const { fixture } = require('testUtils')
 const { commonStrategy } = require('../common')
 
 describe('strategy > common', () => {
-  const common01 = require('fixtures/common/json/common_01.json')
-  const common02 = require('fixtures/common/json/common_02.json')
-  const commonYaml01 = readFileSync(
-    path.resolve(
-      __dirname,
-      '../../../../../test/fixtures/common/yaml/common_01.yml',
-    ),
-    'utf8',
-  )
-  const commonYaml02 = readFileSync(
-    path.resolve(
-      __dirname,
-      '../../../../../test/fixtures/common/yaml/common_02.yml',
-    ),
-    'utf8',
-  )
+  const common01 = fixture('common/json/common_01.json', 'json')
+  const common02 = fixture('common/json/common_02.json', 'json')
+  const commonYaml01 = fixture('common/yaml/common_01.yml')
+  const commonYaml02 = fixture('common/yaml/common_02.yml')
 
   describe('json strategy', () => {
     it('should merge objects by one deep level', () => {

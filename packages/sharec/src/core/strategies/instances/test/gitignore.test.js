@@ -1,36 +1,11 @@
-const path = require('path')
-const { readFileSync } = require.requireActual('fs')
+const { fixture } = require('testUtils')
 const { gitIgnoreStrategy } = require('../gitignore')
 
 describe('strategy > gitignore', () => {
-  const gitignoreCurrent = readFileSync(
-    path.resolve(
-      __dirname,
-      '../../../../../test/fixtures/gitignore/01-base/current.txt',
-    ),
-    'utf8',
-  )
-  const gitignoreNew = readFileSync(
-    path.resolve(
-      __dirname,
-      '../../../../../test/fixtures/gitignore/01-base/new.txt',
-    ),
-    'utf8',
-  )
-  const gitignoreResult = readFileSync(
-    path.resolve(
-      __dirname,
-      '../../../../../test/fixtures/gitignore/01-base/result.txt',
-    ),
-    'utf8',
-  )
-  const gitignoreRestored = readFileSync(
-    path.resolve(
-      __dirname,
-      '../../../../../test/fixtures/gitignore/01-base/restored.txt',
-    ),
-    'utf8',
-  )
+  const gitignoreCurrent = fixture('gitignore/01-base/current.txt')
+  const gitignoreNew = fixture('gitignore/01-base/new.txt')
+  const gitignoreResult = fixture('gitignore/01-base/result.txt')
+  const gitignoreRestored = fixture('gitignore/01-base/restored.txt')
 
   describe('merge', () => {
     it('should correctly merge configs', () => {

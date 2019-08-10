@@ -1,40 +1,15 @@
-const path = require('path')
-const { readFileSync } = require.requireActual('fs')
+const { fixture } = require('testUtils')
 const { eslintStrategy } = require('../eslint')
 
 describe('strategy > eslint', () => {
-  const eslint01 = require('fixtures/eslint/json/eslintrc_01.json')
-  const eslint02 = require('fixtures/eslint/json/eslintrc_02.json')
-  const eslint04 = require('fixtures/eslint/json/eslintrc_04.json')
-  const eslint05 = require('fixtures/eslint/json/eslintrc_05.json')
-  const eslintYaml01 = readFileSync(
-    path.resolve(
-      __dirname,
-      '../../../../../test/fixtures/eslint/yaml/eslintrc_01.yml',
-    ),
-    'utf8',
-  )
-  const eslintYaml02 = readFileSync(
-    path.resolve(
-      __dirname,
-      '../../../../../test/fixtures/eslint/yaml/eslintrc_02.yml',
-    ),
-    'utf8',
-  )
-  const eslintYaml04 = readFileSync(
-    path.resolve(
-      __dirname,
-      '../../../../../test/fixtures/eslint/yaml/eslintrc_04.yml',
-    ),
-    'utf8',
-  )
-  const eslintYaml05 = readFileSync(
-    path.resolve(
-      __dirname,
-      '../../../../../test/fixtures/eslint/yaml/eslintrc_05.yml',
-    ),
-    'utf8',
-  )
+  const eslint01 = fixture('eslint/json/eslintrc_01.json', 'json')
+  const eslint02 = fixture('eslint/json/eslintrc_02.json', 'json')
+  const eslint04 = fixture('eslint/json/eslintrc_04.json', 'json')
+  const eslint05 = fixture('eslint/json/eslintrc_05.json', 'json')
+  const eslintYaml01 = fixture('eslint/yaml/eslintrc_01.yml')
+  const eslintYaml02 = fixture('eslint/yaml/eslintrc_02.yml')
+  const eslintYaml04 = fixture('eslint/yaml/eslintrc_04.yml')
+  const eslintYaml05 = fixture('eslint/yaml/eslintrc_05.yml')
 
   describe('json strategy', () => {
     it('should merge eslint json configs', () => {

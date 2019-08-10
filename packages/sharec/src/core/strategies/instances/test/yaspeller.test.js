@@ -1,10 +1,11 @@
+const { fixture } = require('testUtils')
 const { yaspellerStrategy } = require('../yaspeller')
 
 describe('strategy > yaspeller', () => {
-  const yaspellerCurrent = require('fixtures/yaspeller/01-base/current.json')
-  const yaspellerNew = require('fixtures/yaspeller/01-base/new.json')
-  const yaspellerResult = require('fixtures/yaspeller/01-base/result.json')
-  const yaspellerRestored = require('fixtures/yaspeller/01-base/restored.json')
+  const yaspellerCurrent = fixture('yaspeller/01-base/current.json', 'json')
+  const yaspellerNew = fixture('yaspeller/01-base/new.json', 'json')
+  const yaspellerResult = fixture('yaspeller/01-base/result.json', 'json')
+  const yaspellerRestored = fixture('yaspeller/01-base/restored.json', 'json')
 
   describe('json strategy', () => {
     it('should merge yaspeller json configs', () => {

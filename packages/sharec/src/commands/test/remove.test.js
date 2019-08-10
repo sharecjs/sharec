@@ -1,29 +1,16 @@
-const path = require('path')
-const { readFileSync } = require.requireActual('fs')
+const { fixture } = require('testUtils')
 const { vol } = require('memfs')
 const remove = require('../remove')
 
 describe('commands > remove >', () => {
-  const packageJson5 = require('../../../test/fixtures/package/package_05.json')
-  const packageJson6 = require('../../../test/fixtures/package/package_06.json')
-  const babel10 = require('fixtures/babel/json/babel_10.json')
-  const babel11 = require('fixtures/babel/json/babel_11.json')
-  const eslint04 = require('fixtures/eslint/json/eslintrc_04.json')
-  const eslint05 = require('fixtures/eslint/json/eslintrc_05.json')
-  const yamlEslint04 = readFileSync(
-    path.resolve(
-      __dirname,
-      '../../../test/fixtures/eslint/yaml/eslintrc_04.yml',
-    ),
-    'utf8',
-  )
-  const yamlEslint05 = readFileSync(
-    path.resolve(
-      __dirname,
-      '../../../test/fixtures/eslint/yaml/eslintrc_05.yml',
-    ),
-    'utf8',
-  )
+  const packageJson5 = fixture('package/package_05.json', 'json')
+  const packageJson6 = fixture('package/package_06.json', 'json')
+  const babel10 = fixture('babel/json/babel_10.json', 'json')
+  const babel11 = fixture('babel/json/babel_11.json', 'json')
+  const eslint04 = fixture('eslint/json/eslintrc_04.json', 'json')
+  const eslint05 = fixture('eslint/json/eslintrc_05.json', 'json')
+  const yamlEslint04 = fixture('eslint/yaml/eslintrc_04.yml')
+  const yamlEslint05 = fixture('eslint/yaml/eslintrc_05.yml')
 
   beforeEach(() => {
     vol.reset()

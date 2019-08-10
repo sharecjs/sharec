@@ -1,36 +1,11 @@
-const path = require('path')
-const { readFileSync } = require.requireActual('fs')
+const { fixture } = require('testUtils')
 const { eslintIgnoreStrategy } = require('../eslintignore')
 
 describe('strategy > eslintignore', () => {
-  const eslintignoreCurrent = readFileSync(
-    path.resolve(
-      __dirname,
-      '../../../../../test/fixtures/eslintignore/01-base/current.txt',
-    ),
-    'utf8',
-  )
-  const eslintignoreNew = readFileSync(
-    path.resolve(
-      __dirname,
-      '../../../../../test/fixtures/eslintignore/01-base/new.txt',
-    ),
-    'utf8',
-  )
-  const eslintignoreResult = readFileSync(
-    path.resolve(
-      __dirname,
-      '../../../../../test/fixtures/eslintignore/01-base/result.txt',
-    ),
-    'utf8',
-  )
-  const eslintignoreRestored = readFileSync(
-    path.resolve(
-      __dirname,
-      '../../../../../test/fixtures/eslintignore/01-base/restored.txt',
-    ),
-    'utf8',
-  )
+  const eslintignoreCurrent = fixture('eslintignore/01-base/current.txt')
+  const eslintignoreNew = fixture('eslintignore/01-base/new.txt')
+  const eslintignoreResult = fixture('eslintignore/01-base/result.txt')
+  const eslintignoreRestored = fixture('eslintignore/01-base/restored.txt')
 
   describe('merge', () => {
     it('should correctly merge configs', () => {

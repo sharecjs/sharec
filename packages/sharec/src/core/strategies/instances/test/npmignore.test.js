@@ -1,36 +1,11 @@
-const path = require('path')
-const { readFileSync } = require.requireActual('fs')
+const { fixture } = require('testUtils')
 const { npmIgnoreStrategy } = require('../npmignore')
 
 describe('strategy > npmignore', () => {
-  const npmignoreCurrent = readFileSync(
-    path.resolve(
-      __dirname,
-      '../../../../../test/fixtures/npmignore/01-base/current.txt',
-    ),
-    'utf8',
-  )
-  const npmignoreNew = readFileSync(
-    path.resolve(
-      __dirname,
-      '../../../../../test/fixtures/npmignore/01-base/new.txt',
-    ),
-    'utf8',
-  )
-  const npmignoreResult = readFileSync(
-    path.resolve(
-      __dirname,
-      '../../../../../test/fixtures/npmignore/01-base/result.txt',
-    ),
-    'utf8',
-  )
-  const npmignoreRestored = readFileSync(
-    path.resolve(
-      __dirname,
-      '../../../../../test/fixtures/npmignore/01-base/restored.txt',
-    ),
-    'utf8',
-  )
+  const npmignoreCurrent = fixture('npmignore/01-base/current.txt')
+  const npmignoreNew = fixture('npmignore/01-base/new.txt')
+  const npmignoreResult = fixture('npmignore/01-base/result.txt')
+  const npmignoreRestored = fixture('npmignore/01-base/restored.txt')
 
   describe('merge', () => {
     it('should correctly merge configs', () => {

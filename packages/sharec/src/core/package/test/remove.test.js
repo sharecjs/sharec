@@ -1,9 +1,10 @@
 const { vol } = require('memfs')
+const { fixture } = require('testUtils')
 const { clearPackageJson, ereaseMetaData } = require('../remove')
 
 describe('core > package > remove >', () => {
-  const packageJson5 = require('fixtures/package/package_05.json')
-  const packageJson6 = require('fixtures/package/package_06.json')
+  const packageJson5 = fixture('package/package_05.json', 'json')
+  const packageJson6 = fixture('package/package_06.json', 'json')
 
   beforeEach(() => {
     vol.reset()

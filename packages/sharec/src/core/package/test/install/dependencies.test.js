@@ -1,10 +1,11 @@
 const { vol } = require('memfs')
+const { fixture } = require('testUtils')
 const { installPackageJson } = require('../../install')
 
 describe('core > package > install > dependencies >', () => {
-  const packageCurrent = require('fixtures/package/02-dependencies/current.json')
-  const packageNew = require('fixtures/package/02-dependencies/new.json')
-  const packageResult = require('fixtures/package/02-dependencies/result.json')
+  const packageCurrent = fixture('package/02-dependencies/current.json', 'json')
+  const packageNew = fixture('package/02-dependencies/new.json', 'json')
+  const packageResult = fixture('package/02-dependencies/result.json', 'json')
 
   beforeEach(() => {
     vol.reset()

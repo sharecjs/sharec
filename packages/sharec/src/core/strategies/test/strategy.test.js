@@ -1,43 +1,18 @@
-const path = require('path')
-const { readFileSync } = require.requireActual('fs')
+const { fixture } = require('testUtils')
 const { Strategy, LinearStrategy } = require('../strategy')
 
 describe('strategy', () => {
   let strategy
 
   describe('Strategy class', () => {
-    const common01 = require('fixtures/common/json/common_01.json')
-    const common02 = require('fixtures/common/json/common_02.json')
-    const common04 = require('fixtures/common/json/common_04.json')
-    const common05 = require('fixtures/common/json/common_05.json')
-    const commonYaml01 = readFileSync(
-      path.resolve(
-        __dirname,
-        '../../../../test/fixtures/common/yaml/common_01.yml',
-      ),
-      'utf8',
-    )
-    const commonYaml02 = readFileSync(
-      path.resolve(
-        __dirname,
-        '../../../../test/fixtures/common/yaml/common_02.yml',
-      ),
-      'utf8',
-    )
-    const commonYaml04 = readFileSync(
-      path.resolve(
-        __dirname,
-        '../../../../test/fixtures/common/yaml/common_04.yml',
-      ),
-      'utf8',
-    )
-    const commonYaml05 = readFileSync(
-      path.resolve(
-        __dirname,
-        '../../../../test/fixtures/common/yaml/common_05.yml',
-      ),
-      'utf8',
-    )
+    const common01 = fixture('common/json/common_01.json', 'json')
+    const common02 = fixture('common/json/common_02.json', 'json')
+    const common04 = fixture('common/json/common_04.json', 'json')
+    const common05 = fixture('common/json/common_05.json', 'json')
+    const commonYaml01 = fixture('common/yaml/common_01.yml')
+    const commonYaml02 = fixture('common/yaml/common_02.yml')
+    const commonYaml04 = fixture('common/yaml/common_04.yml')
+    const commonYaml05 = fixture('common/yaml/common_05.yml')
 
     beforeEach(() => {
       strategy = new Strategy()
@@ -157,34 +132,10 @@ describe('strategy', () => {
   })
 
   describe('LinearStrategy class', () => {
-    const gitignoreCurrent = readFileSync(
-      path.resolve(
-        __dirname,
-        '../../../../test/fixtures/gitignore/01-base/current.txt',
-      ),
-      'utf8',
-    )
-    const gitignoreNew = readFileSync(
-      path.resolve(
-        __dirname,
-        '../../../../test/fixtures/gitignore/01-base/new.txt',
-      ),
-      'utf8',
-    )
-    const gitignoreResult = readFileSync(
-      path.resolve(
-        __dirname,
-        '../../../../test/fixtures/gitignore/01-base/result.txt',
-      ),
-      'utf8',
-    )
-    const gitignoreRestored = readFileSync(
-      path.resolve(
-        __dirname,
-        '../../../../test/fixtures/gitignore/01-base/restored.txt',
-      ),
-      'utf8',
-    )
+    const gitignoreCurrent = fixture('gitignore/01-base/current.txt')
+    const gitignoreNew = fixture('gitignore/01-base/new.txt')
+    const gitignoreResult = fixture('gitignore/01-base/result.txt')
+    const gitignoreRestored = fixture('gitignore/01-base/restored.txt')
 
     beforeEach(() => {
       strategy = new LinearStrategy()

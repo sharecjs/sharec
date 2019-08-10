@@ -1,10 +1,11 @@
 const { vol } = require('memfs')
 const { installPackageJson, injectMetaData } = require('../install')
+const { fixture } = require('testUtils')
 
 describe('core > package > install >', () => {
-  const packageJson01 = require('fixtures/package/package_01.json')
-  const packageJson02 = require('fixtures/package/package_02.json')
-  const packageJsonFixture = require('fixtures/package/package_07.json')
+  const packageJson01 = fixture('package/package_01.json', 'json')
+  const packageJson02 = fixture('package/package_02.json', 'json')
+  const packageJsonFixture = fixture('package/package_07.json', 'json')
 
   beforeEach(() => {
     vol.reset()
