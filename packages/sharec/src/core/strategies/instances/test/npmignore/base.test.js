@@ -1,5 +1,5 @@
 const { fixture } = require('testUtils')
-const { npmIgnoreStrategy } = require('../npmignore')
+const { npmIgnoreStrategy } = require('../../npmignore')
 
 describe('strategy > npmignore', () => {
   const npmignoreCurrent = fixture('npmignore/01-base/current.txt')

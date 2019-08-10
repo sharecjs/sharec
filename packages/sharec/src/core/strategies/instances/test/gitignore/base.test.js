@@ -1,5 +1,5 @@
 const { fixture } = require('testUtils')
-const { gitIgnoreStrategy } = require('../gitignore')
+const { gitIgnoreStrategy } = require('../../gitignore')
 
 describe('strategy > gitignore', () => {
   const gitignoreCurrent = fixture('gitignore/01-base/current.txt')
