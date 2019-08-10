@@ -1,0 +1,41 @@
+const { fixture } = require('testUtils')
+const { vol } = require('memfs')
+const install = require('../../install')
+
+describe('commands > install > installed > ', () => {
+  const packageJson01 = fixture('package/package_01.json', 'json')
+
+  beforeEach(() => {
+    vol.reset()
+  })
+
+  it('should not do anything if configs versions are equal already injected', async () => {
+    expect.assertions(1)
+
+    const packageJson = {
+      sharec: {
+        version: '1.0.0',
+      },
+    }
+    const dir = {
+      '/target/package.json': JSON.stringify(packageJson, null, 2),
+      '/configuration-package/package.json': JSON.stringify({
+        version: '1.0.0',
+      }),
+      '/configuration-package/configs/package.json': JSON.stringify(
+        packageJson01,
+      ),
+    }
+
+    vol.fromJSON(dir, '/')
+
+    await install({
+      configsPath: '/configuration-package',
+      targetPath: '/target',
+    })
+
+    expect(
+      JSON.parse(vol.readFileSync('/target/package.json', 'utf8')),
+    ).toEqual(packageJson)
+  })
+})
