@@ -1,0 +1,19 @@
+{
+  "env": {
+    "browser": true,
+    "es6": true,
+    "node": false,
+    "jest": true
+  },
+  "extends": "standard",
+  "globals": {
+    "foo": true,
+    "bar": true,
+    "baz": true
+  },
+  "rules": {
+    "space-before-function-paren": 1,
+    "max-len": ["warn", 80, 2],
+    "sort-imports": 0
+  }
+}

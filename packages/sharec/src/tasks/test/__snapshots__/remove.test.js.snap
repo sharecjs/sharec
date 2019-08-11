@@ -24,6 +24,9 @@ Object {
       ],
     },
   },
+  "ignore": Array [
+    "*.vue",
+  ],
   "plugins": Array [
     Array [
       "syntax-dynamic-import",
@@ -195,6 +198,9 @@ Object {
       ],
     },
   },
+  "ignore": Array [
+    "*.vue",
+  ],
   "plugins": Array [
     Array [
       "syntax-dynamic-import",

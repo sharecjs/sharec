@@ -3,7 +3,10 @@ const { vol } = require('memfs')
 const install = require('../../install')
 
 describe('commands > install > installed > ', () => {
-  const packageJson01 = fixture('package/package_01.json', 'json')
+  const packageJsonResult = fixture(
+    'package/03-base-install/result.json',
+    'json',
+  )
 
   beforeEach(() => {
     vol.reset()
@@ -23,7 +26,7 @@ describe('commands > install > installed > ', () => {
         version: '1.0.0',
       }),
       '/configuration-package/configs/package.json': JSON.stringify(
-        packageJson01,
+        packageJsonResult,
       ),
     }
 

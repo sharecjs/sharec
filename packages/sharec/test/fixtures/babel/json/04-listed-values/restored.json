@@ -1,0 +1,16 @@
+{
+  "plugins": [
+    [
+      "syntax-dynamic-import",
+      {
+        "foo": "baz"
+      }
+    ]
+  ],
+  "env": {
+    "test": {
+      "presets": ["stage-3"]
+    }
+  },
+  "ignore": ["*.vue"]
+}

@@ -3,14 +3,44 @@ const { vol } = require('memfs')
 const remove = require('../../remove')
 
 describe('commands > remove >', () => {
-  const packageJson5 = fixture('package/package_05.json', 'json')
-  const packageJson6 = fixture('package/package_06.json', 'json')
-  const babel10 = fixture('babel/json/babel_10.json', 'json')
-  const babel11 = fixture('babel/json/babel_11.json', 'json')
-  const eslint04 = fixture('eslint/json/eslintrc_04.json', 'json')
-  const eslint05 = fixture('eslint/json/eslintrc_05.json', 'json')
-  const yamlEslint04 = fixture('eslint/yaml/eslintrc_04.yml')
-  const yamlEslint05 = fixture('eslint/yaml/eslintrc_05.yml')
+  const packageJsonResult = fixture(
+    'package/04-base-remove/result.json',
+    'json',
+  )
+  const packageJsonNew = fixture('package/04-base-remove/new.json', 'json')
+  const packageJsonRestored = fixture(
+    'package/04-base-remove/restored.json',
+    'json',
+  )
+  const babelResult = fixture('babel/json/04-listed-values/result.json', 'json')
+  const babelNew = fixture('babel/json/04-listed-values/new.json', 'json')
+  const babelRestored = fixture(
+    'babel/json/04-listed-values/restored.json',
+    'json',
+  )
+
+  const eslintResult = fixture(
+    'eslint/json/02-parser-options-operations/result.json',
+    'json',
+  )
+  const eslintNew = fixture(
+    'eslint/json/02-parser-options-operations/new.json',
+    'json',
+  )
+  const eslintRestored = fixture(
+    'eslint/json/02-parser-options-operations/restored.json',
+    'json',
+  )
+
+  const yamlEslintResult = fixture(
+    'eslint/yaml/02-parser-options-operations/result.yml',
+  )
+  const yamlEslintNew = fixture(
+    'eslint/yaml/02-parser-options-operations/new.yml',
+  )
+  const yamlEslintRestored = fixture(
+    'eslint/yaml/02-parser-options-operations/restored.yml',
+  )
 
   beforeEach(() => {
     vol.reset()
@@ -26,10 +56,10 @@ describe('commands > remove >', () => {
     }
     const dir = {
       '/target/package.json': JSON.stringify(packageJson),
-      '/target/.eslintrc': JSON.stringify(eslint04),
-      '/target/.babelrc': JSON.stringify(babel11),
-      '/configuration-package/configs/.eslintrc': JSON.stringify(eslint05),
-      '/configuration-package/configs/.babelrc': JSON.stringify(babel11),
+      '/target/.eslintrc': JSON.stringify(eslintResult),
+      '/target/.babelrc': JSON.stringify(babelResult),
+      '/configuration-package/configs/.eslintrc': JSON.stringify(eslintNew),
+      '/configuration-package/configs/.babelrc': JSON.stringify(babelResult),
     }
 
     vol.fromJSON(dir)
@@ -39,12 +69,10 @@ describe('commands > remove >', () => {
       configsPath: '/configuration-package',
     })
 
-    expect(
-      JSON.parse(vol.readFileSync('/target/package.json')),
-    ).toMatchSnapshot()
-    expect(
-      JSON.parse(vol.readFileSync('/target/.eslintrc', 'utf8')),
-    ).toMatchSnapshot()
+    expect(JSON.parse(vol.readFileSync('/target/package.json'))).toEqual({})
+    expect(JSON.parse(vol.readFileSync('/target/.eslintrc', 'utf8'))).toEqual(
+      eslintRestored,
+    )
     expect(vol.readdirSync('/target')).not.toContain('.babelrc')
   })
 
@@ -52,9 +80,9 @@ describe('commands > remove >', () => {
     expect.assertions(1)
 
     const dir = {
-      '/target/package.json': JSON.stringify(packageJson5),
+      '/target/package.json': JSON.stringify(packageJsonResult),
       '/configuration-package/configs/package.json': JSON.stringify(
-        packageJson6,
+        packageJsonNew,
       ),
     }
     vol.fromJSON(dir)
@@ -64,24 +92,24 @@ describe('commands > remove >', () => {
       configsPath: '/configuration-package',
     })
 
-    expect(
-      JSON.parse(vol.readFileSync('/target/package.json')),
-    ).toMatchSnapshot()
+    expect(JSON.parse(vol.readFileSync('/target/package.json'))).toEqual(
+      packageJsonRestored,
+    )
   })
 
   it('should remove configuration from package.json and other matched files', async () => {
     expect.assertions(4)
 
     const dir = {
-      '/target/package.json': JSON.stringify(packageJson5),
-      '/target/.eslintrc.yml': yamlEslint04,
-      '/target/.babelrc': JSON.stringify(babel10),
+      '/target/package.json': JSON.stringify(packageJsonResult),
+      '/target/.eslintrc.yml': yamlEslintResult,
+      '/target/.babelrc': JSON.stringify(babelResult),
       '/configuration-package/configs/package.json': JSON.stringify(
-        packageJson6,
+        packageJsonNew,
       ),
       '/configuration-package/package-lock.json': 'foo',
-      '/configuration-package/configs/.eslintrc.yml': yamlEslint05,
-      '/configuration-package/configs/.babelrc': JSON.stringify(babel11),
+      '/configuration-package/configs/.eslintrc.yml': yamlEslintNew,
+      '/configuration-package/configs/.babelrc': JSON.stringify(babelNew),
     }
     vol.fromJSON(dir)
 
@@ -90,11 +118,15 @@ describe('commands > remove >', () => {
       configsPath: '/configuration-package',
     })
 
-    expect(vol.readFileSync('/target/.eslintrc.yml', 'utf8')).toMatchSnapshot()
-    expect(JSON.parse(vol.readFileSync('/target/.babelrc'))).toMatchSnapshot()
-    expect(
-      JSON.parse(vol.readFileSync('/target/package.json')),
-    ).toMatchSnapshot()
+    expect(vol.readFileSync('/target/.eslintrc.yml', 'utf8')).toEqual(
+      yamlEslintRestored,
+    )
+    expect(JSON.parse(vol.readFileSync('/target/.babelrc'))).toEqual(
+      babelRestored,
+    )
+    expect(JSON.parse(vol.readFileSync('/target/package.json'))).toEqual(
+      packageJsonRestored,
+    )
     expect(vol.readdirSync('/target')).not.toContain('package-lock.json')
   })
 })
