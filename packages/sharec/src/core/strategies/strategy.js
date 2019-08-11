@@ -1,4 +1,5 @@
 const path = require('path')
+const { mergeLists, listsDiff } = require('../../utils/lists')
 const { hashesDiff } = require('../../utils/hashes')
 const { transformInputToYAML, toYaml } = require('../../utils/yaml')
 
@@ -62,11 +63,23 @@ class Strategy {
     }
   }
 
-  mergeJSON(a = {}, b = {}) {
+  mergeJSON(a, b) {
+    if (Array.isArray(a) && Array.isArray(b)) {
+      return this.mergeJSONLists(a, b)
+    }
+
+    return this.mergeJSONHashes(a, b)
+  }
+
+  mergeJSONHashes(a = {}, b = {}) {
     return {
       ...a,
       ...b,
     }
+  }
+
+  mergeJSONLists(a = [], b = []) {
+    return mergeLists(a, b)
   }
 
   mergeYAML(rawA, rawB) {
@@ -89,10 +102,6 @@ class Strategy {
      * @returns {Object|String}
      */
     return (localConfig, config) => {
-      if (fileName === 'dependencies') {
-        console.log(localConfig, config)
-      }
-
       if (!matchedMethod) return config
 
       const res = matchedMethod.bind(this)(localConfig, config)
@@ -102,7 +111,19 @@ class Strategy {
   }
 
   unapplyJSON(a, b) {
+    if (Array.isArray(a) && Array.isArray(b)) {
+      return this.unapplyJSONLists(a, b)
+    }
+
+    return this.unapplyJSONHashes(a, b)
+  }
+
+  unapplyJSONHashes(a, b) {
     return hashesDiff(a, b)
+  }
+
+  unapplyJSONLists(a, b) {
+    return listsDiff(a, b)
   }
 
   unapplyYAML(rawA, rawB) {

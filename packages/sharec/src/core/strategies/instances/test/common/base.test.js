@@ -1,7 +1,7 @@
 const { fixtures } = require('testUtils')
 const { commonStrategy } = require('../../common')
 
-describe('strategy > common', () => {
+describe('strategy > common > ', () => {
   const commonBaseFxt = fixtures('common/json/01-base', 'json')
   const commonBaseFxtYaml = fixtures('common/yaml/01-base')
 
