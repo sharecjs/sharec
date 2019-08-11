@@ -1,5 +1,5 @@
 const isEmpty = require('lodash/isEmpty')
-const { Strategy } = require('../strategy')
+const Strategy = require('../Strategy')
 const {
   withoutKeys,
   mergeHashesWithKeys,

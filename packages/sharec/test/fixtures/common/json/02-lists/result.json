@@ -1,0 +1,4 @@
+{
+  "foo": "baz",
+  "bar": ["foo", "bar", "baz"]
+}

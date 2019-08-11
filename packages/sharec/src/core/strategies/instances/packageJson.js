@@ -1,4 +1,4 @@
-const { Strategy } = require('../strategy')
+const Strategy = require('../Strategy')
 
 class PackageJsonStrategy extends Strategy {}
 const packageJsonStrategy = new PackageJsonStrategy({

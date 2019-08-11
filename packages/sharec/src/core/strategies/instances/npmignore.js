@@ -1,4 +1,4 @@
-const { LinearStrategy } = require('../strategy')
+const LinearStrategy = require('../LinearStrategy')
 
 class NPMIgnoreStrategy extends LinearStrategy {}
 

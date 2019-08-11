@@ -6,8 +6,8 @@ const xor = require('lodash/xor')
 const without = require('lodash/without')
 const isEmpty = require('lodash/isEmpty')
 const intersection = require('lodash/intersection')
-const { Strategy } = require('../strategy')
-const { withKeys, mergeHashes, hashesDiff } = require('../../../utils/hashes')
+const Strategy = require('../Strategy')
+const { mergeHashes } = require('../../../utils/hashes')
 const { mergePairs, shallowPairsChangesDiff } = require('../../../utils/pairs')
 
 class BabelStrategy extends Strategy {

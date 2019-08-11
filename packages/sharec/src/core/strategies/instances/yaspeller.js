@@ -3,7 +3,7 @@ const uniq = require('lodash/uniq')
 const omit = require('lodash/omit')
 const unset = require('lodash/unset')
 const intersection = require('lodash/intersection')
-const { Strategy } = require('../strategy')
+const Strategy = require('../Strategy')
 const {
   deepMergeHashesWithoutKeys,
   hashesDiff,
