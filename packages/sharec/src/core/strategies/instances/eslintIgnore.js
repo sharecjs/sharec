@@ -1,8 +1,11 @@
-const LinearStrategy = require('../LinearStrategy')
+const Strategy = require('../Strategy')
 
-class EslintIgnoreStrategy extends LinearStrategy {}
+class EslintIgnoreStrategy extends Strategy {}
 
-const eslintIgnoreStrategy = new EslintIgnoreStrategy(['.eslintignore'])
+const eslintIgnoreStrategy = new EslintIgnoreStrategy({
+  json: ['eslintIgnore'],
+  lines: ['.eslintignore'],
+})
 
 module.exports = {
   EslintIgnoreStrategy,

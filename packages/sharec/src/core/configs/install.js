@@ -4,13 +4,12 @@ const { readFile, writeFile, makeDir } = require('../../utils/fs')
 const { resolveConfigStrategy } = require('../strategies/resolve')
 
 const installConfig = async ({ configsPath, targetPath, filePath }) => {
+  const newConfigPath = path.join(configsPath, filePath)
   const targetStrategy = resolveConfigStrategy(filePath)
   const localConfigPath = path.join(targetPath, filePath)
   const localConfigDirName = path.dirname(localConfigPath)
-  let localConfig = null
-
-  const newConfigPath = path.join(configsPath, filePath)
   let newConfig = await readFile(newConfigPath, 'utf8')
+  let localConfig = null
 
   try {
     localConfig = await readFile(localConfigPath, 'utf8')

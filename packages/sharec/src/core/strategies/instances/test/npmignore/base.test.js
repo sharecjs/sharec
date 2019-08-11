@@ -7,7 +7,7 @@ describe('strategy > npmignore', () => {
   describe('merge', () => {
     it('should correctly merge configs', () => {
       expect(
-        npmIgnoreStrategy.merge()(
+        npmIgnoreStrategy.merge('.npmignore')(
           npmignoreBaseFxt.current,
           npmignoreBaseFxt.new,
         ),
@@ -18,7 +18,7 @@ describe('strategy > npmignore', () => {
   describe('uapplying', () => {
     it('should correctly unapply configs', () => {
       expect(
-        npmIgnoreStrategy.unapply()(
+        npmIgnoreStrategy.unapply('.npmignore')(
           npmignoreBaseFxt.result,
           npmignoreBaseFxt.new,
         ),

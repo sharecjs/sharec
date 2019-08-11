@@ -164,7 +164,7 @@ class BabelStrategy extends Strategy {
   }
 }
 const babelStrategy = new BabelStrategy({
-  json: ['babel', '.babelrc', '.babelrc.json', 'babelrc.js', 'babel.config.js'],
+  json: ['babel', '.babelrc', '.babelrc.json', 'babelrc.json'],
 })
 
 module.exports = {

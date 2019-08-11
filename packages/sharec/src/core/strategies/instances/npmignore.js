@@ -1,8 +1,10 @@
-const LinearStrategy = require('../LinearStrategy')
+const Strategy = require('../Strategy')
 
-class NPMIgnoreStrategy extends LinearStrategy {}
+class NPMIgnoreStrategy extends Strategy {}
 
-const npmIgnoreStrategy = new NPMIgnoreStrategy(['.npmignore'])
+const npmIgnoreStrategy = new NPMIgnoreStrategy({
+  lines: ['.npmignore'],
+})
 
 module.exports = {
   NPMIgnoreStrategy,

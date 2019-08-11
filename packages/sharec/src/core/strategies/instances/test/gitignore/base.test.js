@@ -7,7 +7,7 @@ describe('strategy > gitignore', () => {
   describe('merge', () => {
     it('should correctly merge configs', () => {
       expect(
-        gitIgnoreStrategy.merge()(
+        gitIgnoreStrategy.merge('.gitignore')(
           gitignoreBaseFxt.current,
           gitignoreBaseFxt.new,
         ),
@@ -18,7 +18,7 @@ describe('strategy > gitignore', () => {
   describe('uapplying', () => {
     it('should correctly unapply configs', () => {
       expect(
-        gitIgnoreStrategy.unapply()(
+        gitIgnoreStrategy.unapply('.gitignore')(
           gitignoreBaseFxt.result,
           gitignoreBaseFxt.new,
         ),

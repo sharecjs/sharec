@@ -29,9 +29,6 @@ Object {
       "sort-imports": 0,
     },
   },
-  "eslintIgnore": Array [
-    "/node_modules",
-  ],
   "husky": Object {
     "hooks": Object {
       "commit-msg": "commitlint -E",
