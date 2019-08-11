@@ -1,33 +1,14 @@
-const { fixture } = require('testUtils')
+const { fixtures } = require('testUtils')
 const { vol } = require('memfs')
 const install = require('../../install')
 
 describe('commands > install > base >', () => {
-  const packageJsonCurrent = fixture(
-    'package/03-base-install/current.json',
-    'json',
-  )
-  const packageJsonNew = fixture('package/03-base-install/new.json', 'json')
-  const packageJsonResult = fixture(
-    'package/03-base-install/result.json',
-    'json',
-  )
-
-  const babelCurrent = fixture('babel/json/01-base/current.json', 'json')
-  const babelNew = fixture('babel/json/01-base/new.json', 'json')
-  const babelResult = fixture('babel/json/01-base/result.json', 'json')
-  const eslintCurrent = fixture('eslint/json/01-base/current.json', 'json')
-  const eslintNew = fixture('eslint/json/01-base/new.json', 'json')
-  const eslintResult = fixture('eslint/json/01-base/result.json', 'json')
-  const yamlEslintCurrent = fixture('eslint/yaml/01-base/current.yml')
-  const yamlEslintNew = fixture('eslint/yaml/01-base/new.yml')
-  const yamlEslintResult = fixture('eslint/yaml/01-base/result.yml')
-  const npmignoreCurrent = fixture('npmignore/01-base/current.txt')
-  const npmignoreNew = fixture('npmignore/01-base/new.txt')
-  const npmignoreResult = fixture('npmignore/01-base/result.txt')
-  const gitignoreCurrent = fixture('gitignore/01-base/current.txt')
-  const gitignoreNew = fixture('gitignore/01-base/new.txt')
-  const gitignoreResult = fixture('gitignore/01-base/result.txt')
+  const packageJsonBaseInstallFxt = fixtures('package/03-base-install', 'json')
+  const babelBaseFxt = fixtures('babel/json/01-base', 'json')
+  const eslintBaseFxt = fixtures('eslint/json/01-base', 'json')
+  const eslintBaseFxtYaml = fixtures('eslint/yaml/01-base')
+  const npmignoreBaseFxt = fixtures('npmignore/01-base')
+  const gitignoreBaseFxt = fixtures('gitignore/01-base')
 
   beforeEach(() => {
     vol.reset()
@@ -37,25 +18,33 @@ describe('commands > install > base >', () => {
     expect.assertions(8)
 
     const dir = {
-      '/target/.eslintrc': JSON.stringify(eslintCurrent),
-      '/target/.babelrc': JSON.stringify(babelCurrent),
-      '/target/.eslintrc.yaml': yamlEslintCurrent,
-      '/target/package.json': JSON.stringify(packageJsonCurrent, null, 2),
-      '/target/.gitignore': gitignoreCurrent,
-      '/target/.npmignore': npmignoreCurrent,
+      '/target/.eslintrc': JSON.stringify(eslintBaseFxt.current),
+      '/target/.babelrc': JSON.stringify(babelBaseFxt.current),
+      '/target/.eslintrc.yaml': eslintBaseFxtYaml.current,
+      '/target/package.json': JSON.stringify(
+        packageJsonBaseInstallFxt.current,
+        null,
+        2,
+      ),
+      '/target/.gitignore': gitignoreBaseFxt.current,
+      '/target/.npmignore': npmignoreBaseFxt.current,
       '/configuration-package/package.json': JSON.stringify({
         version: '1.0.0',
       }),
-      '/configuration-package/configs/.eslintrc': JSON.stringify(eslintNew),
-      '/configuration-package/configs/.eslintrc.yaml': yamlEslintNew,
+      '/configuration-package/configs/.eslintrc': JSON.stringify(
+        eslintBaseFxt.new,
+      ),
+      '/configuration-package/configs/.eslintrc.yaml': eslintBaseFxtYaml.new,
       '/configuration-package/configs/.editorconfig': 'bar',
-      '/configuration-package/configs/.babelrc': JSON.stringify(babelNew),
+      '/configuration-package/configs/.babelrc': JSON.stringify(
+        babelBaseFxt.new,
+      ),
       '/configuration-package/configs/package-lock.json': 'bar',
       '/configuration-package/configs/package.json': JSON.stringify(
-        packageJsonNew,
+        packageJsonBaseInstallFxt.new,
       ),
-      '/configuration-package/configs/.gitignore': gitignoreNew,
-      '/configuration-package/configs/.npmignore': npmignoreNew,
+      '/configuration-package/configs/.gitignore': gitignoreBaseFxt.new,
+      '/configuration-package/configs/.npmignore': npmignoreBaseFxt.new,
     }
 
     vol.fromJSON(dir, '/')
@@ -67,23 +56,23 @@ describe('commands > install > base >', () => {
 
     expect(
       JSON.parse(vol.readFileSync('/target/package.json', 'utf8')),
-    ).toEqual(packageJsonResult)
+    ).toEqual(packageJsonBaseInstallFxt.result)
     expect(vol.readdirSync('/target')).not.toContain('package-lock.json')
     expect(vol.readFileSync('/target/.editorconfig', 'utf8')).toEqual('bar')
     expect(JSON.parse(vol.readFileSync('/target/.babelrc', 'utf8'))).toEqual(
-      babelResult,
+      babelBaseFxt.result,
     )
     expect(JSON.parse(vol.readFileSync('/target/.eslintrc', 'utf8'))).toEqual(
-      eslintResult,
+      eslintBaseFxt.result,
     )
     expect(vol.readFileSync('/target/.eslintrc.yaml', 'utf8')).toEqual(
-      yamlEslintResult,
+      eslintBaseFxtYaml.result,
     )
     expect(vol.readFileSync('/target/.gitignore', 'utf8')).toEqual(
-      gitignoreResult,
+      gitignoreBaseFxt.result,
     )
     expect(vol.readFileSync('/target/.npmignore', 'utf8')).toEqual(
-      npmignoreResult,
+      npmignoreBaseFxt.result,
     )
   })
 })

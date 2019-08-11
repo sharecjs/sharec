@@ -1,23 +1,24 @@
-const { fixture } = require('testUtils')
+const { fixtures } = require('testUtils')
 const { babelStrategy } = require('../../babel')
 
 describe('strategy > babel > with empty > ', () => {
-  const babelCurrent = fixture('babel/json/03-unique-env/current.json', 'json')
-  const babelNew = fixture('babel/json/03-unique-env/new.json', 'json')
-  const babelResult = fixture('babel/json/03-unique-env/result.json', 'json')
-  const babelRestored = fixture(
-    'babel/json/03-unique-env/restored.json',
-    'json',
-  )
+  const babelUniqueEnvFxt = fixtures('babel/json/03-unique-env', 'json')
 
   it('should handle merge with empty config', () => {
-    expect(babelStrategy.mergeJSON(babelCurrent, babelNew)).toEqual(babelResult)
-    expect(babelStrategy.mergeJSON(babelNew, babelCurrent)).toEqual(babelResult)
+    expect(
+      babelStrategy.mergeJSON(babelUniqueEnvFxt.current, babelUniqueEnvFxt.new),
+    ).toEqual(babelUniqueEnvFxt.result)
+    expect(
+      babelStrategy.mergeJSON(babelUniqueEnvFxt.new, babelUniqueEnvFxt.current),
+    ).toEqual(babelUniqueEnvFxt.result)
   })
 
   it('should fully unapply babel JSON config', () => {
-    expect(babelStrategy.unapplyJSON(babelResult, babelNew)).toEqual(
-      babelRestored,
-    )
+    expect(
+      babelStrategy.unapplyJSON(
+        babelUniqueEnvFxt.result,
+        babelUniqueEnvFxt.new,
+      ),
+    ).toEqual(babelUniqueEnvFxt.restored)
   })
 })

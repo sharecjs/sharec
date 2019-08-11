@@ -1,45 +1,16 @@
-const { fixture } = require('testUtils')
+const { fixtures } = require('testUtils')
 const { vol } = require('memfs')
 const remove = require('../../remove')
 
 describe('commands > remove >', () => {
-  const packageJsonResult = fixture(
-    'package/04-base-remove/result.json',
+  const packageJsonBaseRemoveFxt = fixtures('package/04-base-remove', 'json')
+  const babelListedValuesFxt = fixtures('babel/json/04-listed-values', 'json')
+  const eslintParserOptionsOperationsFxt = fixtures(
+    'eslint/json/02-parser-options-operations',
     'json',
   )
-  const packageJsonNew = fixture('package/04-base-remove/new.json', 'json')
-  const packageJsonRestored = fixture(
-    'package/04-base-remove/restored.json',
-    'json',
-  )
-  const babelResult = fixture('babel/json/04-listed-values/result.json', 'json')
-  const babelNew = fixture('babel/json/04-listed-values/new.json', 'json')
-  const babelRestored = fixture(
-    'babel/json/04-listed-values/restored.json',
-    'json',
-  )
-
-  const eslintResult = fixture(
-    'eslint/json/02-parser-options-operations/result.json',
-    'json',
-  )
-  const eslintNew = fixture(
-    'eslint/json/02-parser-options-operations/new.json',
-    'json',
-  )
-  const eslintRestored = fixture(
-    'eslint/json/02-parser-options-operations/restored.json',
-    'json',
-  )
-
-  const yamlEslintResult = fixture(
-    'eslint/yaml/02-parser-options-operations/result.yml',
-  )
-  const yamlEslintNew = fixture(
-    'eslint/yaml/02-parser-options-operations/new.yml',
-  )
-  const yamlEslintRestored = fixture(
-    'eslint/yaml/02-parser-options-operations/restored.yml',
+  const eslintParserOptionsOperationsFxtYaml = fixtures(
+    'eslint/yaml/02-parser-options-operations',
   )
 
   beforeEach(() => {
@@ -56,10 +27,16 @@ describe('commands > remove >', () => {
     }
     const dir = {
       '/target/package.json': JSON.stringify(packageJson),
-      '/target/.eslintrc': JSON.stringify(eslintResult),
-      '/target/.babelrc': JSON.stringify(babelResult),
-      '/configuration-package/configs/.eslintrc': JSON.stringify(eslintNew),
-      '/configuration-package/configs/.babelrc': JSON.stringify(babelResult),
+      '/target/.eslintrc': JSON.stringify(
+        eslintParserOptionsOperationsFxt.result,
+      ),
+      '/target/.babelrc': JSON.stringify(babelListedValuesFxt.result),
+      '/configuration-package/configs/.eslintrc': JSON.stringify(
+        eslintParserOptionsOperationsFxt.new,
+      ),
+      '/configuration-package/configs/.babelrc': JSON.stringify(
+        babelListedValuesFxt.result,
+      ),
     }
 
     vol.fromJSON(dir)
@@ -71,7 +48,7 @@ describe('commands > remove >', () => {
 
     expect(JSON.parse(vol.readFileSync('/target/package.json'))).toEqual({})
     expect(JSON.parse(vol.readFileSync('/target/.eslintrc', 'utf8'))).toEqual(
-      eslintRestored,
+      eslintParserOptionsOperationsFxt.restored,
     )
     expect(vol.readdirSync('/target')).not.toContain('.babelrc')
   })
@@ -80,9 +57,9 @@ describe('commands > remove >', () => {
     expect.assertions(1)
 
     const dir = {
-      '/target/package.json': JSON.stringify(packageJsonResult),
+      '/target/package.json': JSON.stringify(packageJsonBaseRemoveFxt.result),
       '/configuration-package/configs/package.json': JSON.stringify(
-        packageJsonNew,
+        packageJsonBaseRemoveFxt.new,
       ),
     }
     vol.fromJSON(dir)
@@ -93,7 +70,7 @@ describe('commands > remove >', () => {
     })
 
     expect(JSON.parse(vol.readFileSync('/target/package.json'))).toEqual(
-      packageJsonRestored,
+      packageJsonBaseRemoveFxt.restored,
     )
   })
 
@@ -101,15 +78,18 @@ describe('commands > remove >', () => {
     expect.assertions(4)
 
     const dir = {
-      '/target/package.json': JSON.stringify(packageJsonResult),
-      '/target/.eslintrc.yml': yamlEslintResult,
-      '/target/.babelrc': JSON.stringify(babelResult),
+      '/target/package.json': JSON.stringify(packageJsonBaseRemoveFxt.result),
+      '/target/.eslintrc.yml': eslintParserOptionsOperationsFxtYaml.result,
+      '/target/.babelrc': JSON.stringify(babelListedValuesFxt.result),
       '/configuration-package/configs/package.json': JSON.stringify(
-        packageJsonNew,
+        packageJsonBaseRemoveFxt.new,
       ),
       '/configuration-package/package-lock.json': 'foo',
-      '/configuration-package/configs/.eslintrc.yml': yamlEslintNew,
-      '/configuration-package/configs/.babelrc': JSON.stringify(babelNew),
+      '/configuration-package/configs/.eslintrc.yml':
+        eslintParserOptionsOperationsFxtYaml.new,
+      '/configuration-package/configs/.babelrc': JSON.stringify(
+        babelListedValuesFxt.new,
+      ),
     }
     vol.fromJSON(dir)
 
@@ -119,13 +99,13 @@ describe('commands > remove >', () => {
     })
 
     expect(vol.readFileSync('/target/.eslintrc.yml', 'utf8')).toEqual(
-      yamlEslintRestored,
+      eslintParserOptionsOperationsFxtYaml.restored,
     )
     expect(JSON.parse(vol.readFileSync('/target/.babelrc'))).toEqual(
-      babelRestored,
+      babelListedValuesFxt.restored,
     )
     expect(JSON.parse(vol.readFileSync('/target/package.json'))).toEqual(
-      packageJsonRestored,
+      packageJsonBaseRemoveFxt.restored,
     )
     expect(vol.readdirSync('/target')).not.toContain('package-lock.json')
   })

@@ -1,18 +1,9 @@
-const { fixture } = require('testUtils')
+const { fixtures } = require('testUtils')
 const { commonStrategy } = require('../../common')
 
 describe('strategy > common', () => {
-  const commonCurrentJSON = fixture('common/json/01-base/current.json', 'json')
-  const commonNewJSON = fixture('common/json/01-base/new.json', 'json')
-  const commonResultJSON = fixture('common/json/01-base/result.json', 'json')
-  const commonRestoredJSON = fixture(
-    'common/json/01-base/restored.json',
-    'json',
-  )
-  const commonCurrentYAML = fixture('common/yaml/01-base/current.yml')
-  const commonNewYAML = fixture('common/yaml/01-base/new.yml')
-  const commonResultYAML = fixture('common/yaml/01-base/result.yml')
-  const commonRestoredYAML = fixture('common/yaml/01-base/restored.yml')
+  const commonBaseFxt = fixtures('common/json/01-base', 'json')
+  const commonBaseFxtYaml = fixtures('common/yaml/01-base')
 
   describe('merge', () => {
     it('should return last argument if it is not mergable', () => {
@@ -22,27 +13,36 @@ describe('strategy > common', () => {
     describe('JSON', () => {
       it('should merge objects by one deep level', () => {
         expect(
-          commonStrategy.mergeJSON(commonCurrentJSON, commonNewJSON),
-        ).toEqual(commonResultJSON)
+          commonStrategy.mergeJSON(commonBaseFxt.current, commonBaseFxt.new),
+        ).toEqual(commonBaseFxt.result)
       })
 
       it('should automatically merge configs with method determination', () => {
         expect(
-          commonStrategy.merge('config.json')(commonCurrentJSON, commonNewJSON),
-        ).toEqual(commonResultJSON)
+          commonStrategy.merge('config.json')(
+            commonBaseFxt.current,
+            commonBaseFxt.new,
+          ),
+        ).toEqual(commonBaseFxt.result)
       })
     })
 
     describe('YAML', () => {
       it('should merge objects by one deep level', () => {
         expect(
-          commonStrategy.mergeYAML(commonCurrentYAML, commonNewYAML),
-        ).toEqual(commonResultYAML)
+          commonStrategy.mergeYAML(
+            commonBaseFxtYaml.current,
+            commonBaseFxtYaml.new,
+          ),
+        ).toEqual(commonBaseFxtYaml.result)
       })
       it('should automatically merge configs with method determination', () => {
         expect(
-          commonStrategy.merge('config.yaml')(commonCurrentYAML, commonNewYAML),
-        ).toEqual(commonResultYAML)
+          commonStrategy.merge('config.yaml')(
+            commonBaseFxtYaml.current,
+            commonBaseFxtYaml.new,
+          ),
+        ).toEqual(commonBaseFxtYaml.result)
       })
     })
   })
@@ -51,34 +51,37 @@ describe('strategy > common', () => {
     describe('JSON', () => {
       it('should unapply objects by one deep level', () => {
         expect(
-          commonStrategy.unapplyJSON(commonResultJSON, commonNewJSON),
-        ).toEqual(commonRestoredJSON)
+          commonStrategy.unapplyJSON(commonBaseFxt.result, commonBaseFxt.new),
+        ).toEqual(commonBaseFxt.restored)
       })
 
       it('should automatically unapply configs with method determination', () => {
         expect(
           commonStrategy.unapply('config.json')(
-            commonResultJSON,
-            commonNewJSON,
+            commonBaseFxt.result,
+            commonBaseFxt.new,
           ),
-        ).toEqual(commonRestoredJSON)
+        ).toEqual(commonBaseFxt.restored)
       })
     })
 
     describe('YAML', () => {
       it('should unapply objects by one deep level', () => {
         expect(
-          commonStrategy.unapplyYAML(commonResultYAML, commonNewYAML),
-        ).toEqual(commonRestoredYAML)
+          commonStrategy.unapplyYAML(
+            commonBaseFxtYaml.result,
+            commonBaseFxtYaml.new,
+          ),
+        ).toEqual(commonBaseFxtYaml.restored)
       })
 
       it('should automatically merge configs with method determination', () => {
         expect(
           commonStrategy.unapply('config.yaml')(
-            commonResultYAML,
-            commonNewYAML,
+            commonBaseFxtYaml.result,
+            commonBaseFxtYaml.new,
           ),
-        ).toEqual(commonRestoredYAML)
+        ).toEqual(commonBaseFxtYaml.restored)
       })
     })
   })

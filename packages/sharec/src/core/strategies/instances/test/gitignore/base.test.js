@@ -1,25 +1,28 @@
-const { fixture } = require('testUtils')
+const { fixtures } = require('testUtils')
 const { gitIgnoreStrategy } = require('../../gitignore')
 
 describe('strategy > gitignore', () => {
-  const gitignoreCurrent = fixture('gitignore/01-base/current.txt')
-  const gitignoreNew = fixture('gitignore/01-base/new.txt')
-  const gitignoreResult = fixture('gitignore/01-base/result.txt')
-  const gitignoreRestored = fixture('gitignore/01-base/restored.txt')
+  const gitignoreBaseFxt = fixtures('gitignore/01-base')
 
   describe('merge', () => {
     it('should correctly merge configs', () => {
-      expect(gitIgnoreStrategy.merge()(gitignoreCurrent, gitignoreNew)).toEqual(
-        gitignoreResult,
-      )
+      expect(
+        gitIgnoreStrategy.merge()(
+          gitignoreBaseFxt.current,
+          gitignoreBaseFxt.new,
+        ),
+      ).toEqual(gitignoreBaseFxt.result)
     })
   })
 
   describe('uapplying', () => {
     it('should correctly unapply configs', () => {
       expect(
-        gitIgnoreStrategy.unapply()(gitignoreResult, gitignoreNew),
-      ).toEqual(gitignoreRestored)
+        gitIgnoreStrategy.unapply()(
+          gitignoreBaseFxt.result,
+          gitignoreBaseFxt.new,
+        ),
+      ).toEqual(gitignoreBaseFxt.restored)
     })
   })
 })
