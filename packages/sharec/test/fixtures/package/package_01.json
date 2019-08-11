@@ -1,9 +1,0 @@
-{
-  "name": "my-awesome-package",
-  "scripts": {
-    "start": "start-script"
-  },
-  "dependencies": {
-    "react": "16.0.0"
-  }
-}

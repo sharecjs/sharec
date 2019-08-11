@@ -1,11 +1,9 @@
 const { vol } = require('memfs')
-const { fixture } = require('testUtils')
+const { fixtures } = require('testUtils')
 const { installPackageJson } = require('../../install')
 
 describe('core > package > install > dependencies >', () => {
-  const packageCurrent = fixture('package/02-dependencies/current.json', 'json')
-  const packageNew = fixture('package/02-dependencies/new.json', 'json')
-  const packageResult = fixture('package/02-dependencies/result.json', 'json')
+  const packageJsonDependenciesFxt = fixtures('package/02-dependencies', 'json')
 
   beforeEach(() => {
     vol.reset()
@@ -13,8 +11,12 @@ describe('core > package > install > dependencies >', () => {
 
   it('should correctly merge package.json all dependencies sections', async () => {
     const dir = {
-      '/target/package.json': JSON.stringify(packageCurrent),
-      '/configuration-package/package.json': JSON.stringify(packageNew),
+      '/target/package.json': JSON.stringify(
+        packageJsonDependenciesFxt.current,
+      ),
+      '/configuration-package/package.json': JSON.stringify(
+        packageJsonDependenciesFxt.new,
+      ),
     }
 
     vol.fromJSON(dir)
@@ -27,6 +29,6 @@ describe('core > package > install > dependencies >', () => {
 
     expect(
       JSON.parse(vol.readFileSync('/target/package.json', 'utf8')),
-    ).toEqual(packageResult)
+    ).toEqual(packageJsonDependenciesFxt.result)
   })
 })

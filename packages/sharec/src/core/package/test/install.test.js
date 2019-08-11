@@ -1,11 +1,9 @@
 const { vol } = require('memfs')
 const { installPackageJson, injectMetaData } = require('../install')
-const { fixture } = require('testUtils')
+const { fixtures } = require('testUtils')
 
 describe('core > package > install >', () => {
-  const packageJson01 = fixture('package/package_01.json', 'json')
-  const packageJson02 = fixture('package/package_02.json', 'json')
-  const packageJsonFixture = fixture('package/package_07.json', 'json')
+  const packageBaseInstallFxt = fixtures('package/03-base-install', 'json')
 
   beforeEach(() => {
     vol.reset()
@@ -16,8 +14,16 @@ describe('core > package > install >', () => {
       expect.assertions(1)
 
       const dir = {
-        '/target/package.json': JSON.stringify(packageJson01, null, 2),
-        '/configs/package.json': JSON.stringify(packageJson02, null, 2),
+        '/target/package.json': JSON.stringify(
+          packageBaseInstallFxt.current,
+          null,
+          2,
+        ),
+        '/configs/package.json': JSON.stringify(
+          packageBaseInstallFxt.new,
+          null,
+          2,
+        ),
       }
       vol.fromJSON(dir, '/')
 
@@ -29,7 +35,7 @@ describe('core > package > install >', () => {
 
       expect(
         JSON.parse(vol.readFileSync('/target/package.json', 'utf8')),
-      ).toMatchSnapshot()
+      ).toEqual(packageBaseInstallFxt.result)
     })
   })
 
@@ -38,10 +44,10 @@ describe('core > package > install >', () => {
       const metaData = {
         injected: true,
       }
-      const res = injectMetaData(metaData)(packageJsonFixture)
+      const res = injectMetaData(metaData)(packageBaseInstallFxt.current)
 
       expect(res).toEqual({
-        ...packageJsonFixture,
+        ...packageBaseInstallFxt.current,
         sharec: metaData,
       })
     })

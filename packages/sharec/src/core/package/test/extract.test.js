@@ -8,7 +8,10 @@ const {
 } = require('../extract')
 
 describe('core > package > extract >', () => {
-  const packageJsonFixture = fixture('package/package_07.json', 'json')
+  const packageJsonConfigsExtractionFxt = fixture(
+    'package/06-configs-extraction/current.json',
+    'json',
+  )
 
   beforeEach(() => {
     vol.reset()
@@ -53,10 +56,10 @@ describe('core > package > extract >', () => {
 
   describe('extractConfigs', () => {
     it('should return all configs from package.json except dependencies, sharec meta-data and other standard package fields', () => {
-      const extractedConfigs = extractConfigs(packageJsonFixture)
+      const extractedConfigs = extractConfigs(packageJsonConfigsExtractionFxt)
 
       expect(extractedConfigs).toEqual(
-        pick(packageJsonFixture, [
+        pick(packageJsonConfigsExtractionFxt, [
           'scripts',
           'lint-staged',
           'husky',
@@ -72,9 +75,9 @@ describe('core > package > extract >', () => {
 
   describe('extractMetaData', () => {
     it('should return sharec meta-data', () => {
-      const extractedMetaData = extractMetaData(packageJsonFixture)
+      const extractedMetaData = extractMetaData(packageJsonConfigsExtractionFxt)
 
-      expect(extractedMetaData).toEqual(packageJsonFixture.sharec)
+      expect(extractedMetaData).toEqual(packageJsonConfigsExtractionFxt.sharec)
     })
 
     it('should return null if sharec meta-data is not exists', () => {

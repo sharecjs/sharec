@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "start": "the new start script",
+    "test": "the start test script"
+  },
+  "sharec": {
+    "version": "1.0.0"
+  }
+}
