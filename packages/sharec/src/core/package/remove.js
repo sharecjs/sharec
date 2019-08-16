@@ -7,7 +7,7 @@ const { readFile, writeFile } = require('../../utils/fs')
 const { extractConfigs } = require('../package/extract')
 const { resolveConfigStrategy } = require('../strategies/resolve')
 
-const clearPackageJson = async (configsPath, targetPath) => {
+const clearPackageJson = async ({ configsPath, targetPath }) => {
   const targetPackageJsonPath = path.resolve(targetPath, 'package.json')
   const rawTargetPackageJson = await readFile(targetPackageJsonPath)
   const targetPackageJson = JSON.parse(rawTargetPackageJson)

@@ -20,7 +20,10 @@ describe('core > package > remove >', () => {
 
       vol.fromJSON(dir)
 
-      await clearPackageJson('/configuration-package', '/target')
+      await clearPackageJson({
+        configsPath: '/configuration-package',
+        targetPath: '/target',
+      })
 
       expect(
         JSON.parse(vol.readFileSync('/target/package.json', 'utf8')),

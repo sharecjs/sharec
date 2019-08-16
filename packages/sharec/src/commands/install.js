@@ -10,7 +10,7 @@ async function install({ configsPath, targetPath, options = {} }) {
   const isSilentMode =
     options.silent || (meta && meta.version === configsVersion)
   const spinner = createSpinner({
-    text: 'applying configuration... 🚀',
+    text: 'applying configuration...',
     silent: isSilentMode,
   })
 
@@ -19,7 +19,7 @@ async function install({ configsPath, targetPath, options = {} }) {
   try {
     await installTask({ configsPath, targetPath, configsVersion, options })
 
-    spinner.succeed('configuration applyed, have a nice time! 🌈')
+    spinner.succeed('configuration applyed, have a nice time!')
 
     if (isSilentMode) {
       installedMessage()
@@ -28,11 +28,11 @@ async function install({ configsPath, targetPath, options = {} }) {
     const { message } = err
 
     if (message.includes('already installed')) {
-      spinner.succeed('this version of configs already injected! 👍')
+      spinner.succeed('this version of configs already injected!')
     } else if (message.includes('ENOENT')) {
-      spinner.fail('configs directory was not found! ⛔️')
+      spinner.fail('configs directory was not found!')
     } else {
-      spinner.fail('unhandeled error! 💥')
+      spinner.fail('unhandeled error!')
       console.error(err)
     }
   }

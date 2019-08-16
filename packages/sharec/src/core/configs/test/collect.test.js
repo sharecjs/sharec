@@ -1,5 +1,9 @@
 const { vol } = require('memfs')
-const { collectConfigVersion, collectConfigsPaths } = require('../collect')
+const {
+  collectConfigVersion,
+  collectConfigsPaths,
+  collectConfigs,
+} = require('../collect')
 
 describe('core > collector >', () => {
   beforeEach(() => {
@@ -110,6 +114,27 @@ describe('core > collector >', () => {
 
       expect(files).not.toContain('package-lock.json')
       expect(files).not.toContain('yarn.lock')
+    })
+  })
+
+  describe('collectConfigs', () => {
+    it('should collect all configs from given path and return hash with their sources in utf8', async () => {
+      expect.assertions(1)
+
+      const dir = {
+        'package.json': 'foo',
+        '.eslintrc': 'bar',
+        'package-lock.json': 'baz',
+        'yarn.lock': 'foo',
+      }
+      vol.fromJSON(dir, '/configs')
+
+      const files = await collectConfigs('/configs')
+
+      expect(files).toEqual({
+        'package.json': 'foo',
+        '.eslintrc': 'bar',
+      })
     })
   })
 })

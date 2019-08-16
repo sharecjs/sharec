@@ -32,6 +32,7 @@ describe('tasks > install >', () => {
         packageInstallJsonBaseFxt.new,
       ),
     }
+
     vol.fromJSON(dir, '/')
 
     await install({

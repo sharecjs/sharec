@@ -3,12 +3,17 @@ const path = require('path')
 const { readFile, writeFile, makeDir } = require('../../utils/fs')
 const { resolveConfigStrategy } = require('../strategies/resolve')
 
-const installConfig = async ({ configsPath, targetPath, filePath }) => {
-  const newConfigPath = path.join(configsPath, filePath)
-  const targetStrategy = resolveConfigStrategy(filePath)
-  const localConfigPath = path.join(targetPath, filePath)
+/**
+ * @param {String} options.targetPath
+ * @param {String} options.configPath
+ * @param {String} options.configSource
+ * @returns {Promise<void>}
+ */
+const installConfig = async ({ targetPath, configPath, configSource }) => {
+  const targetStrategy = resolveConfigStrategy(configPath)
+  const localConfigPath = path.join(targetPath, configPath)
   const localConfigDirName = path.dirname(localConfigPath)
-  let newConfig = await readFile(newConfigPath, 'utf8')
+  let newConfig = null
   let localConfig = null
 
   try {
@@ -17,7 +22,7 @@ const installConfig = async ({ configsPath, targetPath, filePath }) => {
 
   if (localConfig && targetStrategy) {
     try {
-      newConfig = targetStrategy.merge(filePath)(localConfig, newConfig)
+      newConfig = targetStrategy.merge(configPath)(localConfig, configSource)
     } catch (err) {
       const errorMessage = [
         chalk.bold(
@@ -28,6 +33,8 @@ const installConfig = async ({ configsPath, targetPath, filePath }) => {
 
       console.error(errorMessage.join('\n\t'))
     }
+  } else {
+    newConfig = configSource
   }
 
   try {

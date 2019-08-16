@@ -27,7 +27,10 @@ async function remove({ configsPath, targetPath }) {
         }),
       ),
     )
-    await clearPackageJson(fullConfigsPath, targetPath)
+    await clearPackageJson({
+      configsPath: fullConfigsPath,
+      targetPath,
+    })
   } catch (err) {}
 }
 

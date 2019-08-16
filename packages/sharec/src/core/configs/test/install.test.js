@@ -1,12 +1,10 @@
-const { fixture } = require('testUtils')
+const { fixtures } = require('testUtils')
 const { vol } = require('memfs')
 const { installConfig } = require('../install')
 
 describe('processors > configs >', () => {
-  const eslint01 = fixture('eslint/json/eslintrc_01.json', 'json')
-  const eslint02 = fixture('eslint/json/eslintrc_02.json', 'json')
-  const yamlEslint01 = fixture('eslint/yaml/eslintrc_01.yml')
-  const yamlEslint02 = fixture('eslint/yaml/eslintrc_02.yml')
+  const eslintBaseFxt = fixtures('eslint/json/01-base', 'json')
+  const eslintBaseFxtYaml = fixtures('eslint/yaml/01-base')
 
   beforeEach(() => {
     vol.reset()
@@ -17,54 +15,50 @@ describe('processors > configs >', () => {
       expect.assertions(1)
 
       const dir = {
-        '/target/.eslintrc': JSON.stringify(eslint01),
-        '/configs/.eslintrc': JSON.stringify(eslint02),
+        '/target/.eslintrc': JSON.stringify(eslintBaseFxt.current),
       }
       vol.fromJSON(dir, '/')
 
       await installConfig({
-        configsPath: '/configs',
         targetPath: '/target',
-        filePath: '.eslintrc',
+        configPath: '.eslintrc',
+        configSource: JSON.stringify(eslintBaseFxt.new),
       })
 
       const res = await vol.readFileSync('/target/.eslintrc', 'utf8')
 
-      expect(JSON.parse(res)).toMatchSnapshot()
+      expect(JSON.parse(res)).toEqual(eslintBaseFxt.result)
     })
 
     it('should merge YAML configs', async () => {
       expect.assertions(1)
 
       const dir = {
-        '/target/.eslintrc.yaml': yamlEslint01,
-        '/configs/.eslintrc.yaml': yamlEslint02,
+        '/target/.eslintrc.yaml': eslintBaseFxtYaml.current,
       }
       vol.fromJSON(dir, '/')
 
       await installConfig({
-        configsPath: '/configs',
         targetPath: '/target',
-        filePath: '.eslintrc.yaml',
+        configPath: '.eslintrc.yaml',
+        configSource: eslintBaseFxtYaml.new,
       })
 
       const res = await vol.readFileSync('/target/.eslintrc.yaml', 'utf8')
 
-      expect(res).toMatchSnapshot()
+      expect(res).toEqual(eslintBaseFxtYaml.result)
     })
 
     it('should copy all non-mergeable configs', async () => {
       expect.assertions(1)
 
-      const dir = {
-        '/configs/.editorconfig': 'bar',
-      }
+      const dir = {}
       vol.fromJSON(dir, '/')
 
       await installConfig({
-        configsPath: '/configs',
         targetPath: '/target',
-        filePath: '.editorconfig',
+        configPath: '.editorconfig',
+        configSource: 'bar',
       })
 
       const res = await vol.readFileSync('/target/.editorconfig', 'utf8')
@@ -75,15 +69,13 @@ describe('processors > configs >', () => {
     it('should correctly process configs with mixed file structure', async () => {
       expect.assertions(1)
 
-      const dir = {
-        '/configs/foo/bar/.editorconfig': 'bar',
-      }
+      const dir = {}
       vol.fromJSON(dir, '/')
 
       await installConfig({
-        configsPath: '/configs',
         targetPath: '/target',
-        filePath: 'foo/bar/.editorconfig',
+        configPath: 'foo/bar/.editorconfig',
+        configSource: 'bar',
       })
 
       const res = await vol.readFileSync(

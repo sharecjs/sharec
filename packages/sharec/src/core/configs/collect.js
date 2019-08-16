@@ -45,7 +45,24 @@ const collectConfigsPaths = async (configsPath, subPath = '') => {
   return files.filter(file => !/(\.?lock)(\S+)?$/.test(file))
 }
 
+const collectConfigs = async configsPath => {
+  const configsPaths = await collectConfigsPaths(configsPath)
+  const collectedConfigs = {}
+
+  for (const configPath of configsPaths) {
+    const configFullPath = path.join(configsPath, configPath)
+    const configSource = await readFile(configFullPath, 'utf8')
+
+    Object.assign(collectedConfigs, {
+      [configPath]: configSource,
+    })
+  }
+
+  return collectedConfigs
+}
+
 module.exports = {
   collectConfigVersion,
   collectConfigsPaths,
+  collectConfigs,
 }
