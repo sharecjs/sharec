@@ -1,6 +1,6 @@
 const chalk = require('chalk')
 const path = require('path')
-const { readFile, writeFile, makeDir } = require('../../utils/fs')
+const { readFile, writeFile, safeMakeDir } = require('../../utils/fs')
 const { resolveConfigStrategy } = require('../strategies/resolve')
 
 /**
@@ -37,12 +37,7 @@ const installConfig = async ({ targetPath, configPath, configSource }) => {
     newConfig = configSource
   }
 
-  try {
-    await makeDir(localConfigDirName, {
-      recursive: true,
-    })
-  } catch (err) {}
-
+  await safeMakeDir(localConfigDirName)
   await writeFile(
     localConfigPath,
     newConfig instanceof Object

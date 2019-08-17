@@ -9,7 +9,16 @@ const copyFile = promisify(fs.copyFile)
 const writeFile = promisify(fs.writeFile)
 const lstat = promisify(fs.lstat)
 const removeFile = promisify(fs.unlink)
+
 const normalizePathSlashes = paths => paths.map(el => slash(el))
+
+const safeMakeDir = async path => {
+  try {
+    await makeDir(path, {
+      recursive: true,
+    })
+  } catch (err) {}
+}
 
 module.exports = {
   readDir,
@@ -20,4 +29,5 @@ module.exports = {
   lstat,
   removeFile,
   normalizePathSlashes,
+  safeMakeDir,
 }
