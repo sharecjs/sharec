@@ -32,7 +32,7 @@ async function install({ configsPath, targetPath, options = {} }) {
 
     spinner.succeed('configuration applyed, have a nice time!')
 
-    if (isSilentMode) {
+    if (!isSilentMode) {
       installedMessage()
     }
   } catch (err) {
