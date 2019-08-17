@@ -1,6 +1,6 @@
 const { vol } = require('memfs')
 const {
-  collectConfigVersion,
+  collectConfigPackageInfo,
   collectConfigsPaths,
   collectConfigs,
 } = require('../collect')
@@ -10,20 +10,24 @@ describe('core > collector >', () => {
     vol.reset()
   })
 
-  describe('collectConfigVersion', () => {
+  describe('collectConfigPackageInfo', () => {
     it('should return configuration package version', async () => {
       expect.assertions(1)
 
       const dir = {
         'package.json': JSON.stringify({
+          name: 'my-awesome-configs',
           version: '1.0.0',
         }),
       }
       vol.fromJSON(dir, '/configs')
 
-      const version = await collectConfigVersion('/configs')
+      const info = await collectConfigPackageInfo('/configs')
 
-      expect(version).toBe('1.0.0')
+      expect(info).toEqual({
+        name: 'my-awesome-configs',
+        version: '1.0.0',
+      })
     })
   })
 

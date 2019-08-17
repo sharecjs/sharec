@@ -1,14 +1,27 @@
 const path = require('path')
-const { copyFile, safeMakeDir } = require('../../utils/fs')
-const { collectConfigsPaths } = require('./collect')
+const { writeFile, safeMakeDir } = require('../../utils/fs')
 
-const backupConfigs = async ({
+/**
+ * Configs sources mapped by files paths
+ * @typedef {Object} ConfigsSources
+ * @property {String} Config source in UTF8
+ */
+
+/**
+ * @param {String} options.configsName
+ * @param {String} options.configsVersion
+ * @param {String} options.configPath
+ * @param {String} options.configSource
+ * @param {String} options.targetPath
+ * @returns {Promise<void>}
+ */
+const cacheConfig = async ({
   configsName,
   configsVersion,
-  configsPath,
+  configPath,
+  configSource,
   targetPath,
 }) => {
-  const configsPaths = await collectConfigsPaths(configsPath)
   const configsBackupPath = path.join(
     targetPath,
     `node_modules/.cache/sharec/${configsName}/${configsVersion}`,
@@ -16,15 +29,37 @@ const backupConfigs = async ({
 
   await safeMakeDir(configsBackupPath)
 
-  for (const configPath of configsPaths) {
-    const fullConfigPath = path.join(configsPath, configPath)
-    const backupedConfigPath = path.join(configsBackupPath, configPath)
+  const backupedConfigPath = path.join(configsBackupPath, configPath)
 
-    await safeMakeDir(path.dirname(backupedConfigPath))
-    await copyFile(fullConfigPath, backupedConfigPath)
+  await safeMakeDir(path.dirname(backupedConfigPath))
+  await writeFile(backupedConfigPath, configSource, 'utf8')
+}
+
+/**
+ * @param   {String} options.configsName
+ * @param   {String} options.configsVersion
+ * @param   {ConfigsSources} options.configs
+ * @param   {String} targetPath
+ * @returns {Promise<void>}
+ */
+const cacheConfigs = async ({
+  configsName,
+  configsVersion,
+  configs = {},
+  targetPath,
+}) => {
+  for (const configPath in configs) {
+    await cacheConfig({
+      configSource: configs[configPath],
+      configPath,
+      configsName,
+      configsVersion,
+      targetPath,
+    })
   }
 }
 
 module.exports = {
-  backupConfigs,
+  cacheConfig,
+  cacheConfigs,
 }

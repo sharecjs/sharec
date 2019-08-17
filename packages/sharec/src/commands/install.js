@@ -1,14 +1,19 @@
-const createSpinner = require('../messages/spinner')
 const installTask = require('../tasks/install')
-const { collectConfigVersion } = require('../core/configs/collect')
+const { collectConfigPackageInfo } = require('../core/configs/collect')
 const { extractMetaData } = require('../core/package/extract')
-const installedMessage = require('../messages/installed')
+const createSpinner = require('../cli/spinner')
+const installedMessage = require('../cli/messages')
 
+/**
+ * @param {String} options.configsPath
+ * @param {String} options.targetPath
+ * @param {Object} options
+ * @returns {Promise<void>}
+ */
 async function install({ configsPath, targetPath, options = {} }) {
-  const configsVersion = await collectConfigVersion(configsPath)
+  const { name, version } = await collectConfigPackageInfo(configsPath)
   const meta = await extractMetaData(targetPath)
-  const isSilentMode =
-    options.silent || (meta && meta.version === configsVersion)
+  const isSilentMode = options.silent || (meta && meta.version === version)
   const spinner = createSpinner({
     text: 'applying configuration...',
     silent: isSilentMode,
@@ -17,7 +22,13 @@ async function install({ configsPath, targetPath, options = {} }) {
   spinner.start()
 
   try {
-    await installTask({ configsPath, targetPath, configsVersion, options })
+    await installTask({
+      configsName: name,
+      configsVersion: version,
+      configsPath,
+      targetPath,
+      options,
+    })
 
     spinner.succeed('configuration applyed, have a nice time!')
 

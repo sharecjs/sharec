@@ -1,10 +1,23 @@
 const path = require('path')
 const { collectConfigs } = require('../core/configs/collect')
+const { cacheConfigs } = require('../core/configs/cache')
 const { installConfig } = require('../core/configs/install')
 const { getCurrentPackageJsonMetaData } = require('../core/package/extract')
 const { installPackageJson } = require('../core/package/install')
 
-async function install({ configsPath, targetPath, configsVersion, options }) {
+/**
+ * @param {String} options.configsPath
+ * @param {String} options.configsName
+ * @param {String} options.configsVersion
+ * @param {String} options.targetPath
+ * @returns {Promise<void>}
+ */
+async function install({
+  configsPath,
+  configsName,
+  configsVersion,
+  targetPath,
+}) {
   const fullConfigsPath = path.join(configsPath, './configs')
   const metaData = await getCurrentPackageJsonMetaData(targetPath)
 
@@ -13,6 +26,13 @@ async function install({ configsPath, targetPath, configsVersion, options }) {
   }
 
   const configs = await collectConfigs(fullConfigsPath)
+
+  await cacheConfigs({
+    configsName,
+    configsVersion,
+    configs,
+    targetPath,
+  })
 
   if (Object.keys(configs).includes('package.json')) {
     await installPackageJson({

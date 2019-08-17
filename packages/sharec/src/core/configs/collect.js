@@ -6,12 +6,12 @@ const {
   normalizePathSlashes,
 } = require('../../utils/fs')
 
-const collectConfigVersion = async configsPath => {
+const collectConfigPackageInfo = async configsPath => {
   const configPackageJsonPath = path.resolve(configsPath, 'package.json')
   const rawConfigsPackageJson = await readFile(configPackageJsonPath, 'utf8')
-  const { version } = JSON.parse(rawConfigsPackageJson)
+  const { name, version } = JSON.parse(rawConfigsPackageJson)
 
-  return version
+  return { name, version }
 }
 
 const collectConfigsPaths = async (configsPath, subPath = '') => {
@@ -62,7 +62,7 @@ const collectConfigs = async configsPath => {
 }
 
 module.exports = {
-  collectConfigVersion,
+  collectConfigPackageInfo,
   collectConfigsPaths,
   collectConfigs,
 }
