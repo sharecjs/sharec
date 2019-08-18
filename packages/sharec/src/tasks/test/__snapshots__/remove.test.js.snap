@@ -1,5 +1,113 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`tasks > remove > should remove configuration from all files in the target project 1`] = `
+Object {
+  "config": Object {
+    "commitizen": Object {
+      "path": "cz-conventional-changelog",
+    },
+  },
+  "devDependencies": Object {
+    "@commitlint/cli": "^7.6.1",
+    "cz-conventional-changelog": "^2.1.0",
+    "eslint-config-prettier": "^4.2.0",
+  },
+  "eslintConfig": Object {
+    "env": Object {
+      "node": false,
+    },
+    "extends": "standard",
+    "globals": Object {
+      "baz": true,
+    },
+    "rules": Object {
+      "max-len": Array [
+        "warn",
+        80,
+        2,
+      ],
+      "sort-imports": 0,
+    },
+  },
+  "husky": Object {
+    "hooks": Object {
+      "commit-msg": "commitlint -E",
+      "pre-commit": "lint-staged",
+    },
+  },
+  "lint-staged": Object {
+    "src/**/*.{js,json}": Array [
+      "eslint --fix",
+      "prettier --write",
+      "git add",
+    ],
+  },
+  "name": "awesome-project",
+  "prettier": Object {
+    "semi": false,
+    "singleQuote": true,
+    "trailingComma": "all",
+  },
+  "scripts": Object {
+    "lint": "eslint 'src/**/*.{jsx,json}'",
+  },
+}
+`;
+
+exports[`tasks > remove > should remove configuration from all files in the target project 2`] = `
+Object {
+  "config": Object {
+    "commitizen": Object {
+      "path": "cz-conventional-changelog",
+    },
+  },
+  "devDependencies": Object {
+    "@commitlint/cli": "^7.6.1",
+    "cz-conventional-changelog": "^2.1.0",
+    "eslint-config-prettier": "^4.2.0",
+  },
+  "eslintConfig": Object {
+    "env": Object {
+      "node": false,
+    },
+    "extends": "standard",
+    "globals": Object {
+      "baz": true,
+    },
+    "rules": Object {
+      "max-len": Array [
+        "warn",
+        80,
+        2,
+      ],
+      "sort-imports": 0,
+    },
+  },
+  "husky": Object {
+    "hooks": Object {
+      "commit-msg": "commitlint -E",
+      "pre-commit": "lint-staged",
+    },
+  },
+  "lint-staged": Object {
+    "src/**/*.{js,json}": Array [
+      "eslint --fix",
+      "prettier --write",
+      "git add",
+    ],
+  },
+  "name": "awesome-project",
+  "prettier": Object {
+    "semi": false,
+    "singleQuote": true,
+    "trailingComma": "all",
+  },
+  "scripts": Object {
+    "lint": "eslint 'src/**/*.{jsx,json}'",
+  },
+}
+`;
+
 exports[`tasks > remove > should remove configuration from package.json in the target project 1`] = `
 Object {
   "config": Object {

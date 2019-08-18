@@ -1,6 +1,7 @@
 const chalk = require('chalk')
 const path = require('path')
-const { readFile, writeFile, safeMakeDir } = require('../../utils/fs')
+const { readFile, writeFile } = require('../../utils/std').fs
+const { safeMakeDir } = require('../../utils/fs')
 const { resolveConfigStrategy } = require('../strategies/resolve')
 
 /**

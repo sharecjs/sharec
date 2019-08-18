@@ -1,8 +1,8 @@
 const path = require('path')
-const { collectConfigsPaths } = require('../core/configs/collect')
 const { removeConfig } = require('../core/configs/remove')
 const { clearPackageJson } = require('../core/package/remove')
 const { getCurrentPackageJsonMetaData } = require('../core/package/extract')
+const { flatSearch } = require('../utils/fs')
 
 async function remove({ configsPath, targetPath }) {
   const metaData = await getCurrentPackageJsonMetaData(targetPath)
@@ -12,7 +12,10 @@ async function remove({ configsPath, targetPath }) {
   }
 
   const fullConfigsPath = path.join(configsPath, './configs')
-  const configs = await collectConfigsPaths(fullConfigsPath)
+  const configs = await flatSearch({
+    path: fullConfigsPath,
+    pattern: /^((?!lock).)*$/,
+  })
   const standaloneConfigs = configs.filter(
     filePath => !/(package\.json)/.test(filePath),
   )

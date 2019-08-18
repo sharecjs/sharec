@@ -1,8 +1,8 @@
-jest.mock('utils/fs', () => {
-  const fsUtils = require.requireActual('./src/utils/fs')
+jest.mock('utils/std', () => {
+  const stdUtils = require.requireActual('./src/utils/std')
   const fs = require('memfs').promises
 
-  return {
+  stdUtils.fs = {
     readDir: fs.readdir,
     makeDir: fs.mkdir,
     readFile: fs.readFile,
@@ -10,14 +10,7 @@ jest.mock('utils/fs', () => {
     writeFile: fs.writeFile,
     lstat: fs.lstat,
     removeFile: fs.unlink,
-    normalizePathSlashes: fsUtils.normalizePathSlashes,
-    // TODO: find more clean way
-    safeMakeDir: jest.fn().mockImplementation(async path => {
-      try {
-        await fs.mkdir(path, {
-          recursive: true,
-        })
-      } catch (err) {}
-    }),
   }
+
+  return stdUtils
 })

@@ -1,6 +1,6 @@
 const path = require('path')
 const { pipe } = require('../../utils')
-const { readFile, writeFile } = require('../../utils/fs')
+const { readFile, writeFile } = require('../../utils/std').fs
 const { resolveConfigStrategy } = require('../strategies/resolve')
 const { extractConfigs } = require('./extract')
 

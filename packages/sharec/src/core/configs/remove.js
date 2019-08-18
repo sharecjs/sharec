@@ -1,6 +1,6 @@
 const path = require('path')
 const isEmpty = require('lodash/isEmpty')
-const { readFile, writeFile, removeFile } = require('../../utils/fs')
+const { readFile, writeFile, removeFile } = require('../../utils/std').fs
 const { resolveConfigStrategy } = require('../strategies/resolve')
 
 const removeConfig = async ({ configsPath, targetPath, filePath }) => {

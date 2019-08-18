@@ -1,6 +1,6 @@
 const omit = require('lodash/omit')
 const path = require('path')
-const { readFile } = require('../../utils/fs')
+const { readFile } = require('../../utils/std').fs
 
 const IGNORED_FIELDS = [
   'sharec',

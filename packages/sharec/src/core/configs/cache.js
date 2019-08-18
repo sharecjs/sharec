@@ -1,5 +1,6 @@
 const path = require('path')
-const { writeFile, safeMakeDir } = require('../../utils/fs')
+const { writeFile, readFile } = require('../../utils/std').fs
+const { safeMakeDir, flatSearch } = require('../../utils/fs')
 
 /**
  * Configs sources mapped by files paths
@@ -59,7 +60,36 @@ const cacheConfigs = async ({
   }
 }
 
+/**
+ * @param {String} options.configsName
+ * @param {String} options.configsVersion
+ * @param {String} options.targetPath
+ * @returns {Promise<ConfigsSources>}
+ */
+const loadCache = async ({ configsName, configsVersion, targetPath }) => {
+  const configsBackupPath = path.join(
+    targetPath,
+    `node_modules/.cache/sharec/${configsName}/${configsVersion}`,
+  )
+  const cache = {}
+  const targetConfigCache = await flatSearch({
+    path: configsBackupPath,
+  })
+
+  for (const config of targetConfigCache) {
+    const fullConfigCachePath = path.join(configsBackupPath, config)
+    const configSource = await readFile(fullConfigCachePath, 'utf8')
+
+    Object.assign(cache, {
+      [config]: configSource,
+    })
+  }
+
+  return cache
+}
+
 module.exports = {
   cacheConfig,
   cacheConfigs,
+  loadCache,
 }

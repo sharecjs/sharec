@@ -1,8 +1,10 @@
 const path = require('path')
 const { vol } = require('memfs')
-const { cacheConfig, cacheConfigs } = require('../cache')
+const { cacheConfig, cacheConfigs, loadCache } = require('../cache')
 
-describe('core > compress >', () => {
+describe('core > configs > cache >', () => {
+  const cacheDir = '/target/node_modules/.cache/sharec/awesome-config/1.0.0'
+
   beforeEach(() => {
     vol.reset()
   })
@@ -10,8 +12,6 @@ describe('core > compress >', () => {
   describe('cacheConfig', () => {
     it('should cache config source to target path node_modules/.cache', async () => {
       expect.assertions(1)
-
-      const cacheDir = '/target/node_modules/.cache/sharec/awesome-config/1.0.0'
 
       vol.fromJSON({}, '/')
 
@@ -35,8 +35,6 @@ describe('core > compress >', () => {
   describe('cacheConfigs', () => {
     it('should cache configs to target path node_modules/.cache', async () => {
       expect.assertions(3)
-
-      const cacheDir = '/target/node_modules/.cache/sharec/awesome-config/1.0.0'
 
       vol.fromJSON({}, '/')
 
@@ -70,5 +68,30 @@ describe('core > compress >', () => {
         ),
       ).toEqual('baz')
     })
+  })
+
+  describe('loadCache', () => {
+    it('should load configs cache by name and version', async () => {
+      const dir = {
+        [path.join(cacheDir, '_templates/exampleHtml.ejs.t')]: 'foo',
+        [path.join(cacheDir, '_templates/exampleCss.ejs.t')]: 'bar',
+        [path.join(cacheDir, '_templates/exampleJs.ejs.t')]: 'baz',
+      }
+      vol.fromJSON(dir, '/')
+
+      const cache = await loadCache({
+        targetPath: '/target',
+        configsName: 'awesome-config',
+        configsVersion: '1.0.0',
+      })
+
+      expect(cache).toEqual({
+        '_templates/exampleHtml.ejs.t': 'foo',
+        '_templates/exampleCss.ejs.t': 'bar',
+        '_templates/exampleJs.ejs.t': 'baz',
+      })
+    })
+
+    it('should return null if configs with given name and version were not cached', async () => {})
   })
 })
