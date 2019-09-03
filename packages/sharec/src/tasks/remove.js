@@ -7,9 +7,7 @@ const { flatSearch } = require('../utils/fs')
 async function remove({ configsPath, targetPath }) {
   const metaData = await getCurrentPackageJsonMetaData(targetPath)
 
-  if (!metaData) {
-    return
-  }
+  if (!metaData) return
 
   const fullConfigsPath = path.join(configsPath, './configs')
   const configs = await flatSearch({

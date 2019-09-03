@@ -10,6 +10,7 @@
     "baz": "1.0.0"
   },
   "sharec": {
+    "config": "awesome-config",
     "version": "1.0.0"
   }
 }

@@ -15,13 +15,14 @@ describe('core > package > install > dependencies >', () => {
         packageJsonDependenciesFxt.current,
       ),
       '/configuration-package/package.json': JSON.stringify(
-        packageJsonDependenciesFxt.new,
+        packageJsonDependenciesFxt.upcoming,
       ),
     }
 
     vol.fromJSON(dir)
 
     await installPackageJson({
+      configsName: 'awesome-config',
       configsPath: '/configuration-package',
       configsVersion: '1.0.0',
       targetPath: '/target',

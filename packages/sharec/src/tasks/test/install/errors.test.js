@@ -12,31 +12,6 @@ describe('tasks > install > errors >', () => {
     vol.reset()
   })
 
-  it('should throw an error if configuration with the same version already installed', async () => {
-    expect.assertions(1)
-
-    const dir = {
-      '/target/package.json': JSON.stringify({
-        sharec: {
-          version: '1.0.0',
-        },
-      }),
-      '/configuration-package/configs/.editorconfig': 'bar',
-    }
-    vol.fromJSON(dir, '/')
-
-    try {
-      await install({
-        configsPath: '/configuration-package',
-        targetPath: '/target',
-        configsVersion: '1.0.0',
-        configsName: 'awesome-config',
-      })
-    } catch (err) {
-      expect(err.message).toBe('Configs already installed!')
-    }
-  })
-
   it('should throw an error if configuration package was not found', async () => {
     expect.assertions(1)
 

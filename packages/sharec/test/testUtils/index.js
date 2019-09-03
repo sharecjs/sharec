@@ -26,9 +26,10 @@ function fixture(path, format) {
  * All fields are optional!
  * @typedef {Object} Fixtures
  * @property {String} [current] Current file state fixture
- * @property {String} [new] New file state fixture
+ * @property {String} [upcoming] Upcoming file state fixture
  * @property {String} [result] File state fixture after merge
  * @property {String} [restored] File state fixture after unapply
+ * @property {String} [cache] Cached file state fixture
  */
 
 /**
@@ -39,9 +40,10 @@ function fixture(path, format) {
  * // Will return
  * {
  *   current: '...',
- *   new: '...',
+ *   upcoming: '...',
  *   result: '...',
- *   restored: '...'
+ *   restored: '...',
+ *   cache: '...'
  * }
  * @param {String} path Path to fixtures folder from test fixtures folder root
  * @param {String} [format] Fixture format. If it is not passed – returns fixture as
@@ -53,7 +55,7 @@ function fixtures(path, format) {
     arr.find(item => new RegExp(`^${key}`).test(item))
   const fixturesPath = resolve(__dirname, `../fixtures/${path}`)
   const files = readdirSync(fixturesPath)
-  const fixturesKeys = ['current', 'new', 'result', 'restored']
+  const fixturesKeys = ['current', 'upcoming', 'result', 'restored', 'cache']
   const fixturesValues = fixturesKeys.map(key => {
     const fixtureFileName = findFixtureFileByKey(files, key)
 

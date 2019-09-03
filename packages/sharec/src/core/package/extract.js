@@ -1,4 +1,5 @@
 const omit = require('lodash/omit')
+const pick = require('lodash/pick')
 const path = require('path')
 const { readFile } = require('../../utils/std').fs
 
@@ -21,6 +22,12 @@ const IGNORED_FIELDS = [
   'author',
 ]
 
+/**
+ * @typedef {Object} MetaData
+ * @property {String} version
+ * @property {String} config
+ */
+
 const getCurrentPackageJsonMetaData = async targetPath => {
   const targetPackageJsonPath = path.resolve(targetPath, 'package.json')
   const rawTargetPackageJson = await readFile(targetPackageJsonPath, 'utf8')
@@ -31,7 +38,15 @@ const getCurrentPackageJsonMetaData = async targetPath => {
 
 const extractConfigs = packageJson => omit(packageJson, IGNORED_FIELDS)
 
-const extractMetaData = packageJson => packageJson.sharec || null
+/**
+ * @param {Object} packageJson
+ * @returns {MetaData|null}
+ */
+const extractMetaData = packageJson => {
+  if (!packageJson.sharec) return null
+
+  return pick(packageJson.sharec, ['config', 'version'])
+}
 
 module.exports = {
   getCurrentPackageJsonMetaData,

@@ -50,10 +50,10 @@ const ereaseConfigs = configs => packageJson => {
 
     if (!strategy) return
 
-    const restoredConfig = strategy.unapply(key)(
-      restoredPackageJson[key],
-      configs[key],
-    )
+    const restoredConfig = strategy.unapply(key)({
+      current: restoredPackageJson[key],
+      upcoming: configs[key],
+    })
 
     if (isEmpty(restoredConfig)) {
       unset(restoredPackageJson, key)

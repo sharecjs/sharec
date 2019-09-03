@@ -8,7 +8,7 @@ describe('strategy > yaspeller', () => {
     expect(
       yaspellerStrategy.mergeJSON(
         yaspellerBaseFxt.current,
-        yaspellerBaseFxt.new,
+        yaspellerBaseFxt.upcoming,
       ),
     ).toMatchObject(yaspellerBaseFxt.result)
   })
@@ -17,7 +17,7 @@ describe('strategy > yaspeller', () => {
     expect(
       yaspellerStrategy.unapplyJSON(
         yaspellerBaseFxt.result,
-        yaspellerBaseFxt.new,
+        yaspellerBaseFxt.upcoming,
       ),
     ).toMatchObject(yaspellerBaseFxt.restored)
   })

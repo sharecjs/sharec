@@ -14,7 +14,7 @@ describe('core > package > remove >', () => {
       const dir = {
         '/target/package.json': JSON.stringify(packageJsonBaseRemoveFxt.result),
         '/configuration-package/package.json': JSON.stringify(
-          packageJsonBaseRemoveFxt.new,
+          packageJsonBaseRemoveFxt.upcoming,
         ),
       }
 

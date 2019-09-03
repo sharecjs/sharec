@@ -109,19 +109,19 @@ describe('Strategy', () => {
   describe('JSON', () => {
     it('should merge JSON configs', () => {
       expect(
-        strategy.mergeJSON(commonBaseFxt.current, commonBaseFxt.new),
+        strategy.mergeJSON(commonBaseFxt.current, commonBaseFxt.upcoming),
       ).toEqual(commonBaseFxt.result)
     })
 
     it('should merge lists', () => {
       expect(
-        strategy.mergeJSON(commonListsFxt.current, commonListsFxt.new),
+        strategy.mergeJSON(commonListsFxt.current, commonListsFxt.upcoming),
       ).toEqual(commonListsFxt.result)
     })
 
     it('should return object without applied properties from second object', () => {
       expect(
-        strategy.unapplyJSON(commonBaseFxt.result, commonBaseFxt.new),
+        strategy.unapplyJSON(commonBaseFxt.result, commonBaseFxt.upcoming),
       ).toEqual(commonBaseFxt.restored)
     })
 
@@ -133,7 +133,7 @@ describe('Strategy', () => {
 
     it('should unapply lists', () => {
       expect(
-        strategy.unapplyJSON(commonListsFxt.result, commonListsFxt.new),
+        strategy.unapplyJSON(commonListsFxt.result, commonListsFxt.upcoming),
       ).toEqual(commonListsFxt.restored)
     })
   })
@@ -141,19 +141,28 @@ describe('Strategy', () => {
   describe('YAML', () => {
     it('should merge YAML configs', () => {
       expect(
-        strategy.mergeYAML(commonBaseFxtYaml.current, commonBaseFxtYaml.new),
+        strategy.mergeYAML(
+          commonBaseFxtYaml.current,
+          commonBaseFxtYaml.upcoming,
+        ),
       ).toEqual(commonBaseFxtYaml.result)
     })
 
     it('should merge lists', () => {
       expect(
-        strategy.mergeYAML(commonListsFxtYaml.current, commonListsFxtYaml.new),
+        strategy.mergeYAML(
+          commonListsFxtYaml.current,
+          commonListsFxtYaml.upcoming,
+        ),
       ).toEqual(commonListsFxtYaml.result)
     })
 
     it('should return YAML string without applied properties from second YAML', () => {
       expect(
-        strategy.unapplyYAML(commonBaseFxtYaml.result, commonBaseFxtYaml.new),
+        strategy.unapplyYAML(
+          commonBaseFxtYaml.result,
+          commonBaseFxtYaml.upcoming,
+        ),
       ).toEqual(commonBaseFxtYaml.restored)
     })
 
@@ -168,7 +177,10 @@ describe('Strategy', () => {
 
     it('should unapply lists', () => {
       expect(
-        strategy.unapplyYAML(commonListsFxtYaml.result, commonListsFxtYaml.new),
+        strategy.unapplyYAML(
+          commonListsFxtYaml.result,
+          commonListsFxtYaml.upcoming,
+        ),
       ).toEqual(commonListsFxtYaml.restored)
     })
   })
@@ -176,13 +188,19 @@ describe('Strategy', () => {
   describe('Lines', () => {
     it('should merge linear text files', () => {
       expect(
-        strategy.mergeLines(gitignoreBaseFxt.current, gitignoreBaseFxt.new),
+        strategy.mergeLines(
+          gitignoreBaseFxt.current,
+          gitignoreBaseFxt.upcoming,
+        ),
       ).toEqual(gitignoreBaseFxt.result)
     })
 
     it('should unapply upcoming changes from linear text files', () => {
       expect(
-        strategy.unapplyLines(gitignoreBaseFxt.result, gitignoreBaseFxt.new),
+        strategy.unapplyLines(
+          gitignoreBaseFxt.result,
+          gitignoreBaseFxt.upcoming,
+        ),
       ).toEqual(gitignoreBaseFxt.restored)
     })
   })
@@ -190,43 +208,43 @@ describe('Strategy', () => {
   describe('auto', () => {
     it('should automatically determine and apply merge method to given file', () => {
       expect(
-        strategy.merge('common_01.json')(
-          commonBaseFxt.current,
-          commonBaseFxt.new,
-        ),
+        strategy.merge('common_01.json')({
+          current: commonBaseFxt.current,
+          upcoming: commonBaseFxt.upcoming,
+        }),
       ).toEqual(commonBaseFxt.result)
       expect(
-        strategy.merge('common_01.yaml')(
-          commonBaseFxtYaml.current,
-          commonBaseFxtYaml.new,
-        ),
+        strategy.merge('common_01.yaml')({
+          current: commonBaseFxtYaml.current,
+          upcoming: commonBaseFxtYaml.upcoming,
+        }),
       ).toEqual(commonBaseFxtYaml.result)
       expect(
-        strategy.merge('common_01.yaml')(
-          commonBaseFxtYaml.current,
-          commonBaseFxtYaml.new,
-        ),
+        strategy.merge('common_01.yaml')({
+          current: commonBaseFxtYaml.current,
+          upcoming: commonBaseFxtYaml.upcoming,
+        }),
       ).toEqual(commonBaseFxtYaml.result)
     })
 
     it('should automatically determine and apply unapply method to given file', () => {
       expect(
-        strategy.unapply('common.json')(
-          commonBaseFxt.result,
-          commonBaseFxt.new,
-        ),
+        strategy.unapply('common.json')({
+          current: commonBaseFxt.result,
+          upcoming: commonBaseFxt.upcoming,
+        }),
       ).toEqual(commonBaseFxt.restored)
       expect(
-        strategy.unapply('common.yaml')(
-          commonBaseFxtYaml.result,
-          commonBaseFxtYaml.new,
-        ),
+        strategy.unapply('common.yaml')({
+          current: commonBaseFxtYaml.result,
+          upcoming: commonBaseFxtYaml.upcoming,
+        }),
       ).toEqual(commonBaseFxtYaml.restored)
       expect(
-        strategy.unapply('common.txt')(
-          gitignoreBaseFxt.result,
-          gitignoreBaseFxt.new,
-        ),
+        strategy.unapply('common.txt')({
+          current: gitignoreBaseFxt.result,
+          upcoming: gitignoreBaseFxt.upcoming,
+        }),
       ).toEqual(gitignoreBaseFxt.restored)
     })
   })

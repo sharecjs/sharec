@@ -11,16 +11,16 @@ describe('strategy > eslintignore', () => {
   describe('merge', () => {
     it('should correctly merge configs', () => {
       expect(
-        eslintIgnoreStrategy.merge('.eslintignore')(
-          eslintignoreBaseFxt.current,
-          eslintignoreBaseFxt.new,
-        ),
+        eslintIgnoreStrategy.merge('.eslintignore')({
+          current: eslintignoreBaseFxt.current,
+          upcoming: eslintignoreBaseFxt.upcoming,
+        }),
       ).toEqual(eslintignoreBaseFxt.result)
       expect(
-        eslintIgnoreStrategy.merge('eslintIgnore')(
-          eslintignoreArrayLikeFxt.current,
-          eslintignoreArrayLikeFxt.new,
-        ),
+        eslintIgnoreStrategy.merge('eslintIgnore')({
+          current: eslintignoreArrayLikeFxt.current,
+          upcoming: eslintignoreArrayLikeFxt.upcoming,
+        }),
       ).toEqual(eslintignoreArrayLikeFxt.result)
     })
   })
@@ -28,16 +28,16 @@ describe('strategy > eslintignore', () => {
   describe('uapplying', () => {
     it('should correctly unapply configs', () => {
       expect(
-        eslintIgnoreStrategy.unapply('.eslintignore')(
-          eslintignoreBaseFxt.result,
-          eslintignoreBaseFxt.new,
-        ),
+        eslintIgnoreStrategy.unapply('.eslintignore')({
+          current: eslintignoreBaseFxt.result,
+          upcoming: eslintignoreBaseFxt.upcoming,
+        }),
       ).toEqual(eslintignoreBaseFxt.restored)
       expect(
-        eslintIgnoreStrategy.unapply('eslintIgnore')(
-          eslintignoreArrayLikeFxt.result,
-          eslintignoreArrayLikeFxt.new,
-        ),
+        eslintIgnoreStrategy.unapply('eslintIgnore')({
+          current: eslintignoreArrayLikeFxt.result,
+          upcoming: eslintignoreArrayLikeFxt.upcoming,
+        }),
       ).toEqual(eslintignoreArrayLikeFxt.restored)
     })
   })

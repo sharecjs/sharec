@@ -4,8 +4,15 @@ const { readFile, writeFile } = require('../../utils/std').fs
 const { resolveConfigStrategy } = require('../strategies/resolve')
 const { extractConfigs } = require('./extract')
 
+/**
+ * @typedef {Object} MetaData
+ * @property {String} version
+ * @property {String} config
+ */
+
 const installPackageJson = async ({
   configsPath,
+  configsName,
   configsVersion,
   targetPath,
 }) => {
@@ -23,12 +30,14 @@ const installPackageJson = async ({
     newPackageJson = pipe(
       injectConfigs(newConfigs),
       injectMetaData({
+        config: configsName,
         version: configsVersion,
       }),
     )(targetPackageJson)
   } catch (err) {
     newPackageJson = pipe(
       injectMetaData({
+        config: configsName,
         version: configsVersion,
       }),
     )(targetPackageJson)
@@ -49,7 +58,10 @@ const injectConfigs = configs => packageJson => {
 
     if (strategy) {
       Object.assign(updatedPackageJson, {
-        [key]: strategy.merge(key)(updatedPackageJson[key], configs[key]),
+        [key]: strategy.merge(key)({
+          current: updatedPackageJson[key],
+          upcoming: configs[key],
+        }),
       })
     } else {
       Object.assign(updatedPackageJson, {
@@ -61,9 +73,16 @@ const injectConfigs = configs => packageJson => {
   return updatedPackageJson
 }
 
-const injectMetaData = metaData => packageJson => ({
+/**
+ * @param {MetaData} meta
+ * @returns {Function}
+ */
+const injectMetaData = meta => packageJson => ({
   ...packageJson,
-  sharec: metaData,
+  sharec: {
+    config: meta.config,
+    version: meta.version,
+  },
 })
 
 module.exports = {

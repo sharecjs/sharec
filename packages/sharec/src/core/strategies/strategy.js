@@ -178,12 +178,10 @@ class Strategy {
      * @param {Object|String} config
      * @returns {Object|Array|String}
      */
-    return (localConfig, config) => {
-      if (!matchedMethod) return config
+    return ({ current, upcoming, cached }) => {
+      if (!matchedMethod) return upcoming
 
-      const res = matchedMethod.bind(this)(localConfig, config)
-
-      return res
+      return matchedMethod.bind(this)(current, upcoming, cached)
     }
   }
 
@@ -266,14 +264,15 @@ class Strategy {
     const matchedMethod = this.determineUnapplyMethod(fileName)
 
     /**
-     * @param {Object|String} localConfig
-     * @param {Object|String} config
+     * @param {Object|String} options.current
+     * @param {Object|String} options.upcoming
+     * @param {Object|String} [options.cached]
      * @returns {Object|String|Array}
      */
-    return (localConfig, config) => {
-      if (!matchedMethod) return localConfig
+    return ({ current, upcoming, cached }) => {
+      if (!matchedMethod) return current
 
-      return matchedMethod.bind(this)(localConfig, config)
+      return matchedMethod.bind(this)(current, upcoming, cached)
     }
   }
 }

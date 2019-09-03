@@ -18,7 +18,7 @@ describe('core > package > install > scripts override >', () => {
         packageJsonScriptsOverrideFxt.current,
       ),
       '/configuration-package/package.json': JSON.stringify(
-        packageJsonScriptsOverrideFxt.new,
+        packageJsonScriptsOverrideFxt.upcoming,
       ),
     }
 

@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`tasks > remove > should remove configuration from the target project and delete all empty 1`] = `Object {}`;

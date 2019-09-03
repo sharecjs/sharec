@@ -6,13 +6,13 @@ describe('strategy > babel > base >', () => {
 
   it('should merge babel json configs', () => {
     expect(
-      babelStrategy.mergeJSON(babelBaseFxt.current, babelBaseFxt.new),
+      babelStrategy.mergeJSON(babelBaseFxt.current, babelBaseFxt.upcoming),
     ).toEqual(babelBaseFxt.result)
   })
 
   it('should unapply babel JSON config', () => {
     expect(
-      babelStrategy.unapplyJSON(babelBaseFxt.result, babelBaseFxt.new),
+      babelStrategy.unapplyJSON(babelBaseFxt.result, babelBaseFxt.upcoming),
     ).toEqual(babelBaseFxt.restored)
   })
 })

@@ -12,7 +12,10 @@ const removeConfig = async ({ configsPath, targetPath, filePath }) => {
 
   if (!targetStrategy) return
 
-  const restoredConfig = targetStrategy.unapply(filePath)(localConfig, config)
+  const restoredConfig = targetStrategy.unapply(filePath)({
+    current: localConfig,
+    upcoming: config,
+  })
 
   if (isEmpty(restoredConfig)) {
     await removeFile(localConfigPath)

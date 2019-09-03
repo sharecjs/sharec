@@ -3,6 +3,7 @@ const { vol } = require('memfs')
 const { removeConfig } = require('../remove')
 
 describe('processors > configs >', () => {
+  // TODO: remove snapshots tests
   const eslint04 = fixture('eslint/json/eslintrc_04.json', 'json')
   const eslint05 = fixture('eslint/json/eslintrc_05.json', 'json')
   const yamlEslint04 = fixture('eslint/yaml/eslintrc_04.yml')

@@ -29,22 +29,24 @@ describe('commands > install > base >', () => {
       '/target/.gitignore': gitignoreBaseFxt.current,
       '/target/.npmignore': npmignoreBaseFxt.current,
       '/configuration-package/package.json': JSON.stringify({
+        name: 'awesome-config',
         version: '1.0.0',
       }),
       '/configuration-package/configs/.eslintrc': JSON.stringify(
-        eslintBaseFxt.new,
+        eslintBaseFxt.upcoming,
       ),
-      '/configuration-package/configs/.eslintrc.yaml': eslintBaseFxtYaml.new,
+      '/configuration-package/configs/.eslintrc.yaml':
+        eslintBaseFxtYaml.upcoming,
       '/configuration-package/configs/.editorconfig': 'bar',
       '/configuration-package/configs/.babelrc': JSON.stringify(
-        babelBaseFxt.new,
+        babelBaseFxt.upcoming,
       ),
       '/configuration-package/configs/package-lock.json': 'bar',
       '/configuration-package/configs/package.json': JSON.stringify(
-        packageJsonBaseInstallFxt.new,
+        packageJsonBaseInstallFxt.upcoming,
       ),
-      '/configuration-package/configs/.gitignore': gitignoreBaseFxt.new,
-      '/configuration-package/configs/.npmignore': npmignoreBaseFxt.new,
+      '/configuration-package/configs/.gitignore': gitignoreBaseFxt.upcoming,
+      '/configuration-package/configs/.npmignore': npmignoreBaseFxt.upcoming,
     }
 
     vol.fromJSON(dir, '/')

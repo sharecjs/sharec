@@ -6,10 +6,16 @@ describe('strategy > babel > with empty > ', () => {
 
   it('should handle merge with empty config', () => {
     expect(
-      babelStrategy.mergeJSON(babelUniqueEnvFxt.current, babelUniqueEnvFxt.new),
+      babelStrategy.mergeJSON(
+        babelUniqueEnvFxt.current,
+        babelUniqueEnvFxt.upcoming,
+      ),
     ).toEqual(babelUniqueEnvFxt.result)
     expect(
-      babelStrategy.mergeJSON(babelUniqueEnvFxt.new, babelUniqueEnvFxt.current),
+      babelStrategy.mergeJSON(
+        babelUniqueEnvFxt.upcoming,
+        babelUniqueEnvFxt.current,
+      ),
     ).toEqual(babelUniqueEnvFxt.result)
   })
 
@@ -17,7 +23,7 @@ describe('strategy > babel > with empty > ', () => {
     expect(
       babelStrategy.unapplyJSON(
         babelUniqueEnvFxt.result,
-        babelUniqueEnvFxt.new,
+        babelUniqueEnvFxt.upcoming,
       ),
     ).toEqual(babelUniqueEnvFxt.restored)
   })

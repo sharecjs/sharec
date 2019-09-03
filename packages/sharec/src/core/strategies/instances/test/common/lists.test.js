@@ -9,13 +9,16 @@ describe('strategy > lists > ', () => {
     describe('JSON', () => {
       it('should merge objects by one deep level', () => {
         expect(
-          commonStrategy.mergeJSON(listsFxt.current, listsFxt.new),
+          commonStrategy.mergeJSON(listsFxt.current, listsFxt.upcoming),
         ).toEqual(listsFxt.result)
       })
 
       it('should automatically merge configs with method determination', () => {
         expect(
-          commonStrategy.merge('config.json')(listsFxt.current, listsFxt.new),
+          commonStrategy.merge('config.json')({
+            current: listsFxt.current,
+            upcoming: listsFxt.upcoming,
+          }),
         ).toEqual(listsFxt.result)
       })
     })
@@ -23,15 +26,15 @@ describe('strategy > lists > ', () => {
     describe('YAML', () => {
       it('should merge objects by one deep level', () => {
         expect(
-          commonStrategy.mergeYAML(listsFxtYaml.current, listsFxtYaml.new),
+          commonStrategy.mergeYAML(listsFxtYaml.current, listsFxtYaml.upcoming),
         ).toEqual(listsFxtYaml.result)
       })
       it('should automatically merge configs with method determination', () => {
         expect(
-          commonStrategy.merge('config.yaml')(
-            listsFxtYaml.current,
-            listsFxtYaml.new,
-          ),
+          commonStrategy.merge('config.yaml')({
+            current: listsFxtYaml.current,
+            upcoming: listsFxtYaml.upcoming,
+          }),
         ).toEqual(listsFxtYaml.result)
       })
     })
@@ -41,13 +44,16 @@ describe('strategy > lists > ', () => {
     describe('JSON', () => {
       it('should unapply objects by one deep level', () => {
         expect(
-          commonStrategy.unapplyJSON(listsFxt.result, listsFxt.new),
+          commonStrategy.unapplyJSON(listsFxt.result, listsFxt.upcoming),
         ).toEqual(listsFxt.restored)
       })
 
       it('should automatically unapply configs with method determination', () => {
         expect(
-          commonStrategy.unapply('config.json')(listsFxt.result, listsFxt.new),
+          commonStrategy.unapply('config.json')({
+            current: listsFxt.result,
+            upcoming: listsFxt.upcoming,
+          }),
         ).toEqual(listsFxt.restored)
       })
     })
@@ -55,16 +61,19 @@ describe('strategy > lists > ', () => {
     describe('YAML', () => {
       it('should unapply objects by one deep level', () => {
         expect(
-          commonStrategy.unapplyYAML(listsFxtYaml.result, listsFxtYaml.new),
+          commonStrategy.unapplyYAML(
+            listsFxtYaml.result,
+            listsFxtYaml.upcoming,
+          ),
         ).toEqual(listsFxtYaml.restored)
       })
 
       it('should automatically merge configs with method determination', () => {
         expect(
-          commonStrategy.unapply('config.yaml')(
-            listsFxtYaml.result,
-            listsFxtYaml.new,
-          ),
+          commonStrategy.unapply('config.yaml')({
+            current: listsFxtYaml.result,
+            upcoming: listsFxtYaml.upcoming,
+          }),
         ).toEqual(listsFxtYaml.restored)
       })
     })

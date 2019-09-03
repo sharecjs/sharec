@@ -7,10 +7,10 @@ describe('strategy > npmignore', () => {
   describe('merge', () => {
     it('should correctly merge configs', () => {
       expect(
-        npmIgnoreStrategy.merge('.npmignore')(
-          npmignoreBaseFxt.current,
-          npmignoreBaseFxt.new,
-        ),
+        npmIgnoreStrategy.merge('.npmignore')({
+          current: npmignoreBaseFxt.current,
+          upcoming: npmignoreBaseFxt.upcoming,
+        }),
       ).toEqual(npmignoreBaseFxt.result)
     })
   })
@@ -18,10 +18,10 @@ describe('strategy > npmignore', () => {
   describe('uapplying', () => {
     it('should correctly unapply configs', () => {
       expect(
-        npmIgnoreStrategy.unapply('.npmignore')(
-          npmignoreBaseFxt.result,
-          npmignoreBaseFxt.new,
-        ),
+        npmIgnoreStrategy.unapply('.npmignore')({
+          current: npmignoreBaseFxt.result,
+          upcoming: npmignoreBaseFxt.upcoming,
+        }),
       ).toEqual(npmignoreBaseFxt.restored)
     })
   })

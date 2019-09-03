@@ -32,7 +32,7 @@ describe('commands > remove >', () => {
       ),
       '/target/.babelrc': JSON.stringify(babelListedValuesFxt.result),
       '/configuration-package/configs/.eslintrc': JSON.stringify(
-        eslintParserOptionsOperationsFxt.new,
+        eslintParserOptionsOperationsFxt.upcoming,
       ),
       '/configuration-package/configs/.babelrc': JSON.stringify(
         babelListedValuesFxt.result,
@@ -59,7 +59,7 @@ describe('commands > remove >', () => {
     const dir = {
       '/target/package.json': JSON.stringify(packageJsonBaseRemoveFxt.result),
       '/configuration-package/configs/package.json': JSON.stringify(
-        packageJsonBaseRemoveFxt.new,
+        packageJsonBaseRemoveFxt.upcoming,
       ),
     }
     vol.fromJSON(dir)
@@ -82,13 +82,13 @@ describe('commands > remove >', () => {
       '/target/.eslintrc.yml': eslintParserOptionsOperationsFxtYaml.result,
       '/target/.babelrc': JSON.stringify(babelListedValuesFxt.result),
       '/configuration-package/configs/package.json': JSON.stringify(
-        packageJsonBaseRemoveFxt.new,
+        packageJsonBaseRemoveFxt.upcoming,
       ),
       '/configuration-package/package-lock.json': 'foo',
       '/configuration-package/configs/.eslintrc.yml':
-        eslintParserOptionsOperationsFxtYaml.new,
+        eslintParserOptionsOperationsFxtYaml.upcoming,
       '/configuration-package/configs/.babelrc': JSON.stringify(
-        babelListedValuesFxt.new,
+        babelListedValuesFxt.upcoming,
       ),
     }
     vol.fromJSON(dir)

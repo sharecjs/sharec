@@ -1,6 +1,7 @@
 {
   "sharec": {
-    "injected": true
+    "name": "awesome-config",
+    "version": "1.0.0"
   },
   "name": "awesome-project",
   "scripts": {

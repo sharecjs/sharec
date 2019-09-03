@@ -23,6 +23,7 @@ describe('commands > install > installed > ', () => {
     const dir = {
       '/target/package.json': JSON.stringify(packageJson, null, 2),
       '/configuration-package/package.json': JSON.stringify({
+        name: 'awesome-config',
         version: '1.0.0',
       }),
       '/configuration-package/configs/package.json': JSON.stringify(

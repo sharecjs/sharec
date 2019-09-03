@@ -13,7 +13,7 @@ describe('core > package > install > scripts >', () => {
     const dir = {
       '/target/package.json': JSON.stringify(packageJsonScriptsFxt.current),
       '/configuration-package/package.json': JSON.stringify(
-        packageJsonScriptsFxt.new,
+        packageJsonScriptsFxt.upcoming,
       ),
     }
 

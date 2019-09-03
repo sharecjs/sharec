@@ -24,7 +24,8 @@
     "trailingComma": "all"
   },
   "sharec": {
-    "injected": true
+    "version": "1.0.0",
+    "config": "awesome-config"
   },
   "eslintConfig": {
     "parser": "babel-eslint",

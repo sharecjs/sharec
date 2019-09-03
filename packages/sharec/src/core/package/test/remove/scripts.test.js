@@ -3,7 +3,7 @@ const { fixture } = require('testUtils')
 const { clearPackageJson } = require('../../remove')
 
 describe('core > package > remove > scripts >', () => {
-  const packageNew = fixture('package/01-scripts/new.json', 'json')
+  const packageNew = fixture('package/01-scripts/upcoming.json', 'json')
   const packageResult = fixture('package/01-scripts/result.json', 'json')
   const packageRestored = fixture('package/01-scripts/restored.json', 'json')
 

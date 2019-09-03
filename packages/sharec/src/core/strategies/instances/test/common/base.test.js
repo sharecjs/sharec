@@ -7,22 +7,30 @@ describe('strategy > common > ', () => {
 
   describe('merge', () => {
     it('should return last argument if it is not mergable', () => {
-      expect(commonStrategy.merge('config')('bar', 'baz')).toBe('baz')
+      expect(
+        commonStrategy.merge('config')({
+          current: 'bar',
+          upcoming: 'baz',
+        }),
+      ).toBe('baz')
     })
 
     describe('JSON', () => {
       it('should merge objects by one deep level', () => {
         expect(
-          commonStrategy.mergeJSON(commonBaseFxt.current, commonBaseFxt.new),
+          commonStrategy.mergeJSON(
+            commonBaseFxt.current,
+            commonBaseFxt.upcoming,
+          ),
         ).toEqual(commonBaseFxt.result)
       })
 
       it('should automatically merge configs with method determination', () => {
         expect(
-          commonStrategy.merge('config.json')(
-            commonBaseFxt.current,
-            commonBaseFxt.new,
-          ),
+          commonStrategy.merge('config.json')({
+            current: commonBaseFxt.current,
+            upcoming: commonBaseFxt.upcoming,
+          }),
         ).toEqual(commonBaseFxt.result)
       })
     })
@@ -32,16 +40,16 @@ describe('strategy > common > ', () => {
         expect(
           commonStrategy.mergeYAML(
             commonBaseFxtYaml.current,
-            commonBaseFxtYaml.new,
+            commonBaseFxtYaml.upcoming,
           ),
         ).toEqual(commonBaseFxtYaml.result)
       })
       it('should automatically merge configs with method determination', () => {
         expect(
-          commonStrategy.merge('config.yaml')(
-            commonBaseFxtYaml.current,
-            commonBaseFxtYaml.new,
-          ),
+          commonStrategy.merge('config.yaml')({
+            current: commonBaseFxtYaml.current,
+            upcoming: commonBaseFxtYaml.upcoming,
+          }),
         ).toEqual(commonBaseFxtYaml.result)
       })
     })
@@ -51,16 +59,19 @@ describe('strategy > common > ', () => {
     describe('JSON', () => {
       it('should unapply objects by one deep level', () => {
         expect(
-          commonStrategy.unapplyJSON(commonBaseFxt.result, commonBaseFxt.new),
+          commonStrategy.unapplyJSON(
+            commonBaseFxt.result,
+            commonBaseFxt.upcoming,
+          ),
         ).toEqual(commonBaseFxt.restored)
       })
 
       it('should automatically unapply configs with method determination', () => {
         expect(
-          commonStrategy.unapply('config.json')(
-            commonBaseFxt.result,
-            commonBaseFxt.new,
-          ),
+          commonStrategy.unapply('config.json')({
+            current: commonBaseFxt.result,
+            upcoming: commonBaseFxt.upcoming,
+          }),
         ).toEqual(commonBaseFxt.restored)
       })
     })
@@ -70,17 +81,17 @@ describe('strategy > common > ', () => {
         expect(
           commonStrategy.unapplyYAML(
             commonBaseFxtYaml.result,
-            commonBaseFxtYaml.new,
+            commonBaseFxtYaml.upcoming,
           ),
         ).toEqual(commonBaseFxtYaml.restored)
       })
 
       it('should automatically merge configs with method determination', () => {
         expect(
-          commonStrategy.unapply('config.yaml')(
-            commonBaseFxtYaml.result,
-            commonBaseFxtYaml.new,
-          ),
+          commonStrategy.unapply('config.yaml')({
+            current: commonBaseFxtYaml.result,
+            upcoming: commonBaseFxtYaml.upcoming,
+          }),
         ).toEqual(commonBaseFxtYaml.restored)
       })
     })

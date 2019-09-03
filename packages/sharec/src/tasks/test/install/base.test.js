@@ -21,15 +21,16 @@ describe('tasks > install > base >', () => {
       '/target/.eslintrc.yaml': eslintBaseFxtYaml.current,
       '/target/package.json': JSON.stringify(packageInstallJsonBaseFxt.current),
       '/configuration-package/configs/.eslintrc': JSON.stringify(
-        eslintBaseFxt.new,
+        eslintBaseFxt.upcoming,
       ),
-      '/configuration-package/configs/.eslintrc.yaml': eslintBaseFxtYaml.new,
+      '/configuration-package/configs/.eslintrc.yaml':
+        eslintBaseFxtYaml.upcoming,
       '/configuration-package/configs/.editorconfig': 'bar',
       '/configuration-package/configs/babelrc.json': JSON.stringify(
-        babelBaseFxt.new,
+        babelBaseFxt.upcoming,
       ),
       '/configuration-package/configs/package.json': JSON.stringify(
-        packageInstallJsonBaseFxt.new,
+        packageInstallJsonBaseFxt.upcoming,
       ),
     }
 

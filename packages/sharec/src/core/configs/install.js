@@ -8,9 +8,15 @@ const { resolveConfigStrategy } = require('../strategies/resolve')
  * @param {String} options.targetPath
  * @param {String} options.configPath
  * @param {String} options.configSource
+ * @param {String} [options.configCache]
  * @returns {Promise<void>}
  */
-const installConfig = async ({ targetPath, configPath, configSource }) => {
+const installConfig = async ({
+  targetPath,
+  configPath,
+  configSource,
+  configCache,
+}) => {
   const targetStrategy = resolveConfigStrategy(configPath)
   const localConfigPath = path.join(targetPath, configPath)
   const localConfigDirName = path.dirname(localConfigPath)
@@ -23,7 +29,11 @@ const installConfig = async ({ targetPath, configPath, configSource }) => {
 
   if (localConfig && targetStrategy) {
     try {
-      newConfig = targetStrategy.merge(configPath)(localConfig, configSource)
+      newConfig = targetStrategy.merge(configPath)({
+        current: localConfig,
+        upcoming: configSource,
+        cache: configCache,
+      })
     } catch (err) {
       const errorMessage = [
         chalk.bold(

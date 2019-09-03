@@ -17,17 +17,18 @@ describe('processors > configs >', () => {
       const dir = {
         '/target/.eslintrc': JSON.stringify(eslintBaseFxt.current),
       }
+
       vol.fromJSON(dir, '/')
 
       await installConfig({
         targetPath: '/target',
         configPath: '.eslintrc',
-        configSource: JSON.stringify(eslintBaseFxt.new),
+        configSource: JSON.stringify(eslintBaseFxt.upcoming),
       })
 
-      const res = await vol.readFileSync('/target/.eslintrc', 'utf8')
-
-      expect(JSON.parse(res)).toEqual(eslintBaseFxt.result)
+      expect(JSON.parse(vol.readFileSync('/target/.eslintrc', 'utf8'))).toEqual(
+        eslintBaseFxt.result,
+      )
     })
 
     it('should merge YAML configs', async () => {
@@ -41,18 +42,19 @@ describe('processors > configs >', () => {
       await installConfig({
         targetPath: '/target',
         configPath: '.eslintrc.yaml',
-        configSource: eslintBaseFxtYaml.new,
+        configSource: eslintBaseFxtYaml.upcoming,
       })
 
-      const res = await vol.readFileSync('/target/.eslintrc.yaml', 'utf8')
-
-      expect(res).toEqual(eslintBaseFxtYaml.result)
+      expect(vol.readFileSync('/target/.eslintrc.yaml', 'utf8')).toEqual(
+        eslintBaseFxtYaml.result,
+      )
     })
 
     it('should copy all non-mergeable configs', async () => {
       expect.assertions(1)
 
       const dir = {}
+
       vol.fromJSON(dir, '/')
 
       await installConfig({
@@ -78,12 +80,9 @@ describe('processors > configs >', () => {
         configSource: 'bar',
       })
 
-      const res = await vol.readFileSync(
-        '/target/foo/bar/.editorconfig',
-        'utf8',
+      expect(vol.readFileSync('/target/foo/bar/.editorconfig', 'utf8')).toEqual(
+        'bar',
       )
-
-      expect(res).toEqual('bar')
     })
   })
 })

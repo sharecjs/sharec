@@ -12,14 +12,19 @@ const installedMessage = require('../cli/messages')
  */
 async function install({ configsPath, targetPath, options = {} }) {
   const { name, version } = await collectConfigPackageInfo(configsPath)
-  const meta = await extractMetaData(targetPath)
-  const isSilentMode = options.silent || (meta && meta.version === version)
+  const meta = await getCurrentPackageJsonMetaData(targetPath)
+  const isSilentMode = options.silent
+  const isMetaMatched = meta && meta.version === version
   const spinner = createSpinner({
-    text: 'applying configuration...',
+    text: 'preparing...',
     silent: isSilentMode,
-  })
+  }).start()
 
-  spinner.start()
+  if (isMetaMatched) {
+    spinner.succeed('this version of configs already injected')
+    return
+  }
+  spinner.frame('applying configuration...')
 
   try {
     await installTask({
@@ -32,18 +37,16 @@ async function install({ configsPath, targetPath, options = {} }) {
 
     spinner.succeed('configuration applyed, have a nice time!')
 
-    if (!isSilentMode) {
+    if (!isMetaMatched && !isSilentMode) {
       installedMessage()
     }
   } catch (err) {
     const { message } = err
 
-    if (message.includes('already installed')) {
-      spinner.succeed('this version of configs already injected!')
-    } else if (message.includes('ENOENT')) {
-      spinner.fail('configs directory was not found!')
+    if (message.includes('ENOENT')) {
+      spinner.fail('configs directory was not found')
     } else {
-      spinner.fail('unhandeled error!')
+      spinner.fail('unhandeled error')
       console.error(err)
     }
   }

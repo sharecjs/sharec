@@ -68,6 +68,7 @@
     "prettier": "^1.17.1"
   },
   "sharec": {
+    "config": "awesome-config",
     "version": "1.0.0"
   }
 }

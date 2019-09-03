@@ -1,6 +1,7 @@
 const Strategy = require('../Strategy')
 
 class PackageJsonStrategy extends Strategy {}
+
 const packageJsonStrategy = new PackageJsonStrategy({
   json: [
     'scripts',

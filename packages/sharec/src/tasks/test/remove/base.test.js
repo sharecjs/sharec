@@ -1,6 +1,6 @@
 const { fixtures } = require('testUtils')
 const { vol } = require('memfs')
-const remove = require('../remove')
+const remove = require('../../remove')
 
 describe('tasks > remove >', () => {
   const packageJsonBaseRemoveFxt = fixtures('package/04-base-remove', 'json')
@@ -20,22 +20,20 @@ describe('tasks > remove >', () => {
   it('should remove configuration from the target project and delete all empty', async () => {
     expect.assertions(3)
 
-    const packageJson = {
-      sharec: {
-        injected: true,
-      },
-    }
     const dir = {
-      '/target/package.json': JSON.stringify(packageJson),
+      '/target/package.json': JSON.stringify(packageJsonBaseRemoveFxt.result),
       '/target/.eslintrc': JSON.stringify(
         eslintParserOptionsOperationsFxt.result,
       ),
       '/target/.babelrc': JSON.stringify(babelListedValuesFxt.result),
+      '/configuration-package/configs/package.json': JSON.stringify(
+        packageJsonBaseRemoveFxt.upcoming,
+      ),
       '/configuration-package/configs/.eslintrc': JSON.stringify(
-        eslintParserOptionsOperationsFxt.new,
+        eslintParserOptionsOperationsFxt.upcoming,
       ),
       '/configuration-package/configs/.babelrc': JSON.stringify(
-        babelListedValuesFxt.new,
+        babelListedValuesFxt.upcoming,
       ),
     }
     vol.fromJSON(dir)
@@ -45,9 +43,9 @@ describe('tasks > remove >', () => {
       configsPath: '/configuration-package',
     })
 
-    expect(
-      JSON.parse(vol.readFileSync('/target/package.json')),
-    ).toMatchSnapshot()
+    expect(JSON.parse(vol.readFileSync('/target/package.json'))).toEqual(
+      packageJsonBaseRemoveFxt.restored,
+    )
     expect(JSON.parse(vol.readFileSync('/target/.eslintrc', 'utf8'))).toEqual(
       eslintParserOptionsOperationsFxt.restored,
     )
@@ -62,7 +60,7 @@ describe('tasks > remove >', () => {
     const dir = {
       '/target/package.json': JSON.stringify(packageJsonBaseRemoveFxt.result),
       '/configuration-package/configs/package.json': JSON.stringify(
-        packageJsonBaseRemoveFxt.new,
+        packageJsonBaseRemoveFxt.upcoming,
       ),
     }
     vol.fromJSON(dir)
@@ -72,9 +70,9 @@ describe('tasks > remove >', () => {
       configsPath: '/configuration-package',
     })
 
-    expect(
-      JSON.parse(vol.readFileSync('/target/package.json')),
-    ).toMatchSnapshot()
+    expect(JSON.parse(vol.readFileSync('/target/package.json'))).toEqual(
+      packageJsonBaseRemoveFxt.restored,
+    )
   })
 
   it('should remove configuration from all files in the target project', async () => {
@@ -85,12 +83,12 @@ describe('tasks > remove >', () => {
       '/target/.eslintrc.yml': eslintParserOptionsOperationsFxtYaml.result,
       '/target/.babelrc': JSON.stringify(babelListedValuesFxt.result),
       '/configuration-package/configs/package.json': JSON.stringify(
-        packageJsonBaseRemoveFxt.new,
+        packageJsonBaseRemoveFxt.upcoming,
       ),
       '/configuration-package/configs/.eslintrc.yml':
-        eslintParserOptionsOperationsFxtYaml.new,
+        eslintParserOptionsOperationsFxtYaml.upcoming,
       '/configuration-package/configs/.babelrc': JSON.stringify(
-        babelListedValuesFxt.new,
+        babelListedValuesFxt.upcoming,
       ),
     }
     vol.fromJSON(dir)

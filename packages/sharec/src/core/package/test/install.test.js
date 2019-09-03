@@ -20,7 +20,7 @@ describe('core > package > install >', () => {
           2,
         ),
         '/configs/package.json': JSON.stringify(
-          packageBaseInstallFxt.new,
+          packageBaseInstallFxt.upcoming,
           null,
           2,
         ),
@@ -29,6 +29,7 @@ describe('core > package > install >', () => {
 
       await installPackageJson({
         configsPath: '/configs',
+        configsName: 'awesome-config',
         targetPath: '/target',
         configsVersion: '1.0.0',
       })
@@ -42,7 +43,8 @@ describe('core > package > install >', () => {
   describe('injectMetaData', () => {
     it('should inject sharec meta-data', () => {
       const metaData = {
-        injected: true,
+        version: '1.0.0',
+        config: 'awesome-config',
       }
       const res = injectMetaData(metaData)(packageBaseInstallFxt.current)
 

@@ -22,7 +22,8 @@ describe('core > package > extract >', () => {
       expect.assertions(1)
 
       const metaData = {
-        injected: true,
+        version: '1.0.0',
+        config: 'awesome-config',
       }
       const dir = {
         '/target/package.json': JSON.stringify(
