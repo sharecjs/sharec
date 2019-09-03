@@ -18,10 +18,10 @@ describe('strategy > common > ', () => {
     describe('JSON', () => {
       it('should merge objects by one deep level', () => {
         expect(
-          commonStrategy.mergeJSON(
-            commonBaseFxt.current,
-            commonBaseFxt.upcoming,
-          ),
+          commonStrategy.mergeJSON({
+            current: commonBaseFxt.current,
+            upcoming: commonBaseFxt.upcoming,
+          }),
         ).toEqual(commonBaseFxt.result)
       })
 
@@ -38,10 +38,10 @@ describe('strategy > common > ', () => {
     describe('YAML', () => {
       it('should merge objects by one deep level', () => {
         expect(
-          commonStrategy.mergeYAML(
-            commonBaseFxtYaml.current,
-            commonBaseFxtYaml.upcoming,
-          ),
+          commonStrategy.mergeYAML({
+            current: commonBaseFxtYaml.current,
+            upcoming: commonBaseFxtYaml.upcoming,
+          }),
         ).toEqual(commonBaseFxtYaml.result)
       })
       it('should automatically merge configs with method determination', () => {
@@ -59,10 +59,10 @@ describe('strategy > common > ', () => {
     describe('JSON', () => {
       it('should unapply objects by one deep level', () => {
         expect(
-          commonStrategy.unapplyJSON(
-            commonBaseFxt.result,
-            commonBaseFxt.upcoming,
-          ),
+          commonStrategy.unapplyJSON({
+            current: commonBaseFxt.result,
+            upcoming: commonBaseFxt.upcoming,
+          }),
         ).toEqual(commonBaseFxt.restored)
       })
 
@@ -79,10 +79,10 @@ describe('strategy > common > ', () => {
     describe('YAML', () => {
       it('should unapply objects by one deep level', () => {
         expect(
-          commonStrategy.unapplyYAML(
-            commonBaseFxtYaml.result,
-            commonBaseFxtYaml.upcoming,
-          ),
+          commonStrategy.unapplyYAML({
+            current: commonBaseFxtYaml.result,
+            upcoming: commonBaseFxtYaml.upcoming,
+          }),
         ).toEqual(commonBaseFxtYaml.restored)
       })
 

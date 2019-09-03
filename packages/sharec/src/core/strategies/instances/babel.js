@@ -73,8 +73,8 @@ class BabelStrategy extends Strategy {
     return restoredEnvConfig
   }
 
-  mergeJSON(rawA, rawB) {
-    const [a, b] = [rawA, rawB].map(config =>
+  mergeJSON({ current, upcoming }) {
+    const [a, b] = [current, upcoming].map(config =>
       typeof config === 'string' ? JSON.parse(config) : config,
     )
     const newConfig = this.mergeEnv(omit(a, ['env']), omit(b, ['env']))
@@ -127,9 +127,8 @@ class BabelStrategy extends Strategy {
     return newConfig
   }
 
-  // TODO:
-  unapplyJSON(rawA, rawB) {
-    const [a, b] = [rawA, rawB].map(config =>
+  unapplyJSON({ current, upcoming }) {
+    const [a, b] = [current, upcoming].map(config =>
       typeof config === 'string' ? JSON.parse(config) : config,
     )
     const restoredConfig = this.unapplyEnv(omit(a, ['env']), omit(b, ['env']))

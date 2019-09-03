@@ -7,16 +7,19 @@ describe('strategy > eslint', () => {
 
     it('should merge configs', () => {
       expect(
-        eslintStrategy.mergeJSON(eslintBaseFxt.current, eslintBaseFxt.upcoming),
+        eslintStrategy.mergeJSON({
+          current: eslintBaseFxt.current,
+          upcoming: eslintBaseFxt.upcoming,
+        }),
       ).toEqual(eslintBaseFxt.result)
     })
 
     it('should unapply configs', () => {
       expect(
-        eslintStrategy.unapplyJSON(
-          eslintBaseFxt.result,
-          eslintBaseFxt.upcoming,
-        ),
+        eslintStrategy.unapplyJSON({
+          current: eslintBaseFxt.result,
+          upcoming: eslintBaseFxt.upcoming,
+        }),
       ).toEqual(eslintBaseFxt.restored)
     })
   })
@@ -26,16 +29,19 @@ describe('strategy > eslint', () => {
 
     it('should merge configs', () => {
       expect(
-        eslintStrategy.mergeYAML(eslintBaseFxt.current, eslintBaseFxt.upcoming),
+        eslintStrategy.mergeYAML({
+          current: eslintBaseFxt.current,
+          upcoming: eslintBaseFxt.upcoming,
+        }),
       ).toEqual(eslintBaseFxt.result)
     })
 
     it('should unapply configs', () => {
       expect(
-        eslintStrategy.unapplyYAML(
-          eslintBaseFxt.result,
-          eslintBaseFxt.upcoming,
-        ),
+        eslintStrategy.unapplyYAML({
+          current: eslintBaseFxt.result,
+          upcoming: eslintBaseFxt.upcoming,
+        }),
       ).toEqual(eslintBaseFxt.restored)
     })
   })

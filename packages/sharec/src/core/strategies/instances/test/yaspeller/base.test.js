@@ -6,28 +6,28 @@ describe('strategy > yaspeller', () => {
 
   it('should merge yaspeller json configs', () => {
     expect(
-      yaspellerStrategy.mergeJSON(
-        yaspellerBaseFxt.current,
-        yaspellerBaseFxt.upcoming,
-      ),
+      yaspellerStrategy.mergeJSON({
+        current: yaspellerBaseFxt.current,
+        upcoming: yaspellerBaseFxt.upcoming,
+      }),
     ).toMatchObject(yaspellerBaseFxt.result)
   })
 
   it('should remove applyed JSON config', () => {
     expect(
-      yaspellerStrategy.unapplyJSON(
-        yaspellerBaseFxt.result,
-        yaspellerBaseFxt.upcoming,
-      ),
+      yaspellerStrategy.unapplyJSON({
+        current: yaspellerBaseFxt.result,
+        upcoming: yaspellerBaseFxt.upcoming,
+      }),
     ).toMatchObject(yaspellerBaseFxt.restored)
   })
 
   it('should fully unapply JSON config and return empty object', () => {
     expect(
-      yaspellerStrategy.unapplyJSON(
-        yaspellerBaseFxt.result,
-        yaspellerBaseFxt.result,
-      ),
+      yaspellerStrategy.unapplyJSON({
+        current: yaspellerBaseFxt.result,
+        upcoming: yaspellerBaseFxt.result,
+      }),
     ).toEqual({})
   })
 })

@@ -109,31 +109,46 @@ describe('Strategy', () => {
   describe('JSON', () => {
     it('should merge JSON configs', () => {
       expect(
-        strategy.mergeJSON(commonBaseFxt.current, commonBaseFxt.upcoming),
+        strategy.mergeJSON({
+          current: commonBaseFxt.current,
+          upcoming: commonBaseFxt.upcoming,
+        }),
       ).toEqual(commonBaseFxt.result)
     })
 
     it('should merge lists', () => {
       expect(
-        strategy.mergeJSON(commonListsFxt.current, commonListsFxt.upcoming),
+        strategy.mergeJSON({
+          current: commonListsFxt.current,
+          upcoming: commonListsFxt.upcoming,
+        }),
       ).toEqual(commonListsFxt.result)
     })
 
     it('should return object without applied properties from second object', () => {
       expect(
-        strategy.unapplyJSON(commonBaseFxt.result, commonBaseFxt.upcoming),
+        strategy.unapplyJSON({
+          current: commonBaseFxt.result,
+          upcoming: commonBaseFxt.upcoming,
+        }),
       ).toEqual(commonBaseFxt.restored)
     })
 
     it('should return empty object if objects have not difference', () => {
       expect(
-        strategy.unapplyJSON(commonBaseFxt.result, commonBaseFxt.result),
+        strategy.unapplyJSON({
+          current: commonBaseFxt.result,
+          upcoming: commonBaseFxt.result,
+        }),
       ).toEqual({})
     })
 
     it('should unapply lists', () => {
       expect(
-        strategy.unapplyJSON(commonListsFxt.result, commonListsFxt.upcoming),
+        strategy.unapplyJSON({
+          current: commonListsFxt.result,
+          upcoming: commonListsFxt.upcoming,
+        }),
       ).toEqual(commonListsFxt.restored)
     })
   })
@@ -141,46 +156,46 @@ describe('Strategy', () => {
   describe('YAML', () => {
     it('should merge YAML configs', () => {
       expect(
-        strategy.mergeYAML(
-          commonBaseFxtYaml.current,
-          commonBaseFxtYaml.upcoming,
-        ),
+        strategy.mergeYAML({
+          current: commonBaseFxtYaml.current,
+          upcoming: commonBaseFxtYaml.upcoming,
+        }),
       ).toEqual(commonBaseFxtYaml.result)
     })
 
     it('should merge lists', () => {
       expect(
-        strategy.mergeYAML(
-          commonListsFxtYaml.current,
-          commonListsFxtYaml.upcoming,
-        ),
+        strategy.mergeYAML({
+          current: commonListsFxtYaml.current,
+          upcoming: commonListsFxtYaml.upcoming,
+        }),
       ).toEqual(commonListsFxtYaml.result)
     })
 
     it('should return YAML string without applied properties from second YAML', () => {
       expect(
-        strategy.unapplyYAML(
-          commonBaseFxtYaml.result,
-          commonBaseFxtYaml.upcoming,
-        ),
+        strategy.unapplyYAML({
+          current: commonBaseFxtYaml.result,
+          upcoming: commonBaseFxtYaml.upcoming,
+        }),
       ).toEqual(commonBaseFxtYaml.restored)
     })
 
     it('should return empty string if YAML string have not difference', () => {
       expect(
-        strategy.unapplyYAML(
-          commonBaseFxtYaml.result,
-          commonBaseFxtYaml.result,
-        ),
+        strategy.unapplyYAML({
+          current: commonBaseFxtYaml.result,
+          upcoming: commonBaseFxtYaml.result,
+        }),
       ).toBe('')
     })
 
     it('should unapply lists', () => {
       expect(
-        strategy.unapplyYAML(
-          commonListsFxtYaml.result,
-          commonListsFxtYaml.upcoming,
-        ),
+        strategy.unapplyYAML({
+          current: commonListsFxtYaml.result,
+          upcoming: commonListsFxtYaml.upcoming,
+        }),
       ).toEqual(commonListsFxtYaml.restored)
     })
   })
@@ -188,19 +203,19 @@ describe('Strategy', () => {
   describe('Lines', () => {
     it('should merge linear text files', () => {
       expect(
-        strategy.mergeLines(
-          gitignoreBaseFxt.current,
-          gitignoreBaseFxt.upcoming,
-        ),
+        strategy.mergeLines({
+          current: gitignoreBaseFxt.current,
+          upcoming: gitignoreBaseFxt.upcoming,
+        }),
       ).toEqual(gitignoreBaseFxt.result)
     })
 
     it('should unapply upcoming changes from linear text files', () => {
       expect(
-        strategy.unapplyLines(
-          gitignoreBaseFxt.result,
-          gitignoreBaseFxt.upcoming,
-        ),
+        strategy.unapplyLines({
+          current: gitignoreBaseFxt.result,
+          upcoming: gitignoreBaseFxt.upcoming,
+        }),
       ).toEqual(gitignoreBaseFxt.restored)
     })
   })

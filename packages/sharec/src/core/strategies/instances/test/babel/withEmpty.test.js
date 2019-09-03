@@ -6,25 +6,25 @@ describe('strategy > babel > with empty > ', () => {
 
   it('should handle merge with empty config', () => {
     expect(
-      babelStrategy.mergeJSON(
-        babelWithEmptyFxt.current,
-        babelWithEmptyFxt.upcoming,
-      ),
+      babelStrategy.mergeJSON({
+        current: babelWithEmptyFxt.current,
+        upcoming: babelWithEmptyFxt.upcoming,
+      }),
     ).toEqual(babelWithEmptyFxt.result)
     expect(
-      babelStrategy.mergeJSON(
-        babelWithEmptyFxt.upcoming,
-        babelWithEmptyFxt.current,
-      ),
+      babelStrategy.mergeJSON({
+        upcoming: babelWithEmptyFxt.upcoming,
+        current: babelWithEmptyFxt.current,
+      }),
     ).toEqual(babelWithEmptyFxt.result)
   })
 
   it('should fully unapply babel JSON config', () => {
     expect(
-      babelStrategy.unapplyJSON(
-        babelWithEmptyFxt.result,
-        babelWithEmptyFxt.upcoming,
-      ),
+      babelStrategy.unapplyJSON({
+        current: babelWithEmptyFxt.result,
+        upcoming: babelWithEmptyFxt.upcoming,
+      }),
     ).toEqual(babelWithEmptyFxt.restored)
   })
 })

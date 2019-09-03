@@ -104,16 +104,19 @@ class Strategy {
    * @param {String|Object|Array} rawB
    * @returns {Object|Array}
    */
-  mergeJSON(rawA, rawB) {
-    const [a, b] = [rawA, rawB].map(config =>
+  mergeJSON({ current, upcoming }) {
+    const [a, b] = [current, upcoming].map(config =>
       typeof config === 'string' ? JSON.parse(config) : config,
     )
 
     if (Array.isArray(a) || Array.isArray(b)) {
-      return this.mergeJSONLists(a, b)
+      return this.mergeJSONLists({
+        current: a,
+        upcoming: b,
+      })
     }
 
-    return this.mergeJSONHashes(a, b)
+    return this.mergeJSONHashes({ current: a, upcoming: b })
   }
 
   /**
@@ -121,10 +124,10 @@ class Strategy {
    * @param {Object} b
    * @returns {Object}
    */
-  mergeJSONHashes(a = {}, b = {}) {
+  mergeJSONHashes({ current = {}, upcoming = {} }) {
     return {
-      ...a,
-      ...b,
+      ...current,
+      ...upcoming,
     }
   }
 
@@ -133,8 +136,8 @@ class Strategy {
    * @param {Array} b
    * @returns {Array}
    */
-  mergeJSONLists(a = [], b = []) {
-    const res = mergeLists(a, b)
+  mergeJSONLists({ current = [], upcoming = [] }) {
+    const res = mergeLists(current, upcoming)
 
     return normalizeList(res)
   }
@@ -144,9 +147,12 @@ class Strategy {
    * @param {String} rawB
    * @returns {String}
    */
-  mergeYAML(rawA, rawB) {
-    const [a, b] = transformInputToYAML(rawA, rawB)
-    const newConfig = this.mergeJSON(a, b)
+  mergeYAML({ current, upcoming }) {
+    const [a, b] = transformInputToYAML(current, upcoming)
+    const newConfig = this.mergeJSON({
+      current: a,
+      upcoming: b,
+    })
 
     return toYaml(newConfig)
   }
@@ -156,14 +162,14 @@ class Strategy {
    * @param {String} b
    * @returns {String}
    */
-  mergeLines(a, b) {
-    return diffLines(a, b).reduce((acc, line) => {
+  mergeLines({ current, upcoming }) {
+    return diffLines(current, upcoming).reduce((acc, line) => {
       if (line.added) {
         return [acc, line.value].join('')
       }
 
       return acc
-    }, a)
+    }, current)
   }
 
   /**
@@ -181,7 +187,7 @@ class Strategy {
     return ({ current, upcoming, cached }) => {
       if (!matchedMethod) return upcoming
 
-      return matchedMethod.bind(this)(current, upcoming, cached)
+      return matchedMethod.bind(this)({ current, upcoming, cached })
     }
   }
 
@@ -190,16 +196,22 @@ class Strategy {
    * @param {Object|Array|String} rawB
    * @returns {Object|Array}
    */
-  unapplyJSON(rawA, rawB) {
-    const [a, b] = [rawA, rawB].map(config =>
+  unapplyJSON({ current, upcoming }) {
+    const [a, b] = [current, upcoming].map(config =>
       typeof config === 'string' ? JSON.parse(config) : config,
     )
 
     if (Array.isArray(a) && Array.isArray(b)) {
-      return this.unapplyJSONLists(a, b)
+      return this.unapplyJSONLists({
+        current: a,
+        upcoming: b,
+      })
     }
 
-    return this.unapplyJSONHashes(a, b)
+    return this.unapplyJSONHashes({
+      current: a,
+      upcoming: b,
+    })
   }
 
   /**
@@ -207,8 +219,8 @@ class Strategy {
    * @param {Object} b
    * @returns {Object}
    */
-  unapplyJSONHashes(a, b) {
-    return hashesDiff(a, b)
+  unapplyJSONHashes({ current, upcoming }) {
+    return hashesDiff(current, upcoming)
   }
 
   /**
@@ -216,8 +228,8 @@ class Strategy {
    * @param {Array} b
    * @returns {Array}
    */
-  unapplyJSONLists(a, b) {
-    return listsDiff(a, b)
+  unapplyJSONLists({ current, upcoming }) {
+    return listsDiff(current, upcoming)
   }
 
   /**
@@ -225,9 +237,12 @@ class Strategy {
    * @param {String} rawB
    * @returns {String}
    */
-  unapplyYAML(rawA, rawB) {
-    const [a, b] = transformInputToYAML(rawA, rawB)
-    const clearedConfig = this.unapplyJSON(a, b)
+  unapplyYAML({ current, upcoming }) {
+    const [a, b] = transformInputToYAML(current, upcoming)
+    const clearedConfig = this.unapplyJSON({
+      current: a,
+      upcoming: b,
+    })
 
     return toYaml(clearedConfig)
   }
@@ -237,11 +252,11 @@ class Strategy {
    * @param {String} b
    * @returns {String}
    */
-  unapplyLines(a, b) {
-    const aLines = a.split('\n')
+  unapplyLines({ current, upcoming }) {
+    const aLines = current.split('\n')
     const restoredConfig = []
 
-    diffLines(a, b).forEach(line => {
+    diffLines(current, upcoming).forEach(line => {
       const lineIdx = aLines.indexOf(line.value.replace(/\n$/, ''))
 
       if (line.removed && lineIdx !== -1) {
@@ -272,7 +287,7 @@ class Strategy {
     return ({ current, upcoming, cached }) => {
       if (!matchedMethod) return current
 
-      return matchedMethod.bind(this)(current, upcoming, cached)
+      return matchedMethod.bind(this)({ current, upcoming, cached })
     }
   }
 }

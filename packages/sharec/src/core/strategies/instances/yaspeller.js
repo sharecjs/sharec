@@ -10,8 +10,8 @@ const {
 } = require('../../../utils/hashes')
 
 class YaspellerStrategy extends Strategy {
-  mergeJSON(rawA, rawB) {
-    const [a, b] = [rawA, rawB].map(config =>
+  mergeJSON({ current, upcoming }) {
+    const [a, b] = [current, upcoming].map(config =>
       typeof config === 'string' ? JSON.parse(config) : config,
     )
     const aListsKeys = Object.keys(a).filter(key => Array.isArray(b[key]))
@@ -41,8 +41,8 @@ class YaspellerStrategy extends Strategy {
     return newConfig
   }
 
-  unapplyJSON(rawA, rawB) {
-    const [a, b] = [rawA, rawB].map(config =>
+  unapplyJSON({ current, upcoming }) {
+    const [a, b] = [current, upcoming].map(config =>
       typeof config === 'string' ? JSON.parse(config) : config,
     )
     const bListsKeys = Object.keys(b).filter(key => Array.isArray(b[key]))
