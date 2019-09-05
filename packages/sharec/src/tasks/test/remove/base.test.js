@@ -3,7 +3,10 @@ const { vol } = require('memfs')
 const remove = require('../../remove')
 
 describe('tasks > remove >', () => {
-  const packageJsonBaseRemoveFxt = fixtures('package/04-base-remove', 'json')
+  const packageJsonBaseRemoveFxt = fixtures(
+    'package/json/04-base-remove',
+    'json',
+  )
   const babelListedValuesFxt = fixtures('babel/json/04-listed-values', 'json')
   const eslintParserOptionsOperationsFxt = fixtures(
     'eslint/json/02-parser-options-operations',

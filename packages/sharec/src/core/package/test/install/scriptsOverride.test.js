@@ -4,7 +4,7 @@ const { installPackageJson } = require('../../install')
 
 describe('core > package > install > scripts override >', () => {
   const packageJsonScriptsOverrideFxt = fixtures(
-    'package/05-scripts-override',
+    'package/json/05-scripts-override',
     'json',
   )
 

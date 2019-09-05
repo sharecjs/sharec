@@ -4,7 +4,7 @@ const { fixtures } = require('testUtils')
 const install = require('../../install')
 
 describe('tasks > install > cache >', () => {
-  const packageInstallJsonBaseFxt = fixtures('package/03-base-install')
+  const packageInstallJsonBaseFxt = fixtures('package/json/03-base-install')
   const babelBaseFxt = fixtures('babel/json/01-base')
   const eslintBaseFxt = fixtures('eslint/json/01-base')
   const eslintBaseFxtYaml = fixtures('eslint/yaml/01-base')

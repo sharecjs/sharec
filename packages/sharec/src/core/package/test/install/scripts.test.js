@@ -3,7 +3,7 @@ const { fixtures } = require('testUtils')
 const { installPackageJson } = require('../../install')
 
 describe('core > package > install > scripts >', () => {
-  const packageJsonScriptsFxt = fixtures('package/01-scripts', 'json')
+  const packageJsonScriptsFxt = fixtures('package/json/01-scripts', 'json')
 
   beforeEach(() => {
     vol.reset()

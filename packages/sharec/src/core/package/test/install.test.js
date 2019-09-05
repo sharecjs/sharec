@@ -3,7 +3,7 @@ const { installPackageJson, injectMetaData } = require('../install')
 const { fixtures } = require('testUtils')
 
 describe('core > package > install >', () => {
-  const packageBaseInstallFxt = fixtures('package/03-base-install', 'json')
+  const packageBaseInstallFxt = fixtures('package/json/03-base-install', 'json')
 
   beforeEach(() => {
     vol.reset()

@@ -3,7 +3,10 @@ const { vol } = require('memfs')
 const install = require('../../install')
 
 describe('tasks > install > base >', () => {
-  const packageInstallJsonBaseFxt = fixtures('package/03-base-install', 'json')
+  const packageInstallJsonBaseFxt = fixtures(
+    'package/json/03-base-install',
+    'json',
+  )
   const babelBaseFxt = fixtures('babel/json/01-base', 'json')
   const eslintBaseFxt = fixtures('eslint/json/01-base', 'json')
   const eslintBaseFxtYaml = fixtures('eslint/yaml/01-base')

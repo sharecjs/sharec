@@ -3,7 +3,10 @@ const { fixtures } = require('testUtils')
 const { clearPackageJson, ereaseMetaData } = require('../remove')
 
 describe('core > package > remove >', () => {
-  const packageJsonBaseRemoveFxt = fixtures('package/04-base-remove', 'json')
+  const packageJsonBaseRemoveFxt = fixtures(
+    'package/json/04-base-remove',
+    'json',
+  )
 
   beforeEach(() => {
     vol.reset()

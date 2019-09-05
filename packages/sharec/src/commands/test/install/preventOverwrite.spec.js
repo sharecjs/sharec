@@ -4,7 +4,7 @@ const install = require('../../install')
 
 describe('commands > install > ovewrite preventing > ', () => {
   const packageJsonPreventOverwriteFxt = fixtures(
-    'package/07-prevent-overwrite',
+    'package/json/07-prevent-overwrite',
     'json',
   )
 

@@ -4,7 +4,7 @@ const install = require('../../install')
 
 describe('commands > install > installed > ', () => {
   const packageJsonResult = fixture(
-    'package/03-base-install/result.json',
+    'package/json/03-base-install/result.json',
     'json',
   )
 

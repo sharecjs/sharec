@@ -9,7 +9,7 @@ const {
 
 describe('core > package > extract >', () => {
   const packageJsonConfigsExtractionFxt = fixture(
-    'package/06-configs-extraction/current.json',
+    'package/json/06-configs-extraction/current.json',
     'json',
   )
 
