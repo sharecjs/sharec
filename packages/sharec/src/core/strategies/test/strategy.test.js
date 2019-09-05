@@ -13,7 +13,7 @@ describe('Strategy', () => {
   const commonPreventOverwriteFxtYaml = fixtures(
     'common/yaml/03-prevent-overwrite',
   )
-  const gitignoreBaseFxt = fixtures('gitignore/01-base')
+  const gitignoreBaseFxt = fixtures('gitignore/lines/01-base')
 
   let strategy
 

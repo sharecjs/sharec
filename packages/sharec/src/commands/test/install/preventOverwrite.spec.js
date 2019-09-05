@@ -2,7 +2,7 @@ const { fixtures } = require('testUtils')
 const { vol } = require('memfs')
 const install = require('../../install')
 
-describe('commands > install > ovewrite preventing > ', () => {
+describe.skip('commands > install > ovewrite preventing > ', () => {
   const packageJsonPreventOverwriteFxt = fixtures(
     'package/json/07-prevent-overwrite',
     'json',

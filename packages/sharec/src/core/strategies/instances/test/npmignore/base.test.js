@@ -2,7 +2,7 @@ const { fixtures } = require('testUtils')
 const { npmIgnoreStrategy } = require('../../npmignore')
 
 describe('strategy > npmignore', () => {
-  const npmignoreBaseFxt = fixtures('npmignore/01-base')
+  const npmignoreBaseFxt = fixtures('npmignore/lines/01-base')
 
   describe('merge', () => {
     it('should correctly merge configs', () => {

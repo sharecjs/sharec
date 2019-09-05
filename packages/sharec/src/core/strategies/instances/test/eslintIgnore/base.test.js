@@ -2,9 +2,9 @@ const { fixtures } = require('testUtils')
 const { eslintIgnoreStrategy } = require('../../eslintignore')
 
 describe('strategy > eslintignore', () => {
-  const eslintignoreBaseFxt = fixtures('eslintignore/01-base')
+  const eslintignoreBaseFxt = fixtures('eslintignore/lines/01-base')
   const eslintignoreArrayLikeFxt = fixtures(
-    'eslintignore/02-array-like',
+    'eslintignore/lines/02-array-like',
     'json',
   )
 

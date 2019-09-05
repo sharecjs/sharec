@@ -2,7 +2,7 @@ const { fixtures } = require('testUtils')
 const { yaspellerStrategy } = require('../../yaspeller')
 
 describe('strategy > yaspeller', () => {
-  const yaspellerBaseFxt = fixtures('yaspeller/01-base', 'json')
+  const yaspellerBaseFxt = fixtures('yaspeller/json/01-base', 'json')
 
   it('should merge yaspeller json configs', () => {
     expect(

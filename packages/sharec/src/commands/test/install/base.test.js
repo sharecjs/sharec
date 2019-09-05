@@ -10,8 +10,8 @@ describe('commands > install > base >', () => {
   const babelBaseFxt = fixtures('babel/json/01-base', 'json')
   const eslintBaseFxt = fixtures('eslint/json/01-base', 'json')
   const eslintBaseFxtYaml = fixtures('eslint/yaml/01-base')
-  const npmignoreBaseFxt = fixtures('npmignore/01-base')
-  const gitignoreBaseFxt = fixtures('gitignore/01-base')
+  const npmignoreBaseFxt = fixtures('npmignore/lines/01-base')
+  const gitignoreBaseFxt = fixtures('gitignore/lines/01-base')
 
   beforeEach(() => {
     vol.reset()

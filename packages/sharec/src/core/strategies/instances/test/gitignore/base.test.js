@@ -2,7 +2,7 @@ const { fixtures } = require('testUtils')
 const { gitIgnoreStrategy } = require('../../gitignore')
 
 describe('strategy > gitignore', () => {
-  const gitignoreBaseFxt = fixtures('gitignore/01-base')
+  const gitignoreBaseFxt = fixtures('gitignore/lines/01-base')
 
   describe('merge', () => {
     it('should correctly merge configs', () => {
