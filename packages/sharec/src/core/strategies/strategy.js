@@ -1,7 +1,7 @@
 const path = require('path')
 const { diffLines } = require('diff')
-const { mergeLists, listsDiff, normalizeList } = require('../../utils/lists')
-const { hashesDiff } = require('../../utils/hashes')
+const { mergeLists, listsDiff } = require('../../utils/lists')
+const { hashesDiff, hashWithoutChangedFields } = require('../../utils/hashes')
 const { transformInputToYAML, toYaml } = require('../../utils/yaml')
 
 /**
@@ -104,7 +104,7 @@ class Strategy {
    * @param {String|Object|Array} rawB
    * @returns {Object|Array}
    */
-  mergeJSON({ current, upcoming }) {
+  mergeJSON({ current, upcoming, cached }) {
     const [a, b] = [current, upcoming].map(config =>
       typeof config === 'string' ? JSON.parse(config) : config,
     )
@@ -116,7 +116,7 @@ class Strategy {
       })
     }
 
-    return this.mergeJSONHashes({ current: a, upcoming: b })
+    return this.mergeJSONHashes({ current: a, upcoming: b, cached })
   }
 
   /**
@@ -124,7 +124,15 @@ class Strategy {
    * @param {Object} b
    * @returns {Object}
    */
-  mergeJSONHashes({ current = {}, upcoming = {} }) {
+  mergeJSONHashes({ current = {}, upcoming = {}, cached }) {
+    if (cached) {
+      // TODO: not sure that works correctly
+      return {
+        ...current,
+        ...hashWithoutChangedFields(upcoming, cached),
+      }
+    }
+
     return {
       ...current,
       ...upcoming,
@@ -137,9 +145,7 @@ class Strategy {
    * @returns {Array}
    */
   mergeJSONLists({ current = [], upcoming = [] }) {
-    const res = mergeLists(current, upcoming)
-
-    return normalizeList(res)
+    return mergeLists(current, upcoming)
   }
 
   /**
@@ -147,11 +153,17 @@ class Strategy {
    * @param {String} rawB
    * @returns {String}
    */
-  mergeYAML({ current, upcoming }) {
-    const [a, b] = transformInputToYAML(current, upcoming)
+  mergeYAML({ current, upcoming, cached }) {
+    const paramsInJSON = transformInputToYAML(current, upcoming)
+
+    if (cached) {
+      paramsInJSON.push(...transformInputToYAML(cached))
+    }
+
     const newConfig = this.mergeJSON({
-      current: a,
-      upcoming: b,
+      current: paramsInJSON[0],
+      upcoming: paramsInJSON[1],
+      cached: paramsInJSON[2] || null,
     })
 
     return toYaml(newConfig)
@@ -264,9 +276,7 @@ class Strategy {
       }
     })
 
-    if (restoredConfig.length === 0) {
-      return ''
-    }
+    if (restoredConfig.length === 0) return ''
 
     return restoredConfig.join('\n')
   }

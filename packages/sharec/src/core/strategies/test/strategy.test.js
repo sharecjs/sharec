@@ -6,6 +6,13 @@ describe('Strategy', () => {
   const commonBaseFxtYaml = fixtures('common/yaml/01-base')
   const commonListsFxt = fixtures('common/json/02-lists', 'json')
   const commonListsFxtYaml = fixtures('common/yaml/02-lists')
+  const commonPreventOverwriteFxt = fixtures(
+    'common/json/03-prevent-overwrite',
+    'json',
+  )
+  const commonPreventOverwriteFxtYaml = fixtures(
+    'common/yaml/03-prevent-overwrite',
+  )
   const gitignoreBaseFxt = fixtures('gitignore/01-base')
 
   let strategy
@@ -151,6 +158,16 @@ describe('Strategy', () => {
         }),
       ).toEqual(commonListsFxt.restored)
     })
+
+    it('should not overwrite properties changed by user', () => {
+      expect(
+        strategy.mergeJSON({
+          current: commonPreventOverwriteFxt.current,
+          upcoming: commonPreventOverwriteFxt.upcoming,
+          cached: commonPreventOverwriteFxt.cached,
+        }),
+      ).toEqual(commonPreventOverwriteFxt.result)
+    })
   })
 
   describe('YAML', () => {
@@ -197,6 +214,16 @@ describe('Strategy', () => {
           upcoming: commonListsFxtYaml.upcoming,
         }),
       ).toEqual(commonListsFxtYaml.restored)
+    })
+
+    it('should not overwrite properties changed by user', () => {
+      expect(
+        strategy.mergeYAML({
+          current: commonPreventOverwriteFxtYaml.current,
+          upcoming: commonPreventOverwriteFxtYaml.upcoming,
+          cached: commonPreventOverwriteFxtYaml.cached,
+        }),
+      ).toEqual(commonPreventOverwriteFxtYaml.result)
     })
   })
 

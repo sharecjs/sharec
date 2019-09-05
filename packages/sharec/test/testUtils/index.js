@@ -43,7 +43,7 @@ function fixture(path, format) {
  *   upcoming: '...',
  *   result: '...',
  *   restored: '...',
- *   cache: '...'
+ *   cached: '...'
  * }
  * @param {String} path Path to fixtures folder from test fixtures folder root
  * @param {String} [format] Fixture format. If it is not passed – returns fixture as
@@ -55,7 +55,7 @@ function fixtures(path, format) {
     arr.find(item => new RegExp(`^${key}`).test(item))
   const fixturesPath = resolve(__dirname, `../fixtures/${path}`)
   const files = readdirSync(fixturesPath)
-  const fixturesKeys = ['current', 'upcoming', 'result', 'restored', 'cache']
+  const fixturesKeys = ['current', 'upcoming', 'result', 'restored', 'cached']
   const fixturesValues = fixturesKeys.map(key => {
     const fixtureFileName = findFixtureFileByKey(files, key)
 
@@ -64,9 +64,7 @@ function fixtures(path, format) {
     const fixturePath = join(fixturesPath, fixtureFileName)
     const file = readFileSync(fixturePath, 'utf8')
 
-    if (format === 'json') {
-      return JSON.parse(file)
-    }
+    if (format === 'json') return JSON.parse(file)
 
     return file
   })
