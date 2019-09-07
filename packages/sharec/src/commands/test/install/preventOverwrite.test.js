@@ -2,7 +2,7 @@ const { fixtures } = require('testUtils')
 const { vol } = require('memfs')
 const install = require('../../install')
 
-describe.skip('commands > install > ovewrite preventing > ', () => {
+describe('commands > install > ovewrite preventing > ', () => {
   const packageJsonPreventOverwriteFxt = fixtures(
     'package/json/07-prevent-overwrite',
     'json',
@@ -16,9 +16,12 @@ describe.skip('commands > install > ovewrite preventing > ', () => {
     expect.assertions(1)
 
     const dir = {
-      '/target/node_modules/.cache/sharec/awesome-config/0.0.0':
-        packageJsonPreventOverwriteFxt.cache,
-      '/target/package.json': packageJsonPreventOverwriteFxt.current,
+      '/target/node_modules/.cache/sharec/awesome-config/0.0.0/package.json': JSON.stringify(
+        packageJsonPreventOverwriteFxt.cached,
+      ),
+      '/target/package.json': JSON.stringify(
+        packageJsonPreventOverwriteFxt.current,
+      ),
       '/configuration-package/package.json': JSON.stringify({
         name: 'awesome-config',
         version: '1.0.0',

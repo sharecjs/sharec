@@ -32,6 +32,7 @@ async function install({
   if (Object.keys(configs).includes('package.json')) {
     await installPackageJson({
       configsPath: fullConfigsPath,
+      configCache: configsCache ? configsCache['package.json'] : null,
       configsName,
       configsVersion,
       targetPath,

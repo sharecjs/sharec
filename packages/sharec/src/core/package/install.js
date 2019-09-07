@@ -14,6 +14,7 @@ const installPackageJson = async ({
   configsPath,
   configsName,
   configsVersion,
+  configCache,
   targetPath,
 }) => {
   const targetPackageJsonPath = path.resolve(targetPath, 'package.json')
@@ -24,11 +25,15 @@ const installPackageJson = async ({
   try {
     const packageJsonPath = path.resolve(configsPath, 'package.json')
     const rawPackageJson = await readFile(packageJsonPath, 'utf8')
+    const cachedPackageJson = configCache ? JSON.parse(configCache) : {}
     const packageJson = JSON.parse(rawPackageJson)
     const newConfigs = extractConfigs(packageJson)
 
     newPackageJson = pipe(
-      injectConfigs(newConfigs),
+      injectConfigs({
+        configs: newConfigs,
+        configsCache: cachedPackageJson,
+      }),
       injectMetaData({
         config: configsName,
         version: configsVersion,
@@ -50,7 +55,7 @@ const installPackageJson = async ({
   )
 }
 
-const injectConfigs = configs => packageJson => {
+const injectConfigs = ({ configs, configsCache }) => packageJson => {
   const updatedPackageJson = { ...packageJson }
 
   Object.keys(configs).forEach(key => {
@@ -61,6 +66,7 @@ const injectConfigs = configs => packageJson => {
         [key]: strategy.merge(key)({
           current: updatedPackageJson[key],
           upcoming: configs[key],
+          cached: configsCache[key],
         }),
       })
     } else {

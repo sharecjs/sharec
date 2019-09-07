@@ -72,18 +72,21 @@ const loadCache = async ({ configsName, configsVersion, targetPath }) => {
     `node_modules/.cache/sharec/${configsName}/${configsVersion}`,
   )
   const cache = {}
-  const targetConfigCache = await flatSearch({
-    path: configsBackupPath,
-  })
 
-  for (const config of targetConfigCache) {
-    const fullConfigCachePath = path.join(configsBackupPath, config)
-    const configSource = await readFile(fullConfigCachePath, 'utf8')
-
-    Object.assign(cache, {
-      [config]: configSource,
+  try {
+    const targetConfigCache = await flatSearch({
+      path: configsBackupPath,
     })
-  }
+
+    for (const config of targetConfigCache) {
+      const fullConfigCachePath = path.join(configsBackupPath, config)
+      const configSource = await readFile(fullConfigCachePath, 'utf8')
+
+      Object.assign(cache, {
+        [config]: configSource,
+      })
+    }
+  } catch (err) {}
 
   return cache
 }

@@ -3,7 +3,7 @@
     "test": "current test script"
   },
   "sharec": {
-    "version": "0.0.0",
-    "config": "awesome-config"
+    "config": "awesome-config",
+    "version": "0.0.0"
   }
 }

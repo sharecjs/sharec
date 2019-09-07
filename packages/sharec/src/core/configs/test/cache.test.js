@@ -92,6 +92,17 @@ describe('core > configs > cache >', () => {
       })
     })
 
-    it('should return null if configs with given name and version were not cached', async () => {})
+    it('should return empty object if configs with given name and version were not cached', async () => {
+      const dir = {}
+      vol.fromJSON(dir, '/')
+
+      const cache = await loadCache({
+        targetPath: '/target',
+        configsName: 'awesome-config',
+        configsVersion: '1.0.0',
+      })
+
+      expect(cache).toEqual({})
+    })
   })
 })
