@@ -25,8 +25,11 @@ describe('core > package > install > scripts override >', () => {
     vol.fromJSON(dir)
 
     await installPackageJson({
+      upcomingMeta: {
+        config: 'awesome-config',
+        version: '1.0.0',
+      },
       configsPath: '/configuration-package',
-      configsVersion: '1.0.0',
       targetPath: '/target',
     })
 

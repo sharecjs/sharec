@@ -2,6 +2,7 @@ const path = require('path')
 const { pipe } = require('../../utils')
 const { readFile, writeFile } = require('../../utils/std').fs
 const { resolveConfigStrategy } = require('../strategies/resolve')
+const { cacheConfig, loadConfigCache } = require('../cache')
 const { extractConfigs } = require('./extract')
 
 /**
@@ -11,20 +12,26 @@ const { extractConfigs } = require('./extract')
  */
 
 const installPackageJson = async ({
+  installedMeta,
+  upcomingMeta,
   configsPath,
-  configsName,
-  configsVersion,
-  configCache,
   targetPath,
 }) => {
+  const configCache = installedMeta
+    ? await loadConfigCache({
+        configsMeta: installedMeta,
+        configPath: 'package.json',
+        targetPath,
+      })
+    : null
   const targetPackageJsonPath = path.resolve(targetPath, 'package.json')
   const rawTargetPackageJson = await readFile(targetPackageJsonPath)
   const targetPackageJson = JSON.parse(rawTargetPackageJson)
+  const packageJsonPath = path.resolve(configsPath, 'package.json')
+  const rawPackageJson = await readFile(packageJsonPath, 'utf8')
   let newPackageJson = { ...targetPackageJson }
 
   try {
-    const packageJsonPath = path.resolve(configsPath, 'package.json')
-    const rawPackageJson = await readFile(packageJsonPath, 'utf8')
     const cachedPackageJson = configCache ? JSON.parse(configCache) : {}
     const packageJson = JSON.parse(rawPackageJson)
     const newConfigs = extractConfigs(packageJson)
@@ -34,18 +41,10 @@ const installPackageJson = async ({
         configs: newConfigs,
         configsCache: cachedPackageJson,
       }),
-      injectMetaData({
-        config: configsName,
-        version: configsVersion,
-      }),
+      injectMetaData(upcomingMeta),
     )(targetPackageJson)
   } catch (err) {
-    newPackageJson = pipe(
-      injectMetaData({
-        config: configsName,
-        version: configsVersion,
-      }),
-    )(targetPackageJson)
+    newPackageJson = pipe(injectMetaData(upcomingMeta))(targetPackageJson)
   }
 
   await writeFile(
@@ -53,6 +52,12 @@ const installPackageJson = async ({
     JSON.stringify(newPackageJson, null, 2),
     'utf8',
   )
+  await cacheConfig({
+    configsMeta: upcomingMeta,
+    configPath: 'package.json',
+    configSource: rawPackageJson,
+    targetPath,
+  })
 }
 
 const injectConfigs = ({ configs, configsCache }) => packageJson => {

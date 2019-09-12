@@ -34,9 +34,11 @@ describe('tasks > install > cache >', () => {
     vol.fromJSON(dir, '/')
 
     await install({
+      upcomingMeta: {
+        config: 'awesome-config',
+        version: '1.0.0',
+      },
       configsPath: '/configuration-package',
-      configsVersion: '1.0.0',
-      configsName: 'awesome-config',
       targetPath: '/target',
     })
 

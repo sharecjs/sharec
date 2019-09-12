@@ -1,16 +1,7 @@
-const { fixtures } = require('testUtils')
 const { vol } = require('memfs')
 const install = require('../../install')
 
 describe('tasks > install > errors >', () => {
-  const packageInstallJsonBaseFxt = fixtures(
-    'package/json/03-base-install',
-    'json',
-  )
-  const babelBaseFxt = fixtures('babel/json/01-base', 'json')
-  const eslintBaseFxt = fixtures('eslint/json/01-base', 'json')
-  const eslintBaseFxtYaml = fixtures('eslint/yaml/01-base')
-
   beforeEach(() => {
     vol.reset()
   })
@@ -25,8 +16,11 @@ describe('tasks > install > errors >', () => {
 
     try {
       await install({
+        upcomingMeta: {
+          config: 'awesome-config',
+          version: '1.0.0',
+        },
         configsPath: '/configuration-package',
-        configsName: 'awesome-config',
         targetPath: '/target',
       })
     } catch (err) {

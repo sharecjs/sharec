@@ -2,7 +2,8 @@ const path = require('path')
 const { diffLines } = require('diff')
 const { mergeLists, listsDiff } = require('../../utils/lists')
 const { hashesDiff, hashWithoutChangedFields } = require('../../utils/hashes')
-const { transformInputToYAML, toYaml } = require('../../utils/yaml')
+const { transformJSONInput } = require('../../utils/json')
+const { transformYAMLInput, toYaml } = require('../../utils/yaml')
 
 /**
  * @typedef {Object} Matchers
@@ -105,9 +106,7 @@ class Strategy {
    * @returns {Object|Array}
    */
   mergeJSON({ current, upcoming, cached }) {
-    const [a, b] = [current, upcoming].map(config =>
-      typeof config === 'string' ? JSON.parse(config) : config,
-    )
+    const [a, b, c] = transformJSONInput(current, upcoming, cached)
 
     if (Array.isArray(a) || Array.isArray(b)) {
       return this.mergeJSONLists({
@@ -116,7 +115,11 @@ class Strategy {
       })
     }
 
-    return this.mergeJSONHashes({ current: a, upcoming: b, cached })
+    return this.mergeJSONHashes({
+      current: a,
+      upcoming: b,
+      cached: c,
+    })
   }
 
   /**
@@ -126,7 +129,6 @@ class Strategy {
    */
   mergeJSONHashes({ current = {}, upcoming = {}, cached }) {
     if (cached) {
-      // TODO: not sure that works correctly
       return {
         ...current,
         ...hashWithoutChangedFields(upcoming, cached),
@@ -154,10 +156,10 @@ class Strategy {
    * @returns {String}
    */
   mergeYAML({ current, upcoming, cached }) {
-    const paramsInJSON = transformInputToYAML(current, upcoming)
+    const paramsInJSON = transformYAMLInput(current, upcoming)
 
     if (cached) {
-      paramsInJSON.push(...transformInputToYAML(cached))
+      paramsInJSON.push(...transformYAMLInput(cached))
     }
 
     const newConfig = this.mergeJSON({
@@ -208,10 +210,9 @@ class Strategy {
    * @param {Object|Array|String} rawB
    * @returns {Object|Array}
    */
-  unapplyJSON({ current, upcoming }) {
-    const [a, b] = [current, upcoming].map(config =>
-      typeof config === 'string' ? JSON.parse(config) : config,
-    )
+  unapplyJSON({ current, upcoming, cached }) {
+    // TODO: do it with cache
+    const [a, b, c] = transformJSONInput(current, upcoming, cached)
 
     if (Array.isArray(a) && Array.isArray(b)) {
       return this.unapplyJSONLists({
@@ -250,7 +251,7 @@ class Strategy {
    * @returns {String}
    */
   unapplyYAML({ current, upcoming }) {
-    const [a, b] = transformInputToYAML(current, upcoming)
+    const [a, b] = transformYAMLInput(current, upcoming)
     const clearedConfig = this.unapplyJSON({
       current: a,
       upcoming: b,

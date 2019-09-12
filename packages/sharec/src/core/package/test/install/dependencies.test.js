@@ -25,9 +25,11 @@ describe('core > package > install > dependencies >', () => {
     vol.fromJSON(dir)
 
     await installPackageJson({
-      configsName: 'awesome-config',
+      upcomingMeta: {
+        config: 'awesome-config',
+        version: '1.0.0',
+      },
       configsPath: '/configuration-package',
-      configsVersion: '1.0.0',
       targetPath: '/target',
     })
 

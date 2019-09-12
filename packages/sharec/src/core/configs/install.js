@@ -2,24 +2,28 @@ const chalk = require('chalk')
 const path = require('path')
 const { readFile, writeFile } = require('../../utils/std').fs
 const { safeMakeDir } = require('../../utils/fs')
+const { cacheConfig, loadConfigCache } = require('../cache')
 const { resolveConfigStrategy } = require('../strategies/resolve')
 
-/**
- * @param {String} options.targetPath
- * @param {String} options.configPath
- * @param {String} options.configSource
- * @param {String} [options.configCache]
- * @returns {Promise<void>}
- */
 const installConfig = async ({
   targetPath,
+  configsPath,
   configPath,
-  configSource,
-  configCache,
+  installedMeta,
+  upcomingMeta,
 }) => {
+  const configCache = installedMeta
+    ? await loadConfigCache({
+        configsMeta: installedMeta,
+        configPath,
+        targetPath,
+      })
+    : null
   const targetStrategy = resolveConfigStrategy(configPath)
+  const upcomingConfigPath = path.join(configsPath, configPath)
   const localConfigPath = path.join(targetPath, configPath)
   const localConfigDirName = path.dirname(localConfigPath)
+  const upcomingConfig = await readFile(upcomingConfigPath, 'utf8')
   let newConfig = null
   let localConfig = null
 
@@ -31,8 +35,8 @@ const installConfig = async ({
     try {
       newConfig = targetStrategy.merge(configPath)({
         current: localConfig,
-        upcoming: configSource,
-        cache: configCache,
+        upcoming: upcomingConfig,
+        cached: configCache,
       })
     } catch (err) {
       const errorMessage = [
@@ -45,7 +49,7 @@ const installConfig = async ({
       console.error(errorMessage.join('\n\t'))
     }
   } else {
-    newConfig = configSource
+    newConfig = upcomingConfig
   }
 
   await safeMakeDir(localConfigDirName)
@@ -56,6 +60,12 @@ const installConfig = async ({
       : newConfig,
     'utf8',
   )
+  await cacheConfig({
+    configsMeta: upcomingMeta,
+    configSource: upcomingConfig,
+    configPath,
+    targetPath,
+  })
 }
 
 module.exports = {

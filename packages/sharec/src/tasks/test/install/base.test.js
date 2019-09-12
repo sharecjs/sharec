@@ -40,10 +40,12 @@ describe('tasks > install > base >', () => {
     vol.fromJSON(dir, '/')
 
     await install({
+      upcomingMeta: {
+        version: '1.0.0',
+        config: 'awesome-config',
+      },
       configsPath: '/configuration-package',
       targetPath: '/target',
-      configsVersion: '1.0.0',
-      configsName: 'awesome-config',
     })
 
     expect(vol.readFileSync('/target/.editorconfig', 'utf8')).toEqual('bar')

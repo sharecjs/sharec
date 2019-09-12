@@ -2,9 +2,10 @@ const { vol } = require('memfs')
 const pick = require('lodash/pick')
 const { fixture } = require('testUtils')
 const {
-  getCurrentPackageJsonMetaData,
   extractConfigs,
   extractMetaData,
+  getCurrentPackageJsonMetaData,
+  getUpcomingPackageJsonMetaData,
 } = require('../extract')
 
 describe('core > package > extract >', () => {
@@ -15,6 +16,39 @@ describe('core > package > extract >', () => {
 
   beforeEach(() => {
     vol.reset()
+  })
+
+  describe('extractConfigs', () => {
+    it('should return all configs from package.json except dependencies, sharec meta-data and other standard package fields', () => {
+      const extractedConfigs = extractConfigs(packageJsonConfigsExtractionFxt)
+
+      expect(extractedConfigs).toEqual(
+        pick(packageJsonConfigsExtractionFxt, [
+          'scripts',
+          'lint-staged',
+          'husky',
+          'config',
+          'prettier',
+          'eslintConfig',
+          'eslintIgnore',
+          'devDependencies',
+        ]),
+      )
+    })
+  })
+
+  describe('extractMetaData', () => {
+    it('should return sharec meta-data', () => {
+      const extractedMetaData = extractMetaData(packageJsonConfigsExtractionFxt)
+
+      expect(extractedMetaData).toEqual(packageJsonConfigsExtractionFxt.sharec)
+    })
+
+    it('should return null if sharec meta-data is not exists', () => {
+      const extractedMetaData = extractMetaData({})
+
+      expect(extractedMetaData).toBeNull()
+    })
   })
 
   describe('getCurrentPackageJsonMetaData', () => {
@@ -55,36 +89,29 @@ describe('core > package > extract >', () => {
     })
   })
 
-  describe('extractConfigs', () => {
-    it('should return all configs from package.json except dependencies, sharec meta-data and other standard package fields', () => {
-      const extractedConfigs = extractConfigs(packageJsonConfigsExtractionFxt)
+  describe('getUpcomingPackageJsonMetaData', () => {
+    it('should extract upcoming configuration package meta data', async () => {
+      expect.assertions(1)
 
-      expect(extractedConfigs).toEqual(
-        pick(packageJsonConfigsExtractionFxt, [
-          'scripts',
-          'lint-staged',
-          'husky',
-          'config',
-          'prettier',
-          'eslintConfig',
-          'eslintIgnore',
-          'devDependencies',
-        ]),
-      )
-    })
-  })
+      const metaData = {
+        version: '1.0.0',
+        name: 'awesome-config',
+      }
+      const dir = {
+        '/configuration-package/package.json': JSON.stringify(
+          metaData,
+          null,
+          2,
+        ),
+      }
+      vol.fromJSON(dir, '/')
 
-  describe('extractMetaData', () => {
-    it('should return sharec meta-data', () => {
-      const extractedMetaData = extractMetaData(packageJsonConfigsExtractionFxt)
+      const res = await getUpcomingPackageJsonMetaData('/configuration-package')
 
-      expect(extractedMetaData).toEqual(packageJsonConfigsExtractionFxt.sharec)
-    })
-
-    it('should return null if sharec meta-data is not exists', () => {
-      const extractedMetaData = extractMetaData({})
-
-      expect(extractedMetaData).toBeNull()
+      expect(res).toEqual({
+        config: 'awesome-config',
+        version: '1.0.0',
+      })
     })
   })
 })

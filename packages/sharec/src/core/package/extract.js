@@ -28,14 +28,6 @@ const IGNORED_FIELDS = [
  * @property {String} config
  */
 
-const getCurrentPackageJsonMetaData = async targetPath => {
-  const targetPackageJsonPath = path.resolve(targetPath, 'package.json')
-  const rawTargetPackageJson = await readFile(targetPackageJsonPath, 'utf8')
-  const targetPackageJson = JSON.parse(rawTargetPackageJson)
-
-  return extractMetaData(targetPackageJson)
-}
-
 const extractConfigs = packageJson => omit(packageJson, IGNORED_FIELDS)
 
 /**
@@ -48,8 +40,42 @@ const extractMetaData = packageJson => {
   return pick(packageJson.sharec, ['config', 'version'])
 }
 
+/**
+ * @param {String} targetPath
+ * @returns {MetaData|null}
+ */
+const getCurrentPackageJsonMetaData = async targetPath => {
+  const targetPackageJsonPath = path.resolve(targetPath, 'package.json')
+  const rawTargetPackageJson = await readFile(targetPackageJsonPath, 'utf8')
+  const targetPackageJson = JSON.parse(rawTargetPackageJson)
+
+  return extractMetaData(targetPackageJson)
+}
+
+/**
+ * @param {String} configsPath
+ * @returns {MetaData}
+ */
+const getUpcomingPackageJsonMetaData = async configsPath => {
+  const upcomingConfigsPackageJsonPath = path.resolve(
+    configsPath,
+    'package.json',
+  )
+  const rawUpcomingPackageJson = await readFile(
+    upcomingConfigsPackageJsonPath,
+    'utf8',
+  )
+  const upcomingPackageJson = JSON.parse(rawUpcomingPackageJson)
+
+  return {
+    config: upcomingPackageJson.name,
+    version: upcomingPackageJson.version,
+  }
+}
+
 module.exports = {
-  getCurrentPackageJsonMetaData,
   extractConfigs,
   extractMetaData,
+  getCurrentPackageJsonMetaData,
+  getUpcomingPackageJsonMetaData,
 }

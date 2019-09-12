@@ -29,9 +29,11 @@ describe('core > package > install >', () => {
 
       await installPackageJson({
         configsPath: '/configs',
-        configsName: 'awesome-config',
         targetPath: '/target',
-        configsVersion: '1.0.0',
+        upcomingMeta: {
+          config: 'awesome-config',
+          version: '1.0.0',
+        },
       })
 
       expect(

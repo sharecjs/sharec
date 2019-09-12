@@ -15,15 +15,22 @@ describe('processors > configs >', () => {
       expect.assertions(1)
 
       const dir = {
+        '/configuration-package/configs/.eslintrc': JSON.stringify(
+          eslintBaseFxt.upcoming,
+        ),
         '/target/.eslintrc': JSON.stringify(eslintBaseFxt.current),
       }
 
       vol.fromJSON(dir, '/')
 
       await installConfig({
+        upcomingMeta: {
+          config: 'awesome-config',
+          version: '1.0.0',
+        },
         targetPath: '/target',
         configPath: '.eslintrc',
-        configSource: JSON.stringify(eslintBaseFxt.upcoming),
+        configsPath: '/configuration-package/configs',
       })
 
       expect(JSON.parse(vol.readFileSync('/target/.eslintrc', 'utf8'))).toEqual(
@@ -35,14 +42,20 @@ describe('processors > configs >', () => {
       expect.assertions(1)
 
       const dir = {
+        '/configuration-package/configs/.eslintrc.yaml':
+          eslintBaseFxtYaml.upcoming,
         '/target/.eslintrc.yaml': eslintBaseFxtYaml.current,
       }
       vol.fromJSON(dir, '/')
 
       await installConfig({
+        upcomingMeta: {
+          config: 'awesome-config',
+          version: '1.0.0',
+        },
         targetPath: '/target',
         configPath: '.eslintrc.yaml',
-        configSource: eslintBaseFxtYaml.upcoming,
+        configsPath: '/configuration-package/configs',
       })
 
       expect(vol.readFileSync('/target/.eslintrc.yaml', 'utf8')).toEqual(
@@ -53,14 +66,20 @@ describe('processors > configs >', () => {
     it('should copy all non-mergeable configs', async () => {
       expect.assertions(1)
 
-      const dir = {}
+      const dir = {
+        '/configuration-package/configs/.editorconfig': 'bar',
+      }
 
       vol.fromJSON(dir, '/')
 
       await installConfig({
+        upcomingMeta: {
+          config: 'awesome-config',
+          version: '1.0.0',
+        },
         targetPath: '/target',
         configPath: '.editorconfig',
-        configSource: 'bar',
+        configsPath: '/configuration-package/configs',
       })
 
       const res = await vol.readFileSync('/target/.editorconfig', 'utf8')
@@ -68,16 +87,22 @@ describe('processors > configs >', () => {
       expect(res).toEqual('bar')
     })
 
-    it('should correctly process configs with mixed file structure', async () => {
+    it('should correctly process nested configs', async () => {
       expect.assertions(1)
 
-      const dir = {}
+      const dir = {
+        '/configuration-package/configs/foo/bar/.editorconfig': 'bar',
+      }
       vol.fromJSON(dir, '/')
 
       await installConfig({
+        upcomingMeta: {
+          config: 'awesome-config',
+          version: '1.0.0',
+        },
         targetPath: '/target',
         configPath: 'foo/bar/.editorconfig',
-        configSource: 'bar',
+        configsPath: '/configuration-package/configs',
       })
 
       expect(vol.readFileSync('/target/foo/bar/.editorconfig', 'utf8')).toEqual(
