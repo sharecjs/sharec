@@ -8,11 +8,12 @@ const { _, ...options } = minimist(process.argv.slice(2))
   if (!process.env.PWD || process.env.PWD === process.env.INIT_CWD) return
 
   const [command = 'install'] = _
+  const isVersionCommand = command === 'version' || options.v || options.version
 
   await sharec({
     configsPath: process.env.PWD,
     targetPath: process.env.INIT_CWD,
-    command,
+    command: isVersionCommand ? 'version' : command,
     options,
   })
 })()

@@ -1,6 +1,11 @@
-const { install, remove } = require('./commands')
+const { install, remove, version } = require('./commands')
 
 async function sharec({ configsPath, targetPath, command, options }) {
+  if (command === 'version') {
+    await version(configsPath)
+    return
+  }
+
   if (!configsPath || configsPath === targetPath) return
 
   switch (command) {
