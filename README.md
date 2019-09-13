@@ -19,7 +19,7 @@ projects, keep your code up to date and starts new projects in one command.
 ```shell
 npm add sharec
 ```
-3. Add `postinstall` and `preuninstall` scripts to root `package.json` file:
+3. Add `postinstall` script to root `package.json` file:
 ```json
 "scripts": {
   "postinstall": "sharec install"
