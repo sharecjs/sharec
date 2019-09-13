@@ -82,7 +82,7 @@ describe('utils > fs >', () => {
 
       const res = await flatSearch({
         path: '/',
-        pattern: /(^\.[a-z0-9]+|\/\.[a-z0-9]+)/i,
+        pattern: /(^\.[a-z0-9]+|\/\.[a-z0-9]|\\\.[a-z0-9]+)/i,
       })
 
       expect(res).toEqual(['.bar', 'baz/baz/.foo', 'foo/.foo'])
