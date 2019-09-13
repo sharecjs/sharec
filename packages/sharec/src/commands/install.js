@@ -29,6 +29,19 @@ async function install({ configsPath, targetPath, options = {} }) {
     spinner.succeed('this version of configs already injected')
     return
   }
+
+  if (installedMeta && !isMetaMatched) {
+    spinner.frame('removing previous insatlled configuration...')
+
+    await removeTask({
+      configsPath,
+      targetPath,
+    })
+
+    spinner.succeed('previously insatalled configuration removed!')
+    return
+  }
+
   spinner.frame('applying configuration...')
 
   try {

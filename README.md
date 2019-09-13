@@ -22,8 +22,7 @@ npm add sharec
 3. Add `postinstall` and `preuninstall` scripts to root `package.json` file:
 ```json
 "scripts": {
-  "postinstall": "sharec install",
-  "preuninstall": "sharec remove"
+  "postinstall": "sharec install"
 }
 ```
 4. Create `configs` directory.

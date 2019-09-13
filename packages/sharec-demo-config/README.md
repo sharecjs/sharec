@@ -26,8 +26,7 @@ Install `sharec` as **dependency**, not as devDependecy, it is very important!
 ```json
 {
   "scripts": {
-    "postinstall": "sharec install",
-    "preuninstall": "sharec remove"
+    "postinstall": "sharec install"
   }
 }
 ```
