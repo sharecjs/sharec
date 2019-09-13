@@ -6,6 +6,7 @@ const {
   extractMetaData,
   getCurrentPackageJsonMetaData,
   getUpcomingPackageJsonMetaData,
+  isTargetDependantOfSharec,
 } = require('../extract')
 
 describe('core > package > extract >', () => {
@@ -112,6 +113,55 @@ describe('core > package > extract >', () => {
         config: 'awesome-config',
         version: '1.0.0',
       })
+    })
+  })
+
+  describe('isTargetDependantOfSharec', () => {
+    it('should return true is target has sharec in dependencies', async () => {
+      expect.assertions(1)
+
+      const dir = {
+        '/target/package.json': JSON.stringify({
+          dependencies: {
+            sharec: '1.0.0'
+          }
+        })
+      }
+      vol.fromJSON(dir, '/')
+
+      const res = await isTargetDependantOfSharec('/target')
+
+      expect(res).toBe(true)
+    })
+
+    it('should return false is target has not sharec in dependencies', async () => {
+      expect.assertions(1)
+
+      const dir = {
+        '/target/package.json': JSON.stringify({
+          dependencies: {
+          }
+        })
+      }
+      vol.fromJSON(dir, '/')
+
+      const res = await isTargetDependantOfSharec('/target')
+
+      expect(res).toBe(false)
+    })
+
+    it('should return false is target has not any dependencies', async () => {
+      expect.assertions(1)
+
+      const dir = {
+        '/target/package.json': JSON.stringify({
+                  })
+      }
+      vol.fromJSON(dir, '/')
+
+      const res = await isTargetDependantOfSharec('/target')
+
+      expect(res).toBe(false)
     })
   })
 })
