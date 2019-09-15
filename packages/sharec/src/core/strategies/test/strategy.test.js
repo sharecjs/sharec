@@ -177,7 +177,7 @@ describe('Strategy', () => {
           current: commonBaseFxtYaml.current,
           upcoming: commonBaseFxtYaml.upcoming,
         }),
-      ).toEqual(commonBaseFxtYaml.result)
+      ).toWraplessEqual(commonBaseFxtYaml.result)
     })
 
     it('should merge lists', () => {
@@ -186,7 +186,7 @@ describe('Strategy', () => {
           current: commonListsFxtYaml.current,
           upcoming: commonListsFxtYaml.upcoming,
         }),
-      ).toEqual(commonListsFxtYaml.result)
+      ).toWraplessEqual(commonListsFxtYaml.result)
     })
 
     it('should return YAML string without applied properties from second YAML', () => {
@@ -195,7 +195,7 @@ describe('Strategy', () => {
           current: commonBaseFxtYaml.result,
           upcoming: commonBaseFxtYaml.upcoming,
         }),
-      ).toEqual(commonBaseFxtYaml.restored)
+      ).toWraplessEqual(commonBaseFxtYaml.restored)
     })
 
     it('should return empty string if YAML string have not difference', () => {
@@ -213,7 +213,7 @@ describe('Strategy', () => {
           current: commonListsFxtYaml.result,
           upcoming: commonListsFxtYaml.upcoming,
         }),
-      ).toEqual(commonListsFxtYaml.restored)
+      ).toWraplessEqual(commonListsFxtYaml.restored)
     })
 
     it('should not overwrite properties changed by user', () => {
@@ -223,7 +223,7 @@ describe('Strategy', () => {
           upcoming: commonPreventOverwriteFxtYaml.upcoming,
           cached: commonPreventOverwriteFxtYaml.cached,
         }),
-      ).toEqual(commonPreventOverwriteFxtYaml.result)
+      ).toWraplessEqual(commonPreventOverwriteFxtYaml.result)
     })
   })
 
@@ -260,13 +260,13 @@ describe('Strategy', () => {
           current: commonBaseFxtYaml.current,
           upcoming: commonBaseFxtYaml.upcoming,
         }),
-      ).toEqual(commonBaseFxtYaml.result)
+      ).toWraplessEqual(commonBaseFxtYaml.result)
       expect(
         strategy.merge('common_01.yaml')({
           current: commonBaseFxtYaml.current,
           upcoming: commonBaseFxtYaml.upcoming,
         }),
-      ).toEqual(commonBaseFxtYaml.result)
+      ).toWraplessEqual(commonBaseFxtYaml.result)
     })
 
     it('should automatically determine and apply unapply method to given file', () => {
@@ -281,7 +281,7 @@ describe('Strategy', () => {
           current: commonBaseFxtYaml.result,
           upcoming: commonBaseFxtYaml.upcoming,
         }),
-      ).toEqual(commonBaseFxtYaml.restored)
+      ).toWraplessEqual(commonBaseFxtYaml.restored)
       expect(
         strategy.unapply('common.txt')({
           current: gitignoreBaseFxt.result,

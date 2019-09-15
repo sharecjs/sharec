@@ -58,7 +58,7 @@ describe('processors > configs >', () => {
         configsPath: '/configuration-package/configs',
       })
 
-      expect(vol.readFileSync('/target/.eslintrc.yaml', 'utf8')).toEqual(
+      expect(vol.readFileSync('/target/.eslintrc.yaml', 'utf8')).toWraplessEqual(
         eslintBaseFxtYaml.result,
       )
     })

@@ -42,7 +42,7 @@ describe('strategy > common > ', () => {
             current: commonBaseFxtYaml.current,
             upcoming: commonBaseFxtYaml.upcoming,
           }),
-        ).toEqual(commonBaseFxtYaml.result)
+        ).toWraplessEqual(commonBaseFxtYaml.result)
       })
       it('should automatically merge configs with method determination', () => {
         expect(
@@ -50,7 +50,7 @@ describe('strategy > common > ', () => {
             current: commonBaseFxtYaml.current,
             upcoming: commonBaseFxtYaml.upcoming,
           }),
-        ).toEqual(commonBaseFxtYaml.result)
+        ).toWraplessEqual(commonBaseFxtYaml.result)
       })
     })
   })
@@ -83,7 +83,7 @@ describe('strategy > common > ', () => {
             current: commonBaseFxtYaml.result,
             upcoming: commonBaseFxtYaml.upcoming,
           }),
-        ).toEqual(commonBaseFxtYaml.restored)
+        ).toWraplessEqual(commonBaseFxtYaml.restored)
       })
 
       it('should automatically merge configs with method determination', () => {
@@ -92,7 +92,7 @@ describe('strategy > common > ', () => {
             current: commonBaseFxtYaml.result,
             upcoming: commonBaseFxtYaml.upcoming,
           }),
-        ).toEqual(commonBaseFxtYaml.restored)
+        ).toWraplessEqual(commonBaseFxtYaml.restored)
       })
     })
   })

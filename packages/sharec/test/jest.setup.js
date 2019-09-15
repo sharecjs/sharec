@@ -1,5 +1,5 @@
 jest.mock('utils/std', () => {
-  const stdUtils = require.requireActual('./src/utils/std')
+  const stdUtils = require.requireActual('../src/utils/std')
   const fs = require('memfs').promises
 
   stdUtils.fs = {

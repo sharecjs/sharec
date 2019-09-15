@@ -29,12 +29,12 @@ describe('utils > fs >', () => {
 
   describe('flatSearch', () => {
     const dir = {
-      '/.bar': 'bar',
-      '/foo/.foo': 'foo',
-      '/baz/baz/.foo': 'foo',
-      '/baz/baz/bar.txt': 'bar',
-      '/baz/baz/baz.txt': 'baz',
-      '/empty': {},
+      '.bar': 'bar',
+      'foo/.foo': 'foo',
+      'baz/baz/.foo': 'foo',
+      'baz/baz/bar.txt': 'bar',
+      'baz/baz/baz.txt': 'baz',
+      'empty/': {},
     }
 
     beforeEach(() => {
@@ -42,19 +42,14 @@ describe('utils > fs >', () => {
     })
 
     it('should find all files paths in target dir', async () => {
-      expect.assertions(1)
+      expect.assertions(2)
 
       const res = await flatSearch({
         path: '/',
       })
 
-      expect(res).toEqual([
-        '.bar',
-        'baz/baz/.foo',
-        'baz/baz/bar.txt',
-        'baz/baz/baz.txt',
-        'foo/.foo',
-      ])
+      expect(res).toHaveLength(5)
+      expect(res).toEqual(expect.arrayContaining(['.bar', 'foo/.foo', 'baz/baz/baz.txt', 'baz/baz/bar.txt', 'baz/baz/.foo']))
     })
 
     it('should find all files paths in target dir which to equals to root', async () => {
@@ -74,18 +69,21 @@ describe('utils > fs >', () => {
         path: '/empty',
       })
 
-      expect(res).toEqual([])
+      expect(res).toHaveLength(0)
     })
 
     it('should find all files paths in target dir by given pattern', async () => {
-      expect.assertions(1)
+      expect.assertions(4)
 
       const res = await flatSearch({
         path: '/',
         pattern: /(^\.[a-z0-9]+|\/\.[a-z0-9]|\\\.[a-z0-9]+)/i,
       })
 
-      expect(res).toEqual(['.bar', 'baz/baz/.foo', 'foo/.foo'])
+      expect(res).toHaveLength(3)
+      expect(res).toContain('.bar')
+      expect(res).toContain('baz/baz/.foo')
+      expect(res).toContain('foo/.foo')
     })
   })
 })

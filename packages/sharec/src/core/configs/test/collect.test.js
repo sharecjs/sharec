@@ -20,10 +20,10 @@ describe('core > collector >', () => {
 
       const paths = await collectConfigsPaths('/configs')
 
-      expect(paths).toEqual([
+      expect(paths).toEqual(expect.arrayContaining([
         '.eslintrc',
         'package.json'
-      ])
+      ]))
     })
   })
 })

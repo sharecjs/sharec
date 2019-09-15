@@ -1,6 +1,8 @@
 const { fixtures } = require('testUtils')
 const { eslintStrategy } = require('../../eslint')
 
+const diff = require('diff')
+
 describe('strategy > eslint', () => {
   describe('JSON', () => {
     const eslintBaseFxt = fixtures('eslint/json/01-base', 'json')
@@ -33,7 +35,7 @@ describe('strategy > eslint', () => {
           current: eslintBaseFxt.current,
           upcoming: eslintBaseFxt.upcoming,
         }),
-      ).toEqual(eslintBaseFxt.result)
+      ).toWraplessEqual(eslintBaseFxt.result)
     })
 
     it('should unapply configs', () => {
@@ -42,7 +44,7 @@ describe('strategy > eslint', () => {
           current: eslintBaseFxt.result,
           upcoming: eslintBaseFxt.upcoming,
         }),
-      ).toEqual(eslintBaseFxt.restored)
+      ).toWraplessEqual(eslintBaseFxt.restored)
     })
   })
 })

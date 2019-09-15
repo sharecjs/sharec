@@ -27,8 +27,14 @@ const safeMakeDir = async path => {
  * @returns {String[]}
  */
 const flatSearch = async ({ path, pattern, root = true }) => {
-  const filesList = await readDir(path)
   const result = []
+  let filesList = []
+
+  try {
+    filesList = await readDir(path)
+  } catch (err) {
+    return result
+  }
 
   if (filesList.length === 0) {
     return result
@@ -57,10 +63,8 @@ const flatSearch = async ({ path, pattern, root = true }) => {
 
   if (!root) return filteredResult
 
-  return normalizePathSlashes(
-    filteredResult.map(file =>
-      file.replace(new RegExp(`^${path}`), '').replace(/^(\/|\\)/, ''),
-    ),
+  return normalizePathSlashes(filteredResult).map(file =>
+    file.replace(new RegExp(`^${path}`), '').replace(/^\//, ''),
   )
 }
 
