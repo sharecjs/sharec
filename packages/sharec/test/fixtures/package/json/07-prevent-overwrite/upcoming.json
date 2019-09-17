@@ -1,0 +1,6 @@
+{
+  "scripts": {
+    "start": "start script",
+    "test": "new test script"
+  }
+}

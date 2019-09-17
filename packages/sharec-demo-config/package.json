@@ -3,8 +3,7 @@
   "version": "2.9.0-beta",
   "description": "Sharec example config for core functionality demonstration",
   "scripts": {
-    "postinstall": "sharec install",
-    "preuninstall": "sharec remove"
+    "postinstall": "sharec install"
   },
   "homepage": "https://github.com/lamartire/sharec/tree/master/packages/sharec-demo-config",
   "repository": {

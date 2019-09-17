@@ -1,0 +1,11 @@
+{
+  "ignore": ["*.babelrc"],
+  "presets": ["stage-2"],
+  "plugins": ["lodash"],
+  "env": {
+    "test": {
+      "presets": ["env"],
+      "plugins": ["dynamic-import-node"]
+    }
+  }
+}

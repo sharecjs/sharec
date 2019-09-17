@@ -1,16 +1,31 @@
 const chalk = require('chalk')
 const path = require('path')
-const { readFile, writeFile, makeDir } = require('../../utils/fs')
+const { readFile, writeFile } = require('../../utils/std').fs
+const { safeMakeDir } = require('../../utils/fs')
+const { cacheConfig, loadConfigCache } = require('../cache')
 const { resolveConfigStrategy } = require('../strategies/resolve')
 
-const installConfig = async ({ configsPath, targetPath, filePath }) => {
-  const targetStrategy = resolveConfigStrategy(filePath)
-  const localConfigPath = path.join(targetPath, filePath)
+const installConfig = async ({
+  targetPath,
+  configsPath,
+  configPath,
+  installedMeta,
+  upcomingMeta,
+}) => {
+  const configCache = installedMeta
+    ? await loadConfigCache({
+        configsMeta: installedMeta,
+        configPath,
+        targetPath,
+      })
+    : null
+  const targetStrategy = resolveConfigStrategy(configPath)
+  const upcomingConfigPath = path.join(configsPath, configPath)
+  const localConfigPath = path.join(targetPath, configPath)
   const localConfigDirName = path.dirname(localConfigPath)
+  const upcomingConfig = await readFile(upcomingConfigPath, 'utf8')
+  let newConfig = null
   let localConfig = null
-
-  const newConfigPath = path.join(configsPath, filePath)
-  let newConfig = await readFile(newConfigPath, 'utf8')
 
   try {
     localConfig = await readFile(localConfigPath, 'utf8')
@@ -18,7 +33,11 @@ const installConfig = async ({ configsPath, targetPath, filePath }) => {
 
   if (localConfig && targetStrategy) {
     try {
-      newConfig = targetStrategy.merge(filePath)(localConfig, newConfig)
+      newConfig = targetStrategy.merge(configPath)({
+        current: localConfig,
+        upcoming: upcomingConfig,
+        cached: configCache,
+      })
     } catch (err) {
       const errorMessage = [
         chalk.bold(
@@ -29,14 +48,11 @@ const installConfig = async ({ configsPath, targetPath, filePath }) => {
 
       console.error(errorMessage.join('\n\t'))
     }
+  } else {
+    newConfig = upcomingConfig
   }
 
-  try {
-    await makeDir(localConfigDirName, {
-      recursive: true,
-    })
-  } catch (err) {}
-
+  await safeMakeDir(localConfigDirName)
   await writeFile(
     localConfigPath,
     newConfig instanceof Object
@@ -44,6 +60,12 @@ const installConfig = async ({ configsPath, targetPath, filePath }) => {
       : newConfig,
     'utf8',
   )
+  await cacheConfig({
+    configsMeta: upcomingMeta,
+    configSource: upcomingConfig,
+    configPath,
+    targetPath,
+  })
 }
 
 module.exports = {

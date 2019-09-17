@@ -1,9 +1,12 @@
 const { vol } = require('memfs')
+const { fixtures } = require('testUtils')
 const { clearPackageJson, ereaseMetaData } = require('../remove')
 
 describe('core > package > remove >', () => {
-  const packageJson5 = require('fixtures/package/package_05.json')
-  const packageJson6 = require('fixtures/package/package_06.json')
+  const packageJsonBaseRemoveFxt = fixtures(
+    'package/json/04-base-remove',
+    'json',
+  )
 
   beforeEach(() => {
     vol.reset()
@@ -12,17 +15,22 @@ describe('core > package > remove >', () => {
   describe('clearPackageJson', () => {
     it('should remove configs from package json and injection status', async () => {
       const dir = {
-        '/target/package.json': JSON.stringify(packageJson5),
-        '/configuration-package/package.json': JSON.stringify(packageJson6),
+        '/target/package.json': JSON.stringify(packageJsonBaseRemoveFxt.result),
+        '/configuration-package/package.json': JSON.stringify(
+          packageJsonBaseRemoveFxt.upcoming,
+        ),
       }
 
       vol.fromJSON(dir)
 
-      await clearPackageJson('/configuration-package', '/target')
+      await clearPackageJson({
+        configsPath: '/configuration-package',
+        targetPath: '/target',
+      })
 
       expect(
         JSON.parse(vol.readFileSync('/target/package.json', 'utf8')),
-      ).toMatchSnapshot()
+      ).toEqual(packageJsonBaseRemoveFxt.restored)
     })
   })
 

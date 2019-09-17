@@ -1,4 +1,6 @@
 module.exports = wallaby => ({
+  tests: ['!node_modules/**', '!test/fixtures/**/*', 'src/**/*.test.js'],
+
   files: [
     '!node_modules/**',
     '!src/**/*.test.js',
@@ -7,9 +9,8 @@ module.exports = wallaby => ({
     'src/**/*.js',
     'src/**/*.json',
     'test/fixtures/**/*',
+    'test/jest*',
   ],
-
-  tests: ['!node_modules/**', '!test/fixtures/**/*', 'src/**/*.test.js'],
 
   env: {
     type: 'node',

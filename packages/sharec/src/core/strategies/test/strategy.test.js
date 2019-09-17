@@ -1,71 +1,67 @@
-const path = require('path')
-const { readFileSync } = require.requireActual('fs')
-const { Strategy, LinearStrategy } = require('../strategy')
+const { fixtures } = require('testUtils')
+const Strategy = require('../Strategy')
 
-describe('strategy', () => {
+describe('Strategy', () => {
+  const commonBaseFxt = fixtures('common/json/01-base', 'json')
+  const commonBaseFxtYaml = fixtures('common/yaml/01-base')
+  const commonListsFxt = fixtures('common/json/02-lists', 'json')
+  const commonListsFxtYaml = fixtures('common/yaml/02-lists')
+  const commonPreventOverwriteFxt = fixtures(
+    'common/json/03-prevent-overwrite',
+    'json',
+  )
+  const commonPreventOverwriteFxtYaml = fixtures(
+    'common/yaml/03-prevent-overwrite',
+  )
+  const gitignoreBaseFxt = fixtures('gitignore/lines/01-base')
+
   let strategy
 
-  describe('Strategy class', () => {
-    const common01 = require('fixtures/common/json/common_01.json')
-    const common02 = require('fixtures/common/json/common_02.json')
-    const common04 = require('fixtures/common/json/common_04.json')
-    const common05 = require('fixtures/common/json/common_05.json')
-    const commonYaml01 = readFileSync(
-      path.resolve(
-        __dirname,
-        '../../../../test/fixtures/common/yaml/common_01.yml',
-      ),
-      'utf8',
-    )
-    const commonYaml02 = readFileSync(
-      path.resolve(
-        __dirname,
-        '../../../../test/fixtures/common/yaml/common_02.yml',
-      ),
-      'utf8',
-    )
-    const commonYaml04 = readFileSync(
-      path.resolve(
-        __dirname,
-        '../../../../test/fixtures/common/yaml/common_04.yml',
-      ),
-      'utf8',
-    )
-    const commonYaml05 = readFileSync(
-      path.resolve(
-        __dirname,
-        '../../../../test/fixtures/common/yaml/common_05.yml',
-      ),
-      'utf8',
-    )
+  beforeEach(() => {
+    strategy = new Strategy()
+  })
 
-    beforeEach(() => {
-      strategy = new Strategy()
+  it('should checks files compatibility', () => {
+    const validFiles = [
+      'foo.json',
+      'bar.json',
+      'foo.yaml',
+      'bar.yaml',
+      'foo.txt',
+      'bar.txt',
+    ]
+    const invalidFiles = [
+      'beep.json',
+      'boop.json',
+      'beep.yaml',
+      'boop.yaml',
+      'beep.txt',
+      'boop.txt',
+    ]
+
+    strategy = new Strategy({
+      json: validFiles.slice(0, 2),
+      yaml: validFiles.slice(2, 4),
+      lines: validFiles.slice(4, 6),
     })
 
-    it('should checks files compatibility', () => {
-      const validFiles = ['foo.json', 'bar.json', 'foo.yaml', 'bar.yaml']
-      const invalidFiles = ['beep.json', 'boop.json', 'beep.yaml', 'boop.yaml']
-
-      strategy = new Strategy({
-        json: validFiles.slice(0, 2),
-        yaml: validFiles.slice(2, 4),
-      })
-
-      validFiles.forEach(file => {
-        expect(strategy.isExpectedStrategy(file)).toBe(true)
-      })
-      invalidFiles.forEach(file => {
-        expect(strategy.isExpectedStrategy(file)).toBe(false)
-      })
+    validFiles.forEach(file => {
+      expect(strategy.isExpectedStrategy(file)).toBe(true)
     })
+    invalidFiles.forEach(file => {
+      expect(strategy.isExpectedStrategy(file)).toBe(false)
+    })
+  })
 
+  describe('determination', () => {
     it('should determine merge method', () => {
       const mergeJSONMock = Symbol('mergeJSON')
       const mergeYAMLMock = Symbol('mergeYAML')
+      const mergeLinesMock = Symbol('mergeLines')
 
       strategy.mergeJSON = mergeJSONMock
       strategy.mergeYAML = mergeYAMLMock
+      strategy.mergeLines = mergeLinesMock
 
       expect(strategy.determineMergeMethod('example.json')).toBe(mergeJSONMock)
       expect(strategy.determineMergeMethod('example.yaml')).toBe(mergeYAMLMock)
@@ -79,28 +75,19 @@ describe('strategy', () => {
       expect(strategy.determineMergeMethod('foo/bar/example.yml')).toBe(
         mergeYAMLMock,
       )
-    })
-
-    it('should merge JSON configs', () => {
-      expect(strategy.mergeJSON(common01, common02)).toMatchSnapshot()
-    })
-
-    it('should merge YAML configs', () => {
-      expect(strategy.mergeYAML(commonYaml01, commonYaml02)).toMatchSnapshot()
-    })
-
-    it('should automatically determine and apply merge method to given file', () => {
-      expect(
-        strategy.merge('common_01.yaml')(commonYaml01, commonYaml02),
-      ).toMatchSnapshot()
+      expect(strategy.determineMergeMethod('foo/bar/example.txt')).toBe(
+        mergeLinesMock,
+      )
     })
 
     it('should determine unapply method', () => {
       const unapplyJSONMock = Symbol('unapplyJSON')
       const unapplyYAMLMock = Symbol('unapplyYAML')
+      const unapplyLinesMock = Symbol('unapplyLines')
 
       strategy.unapplyJSON = unapplyJSONMock
       strategy.unapplyYAML = unapplyYAMLMock
+      strategy.unapplyLines = unapplyLinesMock
 
       expect(strategy.determineUnapplyMethod('example.json')).toBe(
         unapplyJSONMock,
@@ -120,94 +107,187 @@ describe('strategy', () => {
       expect(strategy.determineUnapplyMethod('foo/bar/example.yml')).toBe(
         unapplyYAMLMock,
       )
-    })
-
-    describe('unapply JSON', () => {
-      it('should return object without applied properties from second object', () => {
-        expect(strategy.unapplyJSON(common04, common05)).toMatchSnapshot()
-      })
-
-      it('should return empty object if objects have not difference', () => {
-        expect(strategy.unapplyJSON(common04, common04)).toEqual({})
-      })
-    })
-
-    describe('unapply YAML', () => {
-      it('should return YAML string without applied properties from second YAML', () => {
-        expect(
-          strategy.unapplyYAML(commonYaml04, commonYaml05),
-        ).toMatchSnapshot()
-      })
-
-      it('should return empty string if YAML string have not difference', () => {
-        expect(strategy.unapplyYAML(commonYaml04, commonYaml04)).toBe('')
-      })
-    })
-
-    describe('auto unapply', () => {
-      it('should automatically determine and apply unapply method to given file', () => {
-        expect(
-          strategy.unapply('common.json')(common04, common05),
-        ).toMatchSnapshot()
-        expect(
-          strategy.unapply('common.yaml')(commonYaml04, commonYaml05),
-        ).toMatchSnapshot()
-      })
+      expect(strategy.determineUnapplyMethod('foo/bar/example.txt')).toBe(
+        unapplyLinesMock,
+      )
     })
   })
 
-  describe('LinearStrategy class', () => {
-    const gitignoreCurrent = readFileSync(
-      path.resolve(
-        __dirname,
-        '../../../../test/fixtures/gitignore/01-base/current.txt',
-      ),
-      'utf8',
-    )
-    const gitignoreNew = readFileSync(
-      path.resolve(
-        __dirname,
-        '../../../../test/fixtures/gitignore/01-base/new.txt',
-      ),
-      'utf8',
-    )
-    const gitignoreResult = readFileSync(
-      path.resolve(
-        __dirname,
-        '../../../../test/fixtures/gitignore/01-base/result.txt',
-      ),
-      'utf8',
-    )
-    const gitignoreRestored = readFileSync(
-      path.resolve(
-        __dirname,
-        '../../../../test/fixtures/gitignore/01-base/restored.txt',
-      ),
-      'utf8',
-    )
-
-    beforeEach(() => {
-      strategy = new LinearStrategy()
+  describe('JSON', () => {
+    it('should merge JSON configs', () => {
+      expect(
+        strategy.mergeJSON({
+          current: commonBaseFxt.current,
+          upcoming: commonBaseFxt.upcoming,
+        }),
+      ).toEqual(commonBaseFxt.result)
     })
 
-    it('should check given filename on matching and return boolean result', () => {
-      strategy = new LinearStrategy(['.gitignore', '.npmignore'])
-
-      expect(strategy.isExpectedStrategy('.gitignore')).toBe(true)
-      expect(strategy.isExpectedStrategy('.npmignore')).toBe(true)
-      expect(strategy.isExpectedStrategy('.babelrc')).toBe(false)
+    it('should merge lists', () => {
+      expect(
+        strategy.mergeJSON({
+          current: commonListsFxt.current,
+          upcoming: commonListsFxt.upcoming,
+        }),
+      ).toEqual(commonListsFxt.result)
     })
 
+    it('should return object without applied properties from second object', () => {
+      expect(
+        strategy.unapplyJSON({
+          current: commonBaseFxt.result,
+          upcoming: commonBaseFxt.upcoming,
+        }),
+      ).toEqual(commonBaseFxt.restored)
+    })
+
+    it('should return empty object if objects have not difference', () => {
+      expect(
+        strategy.unapplyJSON({
+          current: commonBaseFxt.result,
+          upcoming: commonBaseFxt.result,
+        }),
+      ).toEqual({})
+    })
+
+    it('should unapply lists', () => {
+      expect(
+        strategy.unapplyJSON({
+          current: commonListsFxt.result,
+          upcoming: commonListsFxt.upcoming,
+        }),
+      ).toEqual(commonListsFxt.restored)
+    })
+
+    it('should not overwrite properties changed by user', () => {
+      expect(
+        strategy.mergeJSON({
+          current: commonPreventOverwriteFxt.current,
+          upcoming: commonPreventOverwriteFxt.upcoming,
+          cached: commonPreventOverwriteFxt.cached,
+        }),
+      ).toEqual(commonPreventOverwriteFxt.result)
+    })
+  })
+
+  describe('YAML', () => {
+    it('should merge YAML configs', () => {
+      expect(
+        strategy.mergeYAML({
+          current: commonBaseFxtYaml.current,
+          upcoming: commonBaseFxtYaml.upcoming,
+        }),
+      ).toWraplessEqual(commonBaseFxtYaml.result)
+    })
+
+    it('should merge lists', () => {
+      expect(
+        strategy.mergeYAML({
+          current: commonListsFxtYaml.current,
+          upcoming: commonListsFxtYaml.upcoming,
+        }),
+      ).toWraplessEqual(commonListsFxtYaml.result)
+    })
+
+    it('should return YAML string without applied properties from second YAML', () => {
+      expect(
+        strategy.unapplyYAML({
+          current: commonBaseFxtYaml.result,
+          upcoming: commonBaseFxtYaml.upcoming,
+        }),
+      ).toWraplessEqual(commonBaseFxtYaml.restored)
+    })
+
+    it('should return empty string if YAML string have not difference', () => {
+      expect(
+        strategy.unapplyYAML({
+          current: commonBaseFxtYaml.result,
+          upcoming: commonBaseFxtYaml.result,
+        }),
+      ).toBe('')
+    })
+
+    it('should unapply lists', () => {
+      expect(
+        strategy.unapplyYAML({
+          current: commonListsFxtYaml.result,
+          upcoming: commonListsFxtYaml.upcoming,
+        }),
+      ).toWraplessEqual(commonListsFxtYaml.restored)
+    })
+
+    it('should not overwrite properties changed by user', () => {
+      expect(
+        strategy.mergeYAML({
+          current: commonPreventOverwriteFxtYaml.current,
+          upcoming: commonPreventOverwriteFxtYaml.upcoming,
+          cached: commonPreventOverwriteFxtYaml.cached,
+        }),
+      ).toWraplessEqual(commonPreventOverwriteFxtYaml.result)
+    })
+  })
+
+  describe('Lines', () => {
     it('should merge linear text files', () => {
-      expect(strategy.merge()(gitignoreCurrent, gitignoreNew)).toEqual(
-        gitignoreResult,
-      )
+      expect(
+        strategy.mergeLines({
+          current: gitignoreBaseFxt.current,
+          upcoming: gitignoreBaseFxt.upcoming,
+        }),
+      ).toEqual(gitignoreBaseFxt.result)
     })
 
     it('should unapply upcoming changes from linear text files', () => {
-      expect(strategy.unapply()(gitignoreResult, gitignoreNew)).toEqual(
-        gitignoreRestored,
-      )
+      expect(
+        strategy.unapplyLines({
+          current: gitignoreBaseFxt.result,
+          upcoming: gitignoreBaseFxt.upcoming,
+        }),
+      ).toEqual(gitignoreBaseFxt.restored)
+    })
+  })
+
+  describe('auto', () => {
+    it('should automatically determine and apply merge method to given file', () => {
+      expect(
+        strategy.merge('common_01.json')({
+          current: commonBaseFxt.current,
+          upcoming: commonBaseFxt.upcoming,
+        }),
+      ).toEqual(commonBaseFxt.result)
+      expect(
+        strategy.merge('common_01.yaml')({
+          current: commonBaseFxtYaml.current,
+          upcoming: commonBaseFxtYaml.upcoming,
+        }),
+      ).toWraplessEqual(commonBaseFxtYaml.result)
+      expect(
+        strategy.merge('common_01.yaml')({
+          current: commonBaseFxtYaml.current,
+          upcoming: commonBaseFxtYaml.upcoming,
+        }),
+      ).toWraplessEqual(commonBaseFxtYaml.result)
+    })
+
+    it('should automatically determine and apply unapply method to given file', () => {
+      expect(
+        strategy.unapply('common.json')({
+          current: commonBaseFxt.result,
+          upcoming: commonBaseFxt.upcoming,
+        }),
+      ).toEqual(commonBaseFxt.restored)
+      expect(
+        strategy.unapply('common.yaml')({
+          current: commonBaseFxtYaml.result,
+          upcoming: commonBaseFxtYaml.upcoming,
+        }),
+      ).toWraplessEqual(commonBaseFxtYaml.restored)
+      expect(
+        strategy.unapply('common.txt')({
+          current: gitignoreBaseFxt.result,
+          upcoming: gitignoreBaseFxt.upcoming,
+        }),
+      ).toEqual(gitignoreBaseFxt.restored)
     })
   })
 })

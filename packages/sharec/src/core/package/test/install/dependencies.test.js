@@ -1,10 +1,12 @@
 const { vol } = require('memfs')
+const { fixtures } = require('testUtils')
 const { installPackageJson } = require('../../install')
 
 describe('core > package > install > dependencies >', () => {
-  const packageCurrent = require('fixtures/package/02-dependencies/current.json')
-  const packageNew = require('fixtures/package/02-dependencies/new.json')
-  const packageResult = require('fixtures/package/02-dependencies/result.json')
+  const packageJsonDependenciesFxt = fixtures(
+    'package/json/02-dependencies',
+    'json',
+  )
 
   beforeEach(() => {
     vol.reset()
@@ -12,20 +14,27 @@ describe('core > package > install > dependencies >', () => {
 
   it('should correctly merge package.json all dependencies sections', async () => {
     const dir = {
-      '/target/package.json': JSON.stringify(packageCurrent),
-      '/configuration-package/package.json': JSON.stringify(packageNew),
+      '/target/package.json': JSON.stringify(
+        packageJsonDependenciesFxt.current,
+      ),
+      '/configuration-package/package.json': JSON.stringify(
+        packageJsonDependenciesFxt.upcoming,
+      ),
     }
 
     vol.fromJSON(dir)
 
     await installPackageJson({
+      upcomingMeta: {
+        config: 'awesome-config',
+        version: '1.0.0',
+      },
       configsPath: '/configuration-package',
-      configsVersion: '1.0.0',
       targetPath: '/target',
     })
 
     expect(
       JSON.parse(vol.readFileSync('/target/package.json', 'utf8')),
-    ).toEqual(packageResult)
+    ).toEqual(packageJsonDependenciesFxt.result)
   })
 })

@@ -3,10 +3,11 @@ const unset = require('lodash/unset')
 const pick = require('lodash/pick')
 const omit = require('lodash/omit')
 const xor = require('lodash/xor')
+const without = require('lodash/without')
 const isEmpty = require('lodash/isEmpty')
 const intersection = require('lodash/intersection')
-const { Strategy } = require('../strategy')
-const { withKeys, mergeHashes, hashesDiff } = require('../../../utils/hashes')
+const Strategy = require('../Strategy')
+const { mergeHashes } = require('../../../utils/hashes')
 const { mergePairs, shallowPairsChangesDiff } = require('../../../utils/pairs')
 
 class BabelStrategy extends Strategy {
@@ -37,7 +38,7 @@ class BabelStrategy extends Strategy {
   }
 
   unapplyEnv(a, b) {
-    const restoredEnvConfig = withKeys(hashesDiff, ['ignore'])(a, b)
+    const restoredEnvConfig = {}
     const restoredPresets = shallowPairsChangesDiff(
       get(a, 'presets', []),
       get(b, 'presets', []),
@@ -46,6 +47,16 @@ class BabelStrategy extends Strategy {
       get(a, 'plugins', []),
       get(b, 'plugins', []),
     )
+    const restoredIgnore = without(
+      get(a, 'ignore', []),
+      ...get(b, 'ignore', []),
+    )
+
+    if (restoredIgnore.length > 0) {
+      Object.assign(restoredEnvConfig, {
+        ignore: restoredIgnore,
+      })
+    }
 
     if (restoredPresets.length > 0) {
       Object.assign(restoredEnvConfig, {
@@ -62,8 +73,8 @@ class BabelStrategy extends Strategy {
     return restoredEnvConfig
   }
 
-  mergeJSON(rawA, rawB) {
-    const [a, b] = [rawA, rawB].map(config =>
+  mergeJSON({ current, upcoming }) {
+    const [a, b] = [current, upcoming].map(config =>
       typeof config === 'string' ? JSON.parse(config) : config,
     )
     const newConfig = this.mergeEnv(omit(a, ['env']), omit(b, ['env']))
@@ -116,9 +127,8 @@ class BabelStrategy extends Strategy {
     return newConfig
   }
 
-  // TODO:
-  unapplyJSON(rawA, rawB) {
-    const [a, b] = [rawA, rawB].map(config =>
+  unapplyJSON({ current, upcoming }) {
+    const [a, b] = [current, upcoming].map(config =>
       typeof config === 'string' ? JSON.parse(config) : config,
     )
     const restoredConfig = this.unapplyEnv(omit(a, ['env']), omit(b, ['env']))
@@ -153,7 +163,7 @@ class BabelStrategy extends Strategy {
   }
 }
 const babelStrategy = new BabelStrategy({
-  json: ['babel', '.babelrc', '.babelrc.json', 'babelrc.js', 'babel.config.js'],
+  json: ['babel', '.babelrc', '.babelrc.json', 'babelrc.json'],
 })
 
 module.exports = {

@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "test": "current test script"
+  },
+  "sharec": {
+    "config": "awesome-config",
+    "version": "0.0.0"
+  }
+}

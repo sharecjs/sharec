@@ -1,6 +1,7 @@
 const omit = require('lodash/omit')
+const pick = require('lodash/pick')
 const path = require('path')
-const { readFile } = require('../../utils/fs')
+const { readFile } = require('../../utils/std').fs
 
 const IGNORED_FIELDS = [
   'sharec',
@@ -21,6 +22,28 @@ const IGNORED_FIELDS = [
   'author',
 ]
 
+/**
+ * @typedef {Object} MetaData
+ * @property {String} version
+ * @property {String} config
+ */
+
+const extractConfigs = packageJson => omit(packageJson, IGNORED_FIELDS)
+
+/**
+ * @param {Object} packageJson
+ * @returns {MetaData|null}
+ */
+const extractMetaData = packageJson => {
+  if (!packageJson.sharec) return null
+
+  return pick(packageJson.sharec, ['config', 'version'])
+}
+
+/**
+ * @param {String} targetPath
+ * @returns {MetaData|null}
+ */
 const getCurrentPackageJsonMetaData = async targetPath => {
   const targetPackageJsonPath = path.resolve(targetPath, 'package.json')
   const rawTargetPackageJson = await readFile(targetPackageJsonPath, 'utf8')
@@ -29,12 +52,41 @@ const getCurrentPackageJsonMetaData = async targetPath => {
   return extractMetaData(targetPackageJson)
 }
 
-const extractConfigs = packageJson => omit(packageJson, IGNORED_FIELDS)
+/**
+ * @param {String} configsPath
+ * @returns {MetaData}
+ */
+const getUpcomingPackageJsonMetaData = async configsPath => {
+  const upcomingConfigsPackageJsonPath = path.resolve(
+    configsPath,
+    'package.json',
+  )
+  const rawUpcomingPackageJson = await readFile(
+    upcomingConfigsPackageJsonPath,
+    'utf8',
+  )
+  const upcomingPackageJson = JSON.parse(rawUpcomingPackageJson)
 
-const extractMetaData = packageJson => packageJson.sharec || null
+  return {
+    config: upcomingPackageJson.name,
+    version: upcomingPackageJson.version,
+  }
+}
+
+const isTargetDependantOfSharec = async targetPath => {
+  const targetPackageJsonPath = path.resolve(targetPath, 'package.json')
+  const rawTargetPackageJson = await readFile(targetPackageJsonPath, 'utf8')
+  const targetPackageJson = JSON.parse(rawTargetPackageJson)
+
+  if (!targetPackageJson.dependencies) return false
+
+  return Object.keys(targetPackageJson.dependencies).includes('sharec')
+}
 
 module.exports = {
-  getCurrentPackageJsonMetaData,
   extractConfigs,
   extractMetaData,
+  getCurrentPackageJsonMetaData,
+  getUpcomingPackageJsonMetaData,
+  isTargetDependantOfSharec,
 }

@@ -1,16 +1,55 @@
 const { vol } = require('memfs')
 const pick = require('lodash/pick')
+const { fixture } = require('testUtils')
 const {
-  getCurrentPackageJsonMetaData,
   extractConfigs,
   extractMetaData,
+  getCurrentPackageJsonMetaData,
+  getUpcomingPackageJsonMetaData,
+  isTargetDependantOfSharec,
 } = require('../extract')
 
 describe('core > package > extract >', () => {
-  const packageJsonFixture = require('fixtures/package/package_07.json')
+  const packageJsonConfigsExtractionFxt = fixture(
+    'package/json/06-configs-extraction/current.json',
+    'json',
+  )
 
   beforeEach(() => {
     vol.reset()
+  })
+
+  describe('extractConfigs', () => {
+    it('should return all configs from package.json except dependencies, sharec meta-data and other standard package fields', () => {
+      const extractedConfigs = extractConfigs(packageJsonConfigsExtractionFxt)
+
+      expect(extractedConfigs).toEqual(
+        pick(packageJsonConfigsExtractionFxt, [
+          'scripts',
+          'lint-staged',
+          'husky',
+          'config',
+          'prettier',
+          'eslintConfig',
+          'eslintIgnore',
+          'devDependencies',
+        ]),
+      )
+    })
+  })
+
+  describe('extractMetaData', () => {
+    it('should return sharec meta-data', () => {
+      const extractedMetaData = extractMetaData(packageJsonConfigsExtractionFxt)
+
+      expect(extractedMetaData).toEqual(packageJsonConfigsExtractionFxt.sharec)
+    })
+
+    it('should return null if sharec meta-data is not exists', () => {
+      const extractedMetaData = extractMetaData({})
+
+      expect(extractedMetaData).toBeNull()
+    })
   })
 
   describe('getCurrentPackageJsonMetaData', () => {
@@ -18,7 +57,8 @@ describe('core > package > extract >', () => {
       expect.assertions(1)
 
       const metaData = {
-        injected: true,
+        version: '1.0.0',
+        config: 'awesome-config',
       }
       const dir = {
         '/target/package.json': JSON.stringify(
@@ -50,36 +90,78 @@ describe('core > package > extract >', () => {
     })
   })
 
-  describe('extractConfigs', () => {
-    it('should return all configs from package.json except dependencies, sharec meta-data and other standard package fields', () => {
-      const extractedConfigs = extractConfigs(packageJsonFixture)
+  describe('getUpcomingPackageJsonMetaData', () => {
+    it('should extract upcoming configuration package meta data', async () => {
+      expect.assertions(1)
 
-      expect(extractedConfigs).toEqual(
-        pick(packageJsonFixture, [
-          'scripts',
-          'lint-staged',
-          'husky',
-          'config',
-          'prettier',
-          'eslintConfig',
-          'eslintIgnore',
-          'devDependencies',
-        ]),
-      )
+      const metaData = {
+        version: '1.0.0',
+        name: 'awesome-config',
+      }
+      const dir = {
+        '/configuration-package/package.json': JSON.stringify(
+          metaData,
+          null,
+          2,
+        ),
+      }
+      vol.fromJSON(dir, '/')
+
+      const res = await getUpcomingPackageJsonMetaData('/configuration-package')
+
+      expect(res).toEqual({
+        config: 'awesome-config',
+        version: '1.0.0',
+      })
     })
   })
 
-  describe('extractMetaData', () => {
-    it('should return sharec meta-data', () => {
-      const extractedMetaData = extractMetaData(packageJsonFixture)
+  describe('isTargetDependantOfSharec', () => {
+    it('should return true is target has sharec in dependencies', async () => {
+      expect.assertions(1)
 
-      expect(extractedMetaData).toEqual(packageJsonFixture.sharec)
+      const dir = {
+        '/target/package.json': JSON.stringify({
+          dependencies: {
+            sharec: '1.0.0'
+          }
+        })
+      }
+      vol.fromJSON(dir, '/')
+
+      const res = await isTargetDependantOfSharec('/target')
+
+      expect(res).toBe(true)
     })
 
-    it('should return null if sharec meta-data is not exists', () => {
-      const extractedMetaData = extractMetaData({})
+    it('should return false is target has not sharec in dependencies', async () => {
+      expect.assertions(1)
 
-      expect(extractedMetaData).toBeNull()
+      const dir = {
+        '/target/package.json': JSON.stringify({
+          dependencies: {
+          }
+        })
+      }
+      vol.fromJSON(dir, '/')
+
+      const res = await isTargetDependantOfSharec('/target')
+
+      expect(res).toBe(false)
+    })
+
+    it('should return false is target has not any dependencies', async () => {
+      expect.assertions(1)
+
+      const dir = {
+        '/target/package.json': JSON.stringify({
+                  })
+      }
+      vol.fromJSON(dir, '/')
+
+      const res = await isTargetDependantOfSharec('/target')
+
+      expect(res).toBe(false)
     })
   })
 })

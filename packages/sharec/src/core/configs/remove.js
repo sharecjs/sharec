@@ -1,6 +1,6 @@
 const path = require('path')
 const isEmpty = require('lodash/isEmpty')
-const { readFile, writeFile, removeFile } = require('../../utils/fs')
+const { readFile, writeFile, removeFile } = require('../../utils/std').fs
 const { resolveConfigStrategy } = require('../strategies/resolve')
 
 const removeConfig = async ({ configsPath, targetPath, filePath }) => {
@@ -12,7 +12,10 @@ const removeConfig = async ({ configsPath, targetPath, filePath }) => {
 
   if (!targetStrategy) return
 
-  const restoredConfig = targetStrategy.unapply(filePath)(localConfig, config)
+  const restoredConfig = targetStrategy.unapply(filePath)({
+    current: localConfig,
+    upcoming: config,
+  })
 
   if (isEmpty(restoredConfig)) {
     await removeFile(localConfigPath)

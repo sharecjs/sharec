@@ -1,10 +1,9 @@
 const { vol } = require('memfs')
 const { installPackageJson, injectMetaData } = require('../install')
+const { fixtures } = require('testUtils')
 
 describe('core > package > install >', () => {
-  const packageJson01 = require('fixtures/package/package_01.json')
-  const packageJson02 = require('fixtures/package/package_02.json')
-  const packageJsonFixture = require('fixtures/package/package_07.json')
+  const packageBaseInstallFxt = fixtures('package/json/03-base-install', 'json')
 
   beforeEach(() => {
     vol.reset()
@@ -15,32 +14,44 @@ describe('core > package > install >', () => {
       expect.assertions(1)
 
       const dir = {
-        '/target/package.json': JSON.stringify(packageJson01, null, 2),
-        '/configs/package.json': JSON.stringify(packageJson02, null, 2),
+        '/target/package.json': JSON.stringify(
+          packageBaseInstallFxt.current,
+          null,
+          2,
+        ),
+        '/configs/package.json': JSON.stringify(
+          packageBaseInstallFxt.upcoming,
+          null,
+          2,
+        ),
       }
       vol.fromJSON(dir, '/')
 
       await installPackageJson({
         configsPath: '/configs',
         targetPath: '/target',
-        configsVersion: '1.0.0',
+        upcomingMeta: {
+          config: 'awesome-config',
+          version: '1.0.0',
+        },
       })
 
       expect(
         JSON.parse(vol.readFileSync('/target/package.json', 'utf8')),
-      ).toMatchSnapshot()
+      ).toEqual(packageBaseInstallFxt.result)
     })
   })
 
   describe('injectMetaData', () => {
     it('should inject sharec meta-data', () => {
       const metaData = {
-        injected: true,
+        version: '1.0.0',
+        config: 'awesome-config',
       }
-      const res = injectMetaData(metaData)(packageJsonFixture)
+      const res = injectMetaData(metaData)(packageBaseInstallFxt.current)
 
       expect(res).toEqual({
-        ...packageJsonFixture,
+        ...packageBaseInstallFxt.current,
         sharec: metaData,
       })
     })

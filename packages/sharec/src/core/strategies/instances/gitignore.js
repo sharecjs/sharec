@@ -1,8 +1,10 @@
-const { LinearStrategy } = require('../strategy')
+const Strategy = require('../Strategy')
 
-class GitIgnoreStrategy extends LinearStrategy {}
+class GitIgnoreStrategy extends Strategy {}
 
-const gitIgnoreStrategy = new GitIgnoreStrategy(['.gitignore'])
+const gitIgnoreStrategy = new GitIgnoreStrategy({
+  lines: ['.gitignore'],
+})
 
 module.exports = {
   GitIgnoreStrategy,

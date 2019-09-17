@@ -51,19 +51,11 @@ Example:
 
 **`remove`** - removes installed configuration from target project. Modified fields will be saved.
 
-Example:
-
-```json
-{
-  "scripts": {
-    "preuninstall": "sharec remove"
-  }
-}
-```
+**Highly recommend to avoid using that command in `preuninstall` and similar `npm` scripts**!
 
 ## Potential use-cases
 
 You can use sharec not only for configuration management, you can also use it for:
 
-* Create boilerplates, like `create-react-app`
-* Deliver other files to your projects
+- Create boilerplates, like `create-react-app`
+- Deliver other files to your projects

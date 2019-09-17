@@ -1,0 +1,21 @@
+{
+  "env": {
+    "browser": true,
+    "es6": true,
+    "node": true
+  },
+  "extends": "standard",
+  "rules": {
+    "max-len": [
+      "warn",
+      80,
+      2,
+      {
+        "ignoreUrls": true,
+        "ignoreComments": false,
+        "ignoreStrings": true,
+        "ignoreTemplateLiterals": false
+      }
+    ]
+  }
+}

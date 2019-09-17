@@ -1,10 +1,14 @@
 const { vol } = require('memfs')
+const { fixture } = require('testUtils')
 const { clearPackageJson } = require('../../remove')
 
 describe('core > package > remove > scripts >', () => {
-  const packageNew = require('fixtures/package/01-scripts/new.json')
-  const packageResult = require('fixtures/package/01-scripts/result.json')
-  const packageRestored = require('fixtures/package/01-scripts/restored.json')
+  const packageNew = fixture('package/json/01-scripts/upcoming.json', 'json')
+  const packageResult = fixture('package/json/01-scripts/result.json', 'json')
+  const packageRestored = fixture(
+    'package/json/01-scripts/restored.json',
+    'json',
+  )
 
   beforeEach(() => {
     vol.reset()
@@ -18,7 +22,10 @@ describe('core > package > remove > scripts >', () => {
 
     vol.fromJSON(dir)
 
-    await clearPackageJson('/configuration-package', '/target')
+    await clearPackageJson({
+      configsPath: '/configuration-package',
+      targetPath: '/target',
+    })
 
     expect(
       JSON.parse(vol.readFileSync('/target/package.json', 'utf8')),

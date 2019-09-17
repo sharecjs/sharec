@@ -1,12 +1,8 @@
-const path = require('path')
-const { readFileSync } = require('fs')
+const { fixture } = require('testUtils')
 const { fromYaml, toYaml } = require('../yaml')
 
 const jsonFixture = require('fixtures/eslint/json/eslintrc_01.json')
-const yamlFixture = readFileSync(
-  path.resolve(__dirname, '../../../test/fixtures/eslint/yaml/eslintrc_01.yml'),
-  'utf8',
-)
+const yamlFixture = fixture('eslint/yaml/eslintrc_01.yml')
 
 describe('utils > yaml', () => {
   describe('fromYaml', () => {

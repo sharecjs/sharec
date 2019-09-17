@@ -3,11 +3,11 @@ const unset = require('lodash/unset')
 const omit = require('lodash/omit')
 const isEmpty = require('lodash/isEmpty')
 const { pipe } = require('../../utils')
-const { readFile, writeFile } = require('../../utils/fs')
+const { readFile, writeFile } = require('../../utils/std').fs
 const { extractConfigs } = require('../package/extract')
 const { resolveConfigStrategy } = require('../strategies/resolve')
 
-const clearPackageJson = async (configsPath, targetPath) => {
+const clearPackageJson = async ({ configsPath, targetPath }) => {
   const targetPackageJsonPath = path.resolve(targetPath, 'package.json')
   const rawTargetPackageJson = await readFile(targetPackageJsonPath)
   const targetPackageJson = JSON.parse(rawTargetPackageJson)
@@ -50,10 +50,10 @@ const ereaseConfigs = configs => packageJson => {
 
     if (!strategy) return
 
-    const restoredConfig = strategy.unapply(key)(
-      restoredPackageJson[key],
-      configs[key],
-    )
+    const restoredConfig = strategy.unapply(key)({
+      current: restoredPackageJson[key],
+      upcoming: configs[key],
+    })
 
     if (isEmpty(restoredConfig)) {
       unset(restoredPackageJson, key)
@@ -90,7 +90,6 @@ const ereaseDependenciesFrom = (dependencies, target) => {
 const ereaseDependencies = dependencies => packageJson => {
   const mismatchedDeps = {}
   const targetPackageJson = { ...packageJson }
-
   const updatedDeps = Object.keys(dependencies).reduce(
     (acc, key) => {
       if (!packageJson[key]) return acc

@@ -24,7 +24,10 @@
     "test:watch": "jest --watch",
     "commit": "git-cz",
     "lint": "eslint 'src/**/*.{js,jsx,json}'",
-    "lint-staged": "lint-staged"
+    "lint-staged": "lint-staged",
+    "fxt:json": "hygen fixture-json with-prompt",
+    "fxt:yaml": "hygen fixture-yaml with-prompt",
+    "fxt:lines": "hygen fixture-lines with-prompt"
   },
   "lint-staged": {
     "src/**/*.{js,jsx,json}": [
@@ -90,7 +93,10 @@
       "node_modules"
     ],
     "setupFiles": [
-      "./jest.setup.js"
+      "./test/jest.setup.js"
+    ],
+    "setupFilesAfterEnv": [
+      "./test/jest.matchers.js"
     ]
   },
   "devDependencies": {
@@ -110,8 +116,10 @@
     "eslint-plugin-promise": "^4.1.1",
     "eslint-plugin-standard": "^4.0.0",
     "husky": "^2.2.0",
+    "hygen": "^4.0.9",
     "jest": "^24.8.0",
     "jest-cli": "^24.8.0",
+    "jest-diff": "^24.9.0",
     "lint-staged": "^8.1.6",
     "memfs": "^2.15.2",
     "prettier": "^1.17.1"
@@ -122,9 +130,8 @@
     "deep-diff": "^1.0.2",
     "deepmerge": "^3.2.0",
     "diff": "^4.0.1",
-    "fast-glob": "^3.0.0",
     "js-yaml": ">=3.13.1",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.15",
     "minimist": "^1.2.0",
     "ora": "^3.4.0",
     "slash": "^3.0.0"

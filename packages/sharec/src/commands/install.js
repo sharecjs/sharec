@@ -1,38 +1,70 @@
-const createSpinner = require('../messages/spinner')
 const installTask = require('../tasks/install')
-const { collectConfigVersion } = require('../core/configs/collect')
-const { extractMetaData } = require('../core/package/extract')
-const installedMessage = require('../messages/installed')
+const removeTask = require('../tasks/remove')
+const {
+  getCurrentPackageJsonMetaData,
+  getUpcomingPackageJsonMetaData,
+} = require('../core/package/extract')
+const createSpinner = require('../cli/spinner')
+const installedMessage = require('../cli/messages')
 
+/**
+ * @param {String} options.configsPath
+ * @param {String} options.targetPath
+ * @param {Object} options
+ * @returns {Promise<void>}
+ */
 async function install({ configsPath, targetPath, options = {} }) {
-  const configsVersion = await collectConfigVersion(configsPath)
-  const meta = await extractMetaData(targetPath)
-  const isSilentMode =
-    options.silent || (meta && meta.version === configsVersion)
-  const spinner = createSpinner({
-    text: 'applying configuration... 🚀',
-    silent: isSilentMode,
-  })
+  const upcomingMeta = await getUpcomingPackageJsonMetaData(configsPath)
+  const installedMeta = await getCurrentPackageJsonMetaData(targetPath)
 
-  spinner.start()
+  const isSilentMode = options.silent
+  const isMetaMatched =
+    installedMeta && installedMeta.version === upcomingMeta.version
+  const spinner = createSpinner({
+    text: 'preparing...',
+    silent: isSilentMode,
+  }).start()
+
+  if (isMetaMatched) {
+    spinner.succeed('this version of configs already injected')
+    return
+  }
+
+  if (installedMeta && !isMetaMatched) {
+    spinner.frame('removing previous insatlled configuration...')
+
+    await removeTask({
+      configsPath,
+      targetPath,
+    })
+
+    spinner.succeed('previously insatalled configuration removed!')
+    return
+  }
+
+  spinner.frame('applying configuration...')
 
   try {
-    await installTask({ configsPath, targetPath, configsVersion, options })
+    await installTask({
+      installedMeta,
+      upcomingMeta,
+      configsPath,
+      targetPath,
+      options,
+    })
 
-    spinner.succeed('configuration applyed, have a nice time! 🌈')
+    spinner.succeed('configuration applyed, have a nice time!')
 
-    if (isSilentMode) {
+    if (!isMetaMatched && !isSilentMode) {
       installedMessage()
     }
   } catch (err) {
     const { message } = err
 
-    if (message.includes('already installed')) {
-      spinner.succeed('this version of configs already injected! 👍')
-    } else if (message.includes('ENOENT')) {
-      spinner.fail('configs directory was not found! ⛔️')
+    if (message.includes('ENOENT')) {
+      spinner.fail('configs directory was not found')
     } else {
-      spinner.fail('unhandeled error! 💥')
+      spinner.fail('unhandeled error')
       console.error(err)
     }
   }

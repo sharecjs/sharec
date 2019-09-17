@@ -1,17 +1,24 @@
-const { install, remove } = require('./commands')
+const { install, remove, version } = require('./commands')
+const { isTargetDependantOfSharec } = require('./core/package/extract')
 
 async function sharec({ configsPath, targetPath, command, options }) {
-  if (!configsPath || configsPath === targetPath) return
+  if (command === 'version') {
+    await version(configsPath)
+    return
+  }
+
+  const isIndependantOfSharec = await isTargetDependantOfSharec(targetPath)
+
+
+  if (!isIndependantOfSharec) return
 
   switch (command) {
-    case 'install':
-      await install({ configsPath, targetPath, options })
-      break
     case 'remove':
       await remove({ configsPath, targetPath, options })
       break
+    case 'install':
     default:
-      throw new Error(`sharec: unsupported command ${command}.`)
+      await install({ configsPath, targetPath, options })
   }
 }
 

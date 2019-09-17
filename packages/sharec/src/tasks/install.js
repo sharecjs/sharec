@@ -1,36 +1,37 @@
 const path = require('path')
 const { collectConfigsPaths } = require('../core/configs/collect')
 const { installConfig } = require('../core/configs/install')
-const { getCurrentPackageJsonMetaData } = require('../core/package/extract')
 const { installPackageJson } = require('../core/package/install')
 
-async function install({ configsPath, targetPath, configsVersion, options }) {
+async function install({
+  installedMeta,
+  upcomingMeta,
+  configsPath,
+  targetPath,
+}) {
   const fullConfigsPath = path.join(configsPath, './configs')
-  const configs = await collectConfigsPaths(fullConfigsPath)
-  const metaData = await getCurrentPackageJsonMetaData(targetPath)
+  const collectedConfigsPaths = await collectConfigsPaths(fullConfigsPath)
 
-  if (metaData && metaData.version === configsVersion) {
-    throw new Error('Configs already installed!')
+  if (collectedConfigsPaths.includes('package.json')) {
+    await installPackageJson({
+      configsPath: fullConfigsPath,
+      installedMeta,
+      upcomingMeta,
+      targetPath,
+    })
   }
 
-  const standaloneConfigs = configs.filter(
-    filePath => !/(package\.json)/.test(filePath),
-  )
-
-  await Promise.all(
-    standaloneConfigs.map(configPath =>
-      installConfig({
+  for (const configPath of collectedConfigsPaths) {
+    if (!/(package\.json)/.test(configPath)) {
+      await installConfig({
         configsPath: fullConfigsPath,
-        filePath: configPath,
+        configPath,
+        installedMeta,
+        upcomingMeta,
         targetPath,
-      }),
-    ),
-  )
-  await installPackageJson({
-    configsPath: fullConfigsPath,
-    configsVersion,
-    targetPath,
-  })
+      })
+    }
+  }
 }
 
 module.exports = install
