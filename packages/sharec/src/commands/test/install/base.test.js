@@ -70,13 +70,13 @@ describe('commands > install > base >', () => {
     expect(JSON.parse(vol.readFileSync('/target/.eslintrc', 'utf8'))).toEqual(
       eslintBaseFxt.result,
     )
-    expect(vol.readFileSync('/target/.eslintrc.yaml', 'utf8')).toEqual(
+    expect(vol.readFileSync('/target/.eslintrc.yaml', 'utf8')).toWraplessEqual(
       eslintBaseFxtYaml.result,
     )
-    expect(vol.readFileSync('/target/.gitignore', 'utf8')).toEqual(
+    expect(vol.readFileSync('/target/.gitignore', 'utf8')).toWraplessEqual(
       gitignoreBaseFxt.result,
     )
-    expect(vol.readFileSync('/target/.npmignore', 'utf8')).toEqual(
+    expect(vol.readFileSync('/target/.npmignore', 'utf8')).toWraplessEqual(
       npmignoreBaseFxt.result,
     )
   })

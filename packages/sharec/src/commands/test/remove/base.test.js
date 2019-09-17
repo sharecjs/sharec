@@ -101,7 +101,7 @@ describe('commands > remove >', () => {
       configsPath: '/configuration-package',
     })
 
-    expect(vol.readFileSync('/target/.eslintrc.yml', 'utf8')).toEqual(
+    expect(vol.readFileSync('/target/.eslintrc.yml', 'utf8')).toWraplessEqual(
       eslintParserOptionsOperationsFxtYaml.restored,
     )
     expect(JSON.parse(vol.readFileSync('/target/.babelrc'))).toEqual(

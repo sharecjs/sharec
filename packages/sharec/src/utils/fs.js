@@ -63,9 +63,15 @@ const flatSearch = async ({ path, pattern, root = true }) => {
 
   if (!root) return filteredResult
 
-  return normalizePathSlashes(filteredResult).map(file =>
-    file.replace(new RegExp(`^${path}`), '').replace(/^\//, ''),
-  )
+  const normalizedPath = slash(path)
+
+  return filteredResult.map(file => {
+    const normalizedFilePath = slash(file)
+
+    return normalizedFilePath
+      .replace(new RegExp(`^${normalizedPath}`), '')
+      .replace(/^\//, '')
+  })
 }
 
 module.exports = {

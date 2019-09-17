@@ -101,7 +101,7 @@ describe('tasks > remove >', () => {
       configsPath: '/configuration-package',
     })
 
-    expect(vol.readFileSync('/target/.eslintrc.yml', 'utf8')).toEqual(
+    expect(vol.readFileSync('/target/.eslintrc.yml', 'utf8')).toWraplessEqual(
       eslintParserOptionsOperationsFxtYaml.restored,
     )
     expect(JSON.parse(vol.readFileSync('/target/.babelrc'))).toEqual(
@@ -110,31 +110,5 @@ describe('tasks > remove >', () => {
     expect(JSON.parse(vol.readFileSync('/target/package.json'))).toEqual(
       packageJsonBaseRemoveFxt.restored,
     )
-  })
-
-  it('should throw an error if configuration package was not found', async () => {
-    expect.assertions(1)
-
-    const dir = {
-      '/target/package.json': JSON.stringify(
-        {
-          sharec: {
-            injected: true,
-          },
-        },
-        null,
-        2,
-      ),
-    }
-    vol.fromJSON(dir, '/')
-
-    try {
-      await remove({
-        targetPath: '/target',
-        configsPath: '/configuration-package',
-      })
-    } catch (err) {
-      expect(err.message).toContain('ENOENT')
-    }
   })
 })

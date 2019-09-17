@@ -42,13 +42,15 @@ describe('tasks > install > cache >', () => {
       targetPath: '/target',
     })
 
-    expect(vol.readdirSync(cacheDir)).toEqual([
-      '.editorconfig',
-      '.eslintrc',
-      '.eslintrc.yaml',
-      'babelrc.json',
-      'package.json',
-    ])
+    expect(vol.readdirSync(cacheDir)).toEqual(
+      expect.arrayContaining([
+        '.editorconfig',
+        '.eslintrc',
+        '.eslintrc.yaml',
+        'babelrc.json',
+        'package.json',
+      ]),
+    )
     expect(
       vol.readFileSync(path.join(cacheDir, '.editorconfig'), 'utf8'),
     ).toEqual('bar')

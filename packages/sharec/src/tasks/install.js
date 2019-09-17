@@ -22,15 +22,15 @@ async function install({
   }
 
   for (const configPath of collectedConfigsPaths) {
-    if (/(package\.json)/.test(configPath)) return
-
-    await installConfig({
-      configsPath: fullConfigsPath,
-      configPath,
-      installedMeta,
-      upcomingMeta,
-      targetPath,
-    })
+    if (!/(package\.json)/.test(configPath)) {
+      await installConfig({
+        configsPath: fullConfigsPath,
+        configPath,
+        installedMeta,
+        upcomingMeta,
+        targetPath,
+      })
+    }
   }
 }
 

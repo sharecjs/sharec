@@ -55,7 +55,7 @@ describe('tasks > install > base >', () => {
     expect(JSON.parse(vol.readFileSync('/target/.eslintrc', 'utf8'))).toEqual(
       eslintBaseFxt.result,
     )
-    expect(vol.readFileSync('/target/.eslintrc.yaml', 'utf8')).toEqual(
+    expect(vol.readFileSync('/target/.eslintrc.yaml', 'utf8')).toWraplessEqual(
       eslintBaseFxtYaml.result,
     )
     expect(

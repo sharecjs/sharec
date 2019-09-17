@@ -23,7 +23,7 @@ expect.extend({
 
       return {
         actual: received,
-        message: messageParts.join('\n'),
+        message: () => messageParts.join('\n'),
         pass,
       }
     }
@@ -43,7 +43,7 @@ expect.extend({
 
     return {
       actual: received,
-      message: messageParts.join('\n'),
+      message: () => messageParts.join('\n'),
       pass,
     }
   }

@@ -67,7 +67,7 @@ describe('tasks > install > prevent ovewrite >', () => {
     expect(JSON.parse(vol.readFileSync('/target/common.json', 'utf8'))).toEqual(
       commonPreventOverwriteFxt.result,
     )
-    expect(vol.readFileSync('/target/common.yaml', 'utf8')).toEqual(
+    expect(vol.readFileSync('/target/common.yaml', 'utf8')).toWraplessEqual(
       commonPreventOverwriteFxtYaml.result,
     )
   })
