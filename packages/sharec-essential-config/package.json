@@ -1,6 +1,6 @@
 {
   "name": "sharec-essential-config",
-  "version": "2.9.0-beta",
+  "version": "2.10.0-beta",
   "description": "",
   "author": "Konstantin Epishev <lamartire@gmail.com>",
   "keywords": [],
@@ -14,7 +14,7 @@
     "url": "git+https://github.com/lamartire/sharec"
   },
   "dependencies": {
-    "sharec": "^2.9.0-beta"
+    "sharec": "^2.10.0-beta"
   },
   "scripts": {
     "postinstall": "sharec install"
