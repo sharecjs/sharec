@@ -1,5 +1,5 @@
 const { fixtures } = require('testUtils')
-const { eslintIgnoreStrategy } = require('../../eslintignore')
+const { eslintIgnoreStrategy } = require('../../eslintIgnore')
 
 describe('strategy > eslintignore', () => {
   const eslintignoreBaseFxt = fixtures('eslintignore/lines/01-base')
