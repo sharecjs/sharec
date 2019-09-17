@@ -24,7 +24,7 @@ class Strategy {
   }
 
   /**
-   * @param {Strinf} fileName
+   * @param {String} fileName
    * @returns {Boolean}
    */
   isExpectedStrategy(fileName) {
