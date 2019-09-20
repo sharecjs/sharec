@@ -1,0 +1,22 @@
+on:
+  pull_request:
+    branches:
+    - develop
+    - master
+
+jobs:
+  test:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macOS-latest]
+        node_version: [10, 12]
+    runs-on: ${{ matrix.os }}
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions/setup-node@v1
+      with:
+        version: ${{ matrix.node_version }}
+    - run: |
+        npm i -g lerna
+        lerna bootstrap
+        lerna run test
