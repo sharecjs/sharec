@@ -41,7 +41,9 @@ it, sharec will use the common flow.
 
 ## Commands
 
-**`install`** - installs all configuration to the target project.
+### `install`
+
+Installs all configuration to the target project.
 
 Example:
 
@@ -53,7 +55,35 @@ Example:
 }
 ```
 
-**`remove`** - removes installed configuration from target project. Modified fields will be saved.
+Options:
+
+**`--silent`** – hides all outputs from `sharec` in CLI.
+
+Example:
+
+```json
+{
+  "scripts": {
+    "postinstall": "sharec install --silent"
+  }
+}
+```
+
+**`--overwrite`** – force `sharec` to replace all configs without merging and caching.
+
+Example:
+
+```json
+{
+  "scripts": {
+    "postinstall": "sharec install --overwrite"
+  }
+}
+```
+
+### `remove`
+
+Removes installed configuration from target project. Modified fields will be saved.
 
 **Highly recommend to avoid using that command in `preuninstall` and similar `npm` scripts**!
 
