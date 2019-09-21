@@ -25,7 +25,6 @@ describe.skip('tasks > install > errors >', () => {
         targetPath: '/target',
       })
     } catch (err) {
-      console.log(err)
       expect(err.message).toContain('ENOENT')
     }
   })

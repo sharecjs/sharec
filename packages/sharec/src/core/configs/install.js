@@ -11,7 +11,18 @@ const installConfig = async ({
   configPath,
   installedMeta,
   upcomingMeta,
+  overwrite,
 }) => {
+  const localConfigPath = path.join(targetPath, configPath)
+  const localConfigDirName = path.dirname(localConfigPath)
+  const upcomingConfigPath = path.join(configsPath, configPath)
+  const upcomingConfig = await readFile(upcomingConfigPath, 'utf8')
+
+  if (overwrite) {
+    await writeFile(localConfigPath, upcomingConfig, 'utf8')
+    return
+  }
+
   const configCache = installedMeta
     ? await loadConfigCache({
         configsMeta: installedMeta,
@@ -20,10 +31,6 @@ const installConfig = async ({
       })
     : null
   const targetStrategy = resolveConfigStrategy(configPath)
-  const upcomingConfigPath = path.join(configsPath, configPath)
-  const localConfigPath = path.join(targetPath, configPath)
-  const localConfigDirName = path.dirname(localConfigPath)
-  const upcomingConfig = await readFile(upcomingConfigPath, 'utf8')
   let newConfig = null
   let localConfig = null
 
