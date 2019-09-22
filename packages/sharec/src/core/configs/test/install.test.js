@@ -5,6 +5,7 @@ const { installConfig } = require('../install')
 describe('processors > configs >', () => {
   const eslintBaseFxt = fixtures('eslint/json/01-base', 'json')
   const eslintBaseFxtYaml = fixtures('eslint/yaml/01-base')
+  const npmignoreBaseFxt = fixtures('npmignore/lines/01-base')
 
   beforeEach(() => {
     vol.reset()
@@ -58,9 +59,9 @@ describe('processors > configs >', () => {
         configsPath: '/configuration-package/configs',
       })
 
-      expect(vol.readFileSync('/target/.eslintrc.yaml', 'utf8')).toWraplessEqual(
-        eslintBaseFxtYaml.result,
-      )
+      expect(
+        vol.readFileSync('/target/.eslintrc.yaml', 'utf8'),
+      ).toWraplessEqual(eslintBaseFxtYaml.result)
     })
 
     it('should copy all non-mergeable configs', async () => {
@@ -107,6 +108,31 @@ describe('processors > configs >', () => {
 
       expect(vol.readFileSync('/target/foo/bar/.editorconfig', 'utf8')).toEqual(
         'bar',
+      )
+    })
+
+    it('should handle aliased files', async () => {
+      expect.assertions(1)
+
+      const dir = {
+        '/configuration-package/configs/npmignore': npmignoreBaseFxt.upcoming,
+        '/target/.npmignore': npmignoreBaseFxt.current,
+      }
+
+      vol.fromJSON(dir, '/')
+
+      await installConfig({
+        upcomingMeta: {
+          config: 'awesome-config',
+          version: '1.0.0',
+        },
+        targetPath: '/target',
+        configPath: 'npmignore',
+        configsPath: '/configuration-package/configs',
+      })
+
+      expect(vol.readFileSync('/target/.npmignore', 'utf8')).toEqual(
+        npmignoreBaseFxt.result,
       )
     })
   })

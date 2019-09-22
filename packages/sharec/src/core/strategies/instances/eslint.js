@@ -36,8 +36,10 @@ class EslintStrategy extends Strategy {
 }
 
 const eslintStrategy = new EslintStrategy({
-  json: ['eslintConfig', '.eslintrc', 'eslintrc.json'],
-  yaml: ['eslintrc.yml', 'eslintrc.yaml', '.eslintrc.yml', '.eslintrc.yaml'],
+  matchers: {
+    json: ['eslintConfig', '.eslintrc', 'eslintrc.json'],
+    yaml: ['eslintrc.yml', 'eslintrc.yaml', '.eslintrc.yml', '.eslintrc.yaml'],
+  },
 })
 
 module.exports = {

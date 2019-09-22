@@ -1,5 +1,7 @@
 const path = require('path')
 const { diffLines } = require('diff')
+const without = require('lodash/without')
+const difference = require('lodash/difference')
 const { mergeLists, listsDiff } = require('../../utils/lists')
 const { hashesDiff, hashWithoutChangedFields } = require('../../utils/hashes')
 const { transformJSONInput } = require('../../utils/json')
@@ -13,14 +15,15 @@ const { transformYAMLInput, toYaml } = require('../../utils/yaml')
  */
 class Strategy {
   /**
-   * @param {Matchers} matchers
+   * @param {Matchers} options.matchers
    */
-  constructor(matchers) {
-    this.matchers = matchers || {
+  constructor(options = {}) {
+    this.matchers = options.matchers || {
       json: [/\.json/],
       yaml: [/\.ya?ml/],
       lines: [/\.txt/],
     }
+    this.alias = options.alias
   }
 
   /**
@@ -60,6 +63,22 @@ class Strategy {
 
       return match === baseFileName
     })
+  }
+
+  /**
+   * @param {String} fileName
+   * @returns {String}
+   */
+  getAliasedFileName(fileName) {
+    if (!this.alias) {
+      return fileName
+    }
+
+    if (this.isExpectedStrategy(fileName)) {
+      return this.alias
+    }
+
+    return fileName
   }
 
   /**
@@ -177,13 +196,16 @@ class Strategy {
    * @returns {String}
    */
   mergeLines({ current, upcoming }) {
-    return diffLines(current, upcoming).reduce((acc, line) => {
-      if (line.added) {
-        return [acc, line.value].join('')
-      }
+    const aLines = current.split('\n')
+    const bLines = upcoming.split('\n')
 
-      return acc
-    }, current)
+    // EOL support
+    return (
+      aLines
+        .concat(difference(bLines, aLines))
+        .filter(line => !!line)
+        .join('\n') + '\n'
+    )
   }
 
   /**
@@ -211,8 +233,7 @@ class Strategy {
    * @returns {Object|Array}
    */
   unapplyJSON({ current, upcoming, cached }) {
-    // TODO: do it with cache
-    const [a, b, c] = transformJSONInput(current, upcoming, cached)
+    const [a, b] = transformJSONInput(current, upcoming, cached)
 
     if (Array.isArray(a) && Array.isArray(b)) {
       return this.unapplyJSONLists({
@@ -267,19 +288,13 @@ class Strategy {
    */
   unapplyLines({ current, upcoming }) {
     const aLines = current.split('\n')
-    const restoredConfig = []
+    const bLines = upcoming.split('\n')
+    const restoredLines = without(aLines, ...bLines)
 
-    diffLines(current, upcoming).forEach(line => {
-      const lineIdx = aLines.indexOf(line.value.replace(/\n$/, ''))
+    if (restoredLines.length === 0) return ''
 
-      if (line.removed && lineIdx !== -1) {
-        restoredConfig.push(line.value)
-      }
-    })
-
-    if (restoredConfig.length === 0) return ''
-
-    return restoredConfig.join('\n')
+    // EOL support
+    return restoredLines.join('\n') + '\n'
   }
 
   /**

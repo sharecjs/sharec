@@ -1,8 +1,4 @@
-on:
-  pull_request:
-    branches:
-    - develop
-    - master
+on: [push, pull_request]
 
 jobs:
   test:

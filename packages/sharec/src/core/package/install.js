@@ -16,6 +16,7 @@ const installPackageJson = async ({
   upcomingMeta,
   configsPath,
   targetPath,
+  overwrite,
 }) => {
   const configCache = installedMeta
     ? await loadConfigCache({
@@ -41,10 +42,18 @@ const installPackageJson = async ({
         configs: newConfigs,
         configsCache: cachedPackageJson,
       }),
-      injectMetaData(upcomingMeta),
+      injectMetaData({
+        meta: upcomingMeta,
+        skip: overwrite,
+      }),
     )(targetPackageJson)
   } catch (err) {
-    newPackageJson = pipe(injectMetaData(upcomingMeta))(targetPackageJson)
+    newPackageJson = pipe(
+      injectMetaData({
+        meta: upcomingMeta,
+        skip: overwrite,
+      }),
+    )(targetPackageJson)
   }
 
   await writeFile(
@@ -88,13 +97,19 @@ const injectConfigs = ({ configs, configsCache }) => packageJson => {
  * @param {MetaData} meta
  * @returns {Function}
  */
-const injectMetaData = meta => packageJson => ({
-  ...packageJson,
-  sharec: {
-    config: meta.config,
-    version: meta.version,
-  },
-})
+const injectMetaData = ({ meta, skip }) => packageJson => {
+  if (skip) {
+    return packageJson
+  }
+
+  return {
+    ...packageJson,
+    sharec: {
+      config: meta.config,
+      version: meta.version,
+    },
+  }
+}
 
 module.exports = {
   installPackageJson,

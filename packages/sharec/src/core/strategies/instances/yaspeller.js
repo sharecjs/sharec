@@ -67,7 +67,9 @@ class YaspellerStrategy extends Strategy {
 }
 
 const yaspellerStrategy = new YaspellerStrategy({
-  json: ['yaspeller', '.yaspellerrc', '.yaspeller.json'],
+  matchers: {
+    json: ['yaspeller', '.yaspellerrc', '.yaspeller.json'],
+  },
 })
 
 module.exports = {

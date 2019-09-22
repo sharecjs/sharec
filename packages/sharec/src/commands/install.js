@@ -10,7 +10,8 @@ const installedMessage = require('../cli/messages')
 /**
  * @param {String} options.configsPath
  * @param {String} options.targetPath
- * @param {Object} options
+ * @param {Object} options.options
+ * @param {Boolean} [options.overwrite]
  * @returns {Promise<void>}
  */
 async function install({ configsPath, targetPath, options = {} }) {
@@ -50,7 +51,7 @@ async function install({ configsPath, targetPath, options = {} }) {
       upcomingMeta,
       configsPath,
       targetPath,
-      options,
+      overwrite: options.overwrite,
     })
 
     spinner.succeed('configuration applyed, have a nice time!')

@@ -1,5 +1,10 @@
 const { vol } = require('memfs')
-const { normalizePathSlashes, flatSearch, safeMakeDir } = require('../fs')
+const {
+  normalizePathSlashes,
+  flatSearch,
+  safeReadFile,
+  safeMakeDir,
+} = require('../fs')
 
 describe('utils > fs >', () => {
   beforeEach(() => {
@@ -27,6 +32,34 @@ describe('utils > fs >', () => {
     })
   })
 
+  describe('safeReadFile', () => {
+    it('should return file content by given path', async () => {
+      expect.assertions(1)
+
+      const dir = {
+        'target/file.txt': 'foo',
+      }
+      vol.fromJSON(dir, '/')
+
+      const res = await safeReadFile('/target/file.txt', 'utf8')
+
+      expect(res).toEqual('foo')
+    })
+
+    it('should return null if target file is not exists', async () => {
+      expect.assertions(1)
+
+      const dir = {
+        'target/file.txt': 'foo',
+      }
+      vol.fromJSON(dir, '/')
+
+      const res = await safeReadFile('/target/other-file.txt', 'utf8')
+
+      expect(res).toEqual(null)
+    })
+  })
+
   describe('flatSearch', () => {
     const dir = {
       '.bar': 'bar',
@@ -49,7 +82,15 @@ describe('utils > fs >', () => {
       })
 
       expect(res).toHaveLength(5)
-      expect(res).toEqual(expect.arrayContaining(['.bar', 'foo/.foo', 'baz/baz/baz.txt', 'baz/baz/bar.txt', 'baz/baz/.foo']))
+      expect(res).toEqual(
+        expect.arrayContaining([
+          '.bar',
+          'foo/.foo',
+          'baz/baz/baz.txt',
+          'baz/baz/bar.txt',
+          'baz/baz/.foo',
+        ]),
+      )
     })
 
     it('should find all files paths in target dir which to equals to root', async () => {

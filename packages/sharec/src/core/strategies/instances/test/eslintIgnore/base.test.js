@@ -4,7 +4,7 @@ const { eslintIgnoreStrategy } = require('../../eslintIgnore')
 describe('strategy > eslintignore', () => {
   const eslintignoreBaseFxt = fixtures('eslintignore/lines/01-base')
   const eslintignoreArrayLikeFxt = fixtures(
-    'eslintignore/lines/02-array-like',
+    'eslintignore/json/01-array-like',
     'json',
   )
 

@@ -48,12 +48,26 @@ describe('core > package > install >', () => {
         version: '1.0.0',
         config: 'awesome-config',
       }
-      const res = injectMetaData(metaData)(packageBaseInstallFxt.current)
+      const res = injectMetaData({ meta: metaData })(
+        packageBaseInstallFxt.current,
+      )
 
       expect(res).toEqual({
         ...packageBaseInstallFxt.current,
         sharec: metaData,
       })
+    })
+
+    it('should returns unmodified object if skip if passed', () => {
+      const metaData = {
+        version: '1.0.0',
+        config: 'awesome-config',
+      }
+      const res = injectMetaData({ skip: true, meta: metaData })(
+        packageBaseInstallFxt.current,
+      )
+
+      expect(res).toEqual(packageBaseInstallFxt.current)
     })
   })
 })

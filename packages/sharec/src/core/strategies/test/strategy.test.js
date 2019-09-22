@@ -40,9 +40,11 @@ describe('Strategy', () => {
     ]
 
     strategy = new Strategy({
-      json: validFiles.slice(0, 2),
-      yaml: validFiles.slice(2, 4),
-      lines: validFiles.slice(4, 6),
+      matchers: {
+        json: validFiles.slice(0, 2),
+        yaml: validFiles.slice(2, 4),
+        lines: validFiles.slice(4, 6),
+      },
     })
 
     validFiles.forEach(file => {
@@ -110,6 +112,31 @@ describe('Strategy', () => {
       expect(strategy.determineUnapplyMethod('foo/bar/example.txt')).toBe(
         unapplyLinesMock,
       )
+    })
+  })
+
+  describe('aliasing', () => {
+    it('should return filename alias by given filename', () => {
+      strategy = new Strategy({
+        matchers: {
+          lines: ['npmignore'],
+        },
+        alias: '.npmignore',
+      })
+
+      expect(strategy.getAliasedFileName('npmignore')).toEqual('.npmignore')
+      expect(strategy.getAliasedFileName('.gitignore')).toEqual('.gitignore')
+    })
+
+    it('should return given filename if alias if not defined', () => {
+      strategy = new Strategy({
+        matchers: {
+          lines: ['npmignore'],
+        },
+      })
+
+      expect(strategy.getAliasedFileName('npmignore')).toEqual('npmignore')
+      expect(strategy.getAliasedFileName('.gitignore')).toEqual('.gitignore')
     })
   })
 
