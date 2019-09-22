@@ -16,9 +16,12 @@ and sharec provide strategies for this purposes.
 
 For this moment, sharec provides strategies for following tools:
 
+- `npmignore`
 - `eslint`
+- `eslintignore`
 - `babel`
 - `yaspeller`
+- `browserslist`
 
 You can create your own strategy and open pull request, or request it in the project issues.
 
@@ -30,7 +33,7 @@ Sharec uses a very simple and serial flow:
 2. Removing old configuration
 3. Installing new configuration
 
-All changes, which you made in `.json` or `.yaml` files – will be saved.
+All changes, which you made in `.json` or `.yaml` files - will be saved.
 
 **`.js` and other files would be fully rewrited**! Update it on the configuration-level!
 
@@ -57,7 +60,7 @@ Example:
 
 Options:
 
-**`--silent`** – hides all outputs from `sharec` in CLI.
+**`--silent`** - hides all outputs from `sharec` in CLI.
 
 Example:
 
@@ -69,7 +72,7 @@ Example:
 }
 ```
 
-**`--overwrite`** – force `sharec` to replace all configs without merging and caching.
+**`--overwrite`** - force `sharec` to replace all configs without merging and caching.
 
 Example:
 
