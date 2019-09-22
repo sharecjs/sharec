@@ -1,5 +1,5 @@
 const { join } = require('path')
-const { makeDir, readDir, lstat } = require('./std').fs
+const { readFile, makeDir, readDir, lstat } = require('./std').fs
 const slash = require('slash')
 
 /**
@@ -18,6 +18,18 @@ const safeMakeDir = async path => {
       recursive: true,
     })
   } catch (err) {}
+}
+
+/**
+ * @param {String} path
+ * @returns {Promise<void>}
+ */
+const safeReadFile = async path => {
+  try {
+    return await readFile(path, 'utf8')
+  } catch (err) {
+    return null
+  }
 }
 
 /**
@@ -76,6 +88,7 @@ const flatSearch = async ({ path, pattern, root = true }) => {
 
 module.exports = {
   normalizePathSlashes,
+  safeReadFile,
   safeMakeDir,
   flatSearch,
 }

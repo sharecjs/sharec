@@ -3,7 +3,10 @@ const Strategy = require('../Strategy')
 class NPMIgnoreStrategy extends Strategy {}
 
 const npmIgnoreStrategy = new NPMIgnoreStrategy({
-  lines: ['.npmignore'],
+  matchers: {
+    lines: ['.npmignore', 'npmignore'],
+  },
+  alias: '.npmignore',
 })
 
 module.exports = {

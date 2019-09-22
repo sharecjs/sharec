@@ -13,14 +13,15 @@ const { transformYAMLInput, toYaml } = require('../../utils/yaml')
  */
 class Strategy {
   /**
-   * @param {Matchers} matchers
+   * @param {Matchers} options.matchers
    */
-  constructor(matchers) {
-    this.matchers = matchers || {
+  constructor(options = {}) {
+    this.matchers = options.matchers || {
       json: [/\.json/],
       yaml: [/\.ya?ml/],
       lines: [/\.txt/],
     }
+    this.alias = options.alias
   }
 
   /**
@@ -60,6 +61,22 @@ class Strategy {
 
       return match === baseFileName
     })
+  }
+
+  /**
+   * @param {String} fileName
+   * @returns {String}
+   */
+  getAliasedFileName(fileName) {
+    if (!this.alias) {
+      return fileName
+    }
+
+    if (this.isExpectedStrategy(fileName)) {
+      return this.alias
+    }
+
+    return fileName
   }
 
   /**
