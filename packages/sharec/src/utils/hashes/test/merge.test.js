@@ -21,6 +21,15 @@ describe('utils > hashes > merge', () => {
         bar: 'baz',
       })
     })
+
+    it('should return current config if upcoming if empty', () => {
+      const foo = {
+        foo: 'bar',
+      }
+      const bar = {}
+
+      expect(mergeHashes(foo, bar)).toEqual(foo)
+    })
   })
 
   describe('mergeHashesWithKeys', () => {

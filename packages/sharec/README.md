@@ -22,6 +22,7 @@ For this moment, sharec provides strategies for following tools:
 - `babel`
 - `yaspeller`
 - `browserslist`
+- `postcss`
 
 You can create your own strategy and open pull request, or request it in the project issues.
 
