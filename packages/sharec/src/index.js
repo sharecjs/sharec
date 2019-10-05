@@ -1,5 +1,8 @@
 const { install, remove, version } = require('./commands')
-const { isTargetDependantOfSharec } = require('./core/package/extract')
+const {
+  isTargetDependantOfSharec,
+  isTargetPackageInSharecIgnore,
+} = require('./core/package/extract')
 
 async function sharec({ configsPath, targetPath, command, options }) {
   if (command === 'version') {
@@ -8,8 +11,9 @@ async function sharec({ configsPath, targetPath, command, options }) {
   }
 
   const isIndependantOfSharec = await isTargetDependantOfSharec(targetPath)
+  const isIgnoresSharecConfigs = await isTargetPackageInSharecIgnore(targetPath)
 
-  if (isIndependantOfSharec) return
+  if (isIndependantOfSharec || isIgnoresSharecConfigs) return
 
   switch (command) {
     case 'remove':
