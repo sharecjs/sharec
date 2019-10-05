@@ -17,7 +17,6 @@ const installedMessage = require('../cli/messages')
 async function install({ configsPath, targetPath, options = {} }) {
   const upcomingMeta = await getUpcomingPackageJsonMetaData(configsPath)
   const installedMeta = await getCurrentPackageJsonMetaData(targetPath)
-
   const isSilentMode = options.silent
   const isMetaMatched =
     installedMeta && installedMeta.version === upcomingMeta.version
