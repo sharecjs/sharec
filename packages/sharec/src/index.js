@@ -9,8 +9,7 @@ async function sharec({ configsPath, targetPath, command, options }) {
 
   const isIndependantOfSharec = await isTargetDependantOfSharec(targetPath)
 
-
-  if (!isIndependantOfSharec) return
+  if (isIndependantOfSharec) return
 
   switch (command) {
     case 'remove':
