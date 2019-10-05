@@ -93,6 +93,18 @@ Removes installed configuration from target project. Modified fields will be sav
 
 **Highly recommend to avoid using that command in `preuninstall` and similar `npm` scripts**!
 
+## Ignoring configuration
+
+If you want to force upcoming `sharec` configs – just add `ignore` flat to your projects's `sharec` field:
+
+```json
+{
+  "sharec": {
+    "ignore": true
+  }
+}
+```
+
 ## Potential use-cases
 
 You can use sharec not only for configuration management, you can also use it for:

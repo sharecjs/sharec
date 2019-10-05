@@ -7,6 +7,7 @@ const {
   getCurrentPackageJsonMetaData,
   getUpcomingPackageJsonMetaData,
   isTargetDependantOfSharec,
+  isTargetPackageInSharecIgnore,
 } = require('../extract')
 
 describe('core > package > extract >', () => {
@@ -123,9 +124,9 @@ describe('core > package > extract >', () => {
       const dir = {
         '/target/package.json': JSON.stringify({
           dependencies: {
-            sharec: '1.0.0'
-          }
-        })
+            sharec: '1.0.0',
+          },
+        }),
       }
       vol.fromJSON(dir, '/')
 
@@ -139,9 +140,8 @@ describe('core > package > extract >', () => {
 
       const dir = {
         '/target/package.json': JSON.stringify({
-          dependencies: {
-          }
-        })
+          dependencies: {},
+        }),
       }
       vol.fromJSON(dir, '/')
 
@@ -154,12 +154,43 @@ describe('core > package > extract >', () => {
       expect.assertions(1)
 
       const dir = {
-        '/target/package.json': JSON.stringify({
-                  })
+        '/target/package.json': JSON.stringify({}),
       }
       vol.fromJSON(dir, '/')
 
       const res = await isTargetDependantOfSharec('/target')
+
+      expect(res).toBe(false)
+    })
+  })
+
+  describe('isTargetPackageInSharecIgnore', () => {
+    it('should return sharec ignore status from target', async () => {
+      expect.assertions(1)
+
+      const dir = {
+        '/target/package.json': JSON.stringify({
+          sharec: {
+            ignore: true,
+          },
+        }),
+      }
+      vol.fromJSON(dir, '/')
+
+      const res = await isTargetPackageInSharecIgnore('/target')
+
+      expect(res).toBe(true)
+    })
+
+    it('should return fasle if sharec field is not exist', async () => {
+      expect.assertions(1)
+
+      const dir = {
+        '/target/package.json': JSON.stringify({}),
+      }
+      vol.fromJSON(dir, '/')
+
+      const res = await isTargetPackageInSharecIgnore('/target')
 
       expect(res).toBe(false)
     })

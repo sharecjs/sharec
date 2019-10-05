@@ -83,10 +83,21 @@ const isTargetDependantOfSharec = async targetPath => {
   return Object.keys(targetPackageJson.dependencies).includes('sharec')
 }
 
+const isTargetPackageInSharecIgnore = async targetPath => {
+  const targetPackageJsonPath = path.resolve(targetPath, 'package.json')
+  const rawTargetPackageJson = await readFile(targetPackageJsonPath, 'utf8')
+  const targetPackageJson = JSON.parse(rawTargetPackageJson)
+
+  if (!targetPackageJson.sharec) return false
+
+  return targetPackageJson.sharec.ignore
+}
+
 module.exports = {
   extractConfigs,
   extractMetaData,
   getCurrentPackageJsonMetaData,
   getUpcomingPackageJsonMetaData,
   isTargetDependantOfSharec,
+  isTargetPackageInSharecIgnore,
 }

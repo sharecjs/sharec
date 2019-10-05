@@ -119,6 +119,60 @@ describe('sharec', () => {
         },
       })
     })
+
+    it('should not install any configs if target has sharec ignore flag', async () => {
+      expect.assertions(5)
+
+      const dir = {
+        '/target/.eslintrc': JSON.stringify(eslintBaseFxt.current),
+        '/target/babelrc.json': JSON.stringify(babelBaseFxt.current),
+        '/target/.eslintrc.yaml': eslintBaseFxtYaml.current,
+        '/target/package.json': JSON.stringify({
+          ...packageInstallJsonBaseFxt.current,
+          sharec: {
+            ignore: true,
+          },
+        }),
+        '/configuration-package/configs/.eslintrc': JSON.stringify(
+          eslintBaseFxt.upcoming,
+        ),
+        '/configuration-package/configs/.eslintrc.yaml':
+          eslintBaseFxtYaml.upcoming,
+        '/configuration-package/configs/.editorconfig': 'bar',
+        '/configuration-package/configs/babelrc.json': JSON.stringify(
+          babelBaseFxt.upcoming,
+        ),
+        '/configuration-package/configs/package.json': JSON.stringify(
+          packageInstallJsonBaseFxt.upcoming,
+        ),
+      }
+      vol.fromJSON(dir, '/')
+
+      await sharec({
+        configsPath: '/configuration-package',
+        targetPath: '/target',
+        command: 'install',
+      })
+
+      expect(vol.readdirSync('/target')).not.toContain('.editorconfig')
+      expect(
+        JSON.parse(vol.readFileSync('/target/babelrc.json', 'utf8')),
+      ).toEqual(babelBaseFxt.current)
+      expect(JSON.parse(vol.readFileSync('/target/.eslintrc', 'utf8'))).toEqual(
+        eslintBaseFxt.current,
+      )
+      expect(
+        vol.readFileSync('/target/.eslintrc.yaml', 'utf8'),
+      ).toWraplessEqual(eslintBaseFxtYaml.current)
+      expect(
+        JSON.parse(vol.readFileSync('/target/package.json', 'utf8')),
+      ).toEqual({
+        ...packageInstallJsonBaseFxt.current,
+        sharec: {
+          ignore: true,
+        },
+      })
+    })
   })
 
   describe('remove', () => {

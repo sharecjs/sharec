@@ -4,5 +4,8 @@
   "license": "MIT",
   "devDependencies": {
     "lerna": "^3.13.4"
+  },
+  "sharec": {
+    "ignore": true
   }
 }
