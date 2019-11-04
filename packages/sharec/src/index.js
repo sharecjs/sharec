@@ -1,10 +1,23 @@
+const minimist = require('minimist')
 const { install, remove, version } = require('./commands')
 const {
   isTargetDependantOfSharec,
   isTargetPackageInSharecIgnore,
 } = require('./core/package/extract')
 
-async function sharec({ configsPath, targetPath, command, options }) {
+/**
+ * @param {NodeJS.Process} targetProcess
+ * @returns {Promise<void>}
+ */
+async function sharec(targetProcess) {
+  const { _, ...options } = minimist(targetProcess.argv.slice(2))
+  const configsPath = targetProcess.env.PWD
+  const targetPath = targetProcess.env.INIT_CWD
+
+  if (!configsPath || configsPath === targetPath) return
+
+  const [command = 'install'] = _
+
   if (command === 'version') {
     await version(configsPath)
     return

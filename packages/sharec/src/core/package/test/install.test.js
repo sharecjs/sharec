@@ -1,5 +1,5 @@
 const { vol } = require('memfs')
-const { installPackageJson, injectMetaData } = require('../install')
+const { installPackageJson, injectMeta } = require('../install')
 const { fixtures } = require('testUtils')
 
 describe('core > package > install >', () => {
@@ -42,32 +42,25 @@ describe('core > package > install >', () => {
     })
   })
 
-  describe('injectMetaData', () => {
-    it('should inject sharec meta-data', () => {
+  describe('injectMeta', () => {
+    it('should inject sharec meta-data', async () => {
       const metaData = {
         version: '1.0.0',
         config: 'awesome-config',
       }
-      const res = injectMetaData({ meta: metaData })(
-        packageBaseInstallFxt.current,
-      )
+      const dir = {
+        '/target/package.json': JSON.stringify({}),
+      }
 
-      expect(res).toEqual({
-        ...packageBaseInstallFxt.current,
+      vol.fromJSON(dir, '/')
+
+      await injectMeta({ targetPath: '/target', meta: metaData })
+
+      expect(
+        JSON.parse(vol.readFileSync('/target/package.json', 'utf8')),
+      ).toEqual({
         sharec: metaData,
       })
-    })
-
-    it('should returns unmodified object if skip if passed', () => {
-      const metaData = {
-        version: '1.0.0',
-        config: 'awesome-config',
-      }
-      const res = injectMetaData({ skip: true, meta: metaData })(
-        packageBaseInstallFxt.current,
-      )
-
-      expect(res).toEqual(packageBaseInstallFxt.current)
     })
   })
 })

@@ -1,3 +1,4 @@
+// TODO: works awfull, need to rewrite all matchers
 const diff = require('jest-diff')
 
 expect.extend({
@@ -7,8 +8,10 @@ expect.extend({
       isNot: this.isNot,
       promise: this.promise,
     }
-    const normalizeWraps = str => str.replace(/(\r\n|\n\r)/ig, '\n')
-    const [received, expected] = [rawReceived, rawExpected].map(arg => normalizeWraps(arg))
+    const normalizeWraps = str => str.replace(/(\r\n|\n\r)/gi, '\n')
+    const [received, expected] = [rawReceived, rawExpected].map(arg =>
+      normalizeWraps(arg),
+    )
     const pass = received === expected
     const messageParts = [
       this.utils.matcherHint('toWraplessEqual', undefined, undefined, options),
@@ -16,10 +19,12 @@ expect.extend({
     ]
 
     if (pass) {
-      messageParts.push(...[
-        `Expected: ${this.utils.printExpected(expected)}`,
-        `Received: ${this.utils.printExpected(received)}`
-      ])
+      messageParts.push(
+        ...[
+          `Expected: ${this.utils.printExpected(expected)}`,
+          `Received: ${this.utils.printExpected(received)}`,
+        ],
+      )
 
       return {
         actual: received,
@@ -29,16 +34,18 @@ expect.extend({
     }
 
     const diffString = diff(received, expected, {
-      expand: this.expand
+      expand: this.expand,
     })
 
     if (diffString && diffString.includes('- Expect')) {
       messageParts.push(['Difference:\n', diffString])
     } else {
-      messageParts.push(...[
-        `Expected: ${this.utils.printExpected(expected)}`,
-        `Received: ${this.utils.printExpected(received)}`
-      ])
+      messageParts.push(
+        ...[
+          `Expected: ${this.utils.printExpected(expected)}`,
+          `Received: ${this.utils.printExpected(received)}`,
+        ],
+      )
     }
 
     return {
@@ -46,5 +53,5 @@ expect.extend({
       message: () => messageParts.join('\n'),
       pass,
     }
-  }
+  },
 })

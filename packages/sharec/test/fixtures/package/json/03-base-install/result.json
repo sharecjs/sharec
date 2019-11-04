@@ -66,9 +66,5 @@
     "husky": "^2.2.0",
     "lint-staged": "^8.1.6",
     "prettier": "^1.17.1"
-  },
-  "sharec": {
-    "config": "awesome-config",
-    "version": "1.0.0"
   }
 }

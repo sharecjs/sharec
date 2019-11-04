@@ -61,7 +61,13 @@ describe('commands > install > base >', () => {
 
     expect(
       JSON.parse(vol.readFileSync('/target/package.json', 'utf8')),
-    ).toEqual(packageJsonBaseInstallFxt.result)
+    ).toEqual({
+      ...packageJsonBaseInstallFxt.result,
+      sharec: {
+        config: 'awesome-config',
+        version: '1.0.0',
+      },
+    })
     expect(vol.readdirSync('/target')).not.toContain('package-lock.json')
     expect(vol.readFileSync('/target/.editorconfig', 'utf8')).toEqual('bar')
     expect(JSON.parse(vol.readFileSync('/target/.babelrc', 'utf8'))).toEqual(

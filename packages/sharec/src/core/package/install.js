@@ -42,19 +42,8 @@ const installPackageJson = async ({
         configs: newConfigs,
         configsCache: cachedPackageJson,
       }),
-      injectMetaData({
-        meta: upcomingMeta,
-        skip: overwrite,
-      }),
     )(targetPackageJson)
-  } catch (err) {
-    newPackageJson = pipe(
-      injectMetaData({
-        meta: upcomingMeta,
-        skip: overwrite,
-      }),
-    )(targetPackageJson)
-  }
+  } catch (err) {}
 
   await writeFile(
     targetPackageJsonPath,
@@ -94,25 +83,31 @@ const injectConfigs = ({ configs, configsCache }) => packageJson => {
 }
 
 /**
- * @param {MetaData} meta
- * @returns {Function}
+ * @param {Object} options
+ * @param {String} options.targetPath
+ * @param {MetaData} options.meta
+ * @returns {Promise<void>}
  */
-const injectMetaData = ({ meta, skip }) => packageJson => {
-  if (skip) {
-    return packageJson
-  }
+const injectMeta = async ({ targetPath, meta }) => {
+  const targetPackageJsonPath = path.resolve(targetPath, 'package.json')
+  const rawTargetPackageJson = await readFile(targetPackageJsonPath)
+  const targetPackageJson = JSON.parse(rawTargetPackageJson)
 
-  return {
-    ...packageJson,
-    sharec: {
-      config: meta.config,
-      version: meta.version,
-    },
-  }
+  await writeFile(
+    targetPackageJsonPath,
+    JSON.stringify(
+      {
+        ...targetPackageJson,
+        sharec: meta,
+      },
+      null,
+      2,
+    ),
+  )
 }
 
 module.exports = {
   installPackageJson,
   injectConfigs,
-  injectMetaData,
+  injectMeta,
 }
