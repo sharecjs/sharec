@@ -3,7 +3,11 @@ const { diffLines } = require('diff')
 const without = require('lodash/without')
 const difference = require('lodash/difference')
 const { mergeLists, listsDiff } = require('../../utils/lists')
-const { hashesDiff, hashWithoutChangedFields } = require('../../utils/hashes')
+const {
+  hashesDiff,
+  hashWithoutChangedFields,
+  hashWithoutUnchangedFields,
+} = require('../../utils/hashes')
 const { transformJSONInput } = require('../../utils/json')
 const { transformYAMLInput, toYaml } = require('../../utils/yaml')
 
@@ -146,11 +150,13 @@ class Strategy {
    * @param {Object} b
    * @returns {Object}
    */
-  mergeJSONHashes({ current = {}, upcoming = {}, cached }) {
+  mergeJSONHashes({ current, upcoming, cached }) {
     if (cached) {
+      const changedByUserFields = hashWithoutUnchangedFields(current, cached)
+
       return {
-        ...current,
-        ...hashWithoutChangedFields(upcoming, cached),
+        ...upcoming,
+        ...changedByUserFields,
       }
     }
 
@@ -221,7 +227,8 @@ class Strategy {
      * @returns {Object|Array|String}
      */
     return ({ current, upcoming, cached }) => {
-      if (!matchedMethod) return upcoming
+      if (!upcoming) return current
+      if (!current || !matchedMethod) return upcoming
 
       return matchedMethod.bind(this)({ current, upcoming, cached })
     }
@@ -311,10 +318,55 @@ class Strategy {
      * @returns {Object|String|Array}
      */
     return ({ current, upcoming, cached }) => {
-      if (!matchedMethod) return current
+      if (!upcoming || !matchedMethod) return current
 
       return matchedMethod.bind(this)({ current, upcoming, cached })
     }
+  }
+
+  /**
+   * WARNING: this is a very experemental thing and it should be used in the new version
+   * of sharec.
+   * Now it exists only for testing purposes!
+   */
+  unapplyCacheJSON({ current, cached }) {
+    const [a, b] = transformJSONInput(current, cached)
+
+    if (Array.isArray(a) || Array.isArray(b)) {
+      return this.unapplyCacheJSONLists({
+        current: a,
+        cached: b,
+      })
+    }
+
+    return this.unapplyCacheJSONHashes({
+      current: a,
+      cached: b,
+    })
+  }
+
+  unapplyCacheJSONHashes({ current, cached }) {
+    return hashWithoutUnchangedFields(current, cached)
+  }
+
+  unapplyCacheJSONLists({ current, cached }) {
+    return without(current, ...cached)
+  }
+
+  unapplyCacheYAML({ current, cached }) {
+    const [a, b] = transformYAMLInput(current, cached)
+    const cachelessConfig = this.unapplyCacheJSON({
+      current: a,
+      cached: b,
+    })
+
+    return toYaml(cachelessConfig)
+  }
+
+  unapplyCacheLines({ current, cached }) {}
+
+  unapplyCache(fileName) {
+    return ({ current, cached }) => {}
   }
 }
 

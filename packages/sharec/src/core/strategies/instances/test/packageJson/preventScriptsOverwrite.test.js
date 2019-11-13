@@ -18,15 +18,4 @@ describe('strategy > packageJson > prevent scripts overwrite', () => {
       ).toEqual(packageJsonPreventScriptsOverwriteFxt.result)
     })
   })
-
-  // describe('uapplying', () => {
-  //   it('should correctly unapply configs', () => {
-  //     expect(
-  //       npmIgnoreStrategy.unapply('.npmignore')({
-  //         current: npmignoreBaseFxt.result,
-  //         upcoming: npmignoreBaseFxt.upcoming,
-  //       }),
-  //     ).toEqual(npmignoreBaseFxt.restored)
-  //   })
-  // })
 })

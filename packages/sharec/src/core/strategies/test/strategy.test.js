@@ -195,6 +195,24 @@ describe('Strategy', () => {
         }),
       ).toEqual(commonPreventOverwriteFxt.result)
     })
+
+    it('should unapply cache from hashes', () => {
+      expect(
+        strategy.unapplyCacheJSON({
+          current: commonBaseFxt.current,
+          cached: commonBaseFxt.cached,
+        }),
+      ).toEqual(commonBaseFxt.uncached)
+    })
+
+    it('should unapply cache from lists', () => {
+      expect(
+        strategy.unapplyCacheJSON({
+          current: commonListsFxt.current,
+          cached: commonListsFxt.cached,
+        }),
+      ).toEqual(commonListsFxt.uncached)
+    })
   })
 
   describe('YAML', () => {
@@ -251,6 +269,24 @@ describe('Strategy', () => {
           cached: commonPreventOverwriteFxtYaml.cached,
         }),
       ).toWraplessEqual(commonPreventOverwriteFxtYaml.result)
+    })
+
+    it('should unapply cache from hashes', () => {
+      expect(
+        strategy.unapplyCacheYAML({
+          current: commonBaseFxtYaml.current,
+          cached: commonBaseFxtYaml.cached,
+        }),
+      ).toEqual(commonBaseFxtYaml.uncached)
+    })
+
+    it('should unapply cache from lists', () => {
+      expect(
+        strategy.unapplyCacheYAML({
+          current: commonListsFxtYaml.current,
+          cached: commonListsFxtYaml.cached,
+        }),
+      ).toEqual(commonListsFxtYaml.uncached)
     })
   })
 

@@ -39,6 +39,13 @@ describe('tasks > install > cache >', () => {
         version: '1.0.0',
       },
       configsPath: '/configuration-package',
+      configs: [
+        '.editorconfig',
+        '.eslintrc',
+        '.eslintrc.yaml',
+        'babelrc.json',
+        'package.json',
+      ],
       targetPath: '/target',
     })
 

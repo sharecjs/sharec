@@ -1,3 +1,5 @@
 {
-  "foo": "cached foo"
+  "foo": "cached foo",
+  "bar": "bar",
+  "baz": "baz"
 }

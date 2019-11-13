@@ -58,6 +58,7 @@ describe('tasks > install > prevent ovewrite >', () => {
         version: '1.0.0',
       },
       configsPath: '/configuration-package',
+      configs: ['package.json', 'common.json', 'common.yaml'],
       targetPath: '/target',
     })
 

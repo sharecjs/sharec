@@ -1,5 +1,4 @@
 const path = require('path')
-const { pipe } = require('../../utils')
 const { readFile, writeFile } = require('../../utils/std').fs
 const { resolveConfigStrategy } = require('../strategies/resolve')
 const { cacheConfig, loadConfigCache } = require('../cache')
@@ -28,22 +27,24 @@ const installPackageJson = async ({
   const targetPackageJsonPath = path.resolve(targetPath, 'package.json')
   const rawTargetPackageJson = await readFile(targetPackageJsonPath)
   const targetPackageJson = JSON.parse(rawTargetPackageJson)
-  const packageJsonPath = path.resolve(configsPath, 'package.json')
-  const rawPackageJson = await readFile(packageJsonPath, 'utf8')
+  const upcomingPackageJsonPath = path.resolve(configsPath, 'package.json')
+  const rawUpcomingPackageJson = await readFile(upcomingPackageJsonPath, 'utf8')
   let newPackageJson = { ...targetPackageJson }
 
   try {
     const cachedPackageJson = configCache ? JSON.parse(configCache) : {}
-    const packageJson = JSON.parse(rawPackageJson)
-    const newConfigs = extractConfigs(packageJson)
+    const rawPackageJson = JSON.parse(rawUpcomingPackageJson)
+    const newConfigs = extractConfigs(rawPackageJson)
 
-    newPackageJson = pipe(
-      injectConfigs({
-        configs: newConfigs,
-        configsCache: cachedPackageJson,
-      }),
-    )(targetPackageJson)
-  } catch (err) {}
+    newPackageJson = injectConfigs({
+      packageJson: targetPackageJson,
+      configs: newConfigs,
+      configsCache: cachedPackageJson,
+      overwrite,
+    })
+  } catch (err) {
+    console.log(err)
+  }
 
   await writeFile(
     targetPackageJsonPath,
@@ -53,28 +54,37 @@ const installPackageJson = async ({
   await cacheConfig({
     configsMeta: upcomingMeta,
     configPath: 'package.json',
-    configSource: rawPackageJson,
+    configSource: rawUpcomingPackageJson,
     targetPath,
   })
 }
 
-const injectConfigs = ({ configs, configsCache }) => packageJson => {
+const injectConfigs = ({ packageJson, configs, configsCache, overwrite }) => {
   const updatedPackageJson = { ...packageJson }
 
-  Object.keys(configs).forEach(key => {
-    const strategy = resolveConfigStrategy(key)
+  Object.keys(configs).forEach(config => {
+    const targetStrategy = resolveConfigStrategy(config)
 
-    if (strategy) {
+    if (overwrite) {
       Object.assign(updatedPackageJson, {
-        [key]: strategy.merge(key)({
-          current: updatedPackageJson[key],
-          upcoming: configs[key],
-          cached: configsCache[key],
-        }),
+        [config]: configs[config],
+      })
+      return
+    }
+
+    if (targetStrategy) {
+      const mergedConfigField = targetStrategy.merge(config)({
+        current: updatedPackageJson[config],
+        upcoming: configs[config],
+        cached: configsCache[config],
+      })
+
+      Object.assign(updatedPackageJson, {
+        [config]: mergedConfigField,
       })
     } else {
       Object.assign(updatedPackageJson, {
-        [key]: configs[key],
+        [config]: configs[config],
       })
     }
   })

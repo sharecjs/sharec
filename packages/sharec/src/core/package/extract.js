@@ -3,12 +3,11 @@ const pick = require('lodash/pick')
 const path = require('path')
 const { readFile } = require('../../utils/std').fs
 
-const IGNORED_FIELDS = [
+const PACKEGE_JSON_IGNORED_FIELDS = [
   'sharec',
   'name',
   'version',
   'description',
-  'keywords',
   'homepage',
   'bugs',
   'license',
@@ -28,7 +27,8 @@ const IGNORED_FIELDS = [
  * @property {String} config
  */
 
-const extractConfigs = packageJson => omit(packageJson, IGNORED_FIELDS)
+const extractConfigs = packageJson =>
+  omit(packageJson, PACKEGE_JSON_IGNORED_FIELDS)
 
 /**
  * @param {Object} packageJson

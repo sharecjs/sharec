@@ -63,7 +63,13 @@ describe('sharec > install', () => {
     )
     expect(
       JSON.parse(vol.readFileSync('/target/package.json', 'utf8')),
-    ).toEqual(packageInstallJsonBaseFxt.result)
+    ).toEqual({
+      ...packageInstallJsonBaseFxt.result,
+      sharec: {
+        config: 'awesome-config',
+        version: '1.0.0',
+      },
+    })
   })
 
   it('should not install any configs if target dependant of sharec', async () => {
@@ -95,8 +101,6 @@ describe('sharec > install', () => {
     vol.fromJSON(dir, '/')
 
     await sharec(targetProcess)
-
-    console.log(vol.readdirSync('/'))
 
     expect(vol.readdirSync('/target')).not.toContain('.editorconfig')
     expect(
@@ -168,7 +172,7 @@ describe('sharec > install', () => {
     })
   })
 
-  it.skip('should support old meta data format', async () => {
+  it('should support old meta data format', async () => {
     const packageOldMetaJsonBaseFxt = fixtures(
       'package/json/12-old-meta',
       'json',
@@ -176,6 +180,7 @@ describe('sharec > install', () => {
 
     const dir = {
       '/target/package.json': JSON.stringify(packageOldMetaJsonBaseFxt.current),
+      '/configuration-package/configs/.gitkeep': '',
       '/configuration-package/package.json': JSON.stringify({
         name: 'awesome-config',
         version: '1.0.0',

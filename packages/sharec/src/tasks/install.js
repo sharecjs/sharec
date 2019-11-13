@@ -17,7 +17,7 @@ async function install({
   upcomingMeta,
   configsPath,
   targetPath,
-  configs,
+  configs = [],
   overwrite = false,
 }) {
   const fullConfigsPath = path.join(configsPath, './configs')

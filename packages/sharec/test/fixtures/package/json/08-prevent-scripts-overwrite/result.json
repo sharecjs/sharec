@@ -1,5 +1,5 @@
 {
   "start": "start script",
-  "test": "new test script",
-  "deploy": "deploy script"
+  "deploy": "deploy script",
+  "test": "new test script"
 }
