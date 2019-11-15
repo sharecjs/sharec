@@ -9,7 +9,11 @@ const {
   hashWithoutUnchangedFields,
 } = require('../../utils/hashes')
 const { transformJSONInput } = require('../../utils/json')
-const { transformYAMLInput, toYaml } = require('../../utils/yaml')
+const {
+  transformYAMLInput,
+  toYaml,
+  hasDoubleQuotes,
+} = require('../../utils/yaml')
 
 /**
  * @typedef {Object} Matchers
@@ -181,6 +185,7 @@ class Strategy {
    * @returns {String}
    */
   mergeYAML({ current, upcoming, cached }) {
+    const isDoubleQuotes = hasDoubleQuotes(current)
     const paramsInJSON = transformYAMLInput(current, upcoming)
 
     if (cached) {
@@ -193,7 +198,11 @@ class Strategy {
       cached: paramsInJSON[2] || null,
     })
 
-    return toYaml(newConfig)
+    if (!isDoubleQuotes) {
+      return toYaml(newConfig)
+    }
+
+    return toYaml(newConfig).replace(/'/gm, '"')
   }
 
   /**
@@ -279,13 +288,18 @@ class Strategy {
    * @returns {String}
    */
   unapplyYAML({ current, upcoming }) {
+    const isDoubleQuotes = hasDoubleQuotes(current)
     const [a, b] = transformYAMLInput(current, upcoming)
     const clearedConfig = this.unapplyJSON({
       current: a,
       upcoming: b,
     })
 
-    return toYaml(clearedConfig)
+    if (!isDoubleQuotes) {
+      return toYaml(clearedConfig)
+    }
+
+    return toYaml(clearedConfig).replace(/'/gm, '"')
   }
 
   /**

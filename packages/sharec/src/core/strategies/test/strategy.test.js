@@ -288,6 +288,29 @@ describe('Strategy', () => {
         }),
       ).toEqual(commonListsFxtYaml.uncached)
     })
+
+    describe('quotes styles', () => {
+      const singleQuotesYamlFxt = fixtures('common/yaml/05-single-quotes-style')
+      const doubleQuotesYamlFxt = fixtures('common/yaml/06-double-quotes-style')
+
+      it('should save single quotes style', () => {
+        expect(
+          strategy.mergeYAML({
+            current: singleQuotesYamlFxt.current,
+            upcoming: singleQuotesYamlFxt.upcoming,
+          }),
+        ).toEqual(singleQuotesYamlFxt.result)
+      })
+
+      it('should save double quotes style', () => {
+        expect(
+          strategy.mergeYAML({
+            current: doubleQuotesYamlFxt.current,
+            upcoming: doubleQuotesYamlFxt.upcoming,
+          }),
+        ).toEqual(doubleQuotesYamlFxt.result)
+      })
+    })
   })
 
   describe('Lines', () => {

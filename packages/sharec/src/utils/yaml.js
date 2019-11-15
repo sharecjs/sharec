@@ -1,6 +1,8 @@
 const yaml = require('js-yaml')
 const isEmpty = require('lodash/isEmpty')
 
+const hasDoubleQuotes = data => /"/.test(data)
+
 const fromYaml = data => yaml.safeLoad(data)
 
 const toYaml = data => {
@@ -12,6 +14,7 @@ const toYaml = data => {
 const transformYAMLInput = (...args) => args.map(arg => fromYaml(arg))
 
 module.exports = {
+  hasDoubleQuotes,
   fromYaml,
   toYaml,
   transformYAMLInput,
