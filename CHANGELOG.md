@@ -1,3 +1,29 @@
+# v2.13.0-beta
+
+This release includes updated installing flow and fixes a lot of bugs with
+cache handing and updating.
+
+The new algorithm should works as expected in the beggining:
+
+- Removes cached configs
+- Saves fields changed by user
+- Apply upcoming changes without user-changes overwriting
+
+Features:
+
+- Add double qoutes style supporting in YAML files (#76)
+- Backward compatibility for old meta format
+
+Fixes:
+
+- `overwrite` mode now correctly works with `package.json` configs
+- `.gitignore` and `.travis.yml` ereasing during update (#75)
+- Another fix for dependencies merging
+
+Docs:
+
+- Add CHANGELOG.md
+
 # v2.12.1-beta
 
 Features:
