@@ -8,6 +8,7 @@ const { npmIgnoreStrategy } = require('./npmignore')
 const { gitIgnoreStrategy } = require('./gitignore')
 const { eslintIgnoreStrategy } = require('./eslintIgnore')
 const { packageJsonStrategy } = require('./packageJson')
+const { lintStagedStrategy } = require('./lintStaged')
 
 module.exports = {
   commonStrategy,
@@ -20,4 +21,5 @@ module.exports = {
   gitIgnoreStrategy,
   eslintIgnoreStrategy,
   packageJsonStrategy,
+  lintStagedStrategy,
 }

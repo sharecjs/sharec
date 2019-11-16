@@ -45,6 +45,13 @@ describe('tasks > install > base >', () => {
         config: 'awesome-config',
       },
       configsPath: '/configuration-package',
+      configs: [
+        '.eslintrc',
+        '.eslintrc.yaml',
+        '.editorconfig',
+        'babelrc.json',
+        'package.json',
+      ],
       targetPath: '/target',
     })
 
@@ -60,6 +67,12 @@ describe('tasks > install > base >', () => {
     )
     expect(
       JSON.parse(vol.readFileSync('/target/package.json', 'utf8')),
-    ).toEqual(packageInstallJsonBaseFxt.result)
+    ).toEqual({
+      ...packageInstallJsonBaseFxt.result,
+      sharec: {
+        version: '1.0.0',
+        config: 'awesome-config',
+      },
+    })
   })
 })

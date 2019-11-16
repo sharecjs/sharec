@@ -10,5 +10,5 @@ const collectConfigsPaths = async configsPath => {
 }
 
 module.exports = {
-  collectConfigsPaths
+  collectConfigsPaths,
 }

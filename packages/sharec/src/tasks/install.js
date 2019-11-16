@@ -1,7 +1,6 @@
 const path = require('path')
-const { collectConfigsPaths } = require('../core/configs/collect')
 const { installConfig } = require('../core/configs/install')
-const { installPackageJson } = require('../core/package/install')
+const { installPackageJson, injectMeta } = require('../core/package/install')
 
 /**
  * @param {Object} options.installedMeta
@@ -9,6 +8,7 @@ const { installPackageJson } = require('../core/package/install')
  * @param {String} options.configsPath
  * @param {String} options.targetPath
  * @param {Object} options.options
+ * @param {String[]} options.configs
  * @param {Boolean} [options.overwrite]
  * @returns {Promise}
  */
@@ -17,12 +17,12 @@ async function install({
   upcomingMeta,
   configsPath,
   targetPath,
+  configs = [],
   overwrite = false,
 }) {
   const fullConfigsPath = path.join(configsPath, './configs')
-  const collectedConfigsPaths = await collectConfigsPaths(fullConfigsPath)
 
-  if (collectedConfigsPaths.includes('package.json')) {
+  if (configs.includes('package.json')) {
     await installPackageJson({
       configsPath: fullConfigsPath,
       installedMeta,
@@ -32,7 +32,7 @@ async function install({
     })
   }
 
-  for (const configPath of collectedConfigsPaths) {
+  for (const configPath of configs) {
     if (!/(package\.json)/.test(configPath)) {
       await installConfig({
         configsPath: fullConfigsPath,
@@ -44,6 +44,11 @@ async function install({
       })
     }
   }
+
+  await injectMeta({
+    meta: upcomingMeta,
+    targetPath,
+  })
 }
 
 module.exports = install

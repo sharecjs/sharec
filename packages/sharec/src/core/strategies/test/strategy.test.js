@@ -195,6 +195,24 @@ describe('Strategy', () => {
         }),
       ).toEqual(commonPreventOverwriteFxt.result)
     })
+
+    it('should unapply cache from hashes', () => {
+      expect(
+        strategy.unapplyCacheJSON({
+          current: commonBaseFxt.current,
+          cached: commonBaseFxt.cached,
+        }),
+      ).toEqual(commonBaseFxt.uncached)
+    })
+
+    it('should unapply cache from lists', () => {
+      expect(
+        strategy.unapplyCacheJSON({
+          current: commonListsFxt.current,
+          cached: commonListsFxt.cached,
+        }),
+      ).toEqual(commonListsFxt.uncached)
+    })
   })
 
   describe('YAML', () => {
@@ -251,6 +269,47 @@ describe('Strategy', () => {
           cached: commonPreventOverwriteFxtYaml.cached,
         }),
       ).toWraplessEqual(commonPreventOverwriteFxtYaml.result)
+    })
+
+    it('should unapply cache from hashes', () => {
+      expect(
+        strategy.unapplyCacheYAML({
+          current: commonBaseFxtYaml.current,
+          cached: commonBaseFxtYaml.cached,
+        }),
+      ).toEqual(commonBaseFxtYaml.uncached)
+    })
+
+    it('should unapply cache from lists', () => {
+      expect(
+        strategy.unapplyCacheYAML({
+          current: commonListsFxtYaml.current,
+          cached: commonListsFxtYaml.cached,
+        }),
+      ).toEqual(commonListsFxtYaml.uncached)
+    })
+
+    describe('quotes styles', () => {
+      const singleQuotesYamlFxt = fixtures('common/yaml/05-single-quotes-style')
+      const doubleQuotesYamlFxt = fixtures('common/yaml/06-double-quotes-style')
+
+      it('should save single quotes style', () => {
+        expect(
+          strategy.mergeYAML({
+            current: singleQuotesYamlFxt.current,
+            upcoming: singleQuotesYamlFxt.upcoming,
+          }),
+        ).toEqual(singleQuotesYamlFxt.result)
+      })
+
+      it('should save double quotes style', () => {
+        expect(
+          strategy.mergeYAML({
+            current: doubleQuotesYamlFxt.current,
+            upcoming: doubleQuotesYamlFxt.upcoming,
+          }),
+        ).toEqual(doubleQuotesYamlFxt.result)
+      })
     })
   })
 

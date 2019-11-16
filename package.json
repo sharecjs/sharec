@@ -3,7 +3,7 @@
   "author": "Konstantin Epishev <lamartire@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "lerna": "^3.13.4"
+    "lerna": "^3.18.4"
   },
   "sharec": {
     "ignore": true

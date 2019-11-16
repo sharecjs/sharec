@@ -17,6 +17,7 @@ describe('commands > install > installed > ', () => {
 
     const packageJson = {
       sharec: {
+        config: 'awesome-config',
         version: '1.0.0',
       },
     }

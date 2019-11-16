@@ -8,7 +8,10 @@ const {
   deepMergeHashesWithoutKeys,
 } = require('./merge')
 const { hashesDiff, shallowHashesChangesDiff } = require('./diff')
-const { hashWithoutChangedFields } = require('./substract')
+const {
+  hashWithoutChangedFields,
+  hashWithoutUnchangedFields,
+} = require('./substract')
 
 module.exports = {
   withKeys,
@@ -22,4 +25,5 @@ module.exports = {
   hashesDiff,
   shallowHashesChangesDiff,
   hashWithoutChangedFields,
+  hashWithoutUnchangedFields,
 }

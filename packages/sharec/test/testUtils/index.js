@@ -4,6 +4,18 @@ const zipObject = require('lodash/zipObject')
 const pickBy = require('lodash/pickBy')
 
 /**
+ * Fixtures files set mapped by potential state
+ * All fields are optional!
+ * @typedef {Object} Fixtures
+ * @property {String} [current] Current file state fixture
+ * @property {String} [upcoming] Upcoming file state fixture
+ * @property {String} [result] File state fixture after merge
+ * @property {String} [restored] File state fixture after unapply
+ * @property {String} [cached] Cached file state fixture
+ * @property {String} [uncached] Uncached file state fixture
+ */
+
+/**
  * Returns fixture by given path
  * @param {String} path Path to fixture from test fixtures folder root
  * @param {String} format Fixture format. If it is not passed – returns fixture as
@@ -22,17 +34,6 @@ function fixture(path, format) {
 }
 
 /**
- * Fixtures files set mapped by potential state
- * All fields are optional!
- * @typedef {Object} Fixtures
- * @property {String} [current] Current file state fixture
- * @property {String} [upcoming] Upcoming file state fixture
- * @property {String} [result] File state fixture after merge
- * @property {String} [restored] File state fixture after unapply
- * @property {String} [cache] Cached file state fixture
- */
-
-/**
  * Returns fixtures set from given directory
  * If some file is not exists – skip it
  * @example
@@ -43,7 +44,8 @@ function fixture(path, format) {
  *   upcoming: '...',
  *   result: '...',
  *   restored: '...',
- *   cached: '...'
+ *   cached: '...',
+ *   uncached: '...'
  * }
  * @param {String} path Path to fixtures folder from test fixtures folder root
  * @param {String} [format] Fixture format. If it is not passed – returns fixture as
@@ -55,7 +57,14 @@ function fixtures(path, format) {
     arr.find(item => new RegExp(`^${key}`).test(item))
   const fixturesPath = resolve(__dirname, `../fixtures/${path}`)
   const files = readdirSync(fixturesPath)
-  const fixturesKeys = ['current', 'upcoming', 'result', 'restored', 'cached']
+  const fixturesKeys = [
+    'current',
+    'upcoming',
+    'result',
+    'restored',
+    'cached',
+    'uncached',
+  ]
   const fixturesValues = fixturesKeys.map(key => {
     const fixtureFileName = findFixtureFileByKey(files, key)
 

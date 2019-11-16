@@ -13,35 +13,22 @@ const installConfig = async ({
   upcomingMeta,
   overwrite,
 }) => {
-  // TODO: refactor this
   const targetStrategy = resolveConfigStrategy(configPath)
-  const targetConfigBasePath = path.dirname(configPath)
-  const targetConfigFilename = targetStrategy
-    ? targetStrategy.getAliasedFileName(path.basename(configPath))
-    : path.basename(configPath)
-  const newConfigPath = path.join(
-    targetPath,
-    targetConfigBasePath,
-    targetConfigFilename,
-  )
+  const targetConfigFilename = targetStrategy.getAliasedFileName(configPath)
   const upcomingConfigPath = path.join(configsPath, configPath)
   const upcomingConfig = await readFile(upcomingConfigPath, 'utf8')
+  const newConfigPath = path.join(targetPath, targetConfigFilename)
   const localConfig = await safeReadFile(newConfigPath)
 
+  await cacheConfig({
+    configsMeta: upcomingMeta,
+    configSource: upcomingConfig,
+    configPath,
+    targetPath,
+  })
   await safeMakeDir(path.dirname(newConfigPath))
 
-  if (!targetStrategy || !localConfig) {
-    await writeFile(newConfigPath, upcomingConfig, 'utf8')
-    await cacheConfig({
-      configsMeta: upcomingMeta,
-      configSource: upcomingConfig,
-      configPath,
-      targetPath,
-    })
-    return
-  }
-
-  if (overwrite) {
+  if (!targetStrategy || !localConfig || overwrite) {
     await writeFile(newConfigPath, upcomingConfig, 'utf8')
     return
   }
@@ -60,6 +47,7 @@ const installConfig = async ({
       upcoming: upcomingConfig,
       cached: configCache,
     })
+
     await writeFile(
       newConfigPath,
       newConfig instanceof Object
@@ -67,18 +55,11 @@ const installConfig = async ({
         : newConfig,
       'utf8',
     )
-    await cacheConfig({
-      configsMeta: upcomingMeta,
-      configSource: upcomingConfig,
-      configPath,
-      targetPath,
-    })
   } catch (err) {
     const errorMessage = [
       chalk.bold(`sharec: an error occured during merging ${newConfigPath}`),
       err.message,
     ]
-
     console.error(errorMessage.join('\n\t'))
   }
 }

@@ -2,9 +2,5 @@
   "scripts": {
     "start": "the new start script",
     "test": "the start test script"
-  },
-  "sharec": {
-    "config": "awesome-config",
-    "version": "1.0.0"
   }
 }
