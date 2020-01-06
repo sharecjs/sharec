@@ -23,10 +23,13 @@ async function sharec(targetProcess) {
     return
   }
 
-  const isIndependantOfSharec = await isTargetDependantOfSharec(targetPath)
+  const isDependantOfSharec = await isTargetDependantOfSharec(targetPath)
+
+  if (isDependantOfSharec) return
+
   const isIgnoresSharecConfigs = await isTargetPackageInSharecIgnore(targetPath)
 
-  if (isIndependantOfSharec || isIgnoresSharecConfigs) return
+  if (isIgnoresSharecConfigs) return
 
   switch (command) {
     case 'remove':
