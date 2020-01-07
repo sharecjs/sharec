@@ -4,6 +4,7 @@ const {
   isTargetDependantOfSharec,
   isTargetPackageInSharecIgnore,
 } = require('./core/package/extract')
+const { getUpcomingConfigsPath } = require('./core/configs/collect')
 
 /**
  * @param {NodeJS.Process} targetProcess
@@ -11,7 +12,7 @@ const {
  */
 async function sharec(targetProcess) {
   const { _, ...options } = minimist(targetProcess.argv.slice(2))
-  const configsPath = targetProcess.env.PWD
+  const configsPath = getUpcomingConfigsPath(targetProcess)
   const targetPath = targetProcess.env.INIT_CWD
 
   if (!configsPath || configsPath === targetPath) return

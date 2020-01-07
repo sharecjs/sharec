@@ -77,13 +77,11 @@ const flatSearch = async ({ path, pattern, root = true }) => {
 
   const normalizedPath = slash(path)
 
-  return filteredResult.map(file => {
-    const normalizedFilePath = slash(file)
-
-    return normalizedFilePath
-      .replace(new RegExp(`^${normalizedPath}`), '')
-      .replace(/^\//, '')
-  })
+  return filteredResult.map(file =>
+    slash(file)
+      .replace(normalizedPath, '')
+      .replace(/^(\/|\\)/, ''),
+  )
 }
 
 module.exports = {
