@@ -12,8 +12,16 @@ const { getUpcomingConfigsPath } = require('./core/configs/collect')
  */
 async function sharec(targetProcess) {
   const { _, ...options } = minimist(targetProcess.argv.slice(2))
-  const configsPath = getUpcomingConfigsPath(targetProcess)
   const targetPath = targetProcess.env.INIT_CWD
+  const isDependantOfSharec = await isTargetDependantOfSharec(targetPath)
+
+  if (isDependantOfSharec) return
+
+  const isIgnoresSharecConfigs = await isTargetPackageInSharecIgnore(targetPath)
+
+  if (isIgnoresSharecConfigs) return
+
+  const configsPath = getUpcomingConfigsPath(targetProcess)
 
   if (!configsPath || configsPath === targetPath) return
 
@@ -23,14 +31,6 @@ async function sharec(targetProcess) {
     await version(configsPath)
     return
   }
-
-  const isDependantOfSharec = await isTargetDependantOfSharec(targetPath)
-
-  if (isDependantOfSharec) return
-
-  const isIgnoresSharecConfigs = await isTargetPackageInSharecIgnore(targetPath)
-
-  if (isIgnoresSharecConfigs) return
 
   switch (command) {
     case 'remove':
