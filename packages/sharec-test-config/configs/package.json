@@ -1,0 +1,15 @@
+{
+  "scripts": {
+    "lint-staged": "lint-staged"
+  },
+  "lint-staged": {
+    "./src/**/*.{js,json}": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "devDependencies": {
+    "lint-staged": "^8.1.5",
+    "prettier": "^1.16.4"
+  }
+}

@@ -215,7 +215,7 @@ describe('Strategy', () => {
     })
   })
 
-  describe('YAML', () => {
+  describe.only('YAML', () => {
     it('should merge YAML configs', () => {
       expect(
         strategy.mergeYAML({
@@ -277,7 +277,7 @@ describe('Strategy', () => {
           current: commonBaseFxtYaml.current,
           cached: commonBaseFxtYaml.cached,
         }),
-      ).toEqual(commonBaseFxtYaml.uncached)
+      ).toWraplessEqual(commonBaseFxtYaml.uncached)
     })
 
     it('should unapply cache from lists', () => {
@@ -286,7 +286,7 @@ describe('Strategy', () => {
           current: commonListsFxtYaml.current,
           cached: commonListsFxtYaml.cached,
         }),
-      ).toEqual(commonListsFxtYaml.uncached)
+      ).toWraplessEqual(commonListsFxtYaml.uncached)
     })
 
     describe('quotes styles', () => {
@@ -299,7 +299,7 @@ describe('Strategy', () => {
             current: singleQuotesYamlFxt.current,
             upcoming: singleQuotesYamlFxt.upcoming,
           }),
-        ).toEqual(singleQuotesYamlFxt.result)
+        ).toWraplessEqual(singleQuotesYamlFxt.result)
       })
 
       it('should save double quotes style', () => {
@@ -308,7 +308,7 @@ describe('Strategy', () => {
             current: doubleQuotesYamlFxt.current,
             upcoming: doubleQuotesYamlFxt.upcoming,
           }),
-        ).toEqual(doubleQuotesYamlFxt.result)
+        ).toWraplessEqual(doubleQuotesYamlFxt.result)
       })
     })
   })

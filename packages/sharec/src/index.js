@@ -4,6 +4,7 @@ const {
   isTargetDependantOfSharec,
   isTargetPackageInSharecIgnore,
 } = require('./core/package/extract')
+const { getUpcomingConfigsPath } = require('./core/configs/collect')
 
 /**
  * @param {NodeJS.Process} targetProcess
@@ -11,8 +12,16 @@ const {
  */
 async function sharec(targetProcess) {
   const { _, ...options } = minimist(targetProcess.argv.slice(2))
-  const configsPath = targetProcess.env.PWD
   const targetPath = targetProcess.env.INIT_CWD
+  const isDependantOfSharec = await isTargetDependantOfSharec(targetPath)
+
+  if (isDependantOfSharec) return
+
+  const isIgnoresSharecConfigs = await isTargetPackageInSharecIgnore(targetPath)
+
+  if (isIgnoresSharecConfigs) return
+
+  const configsPath = getUpcomingConfigsPath(targetProcess)
 
   if (!configsPath || configsPath === targetPath) return
 
@@ -22,11 +31,6 @@ async function sharec(targetProcess) {
     await version(configsPath)
     return
   }
-
-  const isIndependantOfSharec = await isTargetDependantOfSharec(targetPath)
-  const isIgnoresSharecConfigs = await isTargetPackageInSharecIgnore(targetPath)
-
-  if (isIndependantOfSharec || isIgnoresSharecConfigs) return
 
   switch (command) {
     case 'remove':

@@ -1,3 +1,14 @@
+# v2.14.0-beta
+
+Features:
+
+- Add local test config with current version of `sharec`
+
+Fixes:
+
+- Windows support (#81)
+- CI builds on windows and node 13
+
 # v2.13.0-beta
 
 This release includes updated installing flow and fixes a lot of bugs with
