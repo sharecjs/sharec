@@ -20,8 +20,6 @@
     "sharec-tester": "./bin/sharec-tester"
   },
   "scripts": {
-    "test": "jest",
-    "test:watch": "jest --watch",
     "commit": "git-cz",
     "lint": "eslint 'src/**/*.{js,jsx,json}'",
     "lint-staged": "lint-staged"
