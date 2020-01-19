@@ -1,0 +1,10 @@
+[
+  "warn",
+  80,
+  {
+    "ignoreUrls": true,
+    "ignoreComments": false,
+    "ignoreStrings": true,
+    "ignoreTemplateLiterals": false
+  }
+]
