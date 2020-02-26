@@ -1,16 +1,16 @@
 const { fixtures } = require('testUtils')
 const compose = require('../compose')
-const { primitiveStrategy } = require('../../atoms')
+const { primitiveAtom } = require('../../atoms')
 
-describe('strategies > compose', () => {
+describe('actions > compose', () => {
   const hashFxt = fixtures('rule/json/01-hash', 'json')
   const listFxt = fixtures('list/json/00-base', 'json')
 
   it('should create composition for hashes', () => {
     const composition = compose({
-      foo: primitiveStrategy,
-      bar: primitiveStrategy,
-      baz: primitiveStrategy,
+      foo: primitiveAtom,
+      bar: primitiveAtom,
+      baz: primitiveAtom,
     })
     const result = composition(hashFxt)
 
@@ -18,15 +18,15 @@ describe('strategies > compose', () => {
   })
 
   it('should create composition for lists', () => {
-    const composition = compose([primitiveStrategy])
+    const composition = compose([primitiveAtom])
     const result = composition(listFxt)
 
     expect(result).toEqual(listFxt.result)
   })
 
-  it('should allow to compose nested compositions', () => {
+  it('should allow to compose nested schemas', () => {
     const composition = compose({
-      foo: compose([primitiveStrategy]),
+      foo: compose([primitiveAtom]),
     })
     const result = composition({
       current: { foo: listFxt.current },
@@ -40,14 +40,14 @@ describe('strategies > compose', () => {
   describe('operators', () => {
     describe('$$default', () => {
       it('should apply default strategy for all fields', () => {
-        const composition = compose({ $$default: primitiveStrategy })
+        const composition = compose({ $$default: primitiveAtom })
         const result = composition(hashFxt)
 
         expect(result).toEqual(hashFxt.result)
       })
 
       it('should apply default strategy for fields without strategies', () => {
-        const composition = compose({ $$default: primitiveStrategy })
+        const composition = compose({ $$default: primitiveAtom })
         const result = composition(hashFxt)
 
         expect(result).toEqual(hashFxt.result)

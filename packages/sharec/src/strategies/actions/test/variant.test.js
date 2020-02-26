@@ -1,14 +1,14 @@
 const { fixtures } = require('testUtils')
 const variant = require('../variant')
 const compose = require('../compose')
-const { primitiveStrategy, listStrategy } = require('../../atoms')
+const { primitiveAtom, listAtom } = require('../../atoms')
 
 describe('actions > variant', () => {
   const listFxt = fixtures('list/json/00-base', 'json')
 
   it('should apply strategies for mixed parameters types', () => {
     const composition = compose({
-      foo: variant(listStrategy, primitiveStrategy),
+      foo: variant(listAtom, primitiveAtom),
     })
 
     expect(

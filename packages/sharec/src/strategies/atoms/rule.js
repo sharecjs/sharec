@@ -1,6 +1,6 @@
 const isEqual = require('lodash/isEqual')
 
-function ruleStrategy({ current, upcoming, cached }) {
+function ruleAtom({ current, upcoming, cached }) {
   if (current && !upcoming) return current
   if (!current && upcoming) return upcoming
 
@@ -9,4 +9,4 @@ function ruleStrategy({ current, upcoming, cached }) {
   return current
 }
 
-module.exports = ruleStrategy
+module.exports = ruleAtom

@@ -1,9 +1,9 @@
 const { compose } = require('../actions')
-const { hashStrategy, primitiveStrategy } = require('../atoms')
+const { hashAtom, primitiveAtom } = require('../atoms')
 
 const postcssJson = compose({
-  plugins: hashStrategy,
-  $$default: primitiveStrategy,
+  plugins: hashAtom,
+  $$default: primitiveAtom,
 })
 
 module.exports = {

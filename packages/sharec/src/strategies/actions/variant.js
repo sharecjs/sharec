@@ -1,9 +1,9 @@
 // TODO: rename to fallback
 /**
- * @param {...Array<Function>} schemas
+ * @param {...Array<Function>} atoms
  * @returns {Function}
  */
-const variant = (...schemas) =>
+const variant = (...atoms) =>
   /**
    * @param {Object} params
    * @returns {Array}
@@ -11,10 +11,9 @@ const variant = (...schemas) =>
   params => {
     let result
 
-    for (const schema of schemas) {
+    for (const atom of atoms) {
       try {
-        result = schema(params)
-
+        result = atom(params)
         break
       } catch (err) {
         continue

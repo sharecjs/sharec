@@ -1,6 +1,6 @@
 const isEqual = require('lodash/isEqual')
 
-function listStrategy({ current, upcoming, cached }) {
+function listAtom({ current, upcoming, cached }) {
   if (current && !upcoming) return current
   if (!current && upcoming) return upcoming
 
@@ -16,4 +16,4 @@ function listStrategy({ current, upcoming, cached }) {
   return result
 }
 
-module.exports = listStrategy
+module.exports = listAtom

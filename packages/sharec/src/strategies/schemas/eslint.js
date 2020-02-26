@@ -1,21 +1,16 @@
 const { compose, variant } = require('../actions')
-const {
-  ruleStrategy,
-  hashStrategy,
-  listStrategy,
-  primitiveStrategy,
-} = require('../atoms')
+const { ruleAtom, hashAtom, listAtom, primitiveAtom } = require('../atoms')
 
 const eslintJson = compose({
-  env: hashStrategy,
-  parserOptions: hashStrategy,
-  globals: hashStrategy,
-  extends: variant(listStrategy, primitiveStrategy),
-  plugins: listStrategy,
+  env: hashAtom,
+  parserOptions: hashAtom,
+  globals: hashAtom,
+  extends: variant(listAtom, primitiveAtom),
+  plugins: listAtom,
   rules: compose({
-    $$default: ruleStrategy,
+    $$default: ruleAtom,
   }),
-  $$default: primitiveStrategy,
+  $$default: primitiveAtom,
 })
 
 module.exports = {

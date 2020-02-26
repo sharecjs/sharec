@@ -1,11 +1,11 @@
-const hashStrategy = require('./hash')
-const listStrategy = require('./list')
-const primitiveStrategy = require('./primitive')
-const ruleStrategy = require('./rule')
+const hashAtom = require('./hash')
+const listAtom = require('./list')
+const primitiveAtom = require('./primitive')
+const ruleAtom = require('./rule')
 
 module.exports = {
-  hashStrategy,
-  listStrategy,
-  primitiveStrategy,
-  ruleStrategy,
+  hashAtom,
+  listAtom,
+  primitiveAtom,
+  ruleAtom,
 }

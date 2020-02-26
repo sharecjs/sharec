@@ -1,23 +1,23 @@
 const { fixtures } = require('testUtils')
-const ruleStrategy = require('../rule')
+const ruleAtom = require('../rule')
 
-describe('strategies > rule', () => {
+describe('atoms > rule', () => {
   const eslintRuleFxt = fixtures('rule/json/00-eslint', 'json')
 
   it('should return current if upcoming is not passed', () => {
-    const result = ruleStrategy({ current: eslintRuleFxt.current })
+    const result = ruleAtom({ current: eslintRuleFxt.current })
 
     expect(result).toEqual(eslintRuleFxt.current)
   })
 
   it('should return upcoming if current is not passed', () => {
-    const result = ruleStrategy({ upcoming: eslintRuleFxt.upcoming })
+    const result = ruleAtom({ upcoming: eslintRuleFxt.upcoming })
 
     expect(result).toEqual(eslintRuleFxt.upcoming)
   })
 
   it('should merge rules', () => {
-    const result = ruleStrategy({
+    const result = ruleAtom({
       current: eslintRuleFxt.current,
       upcoming: eslintRuleFxt.upcoming,
     })
@@ -27,13 +27,13 @@ describe('strategies > rule', () => {
 
   it('should handle primitive types', () => {
     expect(
-      ruleStrategy({
+      ruleAtom({
         current: 0,
         upcoming: 1,
       }),
     ).toEqual(1)
     expect(
-      ruleStrategy({
+      ruleAtom({
         current: 'error',
         upcoming: 'warning',
       }),
@@ -42,13 +42,13 @@ describe('strategies > rule', () => {
 
   it('should rewrite rule on types mismatching', () => {
     expect(
-      ruleStrategy({
+      ruleAtom({
         current: eslintRuleFxt.current,
         upcoming: 'error',
       }),
     ).toEqual('error')
     expect(
-      ruleStrategy({
+      ruleAtom({
         current: 'error',
         upcoming: eslintRuleFxt.upcoming,
       }),

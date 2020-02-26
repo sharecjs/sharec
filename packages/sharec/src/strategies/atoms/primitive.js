@@ -1,4 +1,4 @@
-function primitiveStrategy({ current, upcoming, cached }) {
+function primitiveAtom({ current, upcoming, cached }) {
   if (current && !upcoming) return current
   if (!current && upcoming) return upcoming
   if (cached && current !== cached) return current
@@ -7,4 +7,4 @@ function primitiveStrategy({ current, upcoming, cached }) {
   return current
 }
 
-module.exports = primitiveStrategy
+module.exports = primitiveAtom
