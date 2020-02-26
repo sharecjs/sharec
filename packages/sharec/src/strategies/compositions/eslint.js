@@ -1,4 +1,4 @@
-const { compose } = require('../actions')
+const { compose, variant } = require('../actions')
 const {
   ruleStrategy,
   hashStrategy,
@@ -9,7 +9,8 @@ const {
 const eslintJson = compose({
   env: hashStrategy,
   parserOptions: hashStrategy,
-  extends: listStrategy,
+  globals: hashStrategy,
+  extends: variant(listStrategy, primitiveStrategy),
   plugins: listStrategy,
   rules: compose({
     $$default: ruleStrategy,

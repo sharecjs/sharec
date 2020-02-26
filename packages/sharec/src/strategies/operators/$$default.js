@@ -11,7 +11,7 @@ const $$default = ({ target = {}, strategy }) =>
    * @param {Object} params
    * @returns {Object}
    */
-  ({ current, upcoming, cached }) => {
+  ({ current, upcoming, cached = {} }) => {
     let result = {}
     const targetFields = omit(upcoming, Object.keys(target))
 

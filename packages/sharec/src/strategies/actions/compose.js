@@ -41,23 +41,26 @@ const compose = schema =>
    * @returns {Object}
    */
   params => {
-    const { current, upcoming, cached = {} } = params
+    const { current, upcoming, cached } = params
 
     if (!upcoming) return current
     if (!current) return upcoming
+    if (typeof current !== typeof upcoming) return upcoming
     if (Array.isArray(schema)) {
-      return applyToList(schema[0])({ current, upcoming, cached })
+      return applyToList(schema[0])(params)
     }
 
     let result = {}
     const schemaWithoutOperators = omit(schema, operatorsKeys)
 
     for (const key in schemaWithoutOperators) {
+      if (!current[key] && !upcoming[key]) continue
+
       Object.assign(result, {
         [key]: schemaWithoutOperators[key]({
           current: current[key],
           upcoming: upcoming[key],
-          cached: cached[key],
+          cached: cached && cached[key],
         }),
       })
     }
