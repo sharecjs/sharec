@@ -6,11 +6,12 @@ const operators = require('../operators')
 
 const operatorsKeys = Object.keys(operators)
 
+// TODO: move to external module?
 /**
- * @param {Object} schema
+ * @param {Array<Function>} schemas
  * @returns {Function}
  */
-const applyToList = schema =>
+const applyToEachListElement = schema =>
   /**
    * @param {Object} params
    * @returns {Array}
@@ -32,6 +33,48 @@ const applyToList = schema =>
   }
 
 /**
+ * @param {Array<Function>} schemas
+ * @returns {Function}
+ */
+const applyToIndexedListElements = schemas =>
+  /**
+   * @param {Object} params
+   * @returns {Array}
+   */
+  ({ current, upcoming, cached }) => {
+    let result = []
+
+    for (const i in schemas) {
+      result.push(
+        schemas[i]({
+          current: current[i],
+          upcoming: upcoming[i],
+          cached: cached[i],
+        }),
+      )
+    }
+
+    return result
+  }
+
+/**
+ * @param {Array<Function>} schemas
+ * @returns {Function}
+ */
+const applyToList = schemas =>
+  /**
+   * @param {Object} params
+   * @returns {Array}
+   */
+  params => {
+    if (schemas.length === 1) {
+      return applyToEachListElement(schemas[0])(params)
+    }
+
+    return applyToIndexedListElements(schemas)(params)
+  }
+
+/**
  * @param {Object} schema
  * @returns {Function}
  */
@@ -47,7 +90,7 @@ const compose = schema =>
     if (!current) return upcoming
     if (typeof current !== typeof upcoming) return upcoming
     if (Array.isArray(schema)) {
-      return applyToList(schema[0])(params)
+      return applyToList(schema)(params)
     }
 
     let result = {}
