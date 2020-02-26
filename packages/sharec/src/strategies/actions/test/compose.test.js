@@ -1,6 +1,6 @@
 const { fixtures } = require('testUtils')
 const compose = require('../compose')
-const { primitiveStrategy } = require('../atoms')
+const { primitiveStrategy } = require('../../atoms')
 
 describe('strategies > compose', () => {
   const hashFxt = fixtures('rule/json/01-hash', 'json')

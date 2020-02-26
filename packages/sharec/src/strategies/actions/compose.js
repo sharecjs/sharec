@@ -2,7 +2,7 @@ const flow = require('lodash/flow')
 const omit = require('lodash/omit')
 const pick = require('lodash/pick')
 const isEmpty = require('lodash/isEmpty')
-const operators = require('./operators')
+const operators = require('../operators')
 
 const operatorsKeys = Object.keys(operators)
 
@@ -41,7 +41,7 @@ const compose = schema =>
    * @returns {Object}
    */
   params => {
-    const { current, upcoming, cached } = params
+    const { current, upcoming, cached = {} } = params
 
     if (!upcoming) return current
     if (!current) return upcoming
