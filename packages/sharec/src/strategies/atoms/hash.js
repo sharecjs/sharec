@@ -1,5 +1,5 @@
 const omit = require('lodash/omit')
-const { hashWithoutUnchangedFields } = require('../utils/hashes')
+const { hashWithoutUnchangedFields } = require('../../utils/hashes')
 
 function hashStrategy({ current, upcoming, cached }) {
   if (current && !upcoming) return current
