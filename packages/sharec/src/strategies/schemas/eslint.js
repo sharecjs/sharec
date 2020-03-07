@@ -1,11 +1,11 @@
-const { compose, variant } = require('../actions')
+const { compose, fork } = require('../actions')
 const { ruleAtom, hashAtom, listAtom, primitiveAtom } = require('../atoms')
 
 const eslintJson = compose({
   env: hashAtom,
   parserOptions: hashAtom,
   globals: hashAtom,
-  extends: variant(listAtom, primitiveAtom),
+  extends: fork([[Array.isArray, listAtom], primitiveAtom]),
   plugins: listAtom,
   rules: compose({
     $$default: ruleAtom,
