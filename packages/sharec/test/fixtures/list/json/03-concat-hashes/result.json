@@ -1,0 +1,17 @@
+[
+  {
+    "foo": "bar"
+  },
+  {
+    "bar": "baz"
+  },
+  {
+    "baz": "foo"
+  },
+  {
+    "foo": "new bar"
+  },
+  {
+    "baz": "new foo"
+  }
+]

@@ -1,7 +1,7 @@
 const compose = require('./compose')
-const variant = require('./variant')
+const fork = require('./fork')
 
 module.exports = {
   compose,
-  variant,
+  fork,
 }

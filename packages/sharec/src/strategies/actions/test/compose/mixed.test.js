@@ -1,20 +1,22 @@
 const { fixtures } = require('testUtils')
 const compose = require('../../compose')
-const { primitiveAtom } = require('../../../atoms')
+const { listConcatAtom } = require('../../../atoms')
 
 describe('actions > compose > mixed', () => {
-  const listFxt = fixtures('list/json/00-base', 'json')
+  const listFxt = fixtures('list/json/00-concat-primitives', 'json')
 
   it('should allow to compose nested schemas', () => {
     const composition = compose({
-      foo: compose([primitiveAtom]),
+      foo: compose({
+        bar: listConcatAtom,
+      }),
     })
     const result = composition({
-      current: { foo: listFxt.current },
-      upcoming: { foo: listFxt.upcoming },
-      cached: { foo: listFxt.cached },
+      current: { foo: { bar: listFxt.current } },
+      upcoming: { foo: { bar: listFxt.upcoming } },
+      cached: { foo: { bar: listFxt.cached } },
     })
 
-    expect(result).toEqual({ foo: listFxt.result })
+    expect(result).toEqual({ foo: { bar: listFxt.result } })
   })
 })

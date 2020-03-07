@@ -6,74 +6,6 @@ const operators = require('../operators')
 
 const operatorsKeys = Object.keys(operators)
 
-// TODO: move to external module?
-/**
- * @param {Array<Function>} schemas
- * @returns {Function}
- */
-const applyToEachListElement = schema =>
-  /**
-   * @param {Object} params
-   * @returns {Array}
-   */
-  ({ current, upcoming, cached }) => {
-    let result = []
-
-    for (const i in upcoming) {
-      result.push(
-        schema({
-          current: current[i],
-          upcoming: upcoming[i],
-          cached: cached[i],
-        }),
-      )
-    }
-
-    return result
-  }
-
-/**
- * @param {Array<Function>} schemas
- * @returns {Function}
- */
-const applyToIndexedListElements = schemas =>
-  /**
-   * @param {Object} params
-   * @returns {Array}
-   */
-  ({ current, upcoming, cached }) => {
-    let result = []
-
-    for (const i in schemas) {
-      result.push(
-        schemas[i]({
-          current: current[i],
-          upcoming: upcoming[i],
-          cached: cached[i],
-        }),
-      )
-    }
-
-    return result
-  }
-
-/**
- * @param {Array<Function>} schemas
- * @returns {Function}
- */
-const applyToList = schemas =>
-  /**
-   * @param {Object} params
-   * @returns {Array}
-   */
-  params => {
-    if (schemas.length === 1) {
-      return applyToEachListElement(schemas[0])(params)
-    }
-
-    return applyToIndexedListElements(schemas)(params)
-  }
-
 /**
  * @param {Object} schema
  * @returns {Function}
@@ -86,12 +18,9 @@ const compose = schema =>
   params => {
     const { current, upcoming, cached } = params
 
-    if (!upcoming) return current
-    if (!current) return upcoming
+    if (upcoming === undefined) return current
+    if (current === undefined) return upcoming
     if (typeof current !== typeof upcoming) return upcoming
-    if (Array.isArray(schema)) {
-      return applyToList(schema)(params)
-    }
 
     let result = {}
     const schemaWithoutOperators = omit(schema, operatorsKeys)
