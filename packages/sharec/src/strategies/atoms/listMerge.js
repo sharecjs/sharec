@@ -4,9 +4,8 @@ const listMergeAtom = atom => ({ current, upcoming }) => {
 
   const resultLength = Math.max(current.length, upcoming.length)
   let result = new Array(resultLength)
-  let i = 0
 
-  while (i < result.length) {
+  for (let i = 0; i < result.length; i++) {
     if (!current[i] && upcoming[i]) {
       result[i] = upcoming[i]
       continue
@@ -21,8 +20,6 @@ const listMergeAtom = atom => ({ current, upcoming }) => {
       current: current[i],
       upcoming: upcoming[i],
     })
-
-    i++
   }
 
   return result
