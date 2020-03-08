@@ -21,6 +21,7 @@ const compose = schema =>
     if (upcoming === undefined) return current
     if (current === undefined) return upcoming
     if (typeof current !== typeof upcoming) return upcoming
+    if (Array.isArray(schema)) return schema[0](params)
 
     let result = {}
     const schemaWithoutOperators = omit(schema, operatorsKeys)
