@@ -1,4 +1,4 @@
-const listMergeAtom = atom => ({ current, upcoming }) => {
+const listMergeAtom = atom => ({ current, upcoming, cached }) => {
   if (current && upcoming === undefined) return current
   if (current === undefined && upcoming) return upcoming
 
@@ -19,6 +19,7 @@ const listMergeAtom = atom => ({ current, upcoming }) => {
     result[i] = atom({
       current: current[i],
       upcoming: upcoming[i],
+      cached: cached && cached[i],
     })
   }
 
