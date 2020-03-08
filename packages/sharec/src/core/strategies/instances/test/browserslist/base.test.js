@@ -24,21 +24,4 @@ describe('strategy > browserslist', () => {
       ).toEqual(browserslistArrayLikeFxt.result)
     })
   })
-
-  describe('uapplying', () => {
-    it('should correctly unapply configs', () => {
-      expect(
-        browserslistStrategy.unapply('.browserslistrc')({
-          current: browserslistBaseFxt.result,
-          upcoming: browserslistBaseFxt.upcoming,
-        }),
-      ).toEqual(browserslistBaseFxt.restored)
-      expect(
-        browserslistStrategy.unapply('browserslist')({
-          current: browserslistArrayLikeFxt.result,
-          upcoming: browserslistArrayLikeFxt.upcoming,
-        }),
-      ).toEqual(browserslistArrayLikeFxt.restored)
-    })
-  })
 })
