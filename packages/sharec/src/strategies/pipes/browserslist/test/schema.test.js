@@ -1,7 +1,7 @@
 const { fixtures } = require('testUtils')
-const { browserslistJson } = require('../browserslist')
+const { browserslistJson } = require('../schema')
 
-describe('schemas > browserslist', () => {
+describe('pipes > browserslist > schema', () => {
   describe('JSON', () => {
     const browserslistArrayLikeFxt = fixtures(
       'browserslist/json/00-array-like',

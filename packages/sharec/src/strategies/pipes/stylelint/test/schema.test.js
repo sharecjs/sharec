@@ -1,7 +1,7 @@
 const { fixtures } = require('testUtils')
-const { stylelintJson } = require('../stylelint')
+const { stylelintJson } = require('../schema')
 
-describe('schemas > style', () => {
+describe('pipes > stylelint > schema', () => {
   describe('JSON', () => {
     const stylelintBaseFxt = fixtures('stylelint/json/00-base', 'json')
 

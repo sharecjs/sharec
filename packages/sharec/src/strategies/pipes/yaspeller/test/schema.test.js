@@ -1,7 +1,7 @@
 const { fixtures } = require('testUtils')
-const { yaspellerJson } = require('../yaspeller')
+const { yaspellerJson } = require('../schema')
 
-describe('schemas > yaspeller', () => {
+describe('pipes > yaspeller > schema', () => {
   const yaspellerBaseFxt = fixtures('yaspeller/json/01-base', 'json')
 
   it('should merge yaspeller json configs', () => {

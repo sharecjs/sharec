@@ -1,7 +1,7 @@
 const { fixtures } = require('testUtils')
-const { lintStagedJson } = require('../lintStaged')
+const { lintStagedJson } = require('../schema')
 
-describe('schemas > lintStaged', () => {
+describe('pipes > lintStaged > schema', () => {
   describe('JSON', () => {
     const lintStagedBaseFxt = fixtures('lintStaged/json/00-base', 'json')
 

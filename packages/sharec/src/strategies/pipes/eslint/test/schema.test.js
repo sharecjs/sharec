@@ -1,7 +1,7 @@
 const { fixtures } = require('testUtils')
-const { eslintJson } = require('../eslint')
+const { eslintJson } = require('../schema')
 
-describe('schemas > eslint', () => {
+describe('pipes > eslint > schema', () => {
   describe('JSON', () => {
     const eslintBaseFxt = fixtures('eslint/json/01-base', 'json')
 

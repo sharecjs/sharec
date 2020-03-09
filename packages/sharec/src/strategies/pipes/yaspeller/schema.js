@@ -1,5 +1,5 @@
-const { compose } = require('../actions')
-const { primitiveAtom, listConcatAtom } = require('../atoms')
+const { compose } = require('../../actions')
+const { primitiveAtom, listConcatAtom } = require('../../atoms')
 
 const yaspellerJson = compose({
   excludeFiles: listConcatAtom,
