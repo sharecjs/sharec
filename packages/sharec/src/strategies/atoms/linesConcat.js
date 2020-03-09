@@ -1,15 +1,14 @@
 const flow = require('lodash/flow')
 const { trimEOF, linesToLists } = require('../helpers/params')
-const listMergeAtom = require('./listMerge')
-const primitiveAtom = require('./primitive')
+const listConcatAtom = require('./listConcat')
 
-function linesAtom(params) {
+function linesConcatAtom(params) {
   const { current, upcoming } = params
 
   if (current === undefined && upcoming) return upcoming
   if (current && upcoming === undefined) return current
 
-  const result = listMergeAtom(primitiveAtom)(
+  const result = listConcatAtom(
     flow(
       trimEOF,
       linesToLists,
@@ -19,4 +18,4 @@ function linesAtom(params) {
   return result.join('\n') + '\n'
 }
 
-module.exports = linesAtom
+module.exports = linesConcatAtom

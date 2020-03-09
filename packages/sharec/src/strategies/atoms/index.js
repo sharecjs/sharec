@@ -4,7 +4,8 @@ const ruleAtom = require('./rule')
 const listMergeAtom = require('./listMerge')
 const listConcatAtom = require('./listConcat')
 const pairAtom = require('./pair')
-const linesAtom = require('./lines')
+const linesMergeAtom = require('./linesMerge')
+const linesConcatAtom = require('./linesConcat')
 
 module.exports = {
   hashAtom,
@@ -13,5 +14,6 @@ module.exports = {
   listMergeAtom,
   listConcatAtom,
   pairAtom,
-  linesAtom,
+  linesMergeAtom,
+  linesConcatAtom,
 }
