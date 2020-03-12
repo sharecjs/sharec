@@ -1,12 +1,14 @@
 const { fixtures } = require('testUtils')
-const { stylelintJson } = require('../schema')
+const stylelintPipe = require('../pipe')
 
-describe('pipes > stylelint > schema', () => {
+describe('pipes > stylelint > pipe', () => {
   describe('JSON', () => {
     const stylelintBaseFxt = fixtures('atomic/stylelint/json/00-base', 'json')
 
     it('should merge configs', () => {
-      expect(stylelintJson(stylelintBaseFxt)).toEqual(stylelintBaseFxt.result)
+      expect(stylelintPipe('.stylelint')(stylelintBaseFxt)).toEqual(
+        stylelintBaseFxt.result,
+      )
     })
   })
 })

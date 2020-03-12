@@ -1,0 +1,11 @@
+{
+  "testEnvironment": "node",
+  "clearMocks": true,
+  "cacheDirectory": "./.cache",
+  "extraGlobals": ["foo", "bar"],
+  "coverageThreshold": {
+    "global": {
+      "statements": 100
+    }
+  }
+}

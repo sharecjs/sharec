@@ -1,0 +1,11 @@
+{
+  "testEnvironment": "es2015",
+  "clearMocks": false,
+  "cacheDirectory": "./.cache",
+  "extraGlobals": ["foo", "bar", "baz"],
+  "coverageThreshold": {
+    "global": {
+      "statements": 250
+    }
+  }
+}
