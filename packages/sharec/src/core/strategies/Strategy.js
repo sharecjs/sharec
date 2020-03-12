@@ -1,13 +1,8 @@
 const path = require('path')
-const { diffLines } = require('diff')
 const without = require('lodash/without')
 const difference = require('lodash/difference')
 const { mergeLists, listsDiff } = require('../../utils/lists')
-const {
-  hashesDiff,
-  hashWithoutChangedFields,
-  hashWithoutUnchangedFields,
-} = require('../../utils/hashes')
+const { hashesDiff, hashWithoutUnchangedFields } = require('../../utils/hashes')
 const { transformJSONInput } = require('../../utils/json')
 const {
   transformYAMLInput,

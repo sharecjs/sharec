@@ -1,0 +1,6 @@
+{
+  "hooks": {
+    "pre-commit": "different-linter",
+    "post-commit": "echo 'yay'"
+  }
+}
