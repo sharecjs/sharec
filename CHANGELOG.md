@@ -1,3 +1,19 @@
+# v2.15.0-beta (WIP)
+
+This release should contain new strategies and composition API.
+
+Also it includes strategies and pipes (new term of "strategy") for
+many new tools, like - `lint-staged` or `jest`.
+
+Features:
+
+- Implements atomic strategies conception (#66)
+- Adds strategies for `husky`, `lint-staged`, `jest`, `stylelint`, `browserslist`, `postcss`
+
+Fix:
+
+- Better support for `package.json` fields
+
 # v2.14.0-beta
 
 Features:
