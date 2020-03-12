@@ -1,0 +1,8 @@
+{
+  "plugins": {
+    "postcss-partial-import": {},
+    "postcss-custom-properties": {
+      "preserve": false
+    }
+  }
+}
