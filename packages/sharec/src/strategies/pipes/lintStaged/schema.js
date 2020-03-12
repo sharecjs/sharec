@@ -1,8 +1,11 @@
-const { compose } = require('../../actions')
+const { compose, fork } = require('../../actions')
 const { listMergeAtom, primitiveAtom } = require('../../atoms')
 
 const lintStagedJson = compose({
-  $$default: listMergeAtom(primitiveAtom),
+  $$default: fork([
+    [Array.isArray, listMergeAtom(primitiveAtom)],
+    primitiveAtom,
+  ]),
 })
 
 module.exports = {
