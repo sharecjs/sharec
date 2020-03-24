@@ -1,10 +1,14 @@
 {
-  "lang": "en",
-  "ignoreCapitalization": false,
-  "ignoreTags": ["foo"],
-  "fileExtensions": ["bar"],
-  "excludeFiles": ["README-*.md", "CHANGELOG.md"],
-  "ignoreText": [" \\(by [^)]+\\)."],
+  "excludeFiles": [
+    "README-*.md",
+    "CHANGELOG.md"
+  ],
+  "ignoreText": [
+    " \\(by [^)]+\\)."
+  ],
+  "ignoreTags": [
+    "foo"
+  ],
   "dictionary": [
     "cryptographically",
     "formatAsync",
@@ -30,5 +34,10 @@
     "Clojure",
     "ClojureScript",
     "Crypto"
+  ],
+  "lang": "en",
+  "ignoreCapitalization": false,
+  "fileExtensions": [
+    "bar"
   ]
 }

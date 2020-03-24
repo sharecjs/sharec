@@ -5,11 +5,19 @@
     "node": true,
     "jest": true
   },
-  "extends": "airbnb",
+  "parserOptions": {
+    "parser": "babel-eslint",
+    "ecmaVersion": 7,
+    "ecmaFeatures": {
+      "spread": true
+    },
+    "sourceType": "module"
+  },
   "globals": {
     "foo": true,
     "bar": true
   },
+  "extends": "airbnb",
   "rules": {
     "space-before-function-paren": 1,
     "no-console": 0,
@@ -23,13 +31,5 @@
         "ignoreStrings": false
       }
     ]
-  },
-  "parserOptions": {
-    "parser": "babel-eslint",
-    "ecmaVersion": 7,
-    "ecmaFeatures": {
-      "spread": true
-    },
-    "sourceType": "module"
   }
 }
