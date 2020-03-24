@@ -30,7 +30,7 @@
     "fxt:lines": "hygen fixture-lines with-prompt"
   },
   "lint-staged": {
-    "src/**/*.{js,jsx,json}": [
+    "src/**/*.{js}": [
       "eslint --fix",
       "prettier --write",
       "git add"
