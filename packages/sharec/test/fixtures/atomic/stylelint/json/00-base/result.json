@@ -1,17 +1,34 @@
 {
-  "extends": ["stylelint-config-standard", "stylelint-config-recess-order"],
+  "extends": [
+    "stylelint-config-standard",
+    "stylelint-config-recess-order"
+  ],
   "rules": {
     "at-rule-no-unknown": [
       false,
       {
-        "ignoreAtRules": ["define-mixin", "mixin"]
+        "ignoreAtRules": [
+          "define-mixin",
+          "mixin"
+        ]
       }
     ],
     "color-named": "never"
   },
   "processors": [
-    ["stylelint-my-processor", { "optionOne": false }],
-    ["some-other-processor", { "optionOne": false, "optionTwo": true }],
+    [
+      "stylelint-my-processor",
+      {
+        "optionOne": false
+      }
+    ],
+    [
+      "some-other-processor",
+      {
+        "optionOne": false,
+        "optionTwo": true
+      }
+    ],
     "another-processor"
   ]
 }
