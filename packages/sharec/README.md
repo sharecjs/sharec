@@ -14,7 +14,7 @@ Sharec can merge `.yaml` and `.json`. Other files manages with just copying or d
 Some tools have difficult and very specific configuration files (`eslint`, `babel` etc.),
 and sharec provide strategies for this purposes.
 
-For this moment, sharec provides strategies for following tools:
+At this moment, sharec supports configuration management for:
 
 - `npmignore`
 - `eslint`
@@ -23,8 +23,11 @@ For this moment, sharec provides strategies for following tools:
 - `yaspeller`
 - `browserslist`
 - `postcss`
-
-You can create your own strategy and open pull request, or request it in the project issues.
+- `gitignore`
+- `husky`
+- `jest`
+- `lint-staged`
+- `stylelint`
 
 ## Sharec-powered configuration lifecycle
 
@@ -84,12 +87,6 @@ Example:
   }
 }
 ```
-
-### `remove`
-
-Removes installed configuration from target project. Modified fields will be saved.
-
-**Highly recommend to avoid using that command in `preuninstall` and similar `npm` scripts**!
 
 ## Ignoring configuration
 
