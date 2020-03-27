@@ -4,6 +4,8 @@ const { find } = require('../utils/fs')
 const { InternalError, CAUSES } = require('../errors')
 
 const readConfigs = spinner => input => {
+  spinner.frame('Reading upcoming configuration files')
+
   const configsPath = path.join(input.configPath, '/configs')
 
   return find(configsPath, '**/*')
@@ -18,6 +20,8 @@ const readConfigs = spinner => input => {
       let readedConfigs = {}
 
       for (const config of configsPaths) {
+        spinner.frame(`Reading ${config}`)
+
         const configContent = await readFile(config, 'utf8')
         const configBasePath = config.replace(configsPath, '')
 
@@ -26,12 +30,20 @@ const readConfigs = spinner => input => {
 
       return readedConfigs
     })
-    .then(readedConfigs => ({
-      ...input,
-      configs: readedConfigs,
-    }))
+    .then(readedConfigs => {
+      spinner.succeed('All files were readed')
+
+      return {
+        ...input,
+        configs: readedConfigs,
+      }
+    })
     .catch(err => {
-      if (err.code !== 'ENOENT') throw err
+      if (err.code !== 'ENOENT') {
+        spinner.fail('Config files were not readed due unexpected error')
+
+        throw err
+      }
       if (err.message.includes('readdir')) {
         throw new InternalError(
           CAUSES.CONFIGS_NOT_FOUND.message(configsPath),

@@ -90,6 +90,8 @@ function createFakeSpinner() {
     fail: jest.fn().mockImplementation(() => spinner),
     frame: jest.fn().mockImplementation(() => spinner),
   }
+
+  return spinner
 }
 
 module.exports = {
