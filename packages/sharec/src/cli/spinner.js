@@ -1,5 +1,15 @@
 const ora = require('ora')
 
+/**
+ * @typedef {Object} Spinner
+ */
+
+/**
+ * @param {Object} params
+ * @param {String} params.text
+ * @param {Boolean} [params.silent]
+ * @returns {Spinner}
+ */
 const createSpinner = ({ text, silent }) => {
   const spinner = ora({
     spinner: 'line',
@@ -9,6 +19,10 @@ const createSpinner = ({ text, silent }) => {
   })
 
   return {
+    /**
+     * @memberof Spinner
+     * @returns {Spinner}
+     */
     start: () => {
       if (silent) {
         return spinner
@@ -19,6 +33,11 @@ const createSpinner = ({ text, silent }) => {
       return spinner
     },
 
+    /**
+     * @memberof Spinner
+     * @param {String} text
+     * @returns {Spinner}
+     */
     succeed: text => {
       if (silent) {
         return spinner
@@ -29,6 +48,11 @@ const createSpinner = ({ text, silent }) => {
       return spinner
     },
 
+    /**
+     * @memberof Spinner
+     * @param {String} text
+     * @returns {Spinner}
+     */
     fail: text => {
       if (silent) {
         return spinner
@@ -39,6 +63,11 @@ const createSpinner = ({ text, silent }) => {
       return spinner
     },
 
+    /**
+     * @memberof Spinner
+     * @param {String} text
+     * @returns {Spinner}
+     */
     frame: text => {
       if (silent) {
         return spinner

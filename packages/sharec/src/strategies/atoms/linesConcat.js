@@ -15,7 +15,7 @@ function linesConcatAtom(params) {
     )(params),
   )
 
-  return result.join('\n') + '\n'
+  return result.join('\n')
 }
 
 module.exports = linesConcatAtom

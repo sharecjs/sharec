@@ -4,17 +4,17 @@ const { getConfigPipe } = require('../strategies/pipes')
 const { writeFile, readFile } = require('../utils/std').fs
 const { safeMakeDir } = require('../utils/fs')
 
-const writeConfigs = async input => {
+const writeConfigs = spinner => async input => {
   const { configs, cache, targetPath } = input
 
   for (const config in configs) {
-    const configPath = path.join(targetPath, config)
-    const targetPipe = getConfigPipe(configPath)
+    const targetConfigPath = path.join(targetPath, config)
+    const targetPipe = getConfigPipe(targetConfigPath)
     const upcomingConfig = configs[config]
 
     if (!upcomingConfig) continue
     if (!targetPipe) {
-      await writeFile(configPath, upcomingConfig)
+      await writeFile(targetConfigPath, upcomingConfig)
       continue
     }
 
@@ -22,9 +22,9 @@ const writeConfigs = async input => {
     let currentConfig
 
     try {
-      currentConfig = await readFile(configPath, 'utf8')
+      currentConfig = await readFile(targetConfigPath, 'utf8')
     } catch (err) {
-      await safeMakeDir(path.dirname(configPath))
+      await safeMakeDir(path.dirname(targetConfigPath))
     }
 
     const mergedConfig = targetPipe({
@@ -33,7 +33,7 @@ const writeConfigs = async input => {
       cache: cachedConfig,
     })
 
-    await writeFile(configPath, mergedConfig)
+    await writeFile(targetConfigPath, mergedConfig)
   }
 
   return input

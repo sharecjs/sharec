@@ -1,4 +1,5 @@
 const { vol } = require('memfs')
+const { createFakeSpinner } = require('testUtils')
 const readCache = require('../readCache')
 
 describe('steps > readCache', () => {
@@ -9,6 +10,7 @@ describe('steps > readCache', () => {
   it('should read cached configs for previous installed version', async () => {
     expect.assertions(1)
 
+    const spinner = createFakeSpinner()
     const targetPackage = {
       sharec: {
         config: 'awesome-config',
@@ -29,7 +31,7 @@ describe('steps > readCache', () => {
     }
     vol.fromJSON(dir, '/configs')
 
-    const output = await readCache(input)
+    const output = await readCache(spinner)(input)
 
     expect(output.cache).toEqual({
       '.eslintrc': 'foo',
@@ -41,6 +43,7 @@ describe('steps > readCache', () => {
   it('should keep cache empty if previous installed cache is not exist', async () => {
     expect.assertions(1)
 
+    const spinner = createFakeSpinner()
     const targetPackage = {
       sharec: {
         config: 'awesome-config',
@@ -57,7 +60,7 @@ describe('steps > readCache', () => {
     }
     vol.fromJSON(dir, '/configs')
 
-    const output = await readCache(input)
+    const output = await readCache(spinner)(input)
 
     expect(output.cache).toBeNull()
   })
@@ -65,6 +68,7 @@ describe('steps > readCache', () => {
   it('should keep cache empty if previous installed cache is not contain any file', async () => {
     expect.assertions(1)
 
+    const spinner = createFakeSpinner()
     const targetPackage = {
       sharec: {
         config: 'awesome-config',
@@ -82,7 +86,7 @@ describe('steps > readCache', () => {
     }
     vol.fromJSON(dir, '/configs')
 
-    const output = await readCache(input)
+    const output = await readCache(spinner)(input)
 
     expect(output.cache).toBeNull()
   })

@@ -1,4 +1,5 @@
 const { vol } = require('memfs')
+const { createFakeSpinner } = require('testUtils')
 const readTargetPackage = require('../readTargetPackage')
 
 describe('steps > readTargetPackage', () => {
@@ -11,6 +12,7 @@ describe('steps > readTargetPackage', () => {
   it('should read package.json from target project', async () => {
     expect.assertions(1)
 
+    const spinner = createFakeSpinner()
     const packageJson = {
       foo: 'bar',
       bar: 'baz',
@@ -22,7 +24,7 @@ describe('steps > readTargetPackage', () => {
 
     vol.fromJSON(dir, input.targetPath)
 
-    const output = await readTargetPackage(input)
+    const output = await readTargetPackage(spinner)(input)
 
     expect(output).toEqual({
       ...input,
@@ -31,12 +33,13 @@ describe('steps > readTargetPackage', () => {
   })
 
   it('should throw an error if package.json is not exist in target project', async done => {
+    const spinner = createFakeSpinner()
     const dir = {}
 
     vol.fromJSON(dir, input.targetPath)
 
     try {
-      await readTargetPackage(input)
+      await readTargetPackage(spinner)(input)
     } catch (err) {
       done()
     }

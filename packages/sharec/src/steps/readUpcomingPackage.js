@@ -1,7 +1,7 @@
 const path = require('path')
 const { readFile } = require('../utils/std').fs
 
-const readUpcomingPackage = async input => {
+const readUpcomingPackage = spinner => async input => {
   try {
     const upcomingPackageJsonPath = path.resolve(
       input.configPath,

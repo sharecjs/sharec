@@ -1,4 +1,4 @@
-const { fixtures } = require('testUtils')
+const { fixtures, createFakeSpinner } = require('testUtils')
 const { vol } = require('memfs')
 const writeConfigs = require('../../writeConfigs')
 
@@ -12,6 +12,7 @@ describe('steps > writeConfigs > package', () => {
   it('should write and merge package.json from input to target dir', async () => {
     expect.assertions(1)
 
+    const spinner = createFakeSpinner()
     const upcomingPackage = {
       name: 'awesome-config',
       version: '0.0.0',
@@ -29,7 +30,7 @@ describe('steps > writeConfigs > package', () => {
     }
     vol.fromJSON(dir, '/configs')
 
-    await writeConfigs(input)
+    await writeConfigs(spinner)(input)
 
     expect(packageBaseFxt.result).toMatch(
       vol.readFileSync('/target/package.json', 'utf8'),

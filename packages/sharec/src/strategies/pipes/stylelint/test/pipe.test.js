@@ -6,8 +6,8 @@ describe('pipes > stylelint > pipe', () => {
     const stylelintBaseFxt = fixtures('atomic/stylelint/json/00-base')
 
     it('should merge configs', () => {
-      expect(stylelintBaseFxt.result).toMatch(
-        stylelintPipe('.stylelint')(stylelintBaseFxt),
+      expect(stylelintPipe('.stylelint')(stylelintBaseFxt)).toEqual(
+        stylelintBaseFxt.result,
       )
     })
   })

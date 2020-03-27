@@ -2,7 +2,7 @@ const path = require('path')
 const { writeFile } = require('../utils/std').fs
 const { safeMakeDir } = require('../utils/fs')
 
-const writeCache = async input => {
+const writeCache = spinner => async input => {
   const { upcomingPackage, configs, targetPath } = input
   const { name, version } = upcomingPackage
   const baseCachePath = path.join(
@@ -15,6 +15,8 @@ const writeCache = async input => {
   for (const config in configs) {
     await writeFile(path.join(baseCachePath, config), configs[config])
   }
+
+  return input
 }
 
 module.exports = writeCache

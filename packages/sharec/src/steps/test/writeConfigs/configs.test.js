@@ -1,4 +1,4 @@
-const { fixtures } = require('testUtils')
+const { fixtures, createFakeSpinner } = require('testUtils')
 const { vol } = require('memfs')
 const writeConfigs = require('../../writeConfigs')
 
@@ -16,6 +16,7 @@ describe('steps > writeConfigs > configs', () => {
   it('should write and merge configs from input to target dir', async () => {
     expect.assertions(5)
 
+    const spinner = createFakeSpinner()
     const upcomingPackage = {
       name: 'awesome-config',
       version: '0.0.0',
@@ -41,7 +42,7 @@ describe('steps > writeConfigs > configs', () => {
     }
     vol.fromJSON(dir, '/configs')
 
-    await writeConfigs(input)
+    await writeConfigs(spinner)(input)
 
     expect(eslintBaseFxt.result).toMatch(
       vol.readFileSync('/target/.eslintrc', 'utf8'),
