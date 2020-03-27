@@ -13,6 +13,7 @@ describe('sharec > install', () => {
       PWD: '/configuration-package',
       INIT_CWD: '/target',
     },
+    exit: jest.fn(),
   }
 
   beforeEach(() => {

@@ -7,6 +7,8 @@ const { safeMakeDir } = require('../utils/fs')
 const writeConfigs = spinner => async input => {
   const { configs, cache, targetPath } = input
 
+  spinner.frame('Writing configuration')
+
   for (const config in configs) {
     const targetConfigPath = path.join(targetPath, config)
     const targetPipe = getConfigPipe(targetConfigPath)
@@ -35,6 +37,8 @@ const writeConfigs = spinner => async input => {
 
     await writeFile(targetConfigPath, mergedConfig)
   }
+
+  spinner.succeed('Configuration was writed')
 
   return input
 }

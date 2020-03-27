@@ -1,6 +1,7 @@
 const minimist = require('minimist')
 const { createSpinner } = require('./cli')
 const { composeSteps, steps } = require('./steps')
+const { InternalError } = require('./errors')
 
 /**
  * @param {NodeJS.Process} targetProcess
@@ -10,8 +11,10 @@ async function sharec(targetProcess) {
   const { env } = targetProcess
   // eslint-disable-next-line
   const { _, ...options } = minimist(targetProcess.argv.slice(2))
+  const silentMode = options.s || options.silent
   const spinner = createSpinner({
     text: 'Initializing sharec',
+    silent: silentMode,
   })
   const targetPath = targetProcess.env.INIT_CWD
   const configPath = env.PWD
@@ -35,9 +38,17 @@ async function sharec(targetProcess) {
 
   try {
     await commonFlow(input)
+
+    targetProcess.exit(0)
   } catch (err) {
-    // TODO:
-    console.log(err)
+    if (err instanceof InternalError) {
+      spinner.fail(err.message)
+    } else {
+      spinner.fail('Configuration was not fully applyed due unexpected error')
+      console.error(err)
+    }
+
+    targetProcess.exit(1)
   }
 }
 

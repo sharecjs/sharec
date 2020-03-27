@@ -15,6 +15,8 @@ const readCache = spinner => async input => {
     `node_modules/.cache/sharec/${config}/${version}`,
   )
 
+  spinner.frame(`Reading cache for ${config}/${version}`)
+
   return find(cacheBasePath, '**/*')
     .then(async cachedFiles => {
       if (cachedFiles.length === 0) return input
@@ -30,10 +32,18 @@ const readCache = spinner => async input => {
         input.cache[configKey] = cachedConfig
       }
 
+      spinner.succeed('Cache was readed')
+
       return input
     })
     .catch(err => {
-      if (err.message.includes('ENOENT')) return input
+      if (err.message.includes('ENOENT')) {
+        spinner.frame('Cache was not found, skipping')
+
+        return input
+      }
+
+      spinner.fail('Cache was not readed due unexpected error')
 
       throw err
     })
