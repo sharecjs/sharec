@@ -19,7 +19,7 @@ npm init -y
 **2. Install `sharec` as dependency:**
 
 ```shell
-npm add sharec
+npm i --save sharec
 ```
 
 Install `sharec` as **dependency**, not as devDependecy, it is very important!
