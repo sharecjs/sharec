@@ -51,9 +51,5 @@
     "lang": "en",
     "ignoreCapitalization": true,
     "ignoreText": [" \\(by [^)]+\\)."]
-  },
-  "sharec": {
-    "config": "awesome-config",
-    "version": "1.0.0"
   }
 }

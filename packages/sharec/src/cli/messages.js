@@ -17,4 +17,6 @@ const installed = () => {
   )
 }
 
-module.exports = installed
+module.exports = {
+  installed,
+}

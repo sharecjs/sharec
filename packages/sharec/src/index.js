@@ -1,44 +1,43 @@
 const minimist = require('minimist')
-const { install, remove, version } = require('./commands')
-const {
-  isTargetDependantOfSharec,
-  isTargetPackageInSharecIgnore,
-} = require('./core/package/extract')
-const { getUpcomingConfigsPath } = require('./core/configs/collect')
+const { createSpinner } = require('./cli')
+const { composeSteps, steps } = require('./steps')
 
 /**
  * @param {NodeJS.Process} targetProcess
  * @returns {Promise<void>}
  */
 async function sharec(targetProcess) {
+  const { env } = targetProcess
+  // eslint-disable-next-line
   const { _, ...options } = minimist(targetProcess.argv.slice(2))
+  const spinner = createSpinner({
+    text: 'Initializing sharec',
+  })
   const targetPath = targetProcess.env.INIT_CWD
-  const isDependantOfSharec = await isTargetDependantOfSharec(targetPath)
-
-  if (isDependantOfSharec) return
-
-  const isIgnoresSharecConfigs = await isTargetPackageInSharecIgnore(targetPath)
-
-  if (isIgnoresSharecConfigs) return
-
-  const configsPath = getUpcomingConfigsPath(targetProcess)
-
-  if (!configsPath || configsPath === targetPath) return
-
-  const [command = 'install'] = _
-
-  if (command === 'version') {
-    await version(configsPath)
-    return
+  const configPath = env.PWD
+  const input = {
+    targetPath,
+    configPath,
   }
 
-  switch (command) {
-    case 'remove':
-      await remove({ configsPath, targetPath, options })
-      break
-    case 'install':
-    default:
-      await install({ configsPath, targetPath, options })
+  const commonFlow = composeSteps(
+    steps.readTargetPackage(spinner),
+    steps.readUpcomingPackage(spinner),
+    steps.isAlreadyInstalled(spinner),
+    steps.isDependantOfSharec(spinner),
+    steps.isIgnoresSharecConfigs(spinner),
+    steps.readConfigs(spinner),
+    steps.readCache(spinner),
+    steps.writeConfigs(spinner),
+    steps.writeCache(spinner),
+    steps.writeMeta(spinner),
+  )
+
+  try {
+    await commonFlow(input)
+  } catch (err) {
+    // TODO:
+    console.log(err)
   }
 }
 

@@ -2,29 +2,42 @@
 const isAlreadyInstalled = require('./isAlreadyInstalled')
 const isDependantOfSharec = require('./isDependantOfSharec')
 const isIgnoresSharecConfigs = require('./isIgnoresSharecConfigs')
-const isTargetInvalid = require('./isTargetInvalid')
-const isTargetTheConfig = require('./isTargetTheConfig')
 // Input
 const readConfigs = require('./readConfigs')
-const readTargetMeta = require('./readTargetMeta')
-const readUpcomingMeta = require('./readUpcomingMeta')
+const readTargetPackage = require('./readTargetPackage')
+const readUpcomingPackage = require('./readUpcomingPackage')
+const readCache = require('./readCache')
 // Output
 const writeConfigs = require('./writeConfigs')
 const writeMeta = require('./writeMeta')
 const writeCache = require('./writeCache')
 
-module.exports = {
+const composeSteps = (...steps) => async input => {
+  let lastInput = input
+
+  for (const step of steps) {
+    lastInput = await step(lastInput)
+  }
+
+  return lastInput
+}
+
+const steps = {
   isAlreadyInstalled,
   isDependantOfSharec,
   isIgnoresSharecConfigs,
-  isTargetInvalid,
-  isTargetTheConfig,
 
   readConfigs,
-  readTargetMeta,
-  readUpcomingMeta,
+  readTargetPackage,
+  readUpcomingPackage,
+  readCache,
 
   writeConfigs,
   writeMeta,
   writeCache,
+}
+
+module.exports = {
+  composeSteps,
+  steps,
 }

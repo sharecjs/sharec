@@ -1,4 +1,5 @@
 const { vol } = require('memfs')
+const { createFakeSpinner } = require('testUtils')
 const writeMeta = require('../writeMeta')
 
 describe('steps > writeMeta', () => {
@@ -9,6 +10,7 @@ describe('steps > writeMeta', () => {
   it('should write upcoming package.json meta to target package.json', async () => {
     expect.assertions(2)
 
+    const spinner = createFakeSpinner()
     const targetPackage = {}
     const upcomingPackage = {
       name: 'awesome-config',
@@ -23,7 +25,7 @@ describe('steps > writeMeta', () => {
     }
     vol.fromJSON(dir, '/configs')
 
-    const output = await writeMeta(input)
+    const output = await writeMeta(spinner)(input)
 
     expect(
       JSON.parse(vol.readFileSync('/target/package.json', 'utf8')),
@@ -39,6 +41,7 @@ describe('steps > writeMeta', () => {
   it('should not write upcoming package.json meta to target package.json if disappear option is given', async () => {
     expect.assertions(2)
 
+    const spinner = createFakeSpinner()
     const targetPackage = {}
     const upcomingPackage = {
       name: 'awesome-config',
@@ -54,7 +57,7 @@ describe('steps > writeMeta', () => {
     }
     vol.fromJSON(dir, '/configs')
 
-    const output = await writeMeta(input)
+    const output = await writeMeta(spinner)(input)
 
     expect(
       JSON.parse(vol.readFileSync('/target/package.json', 'utf8')),

@@ -1,4 +1,5 @@
 const { vol } = require('memfs')
+const { createFakeSpinner } = require('testUtils')
 const writeConfigs = require('../../writeConfigs')
 
 describe('steps > writeConfigs > base', () => {
@@ -9,6 +10,7 @@ describe('steps > writeConfigs > base', () => {
   it('should write basic configs from input to target dir', async () => {
     expect.assertions(1)
 
+    const spinner = createFakeSpinner()
     const targetPackage = {
       name: 'awesome-project',
       version: '0.0.0',
@@ -30,7 +32,7 @@ describe('steps > writeConfigs > base', () => {
     }
     vol.fromJSON(dir, '/configs')
 
-    await writeConfigs(input)
+    await writeConfigs(spinner)(input)
 
     expect(vol.readFileSync('/target/.editorconfig', 'utf8')).toEqual(
       upcomingConfigs['.editorconfig'],

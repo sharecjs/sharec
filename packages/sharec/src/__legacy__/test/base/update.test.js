@@ -2,7 +2,7 @@ const { fixtures } = require('testUtils')
 const { vol } = require('memfs')
 const sharec = require('../../')
 
-describe('sharec > update', () => {
+describe.skip('sharec > update', () => {
   const packageJsonUpdateFxt = fixtures('package/json/13-base-update', 'json')
   const gitignoreUpdateFxt = fixtures('gitignore/lines/02-base-update')
   const travisUpdateFxt = fixtures('travis/yaml/00-base-update')

@@ -89,6 +89,8 @@
       "js",
       "json"
     ],
+    "testMatch": ["**/*.test.js"],
+    "testPathIgnorePatterns": ["node_modules", "src/__legacy__"],
     "coveragePathIgnorePatterns": [
       "node_modules"
     ],

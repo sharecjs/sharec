@@ -7,7 +7,10 @@
         "ignoreAtRules": ["define-mixin", "mixin"]
       }
     ],
-    "color-named": "never"
+    "block-closing-brace-newline-before": null,
+    "block-opening-brace-space-before": null,
+    "color-named": "never",
+    "declaration-block-trailing-semicolon": null
   },
   "processors": [
     ["stylelint-my-processor", { "optionOne": false }],

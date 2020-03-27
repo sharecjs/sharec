@@ -2,7 +2,7 @@ const path = require('path')
 const get = require('lodash/get')
 const { writeFile, readFile } = require('../utils/std').fs
 
-const writeMeta = async input => {
+const writeMeta = spinner => async input => {
   const disappear = get(input, 'options.disappear')
 
   if (disappear) return input

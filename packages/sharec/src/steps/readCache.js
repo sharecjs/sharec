@@ -3,7 +3,7 @@ const get = require('lodash/get')
 const { readFile } = require('../utils/std').fs
 const { find } = require('../utils/fs')
 
-const readCache = async input => {
+const readCache = spinner => async input => {
   const { targetPackage, targetPath } = input
   const previousTargetMeta = get(targetPackage, 'sharec', null)
 

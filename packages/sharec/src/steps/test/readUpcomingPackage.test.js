@@ -1,4 +1,5 @@
 const { vol } = require('memfs')
+const { createFakeSpinner } = require('testUtils')
 const readUpcomingPackage = require('../readUpcomingPackage')
 
 describe('steps > readUpcomingPackage', () => {
@@ -11,6 +12,7 @@ describe('steps > readUpcomingPackage', () => {
   it('should read package.json from upcoming config', async () => {
     expect.assertions(1)
 
+    const spinner = createFakeSpinner()
     const packageJson = {
       foo: 'bar',
       bar: 'baz',
@@ -22,7 +24,7 @@ describe('steps > readUpcomingPackage', () => {
 
     vol.fromJSON(dir, input.configPath)
 
-    const output = await readUpcomingPackage(input)
+    const output = await readUpcomingPackage(spinner)(input)
 
     expect(output).toEqual({
       ...input,
@@ -31,12 +33,13 @@ describe('steps > readUpcomingPackage', () => {
   })
 
   it('should throw an error if package.json is not exist in upcoming config', async done => {
+    const spinner = createFakeSpinner()
     const dir = {}
 
     vol.fromJSON(dir, input.configPath)
 
     try {
-      await readUpcomingPackage(input)
+      await readUpcomingPackage(spinner)(input)
     } catch (err) {
       done()
     }

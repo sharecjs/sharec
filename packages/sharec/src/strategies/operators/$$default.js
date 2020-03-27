@@ -1,4 +1,6 @@
 const omit = require('lodash/omit')
+const pick = require('lodash/pick')
+const without = require('lodash/without')
 
 /**
  * @param {Object} params
@@ -12,10 +14,17 @@ const $$default = ({ target = {}, strategy }) =>
    * @returns {Object}
    */
   ({ current, upcoming, cached = {} }) => {
-    let result = {}
-    const targetFields = omit(upcoming, Object.keys(target))
+    const targetKeys = Object.keys(target)
+    const currentKeys = Object.keys(current)
+    const upcomingKeys = Object.keys(upcoming)
+    const staticKeys = without(
+      currentKeys,
+      ...[].concat(upcomingKeys, targetKeys),
+    )
+    const newFields = omit(upcoming, targetKeys)
+    let result = pick(current, staticKeys)
 
-    for (const key in targetFields) {
+    for (const key in newFields) {
       Object.assign(result, {
         [key]: strategy({
           current: current[key],

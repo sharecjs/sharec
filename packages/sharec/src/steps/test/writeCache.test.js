@@ -1,4 +1,5 @@
 const { vol } = require('memfs')
+const { createFakeSpinner } = require('testUtils')
 const writeCache = require('../writeCache')
 
 describe('steps > writeCache', () => {
@@ -9,6 +10,7 @@ describe('steps > writeCache', () => {
   it('should write configs from input to cache dir', async () => {
     expect.assertions(2)
 
+    const spinner = createFakeSpinner()
     const targetPackage = {}
     const upcomingPackage = {
       name: 'awesome-config',
@@ -29,7 +31,7 @@ describe('steps > writeCache', () => {
     }
     vol.fromJSON(dir, '/configs')
 
-    await writeCache(input)
+    await writeCache(spinner)(input)
 
     const cachedConfigs = vol.readdirSync(
       '/target/node_modules/.cache/sharec/awesome-config/0.0.0',

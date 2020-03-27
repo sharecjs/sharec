@@ -30,7 +30,7 @@ function fixture(path, format) {
     return JSON.parse(file)
   }
 
-  return file
+  return file.replace(/\n$/, '')
 }
 
 /**
@@ -75,7 +75,7 @@ function fixtures(path, format) {
 
     if (format === 'json') return JSON.parse(file)
 
-    return file
+    return file.replace(/\n$/, '')
   })
 
   const fixturesSet = zipObject(fixturesKeys, fixturesValues)
@@ -83,7 +83,17 @@ function fixtures(path, format) {
   return pickBy(fixturesSet)
 }
 
+function createFakeSpinner() {
+  const spinner = {
+    start: jest.fn().mockImplementation(() => spinner),
+    succeed: jest.fn().mockImplementation(() => spinner),
+    fail: jest.fn().mockImplementation(() => spinner),
+    frame: jest.fn().mockImplementation(() => spinner),
+  }
+}
+
 module.exports = {
   fixture,
   fixtures,
+  createFakeSpinner,
 }

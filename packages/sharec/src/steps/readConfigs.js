@@ -1,9 +1,9 @@
 const path = require('path')
-const { readFile, readDir } = require('../utils/std').fs
+const { readFile } = require('../utils/std').fs
 const { find } = require('../utils/fs')
 const { InternalError, CAUSES } = require('../errors')
 
-const readConfigs = input => {
+const readConfigs = spinner => input => {
   const configsPath = path.join(input.configPath, '/configs')
 
   return find(configsPath, '**/*')
@@ -19,8 +19,9 @@ const readConfigs = input => {
 
       for (const config of configsPaths) {
         const configContent = await readFile(config, 'utf8')
+        const configBasePath = config.replace(configsPath, '')
 
-        readedConfigs[config] = configContent
+        readedConfigs[configBasePath] = configContent
       }
 
       return readedConfigs
