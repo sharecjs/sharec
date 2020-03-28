@@ -1,4 +1,3 @@
-const get = require('lodash/get')
 const path = require('path')
 const { getConfigPipe } = require('../strategies/pipes')
 const { writeFile, readFile } = require('../utils/std').fs

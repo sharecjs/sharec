@@ -1,0 +1,27 @@
+{
+  "lang": "ru",
+  "ignoreCapitalization": true,
+  "excludeFiles": ["README-*.md"],
+  "ignoreText": [" \\(by [^)]+\\)."],
+  "ignoreTags": ["foo"],
+  "dictionary": [
+    "cryptographically",
+    "formatAsync",
+    "generateAsync",
+    "gzip",
+    "gzipped",
+    "Haskell",
+    "js",
+    "JSDoc",
+    "nanoid",
+    "Nim",
+    "nonSecure",
+    "npm",
+    "UUID",
+    "v4",
+    "Versioning",
+    "JS",
+    "PouchDB",
+    "CouchDB"
+  ]
+}

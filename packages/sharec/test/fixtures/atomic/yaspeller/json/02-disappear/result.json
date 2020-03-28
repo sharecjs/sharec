@@ -1,0 +1,43 @@
+{
+  "excludeFiles": [
+    "README-*.md",
+    "CHANGELOG.md"
+  ],
+  "ignoreText": [
+    " \\(by [^)]+\\)."
+  ],
+  "ignoreTags": [
+    "foo"
+  ],
+  "dictionary": [
+    "cryptographically",
+    "formatAsync",
+    "generateAsync",
+    "gzip",
+    "gzipped",
+    "Haskell",
+    "js",
+    "JSDoc",
+    "nanoid",
+    "Nim",
+    "nonSecure",
+    "npm",
+    "UUID",
+    "v4",
+    "Versioning",
+    "JS",
+    "PouchDB",
+    "CouchDB",
+    "Async",
+    "asyncGenerator",
+    "CLI",
+    "Clojure",
+    "ClojureScript",
+    "Crypto"
+  ],
+  "fileExtensions": [
+    "bar"
+  ],
+  "lang": "en",
+  "ignoreCapitalization": false
+}
