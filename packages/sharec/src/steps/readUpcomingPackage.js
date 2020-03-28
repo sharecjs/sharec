@@ -3,7 +3,7 @@ const { readFile } = require('../utils/std').fs
 
 const readUpcomingPackage = spinner => async input => {
   try {
-    spinner.frame('Reading package.json from upcoming configuration')
+    spinner.frame('reading package.json from upcoming configuration')
 
     const upcomingPackageJsonPath = path.resolve(
       input.configPath,
@@ -15,7 +15,7 @@ const readUpcomingPackage = spinner => async input => {
     )
     const upcomingPackage = JSON.parse(rawUpcomingPackageJson)
 
-    spinner.succeed('package.json from upcoming configuration was readed')
+    spinner.frame('package.json from upcoming configuration was readed')
 
     return Object.assign(input, {
       upcomingPackage,

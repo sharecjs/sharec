@@ -9,9 +9,10 @@ const { InternalError } = require('./errors')
  */
 async function sharec(targetProcess) {
   const { env } = targetProcess
-  // eslint-disable-next-line
   const { _, ...options } = minimist(targetProcess.argv.slice(2))
   const silentMode = options.s || options.silent
+  const disappearMode = options.d || options.disappear
+  const overwriteMode = options.o || options.overwrite
   const spinner = createSpinner({
     text: 'Initializing sharec',
     silent: silentMode,
@@ -21,8 +22,12 @@ async function sharec(targetProcess) {
   const input = {
     targetPath,
     configPath,
+    options: {
+      silent: silentMode,
+      overwrite: overwriteMode,
+      disappear: disappearMode,
+    },
   }
-
   const commonFlow = composeSteps(
     steps.readTargetPackage(spinner),
     steps.readUpcomingPackage(spinner),
@@ -38,6 +43,8 @@ async function sharec(targetProcess) {
 
   try {
     await commonFlow(input)
+
+    spinner.succeed('configuration was installed')
 
     targetProcess.exit(0)
   } catch (err) {

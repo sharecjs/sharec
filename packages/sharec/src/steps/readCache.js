@@ -10,12 +10,9 @@ const readCache = spinner => async input => {
   if (!previousTargetMeta) return input
 
   const { config, version } = previousTargetMeta
-  const cacheBasePath = path.join(
-    targetPath,
-    `node_modules/.cache/sharec/${config}/${version}`,
-  )
+  const cacheBasePath = path.join(targetPath, `node_modules/.cache/sharec/${config}/${version}`)
 
-  spinner.frame(`Reading cache for ${config}/${version}`)
+  spinner.frame(`reading cache for ${config}/${version}`)
 
   return find(cacheBasePath, '**/*')
     .then(async cachedFiles => {
@@ -24,21 +21,19 @@ const readCache = spinner => async input => {
       input.cache = {}
 
       for (const configPath of cachedFiles) {
-        const configKey = configPath
-          .replace(cacheBasePath, '')
-          .replace(/^\//, '')
+        const configKey = configPath.replace(cacheBasePath, '').replace(/^\//, '')
         const cachedConfig = await readFile(configPath, 'utf8')
 
         input.cache[configKey] = cachedConfig
       }
 
-      spinner.succeed('Cache was readed')
+      spinner.frame('cache was readed')
 
       return input
     })
     .catch(err => {
       if (err.message.includes('ENOENT')) {
-        spinner.frame('Cache was not found, skipping')
+        spinner.frame('cache was not found, skipping')
 
         return input
       }

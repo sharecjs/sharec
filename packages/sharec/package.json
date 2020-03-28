@@ -45,7 +45,8 @@
   "prettier": {
     "semi": false,
     "singleQuote": true,
-    "trailingComma": "all"
+    "trailingComma": "all",
+    "printWidth": 120
   },
   "eslintConfig": {
     "env": {
@@ -71,7 +72,8 @@
         {
           "semi": false,
           "singleQuote": true,
-          "trailingComma": "all"
+          "trailingComma": "all",
+          "printWidth": 120
         }
       ]
     }

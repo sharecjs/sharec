@@ -1,0 +1,31 @@
+{
+  "env": {
+    "test": {
+      "presets": [
+        "stage-3",
+        "stage-2"
+      ]
+    }
+  },
+  "plugins": [
+    "syntax-dynamic-import"
+  ],
+  "presets": [
+    [
+      "env",
+      {
+        "modules": true,
+        "targets": {
+          "browsers": [
+            "> 1%",
+            "last 2 versions"
+          ]
+        }
+      }
+    ]
+  ],
+  "ignore": [
+    "foo",
+    "bar"
+  ]
+}

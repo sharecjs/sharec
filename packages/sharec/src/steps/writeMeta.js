@@ -7,7 +7,7 @@ const writeMeta = spinner => async input => {
 
   if (disappear) return input
 
-  spinner.frame('Writing sharec meta data to target package')
+  spinner.frame('writing sharec meta data to target package')
 
   const { name, version } = input.upcomingPackage
   const targetPackagePath = path.join(input.targetPath, 'package.json')
@@ -21,7 +21,7 @@ const writeMeta = spinner => async input => {
 
   await writeFile(targetPackagePath, JSON.stringify(targetPackage, null, 2))
 
-  spinner.succeed('Sharec meta data was writed')
+  spinner.frame('sharec meta data was writed')
 
   return input
 }

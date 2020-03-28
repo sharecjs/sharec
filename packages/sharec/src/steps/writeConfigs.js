@@ -5,9 +5,9 @@ const { writeFile, readFile } = require('../utils/std').fs
 const { safeMakeDir } = require('../utils/fs')
 
 const writeConfigs = spinner => async input => {
-  const { configs, cache, targetPath } = input
+  const { configs, cache = {}, targetPath } = input
 
-  spinner.frame('Writing configuration')
+  spinner.frame('writing configuration')
 
   for (const config in configs) {
     const targetConfigPath = path.join(targetPath, config)
@@ -20,7 +20,7 @@ const writeConfigs = spinner => async input => {
       continue
     }
 
-    const cachedConfig = get(cache, config, undefined)
+    const cachedConfig = cache[config]
     let currentConfig
 
     try {
@@ -32,13 +32,13 @@ const writeConfigs = spinner => async input => {
     const mergedConfig = targetPipe({
       current: currentConfig,
       upcoming: upcomingConfig,
-      cache: cachedConfig,
+      cached: cachedConfig,
     })
 
     await writeFile(targetConfigPath, mergedConfig)
   }
 
-  spinner.succeed('Configuration was writed')
+  spinner.frame('configuration was writed')
 
   return input
 }

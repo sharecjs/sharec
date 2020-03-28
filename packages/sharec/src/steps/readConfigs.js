@@ -4,15 +4,13 @@ const { find } = require('../utils/fs')
 const { InternalError, CAUSES } = require('../errors')
 
 const readConfigs = spinner => input => {
-  spinner.frame('Reading upcoming configuration files')
+  spinner.frame('reading upcoming configuration files')
 
   const configsPath = path.join(input.configPath, '/configs')
 
   return find(configsPath, '**/*')
     .then(configsPaths => {
-      const withoutLocks = configsPaths.filter(
-        config => !/(\.|-)lock/.test(config),
-      )
+      const withoutLocks = configsPaths.filter(config => !/(\.|-)lock/.test(config))
 
       return withoutLocks
     })
@@ -20,18 +18,18 @@ const readConfigs = spinner => input => {
       let readedConfigs = {}
 
       for (const config of configsPaths) {
-        spinner.frame(`Reading ${config}`)
+        spinner.frame(`reading ${config}`)
 
         const configContent = await readFile(config, 'utf8')
-        const configBasePath = config.replace(configsPath, '')
+        const configKey = config.replace(configsPath, '').replace(/^\//, '')
 
-        readedConfigs[configBasePath] = configContent
+        readedConfigs[configKey] = configContent
       }
 
       return readedConfigs
     })
     .then(readedConfigs => {
-      spinner.succeed('All files were readed')
+      spinner.frame('all files were readed')
 
       return {
         ...input,
@@ -45,10 +43,7 @@ const readConfigs = spinner => input => {
         throw err
       }
       if (err.message.includes('readdir')) {
-        throw new InternalError(
-          CAUSES.CONFIGS_NOT_FOUND.message(configsPath),
-          CAUSES.CONFIGS_NOT_FOUND.symbol,
-        )
+        throw new InternalError(CAUSES.CONFIGS_NOT_FOUND.message(configsPath), CAUSES.CONFIGS_NOT_FOUND.symbol)
       }
 
       throw err
