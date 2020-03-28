@@ -6,6 +6,7 @@ const yaspellerJson = compose({
   ignoreText: listConcatAtom,
   ignoreTags: listConcatAtom,
   dictionary: listConcatAtom,
+  fileExtensions: listConcatAtom,
   $$default: primitiveAtom,
 })
 

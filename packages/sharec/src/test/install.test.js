@@ -1,6 +1,6 @@
 const { fixtures } = require('testUtils')
 const { vol } = require('memfs')
-const sharec = require('../../')
+const sharec = require('../')
 
 describe('sharec > install', () => {
   const packageFxt = fixtures('atomic/package/json/01-install')
@@ -21,7 +21,7 @@ describe('sharec > install', () => {
   })
 
   it('should install configs to the target project', async () => {
-    expect.assertions(4)
+    expect.assertions(5)
 
     const dir = {
       '/target/.eslintrc': eslintFxt.current,
@@ -50,5 +50,10 @@ describe('sharec > install', () => {
     expect(packageFxt.result).toMatch(
       vol.readFileSync('/target/package.json', 'utf8'),
     )
+    expect(
+      vol.readdirSync(
+        '/target/node_modules/.cache/sharec/awesome-config/1.0.0',
+      ),
+    ).toHaveLength(4)
   })
 })

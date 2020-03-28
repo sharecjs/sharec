@@ -3,10 +3,12 @@ const { writeFile } = require('../utils/std').fs
 const { safeMakeDir } = require('../utils/fs')
 
 const writeCache = spinner => async input => {
-  const { upcomingPackage, configs, targetPath } = input
+  const { upcomingPackage, configs, targetPath, options } = input
   const { name, version } = upcomingPackage
 
-  spinner.frame(`Writing cache for ${name}/${version}`)
+  if (options.disappear) return input
+
+  spinner.frame(`writing cache for ${name}/${version}`)
 
   const baseCachePath = path.join(
     targetPath,
@@ -19,7 +21,7 @@ const writeCache = spinner => async input => {
     await writeFile(path.join(baseCachePath, config), configs[config])
   }
 
-  spinner.succeed(`Configuration for ${name}/${version} was cached`)
+  spinner.frame(`configuration for ${name}/${version} was cached`)
 
   return input
 }

@@ -1,0 +1,21 @@
+{
+  "lang": "en",
+  "ignoreCapitalization": false,
+  "fileExtensions": ["baz"],
+  "excludeFiles": ["README-*.md", "CHANGELOG.md"],
+  "ignoreText": [" \\(by [^)]+\\)."],
+  "dictionary": [
+    "Async",
+    "asyncGenerator",
+    "CLI",
+    "Clojure",
+    "ClojureScript",
+    "Crypto",
+    "cryptographically",
+    "formatAsync",
+    "generateAsync",
+    "foo",
+    "bar",
+    "baz"
+  ]
+}
