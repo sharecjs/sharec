@@ -40,20 +40,10 @@ describe('sharec > install', () => {
 
     await sharec(targetProcess)
 
-    expect(eslintFxt.result).toMatch(
-      vol.readFileSync('/target/.eslintrc', 'utf8'),
-    )
-    expect(babelFxt.result).toMatch(
-      vol.readFileSync('/target/.babelrc', 'utf8'),
-    )
-    expect('bar').toMatch(vol.readFileSync('/target/.editorconfig', 'utf8'))
-    expect(packageFxt.result).toMatch(
-      vol.readFileSync('/target/package.json', 'utf8'),
-    )
-    expect(
-      vol.readdirSync(
-        '/target/node_modules/.cache/sharec/awesome-config/1.0.0',
-      ),
-    ).toHaveLength(4)
+    expect(vol.readFileSync('/target/.eslintrc', 'utf8')).toEqual(eslintFxt.result)
+    expect(vol.readFileSync('/target/.babelrc', 'utf8')).toEqual(babelFxt.result)
+    expect(vol.readFileSync('/target/.editorconfig', 'utf8')).toEqual('bar')
+    expect(vol.readFileSync('/target/package.json', 'utf8')).toEqual(packageFxt.result)
+    expect(vol.readdirSync('/target/node_modules/.cache/sharec/awesome-config/1.0.0')).toHaveLength(4)
   })
 })

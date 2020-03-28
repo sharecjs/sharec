@@ -10,10 +10,7 @@ const writeCache = spinner => async input => {
 
   spinner.frame(`writing cache for ${name}/${version}`)
 
-  const baseCachePath = path.join(
-    targetPath,
-    `node_modules/.cache/sharec/${name}/${version}`,
-  )
+  const baseCachePath = path.join(targetPath, `node_modules/.cache/sharec/${name}/${version}`)
 
   await safeMakeDir(baseCachePath)
 
