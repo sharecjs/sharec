@@ -1,7 +1,7 @@
 const createSpinner = require('./spinner')
-const { installed } = require('./messages')
+const createLogger = require('./logger')
 
 module.exports = {
   createSpinner,
-  installed,
+  createLogger,
 }
