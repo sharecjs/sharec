@@ -91,8 +91,13 @@
       "js",
       "json"
     ],
-    "testMatch": ["**/*.test.js"],
-    "testPathIgnorePatterns": ["node_modules", "src/__legacy__"],
+    "testMatch": [
+      "**/*.test.js"
+    ],
+    "testPathIgnorePatterns": [
+      "node_modules",
+      "src/__legacy__"
+    ],
     "coveragePathIgnorePatterns": [
       "node_modules"
     ],
@@ -129,7 +134,6 @@
     "prettier": "^1.17.1"
   },
   "dependencies": {
-    "boxen": "^4.1.0",
     "chalk": "^2.4.2",
     "deep-diff": "^1.0.2",
     "deepmerge": "^3.2.0",

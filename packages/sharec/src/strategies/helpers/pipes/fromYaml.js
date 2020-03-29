@@ -1,11 +1,12 @@
+const { safeLoad } = require('js-yaml')
 const omitBy = require('lodash/omitBy')
 const isUndefined = require('lodash/isUndefined')
 const mapValues = require('lodash/mapValues')
 
-const fromJson = params => {
+const fromYaml = params => {
   const sanitizedParams = omitBy(params, isUndefined)
 
-  return mapValues(sanitizedParams, JSON.parse)
+  return mapValues(sanitizedParams, safeLoad)
 }
 
-module.exports = fromJson
+module.exports = fromYaml
