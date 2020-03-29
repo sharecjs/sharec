@@ -13,6 +13,8 @@ const operatorsKeys = Object.keys(operators)
 const compose = schema =>
   /**
    * @param {Object} params
+   * @param {Object} options
+   * @param {Boolean} [options.overwrite]
    * @returns {Object}
    */
   params => {
@@ -29,12 +31,10 @@ const compose = schema =>
     for (const key in schemaWithoutOperators) {
       if (!current[key] && !upcoming[key]) continue
 
-      Object.assign(result, {
-        [key]: schemaWithoutOperators[key]({
-          current: current[key],
-          upcoming: upcoming[key],
-          cached: cached && cached[key],
-        }),
+      result[key] = schemaWithoutOperators[key]({
+        current: current[key],
+        upcoming: upcoming[key],
+        cached: cached && cached[key],
       })
     }
 
@@ -45,8 +45,9 @@ const compose = schema =>
 
     if (!isOperatorsExists) return result
     if (schema.$$default) {
-      return operators.$$default({
+      result = operators.$$default({
         target: result,
+        ignore: schema.$$ignore,
         strategy: schema.$$default,
       })(params)
     }

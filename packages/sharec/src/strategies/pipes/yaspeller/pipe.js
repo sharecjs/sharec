@@ -9,9 +9,8 @@ const yaspellerJsonPipe = flow(
   input => JSON.stringify(input, null, 2),
 )
 
-const yaspellerPipe = map(
-  ['.yaspellerrc', yaspellerJsonPipe],
-  ['.yaspeller.json', yaspellerJsonPipe],
-)
+const yaspellerPipe = map(['.yaspellerrc', yaspellerJsonPipe], ['.yaspeller.json', yaspellerJsonPipe])
 
-module.exports = yaspellerPipe
+module.exports = {
+  pipe: yaspellerPipe,
+}

@@ -11,4 +11,6 @@ const lintStagedJsonPipe = flow(
 
 const lintStagedPipe = map(['.lintstagedrc', lintStagedJsonPipe])
 
-module.exports = lintStagedPipe
+module.exports = {
+  pipe: lintStagedPipe,
+}

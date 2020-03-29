@@ -14,13 +14,13 @@ const pipes = {
 
 const getConfigPipe = configPath => {
   const configFilename = path.basename(configPath)
-  const targetPipeKey = Object.keys(pipes).find(
-    key => !!pipes[key](configFilename),
-  )
+  const targetPipeKey = Object.keys(pipes).find(key => !!pipes[key].pipe(configFilename))
 
   if (!targetPipeKey) return null
 
-  return pipes[targetPipeKey](configFilename)
+  return {
+    processor: pipes[targetPipeKey].pipe(configFilename),
+  }
 }
 
 module.exports = {

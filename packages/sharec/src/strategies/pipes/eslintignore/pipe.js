@@ -3,4 +3,6 @@ const { linesConcatAtom } = require('../../atoms')
 
 const eslintignorePipe = map(['.eslintignore', linesConcatAtom])
 
-module.exports = eslintignorePipe
+module.exports = {
+  pipe: eslintignorePipe,
+}

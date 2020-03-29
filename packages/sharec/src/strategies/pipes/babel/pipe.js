@@ -9,10 +9,8 @@ const babelJsonPipe = flow(
   input => JSON.stringify(input, null, 2),
 )
 
-const babelPipe = map(
-  ['.babelrc', babelJsonPipe],
-  ['.babelrc.json', babelJsonPipe],
-  ['babelrc.json', babelJsonPipe],
-)
+const babelPipe = map(['.babelrc', babelJsonPipe], ['.babelrc.json', babelJsonPipe], ['babelrc.json', babelJsonPipe])
 
-module.exports = babelPipe
+module.exports = {
+  pipe: babelPipe,
+}

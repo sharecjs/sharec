@@ -3,4 +3,6 @@ const { linesConcatAtom } = require('../../atoms')
 
 const browserslistPipe = map(['.browserslistrc', linesConcatAtom])
 
-module.exports = browserslistPipe
+module.exports = {
+  pipe: browserslistPipe,
+}

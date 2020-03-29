@@ -23,6 +23,7 @@ describe('steps > writeConfigs > package', () => {
     const input = {
       targetPath: '/target',
       configs: upcomingConfigs,
+      options: {},
       upcomingPackage,
     }
     const dir = {
@@ -32,8 +33,6 @@ describe('steps > writeConfigs > package', () => {
 
     await writeConfigs(spinner)(input)
 
-    expect(packageBaseFxt.result).toMatch(
-      vol.readFileSync('/target/package.json', 'utf8'),
-    )
+    expect(vol.readFileSync('/target/package.json', 'utf8')).toEqual(packageBaseFxt.result)
   })
 })

@@ -3,4 +3,6 @@ const { linesConcatAtom } = require('../../atoms')
 
 const gitignorePipe = map(['.gitignore', linesConcatAtom])
 
-module.exports = gitignorePipe
+module.exports = {
+  pipe: gitignorePipe,
+}

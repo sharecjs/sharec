@@ -18,6 +18,7 @@ describe('steps > writeMeta', () => {
     }
     const input = {
       targetPath: '/target',
+      options: {},
       upcomingPackage,
     }
     const dir = {
@@ -27,9 +28,7 @@ describe('steps > writeMeta', () => {
 
     const output = await writeMeta(spinner)(input)
 
-    expect(
-      JSON.parse(vol.readFileSync('/target/package.json', 'utf8')),
-    ).toEqual({
+    expect(JSON.parse(vol.readFileSync('/target/package.json', 'utf8'))).toEqual({
       sharec: {
         config: upcomingPackage.name,
         version: upcomingPackage.version,
@@ -59,9 +58,7 @@ describe('steps > writeMeta', () => {
 
     const output = await writeMeta(spinner)(input)
 
-    expect(
-      JSON.parse(vol.readFileSync('/target/package.json', 'utf8')),
-    ).toEqual({})
+    expect(JSON.parse(vol.readFileSync('/target/package.json', 'utf8'))).toEqual({})
     expect(output).toEqual(input)
   })
 })

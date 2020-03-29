@@ -25,6 +25,7 @@ describe('steps > writeConfigs > base', () => {
     const input = {
       targetPath: '/target',
       configs: upcomingConfigs,
+      options: {},
       upcomingPackage,
     }
     const dir = {
@@ -34,8 +35,6 @@ describe('steps > writeConfigs > base', () => {
 
     await writeConfigs(spinner)(input)
 
-    expect(vol.readFileSync('/target/.editorconfig', 'utf8')).toEqual(
-      upcomingConfigs['.editorconfig'],
-    )
+    expect(vol.readFileSync('/target/.editorconfig', 'utf8')).toEqual(upcomingConfigs['.editorconfig'])
   })
 })
