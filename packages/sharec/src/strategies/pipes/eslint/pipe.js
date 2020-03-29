@@ -1,18 +1,25 @@
 const flow = require('lodash/flow')
 const { map } = require('../../actions')
 const { eslintJson } = require('./schema')
-const fromJson = require('../../helpers/pipes/fromJson')
+const { fromJson, toJson, fromYaml, toYaml } = require('../../helpers/pipes')
 
 const eslintJsonPipe = flow(
   fromJson,
   eslintJson,
-  input => JSON.stringify(input, null, 2),
+  toJson,
+)
+const eslintYamlPipe = flow(
+  fromYaml,
+  eslintJson,
+  toYaml,
 )
 
 const eslintPipe = map(
   ['.eslintrc', eslintJsonPipe],
   ['.eslintrc.json', eslintJsonPipe],
   ['eslintrc.json', eslintJsonPipe],
+  ['.eslintrc.yaml', eslintYamlPipe],
+  ['.eslintrc.yml', eslintYamlPipe],
 )
 
 module.exports = {
