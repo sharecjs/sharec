@@ -14,6 +14,7 @@ describe('steps > readConfigs', () => {
     const spinner = createFakeSpinner()
     const input = {
       configPath: '/',
+      options: {},
     }
     const dir = {
       'package.json': 'foo',
@@ -28,8 +29,8 @@ describe('steps > readConfigs', () => {
     expect(output).toEqual({
       ...input,
       configs: {
-        '/package.json': 'foo',
-        '/.eslintrc': 'bar',
+        'package.json': 'foo',
+        '.eslintrc': 'bar',
       },
     })
   })
@@ -49,9 +50,7 @@ describe('steps > readConfigs', () => {
     } catch (err) {
       expect(err).toBeInstanceOf(InternalError)
       expect(err.cause).toBe(CAUSES.CONFIGS_NOT_FOUND.symbol)
-      expect(err.message).toEqual(
-        'Configuration files were not found in "/foo/configs"',
-      )
+      expect(err.message).toEqual('Configuration files were not found in "/foo/configs"')
     }
   })
 })

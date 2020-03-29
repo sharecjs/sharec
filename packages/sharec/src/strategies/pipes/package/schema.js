@@ -38,6 +38,21 @@ const packageJson = compose({
   jest: jestJson,
 
   // Handle other fields
+  $$ignore: [
+    'sharec',
+    'name',
+    'version',
+    'description',
+    'homepage',
+    'bugs',
+    'people',
+    'man',
+    'repository',
+    'os',
+    'cpu',
+    'preferGlobal',
+    'private',
+  ],
   $$default: fork([[isObject, hashAtom], primitiveAtom]),
 })
 

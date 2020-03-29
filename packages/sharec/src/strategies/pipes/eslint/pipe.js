@@ -15,4 +15,6 @@ const eslintPipe = map(
   ['eslintrc.json', eslintJsonPipe],
 )
 
-module.exports = eslintPipe
+module.exports = {
+  pipe: eslintPipe,
+}

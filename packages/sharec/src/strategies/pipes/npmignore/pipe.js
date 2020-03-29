@@ -3,4 +3,6 @@ const { linesConcatAtom } = require('../../atoms')
 
 const npmignorePipe = map(['.npmignore', linesConcatAtom])
 
-module.exports = npmignorePipe
+module.exports = {
+  pipe: npmignorePipe,
+}

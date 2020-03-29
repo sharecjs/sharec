@@ -1,11 +1,11 @@
 const path = require('path')
-const get = require('lodash/get')
 const { writeFile, readFile } = require('../utils/std').fs
 
 const writeMeta = spinner => async input => {
-  const disappear = get(input, 'options.disappear')
+  const { options } = input
+  const { disappear, overwrite } = options
 
-  if (disappear) return input
+  if (disappear || overwrite) return input
 
   spinner.frame('writing sharec meta data to target package')
 

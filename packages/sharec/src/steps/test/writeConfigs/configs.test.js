@@ -31,6 +31,7 @@ describe('steps > writeConfigs > configs', () => {
     const input = {
       targetPath: '/target',
       configs: upcomingConfigs,
+      options: {},
       upcomingPackage,
     }
     const dir = {
@@ -44,20 +45,10 @@ describe('steps > writeConfigs > configs', () => {
 
     await writeConfigs(spinner)(input)
 
-    expect(eslintBaseFxt.result).toMatch(
-      vol.readFileSync('/target/.eslintrc', 'utf8'),
-    )
-    expect(babelBaseFxt.result).toMatch(
-      vol.readFileSync('/target/.babelrc', 'utf8'),
-    )
-    expect(npmignoreBaseFxt.result).toMatch(
-      vol.readFileSync('/target/.npmignore', 'utf8'),
-    )
-    expect(gitignoreBaseFxt.result).toMatch(
-      vol.readFileSync('/target/.gitignore', 'utf8'),
-    )
-    expect(yaspellerBaseFxt.result).toMatch(
-      vol.readFileSync('/target/.yaspellerrc', 'utf8'),
-    )
+    expect(vol.readFileSync('/target/.eslintrc', 'utf8')).toEqual(eslintBaseFxt.result)
+    expect(vol.readFileSync('/target/.babelrc', 'utf8')).toEqual(babelBaseFxt.result)
+    expect(vol.readFileSync('/target/.npmignore', 'utf8')).toEqual(npmignoreBaseFxt.result)
+    expect(vol.readFileSync('/target/.gitignore', 'utf8')).toEqual(gitignoreBaseFxt.result)
+    expect(vol.readFileSync('/target/.yaspellerrc', 'utf8')).toEqual(yaspellerBaseFxt.result)
   })
 })

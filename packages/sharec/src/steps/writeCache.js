@@ -5,8 +5,9 @@ const { safeMakeDir } = require('../utils/fs')
 const writeCache = spinner => async input => {
   const { upcomingPackage, configs, targetPath, options } = input
   const { name, version } = upcomingPackage
+  const { disappear, overwrite } = options
 
-  if (options.disappear) return input
+  if (disappear || overwrite) return input
 
   spinner.frame(`writing cache for ${name}/${version}`)
 

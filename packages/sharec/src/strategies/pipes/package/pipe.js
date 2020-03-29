@@ -11,4 +11,6 @@ const packageJsonPipe = flow(
 
 const packagePipe = map(['package.json', packageJsonPipe])
 
-module.exports = packagePipe
+module.exports = {
+  pipe: packagePipe,
+}

@@ -9,9 +9,8 @@ const stylelintJsonPipe = flow(
   input => JSON.stringify(input, null, 2),
 )
 
-const stylelintPipe = map(
-  ['.stylelint', stylelintJsonPipe],
-  ['.stylelint.json', stylelintJsonPipe],
-)
+const stylelintPipe = map(['.stylelint', stylelintJsonPipe], ['.stylelint.json', stylelintJsonPipe])
 
-module.exports = stylelintPipe
+module.exports = {
+  pipe: stylelintPipe,
+}

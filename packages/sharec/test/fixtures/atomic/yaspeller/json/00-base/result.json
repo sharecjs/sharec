@@ -35,9 +35,9 @@
     "ClojureScript",
     "Crypto"
   ],
-  "lang": "en",
-  "ignoreCapitalization": false,
   "fileExtensions": [
     "bar"
-  ]
+  ],
+  "lang": "en",
+  "ignoreCapitalization": false
 }

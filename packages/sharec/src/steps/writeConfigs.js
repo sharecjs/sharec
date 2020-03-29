@@ -4,22 +4,27 @@ const { writeFile, readFile } = require('../utils/std').fs
 const { safeMakeDir } = require('../utils/fs')
 
 const writeConfigs = spinner => async input => {
-  const { configs, cache = {}, targetPath } = input
+  const { configs, cache = {}, targetPath, options } = input
+  const { overwrite } = options
 
   spinner.frame('writing configuration')
 
   for (const config in configs) {
     const targetConfigPath = path.join(targetPath, config)
+    const targetConfigBasename = path.basename(config)
+    const isPackageJson = targetConfigBasename === 'package.json'
+    const isOverwritePackageJson = isPackageJson && overwrite
     const targetPipe = getConfigPipe(targetConfigPath)
     const upcomingConfig = configs[config]
 
     if (!upcomingConfig) continue
-    if (!targetPipe) {
+    if (!targetPipe || (overwrite && !isPackageJson)) {
       await writeFile(targetConfigPath, upcomingConfig)
       continue
     }
 
-    const cachedConfig = cache[config]
+    const { processor } = targetPipe
+    const cachedConfig = !isOverwritePackageJson ? cache[config] : undefined
     let currentConfig
 
     try {
@@ -28,7 +33,7 @@ const writeConfigs = spinner => async input => {
       await safeMakeDir(path.dirname(targetConfigPath))
     }
 
-    const mergedConfig = targetPipe({
+    const mergedConfig = processor({
       current: currentConfig,
       upcoming: upcomingConfig,
       cached: cachedConfig,
