@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "description": "",
   "scripts": {
-    "postinstall": "sharec install"
+    "postinstall": "DEBUG=true sharec"
   },
   "homepage": "https://github.com/lamartire/sharec/tree/master/packages/sharec-test-config",
   "repository": {

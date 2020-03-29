@@ -3,7 +3,7 @@
   "version": "2.14.0-beta",
   "description": "Sharec example config for core functionality demonstration",
   "scripts": {
-    "postinstall": "sharec install"
+    "postinstall": "sharec"
   },
   "homepage": "https://github.com/lamartire/sharec/tree/master/packages/sharec-demo-config",
   "repository": {
