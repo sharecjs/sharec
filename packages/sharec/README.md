@@ -34,56 +34,52 @@ At this moment, sharec supports configuration management for:
 Sharec uses a very simple and serial flow:
 
 1. Check current configuration state
-2. Removing old configuration
-3. Installing new configuration
+2. Loading previous installed configuration
+3. Merge with upcoming configuration files with saving user's changes
 
-All changes, which you made in `.json` or `.yaml` files - will be saved.
-
-**`.js` and other files would be fully rewrited**! Update it on the configuration-level!
+**Upsupported configs will be fully rewrited!** If you want to manage by sharec configuration
+package - open pull request or issue.
 
 ## Configuration updating
 
 If you want to update configuration in project to the definite version, just install
-it, sharec will use the common flow.
+it as common package.
 
-## Commands
+## Options
 
-### `install`
-
-Installs all configuration to the target project.
+**`--silent, -s`** - hides all outputs from `sharec` in CLI.
 
 Example:
 
 ```json
 {
   "scripts": {
-    "postinstall": "sharec install"
+    "postinstall": "sharec --silent"
   }
 }
 ```
 
-Options:
-
-**`--silent`** - hides all outputs from `sharec` in CLI.
+**`--overwrite, -o`** - force `sharec` to replace all configs without merging and caching.
 
 Example:
 
 ```json
 {
   "scripts": {
-    "postinstall": "sharec install --silent"
+    "postinstall": "sharec --overwrite"
   }
 }
 ```
 
-**`--overwrite`** - force `sharec` to replace all configs without merging and caching.
+**`--disappear, -d`** - installs configuration without meta injecting and caching, like
+you do that by yourself.
 
 Example:
 
-```json
+```
 {
   "scripts": {
-    "postinstall": "sharec install --overwrite"
+    "postinstall": "sharec --disappear"
   }
 }
 ```
@@ -96,6 +92,20 @@ If you want to force upcoming `sharec` configs – just add `ignore` flat to you
 {
   "sharec": {
     "ignore": true
+  }
+}
+```
+
+## Debugging
+
+If you see some unexpected behavior and want to help with solution - you can provide
+some debug information about with `DEBUG` environment variable. It allows to see
+everything what happens inside of sharec flow.
+
+```
+{
+  "scripts": {
+    "postinstall": "DEBUG=true sharec"
   }
 }
 ```
