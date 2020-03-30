@@ -9,12 +9,7 @@ Use it in your configuration packages.
 
 ## Supported configs
 
-Sharec can merge `.yaml` and `.json`. Other files manages with just copying or deleting.
-
-Some tools have difficult and very specific configuration files (`eslint`, `babel` etc.),
-and sharec provide strategies for this purposes.
-
-At this moment, sharec supports configuration management for:
+At this moment, sharec supports:
 
 - `npmignore`
 - `eslint`
@@ -29,21 +24,8 @@ At this moment, sharec supports configuration management for:
 - `lint-staged`
 - `stylelint`
 
-## Sharec-powered configuration lifecycle
-
-Sharec uses a very simple and serial flow:
-
-1. Check current configuration state
-2. Loading previous installed configuration
-3. Merge with upcoming configuration files with saving user's changes
-
-**Upsupported configs will be fully rewrited!** If you want to manage by sharec configuration
-package - open pull request or issue.
-
-## Configuration updating
-
-If you want to update configuration in project to the definite version, just install
-it as common package.
+Other `.json` or `.yaml` files will be merged by keys. Files with different extension will be
+just copied.
 
 ## Options
 

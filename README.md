@@ -8,8 +8,8 @@
 [![npm](https://img.shields.io/npm/v/sharec)](https://npmjs.com/sharec)
 ![MIT License](https://camo.githubusercontent.com/4481c7672053be9c676fbc983c040ca59fddfa19/68747470733a2f2f696d672e736869656c64732e696f2f6e706d2f6c2f6c6f6775782d70726f636573736f722e737667)
 
-With **sharec** you can use that tool for share and management configuration between different
-projects, keep your code up to date and starts new projects in one command.
+With **sharec** you can share and management configuration between different projects,
+keep your code up to date and start new projects in one command.
 
 ## Quick start
 
