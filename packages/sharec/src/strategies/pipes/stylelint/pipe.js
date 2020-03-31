@@ -1,13 +1,8 @@
-const flow = require('lodash/flow')
 const { map } = require('../../actions')
 const { stylelintJson } = require('./schema')
-const fromJson = require('../../helpers/pipes/fromJson')
+const { createJsonPipe } = require('../../helpers/pipes')
 
-const stylelintJsonPipe = flow(
-  fromJson,
-  stylelintJson,
-  input => JSON.stringify(input, null, 2),
-)
+const stylelintJsonPipe = createJsonPipe(stylelintJson)
 
 const stylelintPipe = map(['.stylelint', stylelintJsonPipe], ['.stylelint.json', stylelintJsonPipe])
 

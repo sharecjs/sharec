@@ -1,13 +1,8 @@
-const flow = require('lodash/flow')
 const { map } = require('../../actions')
 const { yaspellerJson } = require('./schema')
-const fromJson = require('../../helpers/pipes/fromJson')
+const { createJsonPipe } = require('../../helpers/pipes')
 
-const yaspellerJsonPipe = flow(
-  fromJson,
-  yaspellerJson,
-  input => JSON.stringify(input, null, 2),
-)
+const yaspellerJsonPipe = createJsonPipe(yaspellerJson)
 
 const yaspellerPipe = map(['.yaspellerrc', yaspellerJsonPipe], ['.yaspeller.json', yaspellerJsonPipe])
 
