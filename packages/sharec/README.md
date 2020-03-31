@@ -23,6 +23,7 @@ At this moment, sharec supports:
 - `jest`
 - `lint-staged`
 - `stylelint`
+- `commitlint`
 
 Other `.json` or `.yaml` files will be merged by keys. Files with different extension will be
 just copied.
