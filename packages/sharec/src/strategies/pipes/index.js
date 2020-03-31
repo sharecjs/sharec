@@ -34,7 +34,7 @@ const getFallbackConfigPipe = configPath => {
   if (!targetPipe) return null
 
   return {
-    processor: targetPipe,
+    processor: targetPipe.pipe(configFilename),
   }
 }
 
