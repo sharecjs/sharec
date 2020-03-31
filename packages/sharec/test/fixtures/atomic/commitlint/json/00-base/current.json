@@ -1,0 +1,30 @@
+{
+  "parserPreset": "conventional-changelog-conventionalcommits",
+  "rules": {
+    "body-leading-blank": [
+      1,
+      "always"
+    ],
+    "body-max-line-length": [
+      2,
+      "always",
+      100
+    ],
+    "footer-leading-blank": [
+      1,
+      "always"
+    ],
+    "type-enum": [
+      2,
+      "always",
+      [
+        "build",
+        "chore",
+        "ci",
+        "docs",
+        "feat",
+        "fix"
+      ]
+    ]
+  }
+}
