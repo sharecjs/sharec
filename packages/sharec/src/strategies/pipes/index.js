@@ -23,7 +23,10 @@ const getConfigPipe = configPath => {
   }
 }
 
+const getFallbackConfigPipe = configPath => {}
+
 module.exports = {
   pipes,
   getConfigPipe,
+  getFallbackConfigPipe,
 }
