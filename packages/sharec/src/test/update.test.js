@@ -10,6 +10,8 @@ describe('sharec > update', () => {
   const gitignoreFxt = fixtures('atomic/gitignore/lines/02-update')
   const npmignoreFxt = fixtures('atomic/npmignore/lines/02-update')
   const yaspellerFxt = fixtures('atomic/yaspeller/json/01-update')
+  const defaultJsonFxt = fixtures('atomic/default/json/00-base')
+  const defaultYamlFxt = fixtures('atomic/default/yaml/00-base')
 
   const targetProcess = {
     argv: [null, null, 'install'],
@@ -25,7 +27,7 @@ describe('sharec > update', () => {
   })
 
   it('should update configs in the target project', async () => {
-    expect.assertions(6)
+    expect.assertions(8)
 
     const cacheBasePath = '/target/node_modules/.cache/sharec/awesome-config/1.0.0'
     const upcomingPackage = {
@@ -39,6 +41,8 @@ describe('sharec > update', () => {
       '/configuration-package/configs/.gitignore': gitignoreFxt.upcoming,
       '/configuration-package/configs/.npmignore': npmignoreFxt.upcoming,
       '/configuration-package/configs/.yaspellerrc': yaspellerFxt.upcoming,
+      '/configuration-package/configs/foo.json': defaultJsonFxt.upcoming,
+      '/configuration-package/configs/foo.yaml': defaultYamlFxt.upcoming,
       '/configuration-package/configs/package.json': packageFxt.upcoming,
       '/configuration-package/package.json': JSON.stringify(upcomingPackage),
       // Cached
@@ -47,6 +51,8 @@ describe('sharec > update', () => {
       [path.join(cacheBasePath, '.gitignore')]: gitignoreFxt.cached,
       [path.join(cacheBasePath, '.npmignore')]: npmignoreFxt.cached,
       [path.join(cacheBasePath, '.yaspellerrc')]: yaspellerFxt.cached,
+      [path.join(cacheBasePath, 'foo.json')]: defaultJsonFxt.cached,
+      [path.join(cacheBasePath, 'foo.yaml')]: defaultYamlFxt.cached,
       [path.join(cacheBasePath, 'package.json')]: packageFxt.cached,
       // Current
       '/target/.babelrc': babelFxt.current,
@@ -54,6 +60,8 @@ describe('sharec > update', () => {
       '/target/.gitignore': gitignoreFxt.current,
       '/target/.npmignore': npmignoreFxt.current,
       '/target/.yaspellerrc': yaspellerFxt.current,
+      '/target/foo.json': defaultJsonFxt.current,
+      '/target/foo.yaml': defaultYamlFxt.current,
       '/target/package.json': packageFxt.current,
     }
     vol.fromJSON(dir, '/')
@@ -65,6 +73,8 @@ describe('sharec > update', () => {
     expect(vol.readFileSync('/target/.gitignore', 'utf8')).toEqual(gitignoreFxt.result)
     expect(vol.readFileSync('/target/.npmignore', 'utf8')).toEqual(npmignoreFxt.result)
     expect(vol.readFileSync('/target/.yaspellerrc', 'utf8')).toEqual(yaspellerFxt.result)
+    expect(vol.readFileSync('/target/foo.json', 'utf8')).toEqual(defaultJsonFxt.result)
+    expect(vol.readFileSync('/target/foo.yaml', 'utf8')).toEqual(defaultYamlFxt.result)
     expect(vol.readFileSync('/target/package.json', 'utf8')).toEqual(packageFxt.result)
   })
 })
