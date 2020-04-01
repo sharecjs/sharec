@@ -1,4 +1,4 @@
-# v2.0.0rc
+# v2.0.0-rc.0
 
 This release should contain new strategies and composition API.
 

@@ -1,7 +1,7 @@
 const minimist = require('minimist')
 const { createSpinner, createLogger } = require('./cli')
 const { composeSteps, steps } = require('./steps')
-const { InternalError } = require('./errors')
+const { CAUSES, InternalError } = require('./errors')
 
 /**
  * @param {NodeJS.Process} targetProcess
@@ -64,14 +64,19 @@ async function sharec(targetProcess) {
 
     targetProcess.exit(0)
   } catch (err) {
-    if (err instanceof InternalError) {
-      spinner.fail(err.message)
-    } else {
+    if (!(err instanceof InternalError)) {
       spinner.fail('Configuration was not fully applyed due unexpected error')
       console.error(err)
+      targetProcess.exit(1)
     }
 
-    targetProcess.exit(1)
+    switch (err.cause) {
+      case CAUSES.IS_IGNORES_SHAREC.symbol:
+        break
+      default:
+        spinner.fail(err.message)
+        targetProcess.exit(1)
+    }
   }
 }
 
