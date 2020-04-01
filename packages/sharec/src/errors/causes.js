@@ -9,8 +9,7 @@ const CAUSES = {
     symbol: Symbol('IS_DEPENDANT_OF_SHAREC'),
   },
   IS_IGNORES_SHAREC: {
-    message: () =>
-      "Configuration can't be installed, because target project ignores sharec configs!",
+    message: () => "Configuration can't be installed, because target project ignores sharec configs!",
     symbol: Symbol('IS_IGNORES_SHAREC'),
   },
   CONFIGS_NOT_FOUND: {
