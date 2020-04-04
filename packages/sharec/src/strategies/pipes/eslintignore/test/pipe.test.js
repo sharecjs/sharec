@@ -5,6 +5,6 @@ describe('strategies > pipes > eslintignore', () => {
   const eslintignoreBaseFxt = fixtures('atomic/eslintignore/lines/00-base')
 
   it('should process eslintignore configs', () => {
-    expect(pipe('.eslintignore')(eslintignoreBaseFxt)).toEqual(eslintignoreBaseFxt.result)
+    expect(pipe('.eslintignore')(eslintignoreBaseFxt)).toWraplessEqual(eslintignoreBaseFxt.result)
   })
 })

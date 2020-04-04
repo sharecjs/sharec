@@ -6,7 +6,7 @@ describe('strategies > pipes > commitlint > pipe', () => {
     const commitlintFxt = fixtures('atomic/commitlint/json/00-base')
 
     it('should merge configs', () => {
-      expect(pipe('.commitlintrc.json')(commitlintFxt)).toEqual(commitlintFxt.result)
+      expect(pipe('.commitlintrc.json')(commitlintFxt)).toWraplessEqual(commitlintFxt.result)
     })
   })
 
@@ -14,7 +14,7 @@ describe('strategies > pipes > commitlint > pipe', () => {
     const commitlintFxt = fixtures('atomic/commitlint/yaml/00-base')
 
     it('should merge configs', () => {
-      expect(pipe('.commitlintrc.yaml')(commitlintFxt)).toEqual(commitlintFxt.result)
+      expect(pipe('.commitlintrc.yaml')(commitlintFxt)).toWraplessEqual(commitlintFxt.result)
     })
   })
 })

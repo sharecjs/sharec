@@ -1,5 +1,6 @@
 const path = require('path')
 const get = require('lodash/get')
+const slash = require('slash')
 const { readFile } = require('../utils/std').fs
 const { find } = require('../utils/fs')
 
@@ -10,7 +11,7 @@ const readCache = spinner => async input => {
   if (!previousTargetMeta) return input
 
   const { config, version } = previousTargetMeta
-  const cacheBasePath = path.join(targetPath, `node_modules/.cache/sharec/${config}/${version}`)
+  const cacheBasePath = slash(path.join(targetPath, `node_modules/.cache/sharec/${config}/${version}`))
 
   spinner.frame(`reading cache for ${config}/${version}`)
 

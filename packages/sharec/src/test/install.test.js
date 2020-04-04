@@ -21,8 +21,6 @@ describe('sharec > install', () => {
   })
 
   it('should install configs to the target project', async () => {
-    expect.assertions(5)
-
     const dir = {
       '/target/.eslintrc': eslintFxt.current,
       '/target/.babelrc': babelFxt.current,
@@ -40,10 +38,10 @@ describe('sharec > install', () => {
 
     await sharec(targetProcess)
 
-    expect(vol.readFileSync('/target/.eslintrc', 'utf8')).toEqual(eslintFxt.result)
-    expect(vol.readFileSync('/target/.babelrc', 'utf8')).toEqual(babelFxt.result)
-    expect(vol.readFileSync('/target/.editorconfig', 'utf8')).toEqual('bar')
-    expect(vol.readFileSync('/target/package.json', 'utf8')).toEqual(packageFxt.result)
+    expect(vol.readFileSync('/target/.eslintrc', 'utf8')).toWraplessEqual(eslintFxt.result)
+    expect(vol.readFileSync('/target/.babelrc', 'utf8')).toWraplessEqual(babelFxt.result)
+    expect(vol.readFileSync('/target/.editorconfig', 'utf8')).toWraplessEqual('bar')
+    expect(vol.readFileSync('/target/package.json', 'utf8')).toWraplessEqual(packageFxt.result)
     expect(vol.readdirSync('/target/node_modules/.cache/sharec/awesome-config/1.0.0')).toHaveLength(4)
   })
 })

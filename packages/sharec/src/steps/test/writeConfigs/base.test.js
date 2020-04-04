@@ -8,8 +8,6 @@ describe('steps > writeConfigs > base', () => {
   })
 
   it('should write basic configs from input to target dir', async () => {
-    expect.assertions(1)
-
     const spinner = createFakeSpinner()
     const targetPackage = {
       name: 'awesome-project',
@@ -35,6 +33,6 @@ describe('steps > writeConfigs > base', () => {
 
     await writeConfigs(spinner)(input)
 
-    expect(vol.readFileSync('/target/.editorconfig', 'utf8')).toEqual(upcomingConfigs['.editorconfig'])
+    expect(vol.readFileSync('/target/.editorconfig', 'utf8')).toWraplessEqual(upcomingConfigs['.editorconfig'])
   })
 })

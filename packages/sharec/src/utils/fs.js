@@ -109,7 +109,7 @@ const find = async (path, pattern) => {
     result.push(...subFiles)
   }
 
-  return result.map(slash)
+  return result
 }
 
 module.exports = {

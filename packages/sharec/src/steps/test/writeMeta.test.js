@@ -8,8 +8,6 @@ describe('steps > writeMeta', () => {
   })
 
   it('should write upcoming package.json meta to target package.json', async () => {
-    expect.assertions(2)
-
     const spinner = createFakeSpinner()
     const targetPackage = {}
     const upcomingPackage = {
@@ -38,8 +36,6 @@ describe('steps > writeMeta', () => {
   })
 
   it('should not write upcoming package.json meta to target package.json if disappear option is given', async () => {
-    expect.assertions(2)
-
     const spinner = createFakeSpinner()
     const targetPackage = {}
     const upcomingPackage = {
