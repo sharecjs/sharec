@@ -6,7 +6,7 @@ describe('strategies > pipes > eslint > pipe', () => {
     const eslintFxt = fixtures('atomic/eslint/json/01-base')
 
     it('should merge configs', () => {
-      expect(pipe('.eslintrc')(eslintFxt)).toEqual(eslintFxt.result)
+      expect(pipe('.eslintrc')(eslintFxt)).toWraplessEqual(eslintFxt.result)
     })
   })
 
@@ -14,7 +14,7 @@ describe('strategies > pipes > eslint > pipe', () => {
     const eslintFxt = fixtures('atomic/eslint/yaml/01-base')
 
     it('should merge configs', () => {
-      expect(pipe('.eslintrc.yaml')(eslintFxt)).toEqual(eslintFxt.result)
+      expect(pipe('.eslintrc.yaml')(eslintFxt)).toWraplessEqual(eslintFxt.result)
     })
   })
 })

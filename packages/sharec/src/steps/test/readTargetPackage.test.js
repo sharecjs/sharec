@@ -10,8 +10,6 @@ describe('steps > readTargetPackage', () => {
   })
 
   it('should read package.json from target project', async () => {
-    expect.assertions(1)
-
     const spinner = createFakeSpinner()
     const packageJson = {
       foo: 'bar',

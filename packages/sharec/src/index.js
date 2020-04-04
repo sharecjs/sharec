@@ -5,6 +5,20 @@ const { CAUSES, InternalError } = require('./errors')
 
 /**
  * @param {NodeJS.Process} targetProcess
+ * @returns {String}
+ */
+function getConfigsPath(targetProcess) {
+  const { env, argv } = targetProcess
+
+  if (env.PWD) return env.PWD
+
+  const sharecBinRegExp = /\\node_modules\\sharec\\bin\\sharec$/
+
+  return argv[1].replace(sharecBinRegExp, '')
+}
+
+/**
+ * @param {NodeJS.Process} targetProcess
  * @returns {Promise<void>}
  */
 async function sharec(targetProcess) {
@@ -28,7 +42,7 @@ async function sharec(targetProcess) {
 
   // Steps preparation and definition
   const targetPath = targetProcess.env.INIT_CWD
-  const configPath = env.PWD
+  const configPath = getConfigsPath(targetProcess)
   const input = {
     targetPath,
     configPath,

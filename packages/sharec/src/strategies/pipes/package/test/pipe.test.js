@@ -6,7 +6,7 @@ describe('pipes > package > pipe', () => {
     const packageBaseFxt = fixtures('atomic/package/json/00-base')
 
     it('should merge configs', () => {
-      expect(pipe('package.json')(packageBaseFxt)).toEqual(packageBaseFxt.result)
+      expect(pipe('package.json')(packageBaseFxt)).toWraplessEqual(packageBaseFxt.result)
     })
   })
 })

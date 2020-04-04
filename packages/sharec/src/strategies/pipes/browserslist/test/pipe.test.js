@@ -5,6 +5,6 @@ describe('strategies > pipes > browserslist', () => {
   const browserslistBaseFxt = fixtures('atomic/browserslist/lines/00-base')
 
   it('should process browserslist configs', () => {
-    expect(pipe('.browserslistrc')(browserslistBaseFxt)).toEqual(browserslistBaseFxt.result)
+    expect(pipe('.browserslistrc')(browserslistBaseFxt)).toWraplessEqual(browserslistBaseFxt.result)
   })
 })

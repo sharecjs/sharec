@@ -10,8 +10,6 @@ describe('steps > writeConfigs > package', () => {
   })
 
   it('should write and merge package.json from input to target dir', async () => {
-    expect.assertions(1)
-
     const spinner = createFakeSpinner()
     const upcomingPackage = {
       name: 'awesome-config',
@@ -33,6 +31,6 @@ describe('steps > writeConfigs > package', () => {
 
     await writeConfigs(spinner)(input)
 
-    expect(vol.readFileSync('/target/package.json', 'utf8')).toEqual(packageBaseFxt.result)
+    expect(vol.readFileSync('/target/package.json', 'utf8')).toWraplessEqual(packageBaseFxt.result)
   })
 })

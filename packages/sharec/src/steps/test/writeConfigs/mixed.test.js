@@ -15,8 +15,6 @@ describe('steps > writeConfigs > mixed', () => {
   })
 
   it('should write and merge configs and package.json from input to target dir', async () => {
-    expect.assertions(6)
-
     const spinner = createFakeSpinner()
     const upcomingPackage = {
       name: 'awesome-config',
@@ -48,11 +46,11 @@ describe('steps > writeConfigs > mixed', () => {
 
     await writeConfigs(spinner)(input)
 
-    expect(vol.readFileSync('/target/.eslintrc', 'utf8')).toEqual(eslintBaseFxt.result)
-    expect(vol.readFileSync('/target/.babelrc', 'utf8')).toEqual(babelBaseFxt.result)
-    expect(vol.readFileSync('/target/.npmignore', 'utf8')).toEqual(npmignoreBaseFxt.result)
-    expect(vol.readFileSync('/target/.gitignore', 'utf8')).toEqual(gitignoreBaseFxt.result)
-    expect(vol.readFileSync('/target/.yaspellerrc', 'utf8')).toEqual(yaspellerBaseFxt.result)
-    expect(vol.readFileSync('/target/package.json', 'utf8')).toEqual(packageBaseFxt.result)
+    expect(vol.readFileSync('/target/.eslintrc', 'utf8')).toWraplessEqual(eslintBaseFxt.result)
+    expect(vol.readFileSync('/target/.babelrc', 'utf8')).toWraplessEqual(babelBaseFxt.result)
+    expect(vol.readFileSync('/target/.npmignore', 'utf8')).toWraplessEqual(npmignoreBaseFxt.result)
+    expect(vol.readFileSync('/target/.gitignore', 'utf8')).toWraplessEqual(gitignoreBaseFxt.result)
+    expect(vol.readFileSync('/target/.yaspellerrc', 'utf8')).toWraplessEqual(yaspellerBaseFxt.result)
+    expect(vol.readFileSync('/target/package.json', 'utf8')).toWraplessEqual(packageBaseFxt.result)
   })
 })

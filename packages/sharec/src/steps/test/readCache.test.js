@@ -8,8 +8,6 @@ describe('steps > readCache', () => {
   })
 
   it('should read cached configs for previous installed version', async () => {
-    expect.assertions(1)
-
     const spinner = createFakeSpinner()
     const targetPackage = {
       sharec: {
@@ -41,8 +39,6 @@ describe('steps > readCache', () => {
   })
 
   it('should keep cache empty if previous installed cache is not exist', async () => {
-    expect.assertions(1)
-
     const spinner = createFakeSpinner()
     const targetPackage = {
       sharec: {
@@ -66,8 +62,6 @@ describe('steps > readCache', () => {
   })
 
   it('should keep cache empty if previous installed cache is not contain any file', async () => {
-    expect.assertions(1)
-
     const spinner = createFakeSpinner()
     const targetPackage = {
       sharec: {

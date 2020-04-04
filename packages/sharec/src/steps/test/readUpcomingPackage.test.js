@@ -10,8 +10,6 @@ describe('steps > readUpcomingPackage', () => {
   })
 
   it('should read package.json from upcoming config', async () => {
-    expect.assertions(1)
-
     const spinner = createFakeSpinner()
     const packageJson = {
       foo: 'bar',

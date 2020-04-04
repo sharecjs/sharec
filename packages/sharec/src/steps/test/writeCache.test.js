@@ -8,8 +8,6 @@ describe('steps > writeCache', () => {
   })
 
   it('should write configs from input to cache dir', async () => {
-    expect.assertions(2)
-
     const spinner = createFakeSpinner()
     const targetPackage = {}
     const upcomingPackage = {

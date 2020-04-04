@@ -21,8 +21,6 @@ describe('sharec > overwrite', () => {
   })
 
   it('should overwrite current with upcoming in overwrite mode', async done => {
-    expect.assertions(3)
-
     const dir = {
       '/configuration-package/configs/.eslintrc': eslintFxt.upcoming,
       '/configuration-package/configs/.babelrc': babelFxt.upcoming,
@@ -39,9 +37,9 @@ describe('sharec > overwrite', () => {
 
     await sharec(targetProcess)
 
-    expect(vol.readFileSync('/target/.babelrc', 'utf8')).toEqual(babelFxt.upcoming)
-    expect(vol.readFileSync('/target/.eslintrc', 'utf8')).toEqual(eslintFxt.upcoming)
-    expect(vol.readFileSync('/target/package.json', 'utf8')).toEqual(packageFxt.result)
+    expect(vol.readFileSync('/target/.babelrc', 'utf8')).toWraplessEqual(babelFxt.upcoming)
+    expect(vol.readFileSync('/target/.eslintrc', 'utf8')).toWraplessEqual(eslintFxt.upcoming)
+    expect(vol.readFileSync('/target/package.json', 'utf8')).toWraplessEqual(packageFxt.result)
 
     try {
       vol.readdirSync('/target/node_modules/.cache/sharec/awesome-config/1.0.0')

@@ -6,7 +6,7 @@ describe('pipes > yaspeller > pipe', () => {
     const yaspellerBaseFxt = fixtures('atomic/yaspeller/json/00-base')
 
     it('should merge configs', () => {
-      expect(pipe('.yaspellerrc')(yaspellerBaseFxt)).toEqual(yaspellerBaseFxt.result)
+      expect(pipe('.yaspellerrc')(yaspellerBaseFxt)).toWraplessEqual(yaspellerBaseFxt.result)
     })
   })
 })

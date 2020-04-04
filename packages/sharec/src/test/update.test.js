@@ -27,8 +27,6 @@ describe('sharec > update', () => {
   })
 
   it('should update configs in the target project', async () => {
-    expect.assertions(8)
-
     const cacheBasePath = '/target/node_modules/.cache/sharec/awesome-config/1.0.0'
     const upcomingPackage = {
       name: 'awesome-config',
@@ -68,13 +66,13 @@ describe('sharec > update', () => {
 
     await sharec(targetProcess)
 
-    expect(vol.readFileSync('/target/.babelrc', 'utf8')).toEqual(babelFxt.result)
-    expect(vol.readFileSync('/target/.eslintrc', 'utf8')).toEqual(eslintFxt.result)
-    expect(vol.readFileSync('/target/.gitignore', 'utf8')).toEqual(gitignoreFxt.result)
-    expect(vol.readFileSync('/target/.npmignore', 'utf8')).toEqual(npmignoreFxt.result)
-    expect(vol.readFileSync('/target/.yaspellerrc', 'utf8')).toEqual(yaspellerFxt.result)
-    expect(vol.readFileSync('/target/foo.json', 'utf8')).toEqual(defaultJsonFxt.result)
-    expect(vol.readFileSync('/target/foo.yaml', 'utf8')).toEqual(defaultYamlFxt.result)
-    expect(vol.readFileSync('/target/package.json', 'utf8')).toEqual(packageFxt.result)
+    expect(vol.readFileSync('/target/.babelrc', 'utf8')).toWraplessEqual(babelFxt.result)
+    expect(vol.readFileSync('/target/.eslintrc', 'utf8')).toWraplessEqual(eslintFxt.result)
+    expect(vol.readFileSync('/target/.gitignore', 'utf8')).toWraplessEqual(gitignoreFxt.result)
+    expect(vol.readFileSync('/target/.npmignore', 'utf8')).toWraplessEqual(npmignoreFxt.result)
+    expect(vol.readFileSync('/target/.yaspellerrc', 'utf8')).toWraplessEqual(yaspellerFxt.result)
+    expect(vol.readFileSync('/target/foo.json', 'utf8')).toWraplessEqual(defaultJsonFxt.result)
+    expect(vol.readFileSync('/target/foo.yaml', 'utf8')).toWraplessEqual(defaultYamlFxt.result)
+    expect(vol.readFileSync('/target/package.json', 'utf8')).toWraplessEqual(packageFxt.result)
   })
 })

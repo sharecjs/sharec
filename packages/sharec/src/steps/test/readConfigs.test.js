@@ -9,8 +9,6 @@ describe('steps > readConfigs', () => {
   })
 
   it('should read package.json from target project', async () => {
-    expect.assertions(1)
-
     const spinner = createFakeSpinner()
     const input = {
       configPath: '/',
@@ -36,8 +34,6 @@ describe('steps > readConfigs', () => {
   })
 
   it('should throw an error if package.json is not exist in target project', async () => {
-    expect.assertions(3)
-
     const spinner = createFakeSpinner()
     const input = {
       configPath: '/foo',

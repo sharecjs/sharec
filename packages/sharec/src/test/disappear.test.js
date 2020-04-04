@@ -22,8 +22,6 @@ describe('sharec > disappear', () => {
   })
 
   it('should install configs to the target project without cache and meta writing', async done => {
-    expect.assertions(4)
-
     const dir = {
       '/configuration-package/configs/.eslintrc': eslintFxt.upcoming,
       '/configuration-package/configs/.babelrc': babelFxt.upcoming,
@@ -42,10 +40,10 @@ describe('sharec > disappear', () => {
 
     await sharec(targetProcess)
 
-    expect(vol.readFileSync('/target/.babelrc', 'utf8')).toEqual(babelFxt.result)
-    expect(vol.readFileSync('/target/.eslintrc', 'utf8')).toEqual(eslintFxt.result)
-    expect(vol.readFileSync('/target/.yaspellerrc', 'utf8')).toEqual(yaspellerFxt.result)
-    expect(vol.readFileSync('/target/package.json', 'utf8')).toEqual(packageFxt.result)
+    expect(vol.readFileSync('/target/.babelrc', 'utf8')).toWraplessEqual(babelFxt.result)
+    expect(vol.readFileSync('/target/.eslintrc', 'utf8')).toWraplessEqual(eslintFxt.result)
+    expect(vol.readFileSync('/target/.yaspellerrc', 'utf8')).toWraplessEqual(yaspellerFxt.result)
+    expect(vol.readFileSync('/target/package.json', 'utf8')).toWraplessEqual(packageFxt.result)
 
     try {
       vol.readdirSync('/target/node_modules/.cache/sharec/awesome-config/1.0.0')
