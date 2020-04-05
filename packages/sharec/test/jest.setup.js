@@ -14,3 +14,7 @@ jest.mock('utils/std', () => {
 
   return stdUtils
 })
+
+jest.mock('shelljs', () => ({
+  pwd: jest.fn()
+}))

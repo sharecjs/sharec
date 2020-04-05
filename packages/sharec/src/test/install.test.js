@@ -1,5 +1,6 @@
 const { fixtures } = require('testUtils')
 const { vol } = require('memfs')
+const { pwd } = require('shelljs')
 const sharec = require('../')
 
 describe('sharec > install', () => {
@@ -10,13 +11,14 @@ describe('sharec > install', () => {
   const targetProcess = {
     argv: [null, null, 'install'],
     env: {
-      PWD: '/configuration-package',
       INIT_CWD: '/target',
     },
     exit: jest.fn(),
   }
 
   beforeEach(() => {
+    jest.clearAllMocks()
+    pwd.mockReturnValueOnce({ stdout: '/configuration-package' })
     vol.reset()
   })
 

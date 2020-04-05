@@ -1,5 +1,6 @@
 const { fixtures } = require('testUtils')
 const { vol } = require('memfs')
+const { pwd } = require('shelljs')
 const sharec = require('../')
 
 describe('sharec > overwrite', () => {
@@ -10,13 +11,14 @@ describe('sharec > overwrite', () => {
   const targetProcess = {
     argv: [null, null, '--overwrite'],
     env: {
-      PWD: '/configuration-package',
       INIT_CWD: '/target',
     },
     exit: jest.fn(),
   }
 
   beforeEach(() => {
+    jest.clearAllMocks()
+    pwd.mockReturnValueOnce({ stdout: '/configuration-package' })
     vol.reset()
   })
 

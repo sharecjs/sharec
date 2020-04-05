@@ -1,14 +1,15 @@
 const path = require('path')
+const slash = require('slash')
 const { readFile } = require('../utils/std').fs
 
 const readUpcomingPackage = spinner => async input => {
   try {
     spinner.frame('reading package.json from upcoming configuration')
 
-    const upcomingPackageJsonPath = path.resolve(
+    const upcomingPackageJsonPath = slash(path.resolve(
       input.configPath,
       'package.json',
-    )
+    ))
     const rawUpcomingPackageJson = await readFile(
       upcomingPackageJsonPath,
       'utf8',
