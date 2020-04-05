@@ -1,13 +1,12 @@
-const path = require('path')
-const slash = require('slash')
 const { readFile } = require('../utils/std').fs
+const { join } = require('../utils/std').path
 const { find } = require('../utils/fs')
 const { InternalError, CAUSES } = require('../errors')
 
 const readConfigs = spinner => input => {
   spinner.frame('reading upcoming configuration files')
 
-  const configsPath = slash(path.join(input.configPath, '/configs'))
+  const configsPath = join(input.configPath, '/configs')
 
   return find(configsPath, '**/*')
     .then(configsPaths => {

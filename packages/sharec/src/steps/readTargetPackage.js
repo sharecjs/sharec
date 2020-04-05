@@ -1,12 +1,11 @@
-const path = require('path')
-const slash = require('slash')
 const { readFile } = require('../utils/std').fs
+const { resolve } = require('../utils/std').path
 
 const readTargetPackage = spinner => async input => {
   try {
     spinner.frame('reading package.json from target project')
 
-    const targetPackageJsonPath = slash(path.resolve(input.targetPath, 'package.json'))
+    const targetPackageJsonPath = resolve(input.targetPath, 'package.json')
     const rawTargetPackageJson = await readFile(targetPackageJsonPath, 'utf8')
     const targetPackage = JSON.parse(rawTargetPackageJson)
 

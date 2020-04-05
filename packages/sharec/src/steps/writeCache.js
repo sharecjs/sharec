@@ -1,5 +1,5 @@
-const path = require('path')
 const { writeFile } = require('../utils/std').fs
+const { join } = require('../utils/std').path
 const { safeMakeDir } = require('../utils/fs')
 
 const writeCache = spinner => async input => {
@@ -11,12 +11,12 @@ const writeCache = spinner => async input => {
 
   spinner.frame(`writing cache for ${name}/${version}`)
 
-  const baseCachePath = path.join(targetPath, `node_modules/.cache/sharec/${name}/${version}`)
+  const baseCachePath = join(targetPath, `node_modules/.cache/sharec/${name}/${version}`)
 
   await safeMakeDir(baseCachePath)
 
   for (const config in configs) {
-    await writeFile(path.join(baseCachePath, config), configs[config])
+    await writeFile(join(baseCachePath, config), configs[config])
   }
 
   spinner.frame(`configuration for ${name}/${version} was cached`)
