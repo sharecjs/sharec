@@ -3,7 +3,7 @@ const { vol } = require('memfs')
 const writeConfigs = require('../../writeConfigs')
 
 describe('steps > writeConfigs > package', () => {
-  const packageBaseFxt = fixtures('atomic/package/json/00-base')
+  const packageBaseFxt = fixtures('package/json/00-base')
 
   beforeEach(() => {
     vol.reset()

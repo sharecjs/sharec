@@ -3,7 +3,7 @@ const compose = require('../../compose')
 const { primitiveAtom } = require('../../../atoms')
 
 describe('actions > compose > hash', () => {
-  const hashFxt = fixtures('atomic/rule/json/01-hash', 'json')
+  const hashFxt = fixtures('rule/json/01-hash', 'json')
 
   it('should create composition for hashes', () => {
     const composition = compose({

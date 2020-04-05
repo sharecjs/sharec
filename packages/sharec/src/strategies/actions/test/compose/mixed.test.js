@@ -3,7 +3,7 @@ const compose = require('../../compose')
 const { listConcatAtom } = require('../../../atoms')
 
 describe('actions > compose > mixed', () => {
-  const listFxt = fixtures('atomic/list/json/00-concat-primitives', 'json')
+  const listFxt = fixtures('list/json/00-concat-primitives', 'json')
 
   it('should allow to compose nested schemas', () => {
     const composition = compose({

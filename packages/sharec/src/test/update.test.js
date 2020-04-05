@@ -5,14 +5,14 @@ const { pwd } = require('shelljs')
 const sharec = require('../')
 
 describe('sharec > update', () => {
-  const packageFxt = fixtures('atomic/package/json/02-update')
-  const babelFxt = fixtures('atomic/babel/json/05-update')
-  const eslintFxt = fixtures('atomic/eslint/json/02-update')
-  const gitignoreFxt = fixtures('atomic/gitignore/lines/02-update')
-  const npmignoreFxt = fixtures('atomic/npmignore/lines/02-update')
-  const yaspellerFxt = fixtures('atomic/yaspeller/json/01-update')
-  const defaultJsonFxt = fixtures('atomic/default/json/00-base')
-  const defaultYamlFxt = fixtures('atomic/default/yaml/00-base')
+  const packageFxt = fixtures('package/json/02-update')
+  const babelFxt = fixtures('babel/json/05-update')
+  const eslintFxt = fixtures('eslint/json/02-update')
+  const gitignoreFxt = fixtures('gitignore/lines/02-update')
+  const npmignoreFxt = fixtures('npmignore/lines/02-update')
+  const yaspellerFxt = fixtures('yaspeller/json/01-update')
+  const defaultJsonFxt = fixtures('default/json/00-base')
+  const defaultYamlFxt = fixtures('default/yaml/00-base')
 
   const targetProcess = {
     argv: [null, null, 'install'],

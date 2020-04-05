@@ -2,7 +2,7 @@ const { fixtures } = require('testUtils')
 const hashAtom = require('../hash')
 
 describe('atoms > hash', () => {
-  const hashFxt = fixtures('atomic/rule/json/01-hash', 'json')
+  const hashFxt = fixtures('rule/json/01-hash', 'json')
 
   it('should return current if upcoming is not passed', () => {
     const result = hashAtom({ current: hashFxt.current })

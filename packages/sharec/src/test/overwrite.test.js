@@ -4,9 +4,9 @@ const { pwd } = require('shelljs')
 const sharec = require('../')
 
 describe('sharec > overwrite', () => {
-  const packageFxt = fixtures('atomic/package/json/04-overwrite')
-  const babelFxt = fixtures('atomic/babel/json/00-base')
-  const eslintFxt = fixtures('atomic/eslint/json/01-base')
+  const packageFxt = fixtures('package/json/04-overwrite')
+  const babelFxt = fixtures('babel/json/00-base')
+  const eslintFxt = fixtures('eslint/json/01-base')
 
   const targetProcess = {
     argv: [null, null, '--overwrite'],

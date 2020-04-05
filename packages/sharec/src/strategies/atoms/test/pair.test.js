@@ -2,8 +2,8 @@ const { fixtures } = require('testUtils')
 const pairAtom = require('../pair')
 
 describe('atoms > pair', () => {
-  const basePairFxt = fixtures('atomic/pair/json/00-base', 'json')
-  const differentKeysPairFxt = fixtures('atomic/pair/json/01-different-keys', 'json')
+  const basePairFxt = fixtures('pair/json/00-base', 'json')
+  const differentKeysPairFxt = fixtures('pair/json/01-different-keys', 'json')
 
   it('should return current if upcoming is not passed', () => {
     const result = pairAtom({ current: basePairFxt.current })

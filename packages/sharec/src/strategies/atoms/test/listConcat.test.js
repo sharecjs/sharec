@@ -2,8 +2,8 @@ const { fixtures } = require('testUtils')
 const listConcatAtom = require('../listConcat')
 
 describe('atoms > listConcat', () => {
-  const primitivesListFxt = fixtures('atomic/list/json/00-concat-primitives', 'json')
-  const hashesListFxt = fixtures('atomic/list/json/03-concat-hashes', 'json')
+  const primitivesListFxt = fixtures('list/json/00-concat-primitives', 'json')
+  const hashesListFxt = fixtures('list/json/03-concat-hashes', 'json')
 
   it('should return current if upcoming is not passed', () => {
     expect(listConcatAtom({ current: primitivesListFxt.current })).toEqual(primitivesListFxt.current)

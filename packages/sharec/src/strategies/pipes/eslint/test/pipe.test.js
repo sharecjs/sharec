@@ -3,7 +3,7 @@ const { pipe } = require('../pipe')
 
 describe('strategies > pipes > eslint > pipe', () => {
   describe('JSON', () => {
-    const eslintFxt = fixtures('atomic/eslint/json/01-base')
+    const eslintFxt = fixtures('eslint/json/01-base')
 
     it('should merge configs', () => {
       expect(pipe('.eslintrc')(eslintFxt)).toWraplessEqual(eslintFxt.result)
@@ -11,7 +11,7 @@ describe('strategies > pipes > eslint > pipe', () => {
   })
 
   describe('YAML', () => {
-    const eslintFxt = fixtures('atomic/eslint/yaml/01-base')
+    const eslintFxt = fixtures('eslint/yaml/01-base')
 
     it('should merge configs', () => {
       expect(pipe('.eslintrc.yaml')(eslintFxt)).toWraplessEqual(eslintFxt.result)
