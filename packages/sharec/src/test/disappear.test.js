@@ -1,5 +1,6 @@
 const { fixtures } = require('testUtils')
 const { vol } = require('memfs')
+const { pwd } = require('shelljs')
 const sharec = require('../')
 
 describe('sharec > disappear', () => {
@@ -11,13 +12,14 @@ describe('sharec > disappear', () => {
   const targetProcess = {
     argv: [null, null, '--disappear'],
     env: {
-      PWD: '/configuration-package',
       INIT_CWD: '/target',
     },
     exit: jest.fn(),
   }
 
   beforeEach(() => {
+    jest.clearAllMocks()
+    pwd.mockReturnValueOnce({ stdout: '/configuration-package' })
     vol.reset()
   })
 

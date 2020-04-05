@@ -1,21 +1,8 @@
 const minimist = require('minimist')
+const { pwd } = require('shelljs')
 const { createSpinner, createLogger } = require('./cli')
 const { composeSteps, steps } = require('./steps')
 const { CAUSES, InternalError } = require('./errors')
-
-/**
- * @param {NodeJS.Process} targetProcess
- * @returns {String}
- */
-function getConfigsPath(targetProcess) {
-  const { env, argv } = targetProcess
-
-  if (env.PWD) return env.PWD
-
-  const sharecBinRegExp = /\\node_modules\\sharec\\bin\\sharec$/
-
-  return argv[1].replace(sharecBinRegExp, '')
-}
 
 /**
  * @param {NodeJS.Process} targetProcess
@@ -42,7 +29,7 @@ async function sharec(targetProcess) {
 
   // Steps preparation and definition
   const targetPath = targetProcess.env.INIT_CWD
-  const configPath = getConfigsPath(targetProcess)
+  const configPath = pwd().stdout
   const input = {
     targetPath,
     configPath,
