@@ -1,9 +1,0 @@
-{
-  "foo": "new foo",
-  "bar": "new bar",
-  "baz": "baz",
-  "sharec": {
-    "config": "awesome-config",
-    "version": "1.0.0"
-  }
-}

@@ -1,8 +1,0 @@
-[
-  "foo",
-  {
-    "foo": "new foo",
-    "baz": "baz",
-    "bar": "new bar"
-  }
-]

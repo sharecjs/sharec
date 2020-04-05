@@ -2,7 +2,7 @@ const { fixtures } = require('testUtils')
 const linesMergeAtom = require('../linesMerge')
 
 describe('atoms > linesMerge', () => {
-  const mergeLinesFxt = fixtures('lines/lines/00-merge')
+  const mergeLinesFxt = fixtures('atomic/lines/lines/00-merge')
 
   it('should return current if upcoming is not passed', () => {
     const result = linesMergeAtom({ current: mergeLinesFxt.current })

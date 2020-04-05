@@ -2,25 +2,17 @@ const { fixtures } = require('testUtils')
 const listConcatAtom = require('../listConcat')
 
 describe('atoms > listConcat', () => {
-  const primitivesListFxt = fixtures('list/json/00-concat-primitives', 'json')
-  const hashesListFxt = fixtures('list/json/03-concat-hashes', 'json')
+  const primitivesListFxt = fixtures('atomic/list/json/00-concat-primitives', 'json')
+  const hashesListFxt = fixtures('atomic/list/json/03-concat-hashes', 'json')
 
   it('should return current if upcoming is not passed', () => {
-    expect(listConcatAtom({ current: primitivesListFxt.current })).toEqual(
-      primitivesListFxt.current,
-    )
-    expect(listConcatAtom({ current: hashesListFxt.current })).toEqual(
-      hashesListFxt.current,
-    )
+    expect(listConcatAtom({ current: primitivesListFxt.current })).toEqual(primitivesListFxt.current)
+    expect(listConcatAtom({ current: hashesListFxt.current })).toEqual(hashesListFxt.current)
   })
 
   it('should return upcoming if current is not passed', () => {
-    expect(listConcatAtom({ upcoming: primitivesListFxt.upcoming })).toEqual(
-      primitivesListFxt.upcoming,
-    )
-    expect(listConcatAtom({ upcoming: hashesListFxt.upcoming })).toEqual(
-      hashesListFxt.upcoming,
-    )
+    expect(listConcatAtom({ upcoming: primitivesListFxt.upcoming })).toEqual(primitivesListFxt.upcoming)
+    expect(listConcatAtom({ upcoming: hashesListFxt.upcoming })).toEqual(hashesListFxt.upcoming)
   })
 
   it('should concat primitives lists', () => {

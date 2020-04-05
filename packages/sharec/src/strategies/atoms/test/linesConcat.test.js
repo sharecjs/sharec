@@ -2,7 +2,7 @@ const { fixtures } = require('testUtils')
 const linesConcatAtom = require('../linesConcat')
 
 describe('atoms > linesConcat', () => {
-  const concatLinesFxt = fixtures('lines/lines/01-concat')
+  const concatLinesFxt = fixtures('atomic/lines/lines/01-concat')
 
   it('should return current if upcoming is not passed', () => {
     const result = linesConcatAtom({ current: concatLinesFxt.current })

@@ -1,8 +1,0 @@
-[
-  "warn",
-  120,
-  {
-    "ignoreUrls": true,
-    "ignoreComments": true
-  }
-]

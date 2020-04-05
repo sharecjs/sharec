@@ -4,7 +4,7 @@ const compose = require('../compose')
 const { primitiveAtom, listConcatAtom } = require('../../atoms')
 
 describe('actions > fork', () => {
-  const listFxt = fixtures('list/json/00-concat-primitives', 'json')
+  const listFxt = fixtures('atomic/list/json/00-concat-primitives', 'json')
 
   it('should apply strategies for mixed parameters types', () => {
     const composition = compose({

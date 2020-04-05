@@ -15,14 +15,14 @@
     [
       "syntax-dynamic-import",
       {
-        "foo": "baz"
+        "foo": "bar"
       }
     ],
     "lodash"
   ],
   "env": {
     "test": {
-      "presets": ["env", "stage-3"],
+      "presets": ["env", "stage-2"],
       "plugins": ["dynamic-import-node"]
     }
   },

@@ -2,7 +2,7 @@ const { fixtures } = require('testUtils')
 const ruleAtom = require('../rule')
 
 describe('atoms > rule', () => {
-  const eslintRuleFxt = fixtures('rule/json/00-eslint', 'json')
+  const eslintRuleFxt = fixtures('atomic/rule/json/00-eslint', 'json')
 
   it('should return current if upcoming is not passed', () => {
     const result = ruleAtom({ current: eslintRuleFxt.current })

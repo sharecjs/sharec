@@ -2,7 +2,7 @@
   "foo",
   {
     "foo": "foo",
-    "bar": "new bar",
+    "bar": "bar",
     "baz": "baz"
   }
 ]
