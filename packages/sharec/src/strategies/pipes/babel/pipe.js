@@ -1,10 +1,11 @@
 const { map } = require('../../actions')
 const { babelJson } = require('./schema')
+const { createJsonPipe } = require('../../helpers/pipes')
 
-const babelPipe = map(
-  ['.babelrc', babelJson],
-  ['.babelrc.json', babelJson],
-  ['babelrc.json', babelJson],
-)
+const babelJsonPipe = createJsonPipe(babelJson)
 
-module.exports = babelPipe
+const babelPipe = map(['.babelrc', babelJsonPipe], ['.babelrc.json', babelJsonPipe], ['babelrc.json', babelJsonPipe])
+
+module.exports = {
+  pipe: babelPipe,
+}

@@ -1,6 +1,7 @@
 const { join } = require('path')
-const { readFile, makeDir, readDir, lstat } = require('./std').fs
+const nanomatch = require('nanomatch')
 const slash = require('slash')
+const { readFile, makeDir, readDir, lstat } = require('./std').fs
 
 /**
  * @param {String} paths
@@ -84,9 +85,37 @@ const flatSearch = async ({ path, pattern, root = true }) => {
   )
 }
 
+const find = async (path, pattern) => {
+  let result = []
+  const subresult = await readDir(path)
+
+  if (subresult.length === 0) return result
+
+  for (const file of subresult) {
+    const fullFilePath = join(path, file)
+    const stats = await lstat(fullFilePath)
+
+    if (stats.isFile()) {
+      result.push(
+        ...nanomatch([fullFilePath], pattern, {
+          dot: true,
+        }),
+      )
+      continue
+    }
+
+    const subFiles = await find(fullFilePath, pattern)
+
+    result.push(...subFiles)
+  }
+
+  return result
+}
+
 module.exports = {
   normalizePathSlashes,
   safeReadFile,
   safeMakeDir,
   flatSearch,
+  find,
 }

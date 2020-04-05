@@ -17,6 +17,6 @@
     "sharec": "^2.14.0-beta"
   },
   "scripts": {
-    "postinstall": "sharec install"
+    "postinstall": "sharec"
   }
 }

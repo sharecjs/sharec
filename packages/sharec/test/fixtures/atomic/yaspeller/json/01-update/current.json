@@ -1,0 +1,18 @@
+{
+  "lang": "ru",
+  "ignoreCapitalization": false,
+  "fileExtensions": ["foo", "bar"],
+  "excludeFiles": ["README-*.md", "CHANGELOG.md"],
+  "ignoreText": [" \\(by [^)]+\\)."],
+  "dictionary": [
+    "Async",
+    "asyncGenerator",
+    "CLI",
+    "Clojure",
+    "ClojureScript",
+    "Crypto",
+    "cryptographically",
+    "formatAsync",
+    "generateAsync"
+  ]
+}

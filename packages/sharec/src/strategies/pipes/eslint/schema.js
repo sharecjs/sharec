@@ -1,10 +1,5 @@
 const { compose, fork } = require('../../actions')
-const {
-  ruleAtom,
-  hashAtom,
-  listConcatAtom,
-  primitiveAtom,
-} = require('../../atoms')
+const { ruleAtom, hashAtom, listConcatAtom, primitiveAtom } = require('../../atoms')
 
 const eslintJson = compose({
   env: hashAtom,

@@ -1,6 +1,11 @@
 const { map } = require('../../actions')
 const { packageJson } = require('./schema')
+const { createJsonPipe } = require('../../helpers/pipes')
 
-const packagePipe = map(['package.json', packageJson])
+const packageJsonPipe = createJsonPipe(packageJson)
 
-module.exports = packagePipe
+const packagePipe = map(['package.json', packageJsonPipe])
+
+module.exports = {
+  pipe: packagePipe,
+}

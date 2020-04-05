@@ -4,28 +4,19 @@
 
 # Sharec
 
-[![Build Status](https://travis-ci.org/lamartire/sharec.svg?branch=master)](https://travis-ci.org/lamartire/sharec)
-[![Build status](https://ci.appveyor.com/api/projects/status/mjtiauhp4xmvr9w7/branch/master?svg=true)](https://ci.appveyor.com/project/lamartire/sharec/branch/master)
 [![Build Status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Flamartire%2Fsharec%2Fbadge&style=flat)](https://actions-badge.atrox.dev/lamartire/sharec/goto)
 [![npm](https://img.shields.io/npm/v/sharec)](https://npmjs.com/sharec)
 ![MIT License](https://camo.githubusercontent.com/4481c7672053be9c676fbc983c040ca59fddfa19/68747470733a2f2f696d672e736869656c64732e696f2f6e706d2f6c2f6c6f6775782d70726f636573736f722e737667)
 
-Sharec – is a new minimalistic tool for boilerplating and configuration versioning,
-which can copy, merge and delete files.
+With **sharec** you can share and management configuration between different projects,
+keep your code up to date and start new projects in one command.
 
-You can use that tool for share and management bloat configuration between different
-projects, keep your code up to date and starts new projects in one command.
-
-* **Integrity**. Pack all your configs in the one package and save time on support.
-* **Distribution**. Publish configuration with npm or distribute it via repositories.
-* **Simplicity**. Install packages just as dependency and forget about headache  related to configs.
-
-## Usage
+## Quick start
 
 1. Create configuration project and init `npm` inside.
 2. Install `sharec` as dependency:
 ```shell
-npm add sharec
+npm i --save sharec
 ```
 3. Add `postinstall` script to root `package.json` file:
 ```json
@@ -36,7 +27,7 @@ npm add sharec
 4. Create `configs` directory.
 5. Place some configuration files to the created `configs` directory.
 6. Create `package.json` file inside `configs` directory and add required dependencies for tool what you need.
-7. Publish configuration with `npm publish` command or just push it.
+7. Publish configuration with `npm publish` command or just push it to git repository.
 8. Install it wherever you want with `npm install` command.
 
 If you want read more detailed manual – look at [official demo config](packages/sharec-demo-config)

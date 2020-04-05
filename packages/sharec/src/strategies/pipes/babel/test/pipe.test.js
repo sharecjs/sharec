@@ -1,10 +1,10 @@
 const { fixtures } = require('testUtils')
-const babelPipe = require('../pipe')
+const { pipe } = require('../pipe')
 
 describe('strategies > pipes > babel > pipe', () => {
-  const babelBaseFxt = fixtures('atomic/babel/json/00-base', 'json')
+  const babelBaseFxt = fixtures('atomic/babel/json/00-base')
 
   it('should merge babel json configs', () => {
-    expect(babelPipe('.babelrc')(babelBaseFxt)).toEqual(babelBaseFxt.result)
+    expect(pipe('.babelrc')(babelBaseFxt)).toWraplessEqual(babelBaseFxt.result)
   })
 })

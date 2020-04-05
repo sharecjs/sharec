@@ -22,8 +22,6 @@ describe('utils > fs >', () => {
 
   describe('safeMakeDir', () => {
     it('should create directories by given path recursively', async () => {
-      expect.assertions(1)
-
       vol.fromJSON({}, '/')
 
       await safeMakeDir('/foo/bar/baz')
@@ -34,8 +32,6 @@ describe('utils > fs >', () => {
 
   describe('safeReadFile', () => {
     it('should return file content by given path', async () => {
-      expect.assertions(1)
-
       const dir = {
         'target/file.txt': 'foo',
       }
@@ -47,8 +43,6 @@ describe('utils > fs >', () => {
     })
 
     it('should return null if target file is not exists', async () => {
-      expect.assertions(1)
-
       const dir = {
         'target/file.txt': 'foo',
       }
@@ -75,8 +69,6 @@ describe('utils > fs >', () => {
     })
 
     it('should find all files paths in target dir', async () => {
-      expect.assertions(2)
-
       const res = await flatSearch({
         path: '/',
       })
@@ -94,8 +86,6 @@ describe('utils > fs >', () => {
     })
 
     it('should find all files paths in target dir which to equals to root', async () => {
-      expect.assertions(1)
-
       const res = await flatSearch({
         path: '/foo',
       })
@@ -104,8 +94,6 @@ describe('utils > fs >', () => {
     })
 
     it('should return empty array if target directory is empty', async () => {
-      expect.assertions(1)
-
       const res = await flatSearch({
         path: '/empty',
       })
@@ -114,8 +102,6 @@ describe('utils > fs >', () => {
     })
 
     it('should find all files paths in target dir by given pattern', async () => {
-      expect.assertions(4)
-
       const res = await flatSearch({
         path: '/',
         pattern: /(^\.[a-z0-9]+|\/\.[a-z0-9]|\\\.[a-z0-9]+)/i,

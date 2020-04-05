@@ -1,6 +1,11 @@
 const { map } = require('../../actions')
 const { lintStagedJson } = require('./schema')
+const { createJsonPipe } = require('../../helpers/pipes')
 
-const lintStagedPipe = map(['.lintstagedrc', lintStagedJson])
+const lintStagedJsonPipe = createJsonPipe(lintStagedJson)
 
-module.exports = lintStagedPipe
+const lintStagedPipe = map(['.lintstagedrc', lintStagedJsonPipe])
+
+module.exports = {
+  pipe: lintStagedPipe,
+}

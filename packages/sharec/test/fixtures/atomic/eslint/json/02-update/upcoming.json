@@ -1,0 +1,34 @@
+{
+  "env": {
+    "browser": true,
+    "es6": true,
+    "node": true,
+    "jest": true
+  },
+  "extends": "airbnb",
+  "rules": {
+    "prettier/trailingComma": "all",
+    "prettier/semi": false,
+    "prettier/singleQuote": true,
+    "space-before-function-paren": 1,
+    "no-console": 0,
+    "max-len": [
+      "warn",
+      80,
+      4,
+      {
+        "ignoreUrls": false,
+        "ignoreComments": true,
+        "ignoreStrings": false
+      }
+    ]
+  },
+  "parserOptions": {
+    "parser": "babel-eslint",
+    "ecmaVersion": "es2019",
+    "ecmaFeatures": {
+      "spread": true
+    },
+    "sourceType": "module"
+  }
+}

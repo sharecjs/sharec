@@ -1,9 +1,11 @@
 const { map } = require('../../actions')
 const { stylelintJson } = require('./schema')
+const { createJsonPipe } = require('../../helpers/pipes')
 
-const stylelintPipe = map(
-  ['.stylelint', stylelintJson],
-  ['.stylelint.json', stylelintJson],
-)
+const stylelintJsonPipe = createJsonPipe(stylelintJson)
 
-module.exports = stylelintPipe
+const stylelintPipe = map(['.stylelint', stylelintJsonPipe], ['.stylelint.json', stylelintJsonPipe])
+
+module.exports = {
+  pipe: stylelintPipe,
+}

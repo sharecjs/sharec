@@ -1,9 +1,11 @@
 const { map } = require('../../actions')
 const { yaspellerJson } = require('./schema')
+const { createJsonPipe } = require('../../helpers/pipes')
 
-const yaspellerPipe = map(
-  ['.yaspellerrc', yaspellerJson],
-  ['.yaspeller.json', yaspellerJson],
-)
+const yaspellerJsonPipe = createJsonPipe(yaspellerJson)
 
-module.exports = yaspellerPipe
+const yaspellerPipe = map(['.yaspellerrc', yaspellerJsonPipe], ['.yaspeller.json', yaspellerJsonPipe])
+
+module.exports = {
+  pipe: yaspellerPipe,
+}

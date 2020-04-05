@@ -1,3 +1,4 @@
+const isEqual = require('lodash/isEqual')
 const primitiveAtom = require('./primitive')
 const hashAtom = require('./hash')
 
@@ -6,6 +7,7 @@ function pairAtom(params) {
 
   if (current === undefined && upcoming) return upcoming
   if (current && upcoming === undefined) return current
+  if (cached !== undefined && !isEqual(current, cached)) return current
   if (typeof current !== typeof upcoming) return upcoming
   if (typeof current === 'string') return primitiveAtom(params)
 

@@ -1,4 +1,4 @@
-# v2.15.0-beta (WIP)
+# v2.0.0-rc.0
 
 This release should contain new strategies and composition API.
 
@@ -8,11 +8,20 @@ many new tools, like - `lint-staged` or `jest`.
 Features:
 
 - Implements atomic strategies conception (#66)
-- Adds strategies for `husky`, `lint-staged`, `jest`, `stylelint`, `browserslist`, `postcss`
-
-Fix:
-
+- Adds strategies for `husky`, `lint-staged`, `jest`, `stylelint`, `browserslist`, `postcss`, `commitlint` etc.
 - Better support for `package.json` fields
+- Disappear mode
+- Logger and debug mode
+
+Beaking changes:
+
+- `remove` command was deprecated
+- `tester` and `extractor` were deprecated and removed
+
+CI:
+
+- Remove Travis CI
+- Remove appveyor
 
 # v2.14.0-beta
 
