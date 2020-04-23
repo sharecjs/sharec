@@ -3,7 +3,7 @@ const compose = require('../../compose')
 const { listConcatAtom } = require('../../../atoms')
 
 describe('actions > compose > mixed', () => {
-  const listFxt = fixtures('list/json/00-concat-primitives', 'json')
+  const listFxt = fixtures('list/json/00-concat-primitives', 'map')
 
   it('should allow to compose nested schemas', () => {
     const composition = compose({
@@ -12,11 +12,11 @@ describe('actions > compose > mixed', () => {
       }),
     })
     const result = composition({
-      current: { foo: { bar: listFxt.current } },
-      upcoming: { foo: { bar: listFxt.upcoming } },
-      cached: { foo: { bar: listFxt.cached } },
+      current: new Map().set('foo', new Map().set('bar', listFxt.current)),
+      upcoming: new Map().set('foo', new Map().set('bar', listFxt.upcoming)),
+      cached: new Map().set('foo', new Map().set('bar', listFxt.cached)),
     })
 
-    expect(result).toEqual({ foo: { bar: listFxt.result } })
+    expect(result).toEqual(new Map().set('foo', new Map().set('bar', listFxt.result)))
   })
 })

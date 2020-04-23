@@ -1,5 +1,5 @@
 foo: bar
 bar: baz
 baz:
-  - foo: bar
-    bar: baz
+  foo: bar
+  bar: baz

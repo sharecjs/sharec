@@ -1,10 +1,32 @@
-const flow = require('lodash/flow')
-const omit = require('lodash/omit')
-const pick = require('lodash/pick')
-const isEmpty = require('lodash/isEmpty')
-const operators = require('../operators')
+const without = require('lodash/without')
 
-const operatorsKeys = Object.keys(operators)
+const applySchemaByKeys = ({ schema, keys = [], target }) => params => {
+  if (keys.length === 0) return target
+
+  const { current, upcoming, cached } = params
+
+  for (const key of keys) {
+    const strategy = schema[key] || schema.$$default
+    const ignoreList = schema.$$ignore || []
+
+    if (!strategy || !upcoming.has(key) || ignoreList.includes(key)) {
+      target.set(key, current.get(key))
+      continue
+    }
+
+    target.set(
+      key,
+      strategy({
+        current: current.get(key),
+        upcoming: upcoming.get(key),
+        cached: cached && cached.get(key),
+        ignore: schema.$$ignore,
+      }),
+    )
+  }
+
+  return target
+}
 
 /**
  * @param {Object} schema
@@ -18,39 +40,22 @@ const compose = schema =>
    * @returns {Object}
    */
   params => {
-    const { current, upcoming, cached } = params
+    const { current, upcoming } = params
 
     if (upcoming === undefined) return current
     if (current === undefined) return upcoming
     if (typeof current !== typeof upcoming) return upcoming
     if (Array.isArray(schema)) return schema[0](params)
 
-    let result = {}
-    const schemaWithoutOperators = omit(schema, operatorsKeys)
+    let result = new Map()
 
-    for (const key in schemaWithoutOperators) {
-      if (!current[key] && !upcoming[key]) continue
+    const currentKeys = Array.from(current.keys())
+    const upcomingKeys = Array.from(upcoming.keys())
 
-      result[key] = schemaWithoutOperators[key]({
-        current: current[key],
-        upcoming: upcoming[key],
-        cached: cached && cached[key],
-      })
-    }
+    const newKeys = without(upcomingKeys, ...currentKeys)
 
-    const isOperatorsExists = !flow(
-      pick,
-      isEmpty,
-    )(schema, operatorsKeys)
-
-    if (!isOperatorsExists) return result
-    if (schema.$$default) {
-      result = operators.$$default({
-        target: result,
-        ignore: schema.$$ignore,
-        strategy: schema.$$default,
-      })(params)
-    }
+    applySchemaByKeys({ schema, keys: currentKeys, target: result })(params)
+    applySchemaByKeys({ schema, keys: newKeys, target: result })(params)
 
     return result
   }

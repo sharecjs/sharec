@@ -1,3 +1,5 @@
-const toJson = input => JSON.stringify(input, null, 2)
+const { toJSON } = require('../../../parsers/json')
 
-module.exports = toJson
+const toJsonPipe = input => toJSON(input)
+
+module.exports = toJsonPipe

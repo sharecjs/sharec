@@ -1,4 +1,4 @@
-const isObject = require('lodash/isObject')
+const isMap = require('lodash/isMap')
 const { compose, fork } = require('../../actions')
 const { hashAtom, listConcatAtom, primitiveAtom } = require('../../atoms')
 const { eslintJson } = require('../eslint/schema')
@@ -13,10 +13,10 @@ const packageJson = compose({
   // Default fields
   keywords: listConcatAtom,
   homepage: primitiveAtom,
-  bugs: fork([[isObject, hashAtom], primitiveAtom]),
-  license: fork([[isObject, hashAtom], primitiveAtom]),
-  author: fork([[isObject, hashAtom], primitiveAtom]),
-  repository: fork([[isObject, hashAtom], primitiveAtom]),
+  bugs: fork([[isMap, hashAtom], primitiveAtom]),
+  license: fork([[isMap, hashAtom], primitiveAtom]),
+  author: fork([[isMap, hashAtom], primitiveAtom]),
+  repository: fork([[isMap, hashAtom], primitiveAtom]),
   scripts: hashAtom,
   config: hashAtom,
   engines: hashAtom,
@@ -53,7 +53,7 @@ const packageJson = compose({
     'preferGlobal',
     'private',
   ],
-  $$default: fork([[isObject, hashAtom], primitiveAtom]),
+  $$default: fork([[isMap, hashAtom], primitiveAtom]),
 })
 
 module.exports = {

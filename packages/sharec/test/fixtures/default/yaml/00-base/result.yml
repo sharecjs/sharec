@@ -1,6 +1,6 @@
-baz:
-  - foo: bar
-    bar: baz
 foo: baz
 bar:
-  - foo: foo
+  foo: foo
+baz:
+  foo: bar
+  bar: baz

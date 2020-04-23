@@ -1,4 +1,11 @@
 {
+  "lang": "ru",
+  "ignoreCapitalization": false,
+  "fileExtensions": [
+    "foo",
+    "bar",
+    "baz"
+  ],
   "excludeFiles": [
     "README-*.md",
     "CHANGELOG.md"
@@ -19,12 +26,5 @@
     "foo",
     "bar",
     "baz"
-  ],
-  "fileExtensions": [
-    "foo",
-    "bar",
-    "baz"
-  ],
-  "lang": "ru",
-  "ignoreCapitalization": false
+  ]
 }

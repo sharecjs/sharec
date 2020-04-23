@@ -1,4 +1,7 @@
 {
+  "name": "awesome-package",
+  "description": "This is a just awesome project",
+  "version": "1.0.0",
   "scripts": {
     "api": "documentation build *.js -f md -o api.md",
     "spell": "yarn api && yaspeller-ci *.md",
@@ -26,27 +29,14 @@
     "eslint-plugin-security": "^1.4.0",
     "eslint-plugin-unicorn": "^12.1.0"
   },
-  "eslintConfig": {
-    "extends": "@logux/eslint-config/browser"
-  },
-  "eslintIgnore": [
-    "node_modules"
-  ],
-  "lint-staged": {
-    "*.md": "yaspeller-ci",
-    "*.js": "eslint"
-  },
-  "yaspeller": {
-    "ignoreText": [
-      " \\(by [^)]+\\)."
-    ],
-    "lang": "en",
-    "ignoreCapitalization": true
-  },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
     }
+  },
+  "lint-staged": {
+    "*.md": "yaspeller-ci",
+    "*.js": "eslint"
   },
   "jest": {
     "testEnvironment": "node",
@@ -56,7 +46,17 @@
       }
     }
   },
-  "description": "This is a just awesome project",
-  "name": "awesome-package",
-  "version": "1.0.0"
+  "eslintConfig": {
+    "extends": "@logux/eslint-config/browser"
+  },
+  "eslintIgnore": [
+    "node_modules"
+  ],
+  "yaspeller": {
+    "lang": "en",
+    "ignoreCapitalization": true,
+    "ignoreText": [
+      " \\(by [^)]+\\)."
+    ]
+  }
 }

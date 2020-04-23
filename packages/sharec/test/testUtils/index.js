@@ -1,5 +1,6 @@
 const { resolve, join } = require('path')
 const { readFileSync, readdirSync } = require.requireActual('fs')
+const json8 = require('json8')
 const zipObject = require('lodash/zipObject')
 const pickBy = require('lodash/pickBy')
 
@@ -30,6 +31,10 @@ function fixture(path, format) {
     return JSON.parse(file)
   }
 
+  if (format === 'map') {
+    return json8.parse(file, { map: true })
+  }
+
   return file.replace(/\n$/, '')
 }
 
@@ -53,18 +58,10 @@ function fixture(path, format) {
  * @returns {Fixtures}
  */
 function fixtures(path, format) {
-  const findFixtureFileByKey = (arr, key) =>
-    arr.find(item => new RegExp(`^${key}`).test(item))
+  const findFixtureFileByKey = (arr, key) => arr.find(item => new RegExp(`^${key}`).test(item))
   const fixturesPath = resolve(__dirname, `../fixtures/${path}`)
   const files = readdirSync(fixturesPath)
-  const fixturesKeys = [
-    'current',
-    'upcoming',
-    'result',
-    'restored',
-    'cached',
-    'uncached',
-  ]
+  const fixturesKeys = ['current', 'upcoming', 'result', 'restored', 'cached', 'uncached']
   const fixturesValues = fixturesKeys.map(key => {
     const fixtureFileName = findFixtureFileByKey(files, key)
 
@@ -74,6 +71,7 @@ function fixtures(path, format) {
     const file = readFileSync(fixturePath, 'utf8')
 
     if (format === 'json') return JSON.parse(file)
+    if (format === 'map') return json8.parse(file, { map: true })
 
     return file.replace(/\n$/, '')
   })

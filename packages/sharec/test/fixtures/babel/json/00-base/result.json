@@ -1,24 +1,4 @@
 {
-  "env": {
-    "test": {
-      "plugins": [
-        "dynamic-import-node"
-      ],
-      "presets": [
-        "env",
-        "stage-2"
-      ]
-    }
-  },
-  "plugins": [
-    [
-      "syntax-dynamic-import",
-      {
-        "foo": "bar"
-      }
-    ],
-    "lodash"
-  ],
   "presets": [
     [
       "env",
@@ -35,6 +15,26 @@
     ],
     "stage-2"
   ],
+  "plugins": [
+    [
+      "syntax-dynamic-import",
+      {
+        "foo": "bar"
+      }
+    ],
+    "lodash"
+  ],
+  "env": {
+    "test": {
+      "presets": [
+        "env",
+        "stage-2"
+      ],
+      "plugins": [
+        "dynamic-import-node"
+      ]
+    }
+  },
   "ignore": [
     "*.babelrc"
   ]

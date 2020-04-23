@@ -3,19 +3,11 @@ env:
   es6: true
   node: true
   jest: true
-parserOptions:
-  parser: babel-eslint
-  ecmaVersion: 7
-  ecmaFeatures:
-    spread: true
-  sourceType: module
 globals:
   foo: true
   bar: true
 extends: airbnb
 rules:
-  space-before-function-paren: 1
-  no-console: 0
   max-len:
     - warn
     - 120
@@ -23,3 +15,11 @@ rules:
     - ignoreUrls: false
       ignoreStrings: false
       ignoreComments: true
+  space-before-function-paren: 1
+  no-console: 0
+parserOptions:
+  parser: babel-eslint
+  ecmaVersion: 7
+  ecmaFeatures:
+    spread: true
+  sourceType: module

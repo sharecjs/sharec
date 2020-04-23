@@ -29,27 +29,14 @@
     "eslint-plugin-prefer-let": "^1.0.1",
     "eslint-plugin-unicorn": "^12.1.0"
   },
-  "eslintConfig": {
-    "extends": "@logux/eslint-config/browser"
-  },
-  "eslintIgnore": [
-    "node_modules"
-  ],
-  "lint-staged": {
-    "*.md": "yaspeller-ci",
-    "*.js": "eslint"
-  },
-  "yaspeller": {
-    "ignoreText": [
-      " \\(by [^)]+\\)."
-    ],
-    "lang": "en",
-    "ignoreCapitalization": true
-  },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
     }
+  },
+  "lint-staged": {
+    "*.md": "yaspeller-ci",
+    "*.js": "eslint"
   },
   "jest": {
     "testEnvironment": "node",
@@ -58,5 +45,18 @@
         "statements": 100
       }
     }
+  },
+  "eslintConfig": {
+    "extends": "@logux/eslint-config/browser"
+  },
+  "eslintIgnore": [
+    "node_modules"
+  ],
+  "yaspeller": {
+    "lang": "en",
+    "ignoreCapitalization": true,
+    "ignoreText": [
+      " \\(by [^)]+\\)."
+    ]
   }
 }

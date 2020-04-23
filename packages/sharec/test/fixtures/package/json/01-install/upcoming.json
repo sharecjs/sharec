@@ -1,4 +1,5 @@
 {
+  "name": "my-awesome-package",
   "scripts": {
     "commit": "git-cz",
     "lint": "eslint 'src/**/*.{js,jsx,json}'",
