@@ -4,7 +4,7 @@ const compose = require('../compose')
 const { primitiveAtom, listConcatAtom } = require('../../atoms')
 
 describe('actions > fork', () => {
-  const listFxt = fixtures('list/json/00-concat-primitives', 'json')
+  const listFxt = fixtures('list/json/00-concat-primitives', 'map')
 
   it('should apply strategies for mixed parameters types', () => {
     const composition = compose({
@@ -13,19 +13,15 @@ describe('actions > fork', () => {
 
     expect(
       composition({
-        current: { foo: listFxt.current },
-        upcoming: { foo: listFxt.upcoming },
+        current: new Map().set('foo', listFxt.current),
+        upcoming: new Map().set('foo', listFxt.upcoming),
       }),
-    ).toEqual({
-      foo: listFxt.result,
-    })
+    ).toEqual(new Map().set('foo', listFxt.result))
     expect(
       composition({
-        current: { foo: 'foo' },
-        upcoming: { foo: 'bar' },
+        current: new Map().set('foo', 'foo'),
+        upcoming: new Map().set('foo', 'bar'),
       }),
-    ).toEqual({
-      foo: 'bar',
-    })
+    ).toEqual(new Map().set('foo', 'bar'))
   })
 })

@@ -26,18 +26,15 @@
     "size-limit": "^1.3.7",
     "yaspeller-ci": "^1.0.1"
   },
-  "eslintIgnore": [
-    "node_modules"
-  ],
-  "lint-staged": {
-    "*.md": "yaspeller",
-    "*.js": "eslint",
-    "*.css": "stylelint"
-  },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
     }
+  },
+  "lint-staged": {
+    "*.md": "yaspeller",
+    "*.js": "eslint",
+    "*.css": "stylelint"
   },
   "jest": {
     "testEnvironment": "node",
@@ -46,5 +43,8 @@
         "statements": 100
       }
     }
-  }
+  },
+  "eslintIgnore": [
+    "node_modules"
+  ]
 }

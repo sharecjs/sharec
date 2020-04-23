@@ -4,8 +4,8 @@ const primitiveAtom = require('../primitive')
 const hashAtom = require('../hash')
 
 describe('atoms > listMerge', () => {
-  const primitivesListFxt = fixtures('list/json/01-merge-primitives', 'json')
-  const hashesListFxt = fixtures('list/json/02-merge-hashes', 'json')
+  const primitivesListFxt = fixtures('list/json/01-merge-primitives', 'map')
+  const hashesListFxt = fixtures('list/json/02-merge-hashes', 'map')
 
   it('should return current if upcoming is not passed', () => {
     expect(listMergeAtom(primitiveAtom)({ current: primitivesListFxt.current })).toEqual(primitivesListFxt.current)

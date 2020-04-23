@@ -3,7 +3,7 @@ const { commitlintJson } = require('../schema')
 
 describe('pipes > commitlint > schema', () => {
   describe('JSON', () => {
-    const commitlintFxt = fixtures('commitlint/json/00-base', 'json')
+    const commitlintFxt = fixtures('commitlint/json/00-base', 'map')
 
     it('should merge configs', () => {
       expect(

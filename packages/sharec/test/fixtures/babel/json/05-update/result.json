@@ -1,15 +1,4 @@
 {
-  "env": {
-    "test": {
-      "presets": [
-        "stage-3",
-        "stage-2"
-      ]
-    }
-  },
-  "plugins": [
-    "syntax-dynamic-import"
-  ],
   "presets": [
     [
       "env",
@@ -24,6 +13,17 @@
       }
     ]
   ],
+  "plugins": [
+    "syntax-dynamic-import"
+  ],
+  "env": {
+    "test": {
+      "presets": [
+        "stage-3",
+        "stage-2"
+      ]
+    }
+  },
   "ignore": [
     "foo",
     "bar"

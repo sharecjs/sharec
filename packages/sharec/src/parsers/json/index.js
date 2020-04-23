@@ -1,13 +1,10 @@
 const json8 = require('json8')
 
-const parseJSON = str => json8.parse(str, { map: true })
+const fromJSON = str => json8.parse(str, { map: true })
 
-const makeJSON = map =>
-  json8.serialize(map, {
-    space: 2,
-  })
+const toJSON = (map, space = 2) => json8.serialize(map, { space })
 
 module.exports = {
-  parseJSON,
-  makeJSON,
+  fromJSON,
+  toJSON,
 }

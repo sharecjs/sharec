@@ -1,11 +1,12 @@
 const omitBy = require('lodash/omitBy')
 const isUndefined = require('lodash/isUndefined')
 const mapValues = require('lodash/mapValues')
+const { fromJSON } = require('../../../parsers/json')
 
-const fromJson = params => {
+const fromJsonPipe = params => {
   const sanitizedParams = omitBy(params, isUndefined)
 
-  return mapValues(sanitizedParams, JSON.parse)
+  return mapValues(sanitizedParams, fromJSON)
 }
 
-module.exports = fromJson
+module.exports = fromJsonPipe

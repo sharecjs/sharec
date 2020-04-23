@@ -1,4 +1,6 @@
 {
+  "lang": "en",
+  "ignoreCapitalization": false,
   "excludeFiles": [
     "README-*.md",
     "CHANGELOG.md"
@@ -37,7 +39,5 @@
   ],
   "fileExtensions": [
     "bar"
-  ],
-  "lang": "en",
-  "ignoreCapitalization": false
+  ]
 }
