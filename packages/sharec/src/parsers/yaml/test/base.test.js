@@ -7,7 +7,7 @@ describe('parsers > yaml', () => {
 
   describe('fromYAML', () => {
     it('should create Map from given YAML', () => {
-      expect(fromYAML(defaultFxtYAML.current)).toEqual(defaultFxt.current)
+      expect(fromYAML(defaultFxtYAML.current)).toWraplessEqual(defaultFxt.current)
     })
   })
 
