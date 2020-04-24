@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="public/logo.svg" width="150px" height="150px" alt="Sharec logo by Ivashkina Xenia <xeniaowl112@mail.ru>" width="200">
+  <img src="public/hero-image.jpg" alt="Sharec logo by Ivashkina Xenia <xeniaowl112@mail.ru>">
 </p>
 
 # Sharec
