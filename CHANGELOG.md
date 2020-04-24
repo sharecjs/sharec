@@ -1,3 +1,9 @@
+# v2.0.1
+
+Fix:
+
+- Add `nanomatch`
+
 # v2.0.0
 
 Finally, `sharec` looks like it should be! :)
