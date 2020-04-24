@@ -1,5 +1,0 @@
-foo: bar
-bar: baz
-baz:
-  - foo: bar
-    bar: baz

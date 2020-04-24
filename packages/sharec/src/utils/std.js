@@ -1,5 +1,7 @@
 const fs = require('fs')
+const path = require('path')
 const { promisify } = require('util')
+const slash = require('slash')
 
 const readDir = promisify(fs.readdir)
 const makeDir = promisify(fs.mkdir)
@@ -18,5 +20,11 @@ module.exports = {
     writeFile,
     lstat,
     removeFile,
+  },
+
+  path: {
+    join: (...args) => slash(path.join(...args)),
+    resolve: (...args) => slash(path.resolve(...args)),
+    basename: (...args) => slash(path.basename(...args)),
   },
 }

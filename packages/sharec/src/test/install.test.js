@@ -4,9 +4,9 @@ const { pwd } = require('shelljs')
 const sharec = require('../')
 
 describe('sharec > install', () => {
-  const packageFxt = fixtures('atomic/package/json/01-install')
-  const babelFxt = fixtures('atomic/babel/json/00-base')
-  const eslintFxt = fixtures('atomic/eslint/json/01-base')
+  const packageFxt = fixtures('package/json/01-install')
+  const babelFxt = fixtures('babel/json/00-base')
+  const eslintFxt = fixtures('eslint/json/01-base')
 
   const targetProcess = {
     argv: [null, null, 'install'],

@@ -4,10 +4,10 @@ const { pwd } = require('shelljs')
 const sharec = require('../')
 
 describe('sharec > disappear', () => {
-  const packageFxt = fixtures('atomic/package/json/03-disappear')
-  const babelFxt = fixtures('atomic/babel/json/06-disappear')
-  const eslintFxt = fixtures('atomic/eslint/json/03-disappear')
-  const yaspellerFxt = fixtures('atomic/yaspeller/json/02-disappear')
+  const packageFxt = fixtures('package/json/03-disappear')
+  const babelFxt = fixtures('babel/json/06-disappear')
+  const eslintFxt = fixtures('eslint/json/03-disappear')
+  const yaspellerFxt = fixtures('yaspeller/json/02-disappear')
 
   const targetProcess = {
     argv: [null, null, '--disappear'],

@@ -1,5 +1,5 @@
-const path = require('path')
 const { writeFile, readFile } = require('../utils/std').fs
+const { join } = require('../utils/std').path
 
 const writeMeta = spinner => async input => {
   const { options } = input
@@ -10,7 +10,7 @@ const writeMeta = spinner => async input => {
   spinner.frame('writing sharec meta data to target package')
 
   const { name, version } = input.upcomingPackage
-  const targetPackagePath = path.join(input.targetPath, 'package.json')
+  const targetPackagePath = join(input.targetPath, 'package.json')
   const rawTargetPackagePath = await readFile(targetPackagePath, 'utf8')
   let targetPackage = JSON.parse(rawTargetPackagePath)
 

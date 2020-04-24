@@ -3,12 +3,12 @@ const { vol } = require('memfs')
 const writeConfigs = require('../../writeConfigs')
 
 describe('steps > writeConfigs > mixed', () => {
-  const packageBaseFxt = fixtures('atomic/package/json/00-base')
-  const eslintBaseFxt = fixtures('atomic/eslint/json/01-base')
-  const babelBaseFxt = fixtures('atomic/babel/json/00-base')
-  const npmignoreBaseFxt = fixtures('atomic/npmignore/lines/00-base')
-  const gitignoreBaseFxt = fixtures('atomic/gitignore/lines/00-base')
-  const yaspellerBaseFxt = fixtures('atomic/yaspeller/json/00-base')
+  const packageBaseFxt = fixtures('package/json/00-base')
+  const eslintBaseFxt = fixtures('eslint/json/01-base')
+  const babelBaseFxt = fixtures('babel/json/00-base')
+  const npmignoreBaseFxt = fixtures('npmignore/lines/00-base')
+  const gitignoreBaseFxt = fixtures('gitignore/lines/00-base')
+  const yaspellerBaseFxt = fixtures('yaspeller/json/00-base')
 
   beforeEach(() => {
     vol.reset()

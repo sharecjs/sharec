@@ -1,4 +1,4 @@
-const isObject = require('lodash/isObject')
+const isMap = require('lodash/isMap')
 const { compose, fork } = require('../../actions')
 const { listConcatAtom, primitiveAtom, hashAtom } = require('../../atoms')
 
@@ -60,11 +60,7 @@ const jestJson = compose({
   // verbose [boolean]
   // watchPathIgnorePatterns [array<string>]
   // watchPlugins [array<string | [string, Object]>]
-  $$default: fork([
-    [Array.isArray, listConcatAtom],
-    [isObject, hashAtom],
-    primitiveAtom,
-  ]),
+  $$default: fork([[Array.isArray, listConcatAtom], [isMap, hashAtom], primitiveAtom]),
 })
 
 module.exports = {

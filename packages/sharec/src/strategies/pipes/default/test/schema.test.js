@@ -3,7 +3,7 @@ const { defaultJson } = require('../schema')
 
 describe('pipes > default > schema', () => {
   describe('JSON', () => {
-    const defaultFxt = fixtures('atomic/default/json/00-base', 'json')
+    const defaultFxt = fixtures('default/json/00-base', 'map')
 
     it('should merge configs', () => {
       expect(

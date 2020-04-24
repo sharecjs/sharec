@@ -1,4 +1,0 @@
-{
-  "test": "jest --coverage && eslint .",
-  "dev": "NODE_ENV=dev webpack & gulp watch & command --arg"
-}

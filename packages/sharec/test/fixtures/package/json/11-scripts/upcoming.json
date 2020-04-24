@@ -1,4 +1,0 @@
-{
-  "test": "eslint ./src && size-limit && yarn spell",
-  "dev": "webpack --param & NODE_ENV=dev gulp watch & command --arg"
-}

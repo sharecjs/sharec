@@ -1,3 +1,12 @@
+# v2.0.0
+
+Finally, `sharec` looks like it should be! :)
+
+Features:
+
+- Save fields order after configuration apply (#48)
+- New logo
+
 # v2.0.0-rc.0
 
 This release should contain new strategies and composition API.

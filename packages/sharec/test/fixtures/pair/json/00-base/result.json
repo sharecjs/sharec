@@ -1,8 +1,8 @@
 [
   "foo",
   {
-    "foo": "new foo",
-    "baz": "baz",
-    "bar": "new bar"
+    "foo": "foo",
+    "bar": "bar",
+    "baz": "baz"
   }
 ]

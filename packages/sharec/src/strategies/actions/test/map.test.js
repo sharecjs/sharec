@@ -1,11 +1,7 @@
 const map = require('../map')
 
 describe('actions > map', () => {
-  const mapper = map(
-    ['filename', () => 'foo'],
-    [/\.json$/, () => 'bar'],
-    [/\.ya?ml$/, () => 'baz'],
-  )
+  const mapper = map(['filename', () => 'foo'], [/\.json$/, () => 'bar'], [/\.ya?ml$/, () => 'baz'])
 
   it('should map functions by filename regexp and strings', () => {
     expect(mapper('filename')()).toEqual('foo')

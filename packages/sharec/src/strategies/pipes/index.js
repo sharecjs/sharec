@@ -1,4 +1,4 @@
-const path = require('path')
+const { basename } = require('../../utils/std').path
 
 const pipes = {
   babel: require('./babel/pipe'),
@@ -15,7 +15,7 @@ const pipes = {
 const fallbackPipes = [require('./default/pipe')]
 
 const getConfigPipe = configPath => {
-  const configFilename = path.basename(configPath)
+  const configFilename = basename(configPath)
   const targetPipeKey = Object.keys(pipes).find(key => !!pipes[key].pipe(configFilename))
 
   if (!targetPipeKey) {
@@ -28,7 +28,7 @@ const getConfigPipe = configPath => {
 }
 
 const getFallbackConfigPipe = configPath => {
-  const configFilename = path.basename(configPath)
+  const configFilename = basename(configPath)
   const targetPipe = fallbackPipes.find(pipe => !!pipe.pipe(configFilename))
 
   if (!targetPipe) return null

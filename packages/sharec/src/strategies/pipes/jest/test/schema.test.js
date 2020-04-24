@@ -3,7 +3,7 @@ const { jestJson } = require('../schema')
 
 describe('pipes > jest > schema', () => {
   describe('JSON', () => {
-    const jestBaseFxt = fixtures('atomic/jest/json/00-base', 'json')
+    const jestBaseFxt = fixtures('jest/json/00-base', 'map')
 
     it('should merge configs', () => {
       expect(jestJson(jestBaseFxt)).toEqual(jestBaseFxt.result)
