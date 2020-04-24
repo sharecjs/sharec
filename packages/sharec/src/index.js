@@ -72,13 +72,11 @@ async function sharec(targetProcess) {
     }
 
     switch (err.cause) {
+      case CAUSES.IS_DEPENDANT_OF_SHAREC.symbol:
       case CAUSES.IS_IGNORES_SHAREC.symbol:
         break
       case CAUSES.ALREADY_INSTALLED.symbol:
         spinner.succeed(err.message)
-        break
-      case CAUSES.IS_DEPENDANT_OF_SHAREC.symbol:
-        spinner.fail(err.message)
         break
       default:
         spinner.fail(err.message)
