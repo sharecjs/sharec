@@ -9,10 +9,7 @@ const isDependantOfSharec = spinner => input => {
     return input
   }
 
-  throw new InternalError(
-    CAUSES.IS_DEPENDANT_OF_SHAREC.message(),
-    CAUSES.IS_DEPENDANT_OF_SHAREC.symbol,
-  )
+  throw new InternalError(CAUSES.IS_DEPENDANT_OF_SHAREC.message(), CAUSES.IS_DEPENDANT_OF_SHAREC.symbol)
 }
 
 module.exports = isDependantOfSharec
