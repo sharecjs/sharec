@@ -1,3 +1,10 @@
+# v2.0.3
+
+Fix:
+
+- Remove error if target package is dependent of sharec
+- Quotes processing in YAML files
+
 # v2.0.2
 
 Fix:
