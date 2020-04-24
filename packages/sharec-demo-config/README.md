@@ -1,8 +1,3 @@
-<p align="center">
-  <img src="public/hero-image.jpg" alt="Sharec logo by Ivashkina Xenia <xeniaowl112@mail.ru>">
-</p>
-
-
 # Sharec demo config
 
 [![Build Status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Flamartire%2Fsharec%2Fbadge&style=flat)](https://actions-badge.atrox.dev/lamartire/sharec/goto)
