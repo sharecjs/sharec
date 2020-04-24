@@ -5,7 +5,7 @@ const toYaml = require('./toYaml')
 const fromYaml = require('./fromYaml')
 
 const createYamlPipe = (...handlers) => params => {
-  const isSingleQuote = params.current && /'/g.test(params.current)
+  const isSingleQuote = params.current && /'/gm.test(params.current)
   const pipe = flow(
     fromYaml,
     fromJson,
@@ -15,9 +15,9 @@ const createYamlPipe = (...handlers) => params => {
   )
   const result = pipe(params)
 
-  if (isSingleQuote) return result.replace(/"/m, "'")
+  if (isSingleQuote) return result.replace(/"/gm, "'")
 
-  return result.replace(/'/m, '"')
+  return result.replace(/'/gm, '"')
 }
 
 module.exports = createYamlPipe
