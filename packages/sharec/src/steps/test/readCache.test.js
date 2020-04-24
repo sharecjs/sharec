@@ -21,10 +21,8 @@ describe('steps > readCache', () => {
     }
     const dir = {
       '/target/package.json': JSON.stringify(targetPackage),
-      '/target/node_modules/.cache/sharec/awesome-config/0.0.0/.eslintrc':
-        'foo',
-      '/target/node_modules/.cache/sharec/awesome-config/0.0.0/.editorconfig':
-        'bar',
+      '/target/node_modules/.cache/sharec/awesome-config/0.0.0/.eslintrc': 'foo',
+      '/target/node_modules/.cache/sharec/awesome-config/0.0.0/.editorconfig': 'bar',
       '/target/node_modules/.cache/sharec/awesome-config/0.0.0/.babelrc': 'baz',
     }
     vol.fromJSON(dir, '/configs')

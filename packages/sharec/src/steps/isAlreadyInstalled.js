@@ -9,10 +9,7 @@ const isAlreadyInstalled = spinner => input => {
   const isTheSameVersion = installedConfigVersion === upcomingPackage.version
 
   if (isTheSameConfig && isTheSameVersion) {
-    throw new InternalError(
-      CAUSES.ALREADY_INSTALLED.message(),
-      CAUSES.ALREADY_INSTALLED.symbol,
-    )
+    throw new InternalError(CAUSES.ALREADY_INSTALLED.message(), CAUSES.ALREADY_INSTALLED.symbol)
   }
 
   return input
