@@ -1,3 +1,14 @@
+# v2.0.2
+
+Fix:
+
+- Handling internal errors
+
+CI:
+
+- Add linters
+- Add node 14
+
 # v2.0.1
 
 Fix:
