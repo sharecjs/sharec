@@ -1,11 +1,5 @@
 const { compose, fork } = require('../../actions')
-const {
-  ruleAtom,
-  listConcatAtom,
-  listMergeAtom,
-  primitiveAtom,
-  pairAtom,
-} = require('../../atoms')
+const { ruleAtom, listConcatAtom, listMergeAtom, primitiveAtom, pairAtom } = require('../../atoms')
 
 const stylelintJson = compose({
   extends: fork([[Array.isArray, listConcatAtom], primitiveAtom]),

@@ -4,9 +4,7 @@ function trimEOF(params) {
   return Object.keys(params).reduce(
     (acc, key) =>
       Object.assign(acc, {
-        [key]: eofRegexp.test(params[key])
-          ? params[key].replace(eofRegexp, '')
-          : params[key],
+        [key]: eofRegexp.test(params[key]) ? params[key].replace(eofRegexp, '') : params[key],
       }),
     {},
   )

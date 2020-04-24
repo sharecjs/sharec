@@ -6,10 +6,7 @@ const isIgnoresSharecConfigs = spinner => input => {
 
   if (!isIgnoresSharec) return input
 
-  throw new InternalError(
-    CAUSES.IS_IGNORES_SHAREC.message(),
-    CAUSES.IS_IGNORES_SHAREC.symbol,
-  )
+  throw new InternalError(CAUSES.IS_IGNORES_SHAREC.message(), CAUSES.IS_IGNORES_SHAREC.symbol)
 }
 
 module.exports = isIgnoresSharecConfigs

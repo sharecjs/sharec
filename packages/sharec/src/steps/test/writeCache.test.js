@@ -32,14 +32,10 @@ describe('steps > writeCache', () => {
 
     await writeCache(spinner)(input)
 
-    const cachedConfigs = vol.readdirSync(
-      '/target/node_modules/.cache/sharec/awesome-config/0.0.0',
-    )
+    const cachedConfigs = vol.readdirSync('/target/node_modules/.cache/sharec/awesome-config/0.0.0')
 
     expect(cachedConfigs).toHaveLength(3)
-    expect(cachedConfigs).toEqual(
-      expect.arrayContaining(Object.keys(upcomingConfigs)),
-    )
+    expect(cachedConfigs).toEqual(expect.arrayContaining(Object.keys(upcomingConfigs)))
   })
 
   it('should not write cache in disappear mode', async done => {

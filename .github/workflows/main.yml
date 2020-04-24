@@ -1,11 +1,32 @@
 on: [push]
 
 jobs:
+  lint:
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        node_version: ['10.x']
+    runs-on: ${{ matrix.os }}
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions/setup-node@v1
+      with:
+        version: ${{ matrix.node_version }}
+    - name: Lerna installing
+      run: |
+        npm i -g lerna
+    - name: Install packages dependencies
+      run: |
+        lerna bootstrap
+    - name: Running linters
+      run: |
+        lerna run lint
+
   test:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macOS-latest]
-        node_version: ['10.x', '12.x', '13.x']
+        node_version: ['10.x', '12.x', '13.x', '14.x']
     runs-on: ${{ matrix.os }}
     steps:
     - uses: actions/checkout@v1
