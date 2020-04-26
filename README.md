@@ -1,10 +1,6 @@
-<p align="center">
-  <img src="public/hero-image.jpg" alt="Sharec logo by Ivashkina Xenia <xeniaowl112@mail.ru>">
-</p>
-
 # Sharec
 
-[![Build Status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Flamartire%2Fsharec%2Fbadge&style=flat)](https://actions-badge.atrox.dev/lamartire/sharec/goto)
+[![.github/workflows/main.yml](https://github.com/lamartire/sharec/workflows/.github/workflows/main.yml/badge.svg)](https://github.com/lamartire/sharec/actions)
 [![npm](https://img.shields.io/npm/v/sharec)](https://npmjs.com/sharec)
 ![MIT License](https://camo.githubusercontent.com/4481c7672053be9c676fbc983c040ca59fddfa19/68747470733a2f2f696d672e736869656c64732e696f2f6e706d2f6c2f6c6f6775782d70726f636573736f722e737667)
 
@@ -13,6 +9,8 @@ keep your code up to date and start new projects in one command.
 
 
 ## Quick start
+
+<img src="public/logo-alt.svg" alt="Sharec logo by Ivashkina Xenia <xeniaowl112@mail.ru>" align="right" width="100">
 
 1. Create configuration project and init `npm` inside.
 2. Install `sharec` as dependency:
