@@ -4,7 +4,7 @@ const { vol } = require('memfs')
 const { pwd } = require('shelljs')
 const sharec = require('../')
 
-describe('sharec > update', () => {
+describe('sharec > update > linear', () => {
   const packageFxt = fixtures('package/json/02-update')
   const babelFxt = fixtures('babel/json/05-update')
   const eslintFxt = fixtures('eslint/json/02-update')
@@ -75,6 +75,46 @@ describe('sharec > update', () => {
     expect(vol.readFileSync('/target/.yaspellerrc', 'utf8')).toWraplessEqual(yaspellerFxt.result)
     expect(vol.readFileSync('/target/foo.json', 'utf8')).toWraplessEqual(defaultJsonFxt.result)
     expect(vol.readFileSync('/target/foo.yaml', 'utf8')).toWraplessEqual(defaultYamlFxt.result)
+    expect(vol.readFileSync('/target/package.json', 'utf8')).toWraplessEqual(packageFxt.result)
+  })
+})
+
+describe('sharec > update > with removed fields', () => {
+  const packageFxt = fixtures('package/json/05-removed')
+
+  const targetProcess = {
+    argv: [null, null, 'install'],
+    env: {
+      INIT_CWD: '/target',
+    },
+    exit: jest.fn(),
+  }
+
+  beforeEach(() => {
+    jest.clearAllMocks()
+    pwd.mockReturnValueOnce({ stdout: '/configuration-package' })
+    vol.reset()
+  })
+
+  it('should update configs in the target project', async () => {
+    const cacheBasePath = '/target/node_modules/.cache/sharec/awesome-config/1.0.0'
+    const upcomingPackage = {
+      name: 'awesome-config',
+      version: '2.0.0',
+    }
+    const dir = {
+      // Upcoming
+      '/configuration-package/configs/package.json': packageFxt.upcoming,
+      '/configuration-package/package.json': JSON.stringify(upcomingPackage),
+      // Cached
+      [path.join(cacheBasePath, 'package.json')]: packageFxt.cached,
+      // Current
+      '/target/package.json': packageFxt.current,
+    }
+    vol.fromJSON(dir, '/')
+
+    await sharec(targetProcess)
+
     expect(vol.readFileSync('/target/package.json', 'utf8')).toWraplessEqual(packageFxt.result)
   })
 })
