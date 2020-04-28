@@ -1,18 +1,5 @@
 const isEqual = require('lodash/isEqual')
-
-function omitChanged(target, cached) {
-  let result = new Map()
-
-  if (!cached) return result
-
-  target.forEach((value, key) => {
-    if (!cached.has(key) || isEqual(cached.get(key), value)) return
-
-    result.set(key)
-  })
-
-  return result
-}
+const { pickBy, omitBy } = require('../../utils/map')
 
 function hashAtom({ current, upcoming, cached }) {
   if (current && upcoming === undefined) return current
@@ -20,19 +7,25 @@ function hashAtom({ current, upcoming, cached }) {
 
   let result = new Map(current)
 
-  if (cached !== undefined) {
-    const ignoredFields = omitChanged(current, cached)
-
+  if (cached === undefined) {
     upcoming.forEach((value, key) => {
-      if (ignoredFields.has(key)) return
-
       result.set(key, value)
     })
 
     return result
   }
 
+  const removedFields = pickBy(cached, (value, key) => value !== undefined && current.get(key) === undefined)
+  const ignoredFields = omitBy(current, (value, key) => {
+    if (!cached.has(key)) return true
+    if (isEqual(cached.get(key), value)) return true
+
+    return false
+  })
+
   upcoming.forEach((value, key) => {
+    if (removedFields.has(key) || ignoredFields.has(key)) return
+
     result.set(key, value)
   })
 

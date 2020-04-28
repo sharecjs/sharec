@@ -3,6 +3,7 @@ const hashAtom = require('../hash')
 
 describe('atoms > hash', () => {
   const hashFxt = fixtures('rule/json/01-hash', 'map')
+  const hashRemovedFxt = fixtures('default/json/01-handle-removed', 'map')
 
   it('should return current if upcoming is not passed', () => {
     const result = hashAtom({ current: hashFxt.current })
@@ -17,12 +18,14 @@ describe('atoms > hash', () => {
   })
 
   it('should merge rules with cache', () => {
-    const result = hashAtom({
-      current: hashFxt.current,
-      upcoming: hashFxt.upcoming,
-      cached: hashFxt.cached,
-    })
+    const result = hashAtom(hashFxt)
 
     expect(result).toEqual(hashFxt.result)
+  })
+
+  it('should handle removed fields', () => {
+    const result = hashAtom(hashRemovedFxt)
+
+    expect(result).toEqual(hashRemovedFxt.result)
   })
 })
