@@ -3,24 +3,30 @@ const without = require('lodash/without')
 const applySchemaByKeys = ({ schema, keys = [], target }) => params => {
   if (keys.length === 0) return target
 
-  const { current, upcoming, cached } = params
-
   for (const key of keys) {
     const strategy = schema[key] || schema.$$default
     const ignoreList = schema.$$ignore || []
 
-    if (!strategy || !upcoming.has(key) || ignoreList.includes(key)) {
-      target.set(key, current.get(key))
+    if (!strategy || !params.upcoming.has(key) || ignoreList.includes(key)) {
+      target.set(key, params.current.get(key))
+      continue
+    }
+
+    const current = params.current.get(key)
+    const upcoming = params.upcoming.get(key)
+    const cached = params.cached && params.cached.get(key)
+
+    if (current === undefined && cached !== undefined) {
       continue
     }
 
     target.set(
       key,
       strategy({
-        current: current.get(key),
-        upcoming: upcoming.get(key),
-        cached: cached && cached.get(key),
         ignore: schema.$$ignore,
+        current,
+        upcoming,
+        cached,
       }),
     )
   }

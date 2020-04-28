@@ -1,3 +1,9 @@
+# 2.1.0
+
+Features:
+
+- Sharec skip fields removed by user (#78)
+
 # v2.0.3
 
 Fix:
