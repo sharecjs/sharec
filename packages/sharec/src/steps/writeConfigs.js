@@ -10,7 +10,7 @@ const writeConfigs = spinner => async input => {
   spinner.frame('writing configuration')
 
   for (const config in configs) {
-    const targetConfigPath = path.join(targetPath, config)
+    let targetConfigPath = path.join(targetPath, config)
     const targetConfigBasename = path.basename(config)
     const isPackageJson = targetConfigBasename === 'package.json'
     const isOverwritePackageJson = isPackageJson && overwrite
@@ -18,12 +18,23 @@ const writeConfigs = spinner => async input => {
     const upcomingConfig = configs[config]
 
     if (!upcomingConfig) continue
-    if (!targetPipe || (overwrite && !isPackageJson)) {
+    if (!targetPipe) {
       await writeFile(targetConfigPath, upcomingConfig)
       continue
     }
 
-    const { processor } = targetPipe
+    const { processor, alias } = targetPipe
+
+    if (alias) {
+      targetConfigPath = path.join(path.dirname(targetConfigPath), alias)
+    }
+
+    // package.json can't be overwrited
+    if (overwrite && !isPackageJson) {
+      await writeFile(targetConfigPath, upcomingConfig)
+      continue
+    }
+
     const cachedConfig = !isOverwritePackageJson ? cache[config] : undefined
     let currentConfig
 

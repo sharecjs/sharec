@@ -1,3 +1,4 @@
+const omit = require('lodash/omit')
 const { basename } = require('../../utils/std').path
 
 const pipes = {
@@ -24,6 +25,7 @@ const getConfigPipe = configPath => {
 
   return {
     processor: pipes[targetPipeKey].pipe(configFilename),
+    ...omit(pipes[targetPipeKey], ['pipe']),
   }
 }
 
@@ -35,6 +37,7 @@ const getFallbackConfigPipe = configPath => {
 
   return {
     processor: targetPipe.pipe(configFilename),
+    ...omit(pipes[targetPipe], ['pipe']),
   }
 }
 

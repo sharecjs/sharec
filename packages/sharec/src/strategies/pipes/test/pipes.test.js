@@ -28,5 +28,14 @@ describe('strategies > pipes', () => {
     it('should return null if pipe is not exist for given config', () => {
       expect(getConfigPipe('/configs/.simpsonsrc')).toBeNull()
     })
+
+    it('should return alias for .gitignore and .npmignore', () => {
+      expect(getConfigPipe('/configs/npmignore').alias).toBe('.npmignore')
+      expect(getConfigPipe('/configs/gitignore').alias).toBe('.gitignore')
+    })
+
+    it('should not return any alias for config without aliases', () => {
+      expect(getConfigPipe('/configs/package.json').alias).toBeUndefined()
+    })
   })
 })
