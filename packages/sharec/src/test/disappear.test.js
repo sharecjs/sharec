@@ -8,6 +8,8 @@ describe('sharec > disappear', () => {
   const babelFxt = fixtures('babel/json/06-disappear')
   const eslintFxt = fixtures('eslint/json/03-disappear')
   const yaspellerFxt = fixtures('yaspeller/json/02-disappear')
+  const npmignoreFxt = fixtures('npmignore/lines/00-base')
+  const gitignoreFxt = fixtures('gitignore/lines/00-base')
 
   const targetProcess = {
     argv: [null, null, '--disappear'],
@@ -33,6 +35,10 @@ describe('sharec > disappear', () => {
         name: 'awesome-config',
         version: '1.0.0',
       }),
+      '/configuration-package/configs/npmignore': npmignoreFxt.upcoming,
+      '/configuration-package/configs/gitignore': gitignoreFxt.upcoming,
+      '/target/.npmignore': npmignoreFxt.current,
+      '/target/.gitignore': gitignoreFxt.current,
       '/target/.eslintrc': eslintFxt.current,
       '/target/.babelrc': babelFxt.current,
       '/target/.yaspellerrc': yaspellerFxt.current,
@@ -46,6 +52,8 @@ describe('sharec > disappear', () => {
     expect(vol.readFileSync('/target/.eslintrc', 'utf8')).toWraplessEqual(eslintFxt.result)
     expect(vol.readFileSync('/target/.yaspellerrc', 'utf8')).toWraplessEqual(yaspellerFxt.result)
     expect(vol.readFileSync('/target/package.json', 'utf8')).toWraplessEqual(packageFxt.result)
+    expect(vol.readFileSync('/target/.gitignore', 'utf8')).toWraplessEqual(gitignoreFxt.result)
+    expect(vol.readFileSync('/target/.npmignore', 'utf8')).toWraplessEqual(npmignoreFxt.result)
 
     try {
       vol.readdirSync('/target/node_modules/.cache/sharec/awesome-config/1.0.0')
