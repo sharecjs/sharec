@@ -6,7 +6,7 @@ expect.extend({
    * jest-matcher is the best and simple solution
    */
   toWraplessEqual(rawReceived, rawExpected) {
-    const normalizeWraps = str => str.replace(/(\r\n|\n\r|\r|\n)/g, '\n').replace(/\n$/, '')
+    const normalizeWraps = (str) => str.replace(/(\r\n|\n\r|\r|\n)/g, '\n').replace(/\n$/, '')
     const normalizedReceived = normalizeWraps(rawReceived)
     const normalizedExpected = normalizeWraps(rawExpected)
 

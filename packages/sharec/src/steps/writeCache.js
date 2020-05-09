@@ -2,7 +2,7 @@ const { writeFile } = require('../utils/std').fs
 const { join, dirname } = require('../utils/std').path
 const { safeMakeDir } = require('../utils/fs')
 
-const writeCache = spinner => async input => {
+const writeCache = (spinner) => async (input) => {
   const { upcomingPackage, configs, targetPath, options } = input
   const { name, version } = upcomingPackage
   const { disappear, overwrite } = options

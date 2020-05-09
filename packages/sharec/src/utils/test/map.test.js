@@ -21,7 +21,7 @@ describe('utils > map', () => {
     it('should pick values by predicate function', () => {
       const target = new Map().set('foo', 1).set('bar', 'baz')
 
-      expect(pickBy(target, val => typeof val === 'number')).toEqual(new Map().set('foo', 1))
+      expect(pickBy(target, (val) => typeof val === 'number')).toEqual(new Map().set('foo', 1))
     })
   })
 
@@ -29,7 +29,7 @@ describe('utils > map', () => {
     it('should omit values by predicate function', () => {
       const target = new Map().set('foo', 1).set('bar', 'baz')
 
-      expect(omitBy(target, val => typeof val === 'number')).toEqual(new Map().set('bar', 'baz'))
+      expect(omitBy(target, (val) => typeof val === 'number')).toEqual(new Map().set('bar', 'baz'))
     })
   })
 })

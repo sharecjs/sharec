@@ -20,7 +20,7 @@ jobs:
         lerna bootstrap
     - name: Running linters
       run: |
-        lerna run lint
+        npm run lint
 
   test:
     strategy:

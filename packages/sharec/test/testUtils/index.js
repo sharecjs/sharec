@@ -58,11 +58,11 @@ function fixture(path, format) {
  * @returns {Fixtures}
  */
 function fixtures(path, format) {
-  const findFixtureFileByKey = (arr, key) => arr.find(item => new RegExp(`^${key}`).test(item))
+  const findFixtureFileByKey = (arr, key) => arr.find((item) => new RegExp(`^${key}`).test(item))
   const fixturesPath = resolve(__dirname, `../fixtures/${path}`)
   const files = readdirSync(fixturesPath)
   const fixturesKeys = ['current', 'upcoming', 'result', 'restored', 'cached', 'uncached']
-  const fixturesValues = fixturesKeys.map(key => {
+  const fixturesValues = fixturesKeys.map((key) => {
     const fixtureFileName = findFixtureFileByKey(files, key)
 
     if (!fixtureFileName) return null

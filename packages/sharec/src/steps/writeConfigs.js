@@ -3,7 +3,7 @@ const { writeFile, readFile } = require('../utils/std').fs
 const { join, dirname, basename } = require('../utils/std').path
 const { safeMakeDir } = require('../utils/fs')
 
-const writeConfigs = spinner => async input => {
+const writeConfigs = (spinner) => async (input) => {
   const { configs, cache = {}, targetPath, options } = input
   const { overwrite } = options
 

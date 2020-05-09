@@ -11,27 +11,22 @@ gulp.task('svg', () => {
     .src('src/assets/svg/*.svg')
     .pipe(
       plumber({
-        errorHandler: plumberErrorHandler(
-          'Error was occurred during SVG compile'
-        )
-      })
+        errorHandler: plumberErrorHandler('Error was occurred during SVG compile'),
+      }),
     )
     .pipe(
-      svgMin(file => {
+      svgMin((file) => {
         return {
           plugins: [
             {
               cleanupIDs: {
-                prefix: `${path.basename(
-                  file.relative,
-                  path.extname(file.relative)
-                )}-`,
-                minify: true
-              }
-            }
-          ]
+                prefix: `${path.basename(file.relative, path.extname(file.relative))}-`,
+                minify: true,
+              },
+            },
+          ],
         }
-      })
+      }),
     )
     .pipe(svgStore({ inlineSvg: true }))
     .pipe(gulp.dest('dist/assets/svg'))

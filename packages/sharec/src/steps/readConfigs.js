@@ -3,19 +3,19 @@ const { join } = require('../utils/std').path
 const { find } = require('../utils/fs')
 const { InternalError, CAUSES } = require('../errors')
 
-const readConfigs = spinner => input => {
+const readConfigs = (spinner) => (input) => {
   spinner.frame('reading upcoming configuration files')
 
   const configsPath = join(input.configPath, '/configs')
 
   return find(configsPath, '**/*')
-    .then(configsPaths => {
-      const withoutLocks = configsPaths.filter(config => !/(\.|-)lock/.test(config))
+    .then((configsPaths) => {
+      const withoutLocks = configsPaths.filter((config) => !/(\.|-)lock/.test(config))
 
       return withoutLocks
     })
-    .then(async configsPaths => {
-      let readedConfigs = {}
+    .then(async (configsPaths) => {
+      const readedConfigs = {}
 
       for (const config of configsPaths) {
         spinner.frame(`reading ${config}`)
@@ -28,7 +28,7 @@ const readConfigs = spinner => input => {
 
       return readedConfigs
     })
-    .then(readedConfigs => {
+    .then((readedConfigs) => {
       spinner.frame('all files were readed')
 
       return {
@@ -36,7 +36,7 @@ const readConfigs = spinner => input => {
         configs: readedConfigs,
       }
     })
-    .catch(err => {
+    .catch((err) => {
       if (err.code !== 'ENOENT') {
         spinner.fail('Config files were not readed due unexpected error')
 

@@ -1,7 +1,7 @@
 const last = require('lodash/last')
 const { toYAML } = require('../../../parsers/yaml')
 
-const toYaml = input => {
+const toYaml = (input) => {
   const yamlInput = toYAML(input)
   const yamlLines = yamlInput.split(/\n|\r\n/)
   const eof = last(yamlLines) === ''

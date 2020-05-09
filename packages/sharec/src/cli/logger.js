@@ -1,7 +1,7 @@
 const { bold } = require('chalk')
 
 const createLogger = ({ prefix = '', silent }) => {
-  let logPrefixParts = ['sharec', ':']
+  const logPrefixParts = ['sharec', ':']
 
   if (prefix) {
     logPrefixParts.splice(1, 0, ` [${prefix}]`)

@@ -8,12 +8,7 @@ function linesConcatAtom(params) {
   if (current === undefined && upcoming) return upcoming
   if (current && upcoming === undefined) return current
 
-  const result = listConcatAtom(
-    flow(
-      trimEOF,
-      linesToLists,
-    )(params),
-  )
+  const result = listConcatAtom(flow(trimEOF, linesToLists)(params))
 
   return result.join('\n')
 }

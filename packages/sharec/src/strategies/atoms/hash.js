@@ -5,7 +5,7 @@ function hashAtom({ current, upcoming, cached }) {
   if (current && upcoming === undefined) return current
   if (current === undefined && upcoming) return upcoming
 
-  let result = new Map(current)
+  const result = new Map(current)
 
   if (cached === undefined) {
     upcoming.forEach((value, key) => {

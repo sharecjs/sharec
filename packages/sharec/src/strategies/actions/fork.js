@@ -2,13 +2,13 @@
  * @param {Array<Array|Function>} cases
  * @returns {Function}
  */
-const fork = cases =>
+const fork = (cases) =>
   /**
    * @param {Object} params
    * @returns {*}
    */
-  params => {
-    const targetCase = cases.find(c => {
+  (params) => {
+    const targetCase = cases.find((c) => {
       if (!Array.isArray(c)) return c
       if (params.current) return c[0](params.current)
 

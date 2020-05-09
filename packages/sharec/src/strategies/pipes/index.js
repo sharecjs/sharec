@@ -15,9 +15,9 @@ const pipes = {
 
 const fallbackPipes = [require('./default/pipe')]
 
-const getConfigPipe = configPath => {
+const getConfigPipe = (configPath) => {
   const configFilename = basename(configPath)
-  const targetPipeKey = Object.keys(pipes).find(key => !!pipes[key].pipe(configFilename))
+  const targetPipeKey = Object.keys(pipes).find((key) => !!pipes[key].pipe(configFilename))
 
   if (!targetPipeKey) {
     return getFallbackConfigPipe(configPath)
@@ -29,9 +29,9 @@ const getConfigPipe = configPath => {
   }
 }
 
-const getFallbackConfigPipe = configPath => {
+const getFallbackConfigPipe = (configPath) => {
   const configFilename = basename(configPath)
-  const targetPipe = fallbackPipes.find(pipe => !!pipe.pipe(configFilename))
+  const targetPipe = fallbackPipes.find((pipe) => !!pipe.pipe(configFilename))
 
   if (!targetPipe) return null
 

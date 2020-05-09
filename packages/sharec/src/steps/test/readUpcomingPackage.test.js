@@ -30,7 +30,7 @@ describe('steps > readUpcomingPackage', () => {
     })
   })
 
-  it('should throw an error if package.json is not exist in upcoming config', async done => {
+  it('should throw an error if package.json is not exist in upcoming config', async (done) => {
     const spinner = createFakeSpinner()
     const dir = {}
 

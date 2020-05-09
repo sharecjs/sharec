@@ -24,7 +24,7 @@ describe('sharec > overwrite', () => {
     vol.reset()
   })
 
-  it('should overwrite current with upcoming in overwrite mode', async done => {
+  it('should overwrite current with upcoming in overwrite mode', async (done) => {
     const dir = {
       '/configuration-package/configs/.eslintrc': eslintFxt.upcoming,
       '/configuration-package/configs/.babelrc': babelFxt.upcoming,

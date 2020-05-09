@@ -1,7 +1,7 @@
 const { writeFile, readFile } = require('../utils/std').fs
 const { join } = require('../utils/std').path
 
-const writeMeta = spinner => async input => {
+const writeMeta = (spinner) => async (input) => {
   const { options } = input
   const { disappear, overwrite } = options
 
@@ -12,7 +12,7 @@ const writeMeta = spinner => async input => {
   const { name, version } = input.upcomingPackage
   const targetPackagePath = join(input.targetPath, 'package.json')
   const rawTargetPackagePath = await readFile(targetPackagePath, 'utf8')
-  let targetPackage = JSON.parse(rawTargetPackagePath)
+  const targetPackage = JSON.parse(rawTargetPackagePath)
 
   targetPackage.sharec = {
     config: name,
