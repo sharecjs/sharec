@@ -5,7 +5,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        node_version: ['10.x']
+        node_version: ['12.x']
     runs-on: ${{ matrix.os }}
     steps:
     - uses: actions/checkout@v1
@@ -17,7 +17,7 @@ jobs:
         npm i -g lerna
     - name: Install packages dependencies
       run: |
-        lerna bootstrap
+        npm i
     - name: Running linters
       run: |
         npm run lint
