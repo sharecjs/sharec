@@ -1,3 +1,9 @@
+# v2.1.2
+
+Fix:
+
+- Removed configuration files now not rewrites by upcoming package
+
 # v2.1.1
 
 Fix:

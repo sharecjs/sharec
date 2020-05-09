@@ -20,7 +20,7 @@ npm i --save sharec
 3. Add `postinstall` script to root `package.json` file:
 ```json
 "scripts": {
-  "postinstall": "sharec install"
+  "postinstall": "sharec"
 }
 ```
 4. Create `configs` directory.
