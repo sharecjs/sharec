@@ -11,7 +11,7 @@
       "prettier --write",
       "git add"
     ],
-    "packages/**/*.{json,ya?ml,css}": [
+    "packages/**/*.{json,ya?ml,css,html,md}": [
       "prettier --write",
       "git add"
     ]
