@@ -1,5 +1,5 @@
 const { writeFile } = require('../utils/std').fs
-const { join } = require('../utils/std').path
+const { join, dirname } = require('../utils/std').path
 const { safeMakeDir } = require('../utils/fs')
 
 const writeCache = spinner => async input => {
@@ -16,6 +16,7 @@ const writeCache = spinner => async input => {
   await safeMakeDir(baseCachePath)
 
   for (const config in configs) {
+    await safeMakeDir(join(baseCachePath, dirname(config)))
     await writeFile(join(baseCachePath, config), configs[config])
   }
 
