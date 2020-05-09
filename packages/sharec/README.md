@@ -32,7 +32,7 @@ Files with different extension will be just copied.
 ## Potential use-cases
 
 - Versionable configuration packages (try out [demo config](https://github.com/lamartire/sharec/tree/master/packages/sharec-demo-config))
-- Create boilerplates, like `create-react-app` (see dead simple example [here](github.com/lamartire/sharec-react-app))
+- Create boilerplates, like `create-react-app` (see dead simple example [here](https://github.com/lamartire/sharec-react-app))
 
 ## Options
 
