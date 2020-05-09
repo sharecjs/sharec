@@ -9,12 +9,7 @@ function linesMergeAtom(params) {
   if (current === undefined && upcoming) return upcoming
   if (current && upcoming === undefined) return current
 
-  const result = listMergeAtom(primitiveAtom)(
-    flow(
-      trimEOF,
-      linesToLists,
-    )(params),
-  )
+  const result = listMergeAtom(primitiveAtom)(flow(trimEOF, linesToLists)(params))
 
   return result.join('\n')
 }

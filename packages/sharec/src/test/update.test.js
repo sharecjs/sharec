@@ -118,3 +118,47 @@ describe('sharec > update > with removed fields', () => {
     expect(vol.readFileSync('/target/package.json', 'utf8')).toWraplessEqual(packageFxt.result)
   })
 })
+
+describe('sharec > update > with removed configs', () => {
+  const eslintFxt = fixtures('eslint/json/02-update')
+  const packageFxt = fixtures('package/json/05-removed')
+
+  const targetProcess = {
+    argv: [null, null, 'install'],
+    env: {
+      INIT_CWD: '/target',
+    },
+    exit: jest.fn(),
+  }
+
+  beforeEach(() => {
+    jest.clearAllMocks()
+    pwd.mockReturnValueOnce({ stdout: '/configuration-package' })
+    vol.reset()
+  })
+
+  it('should update configs in the target project', async () => {
+    const cacheBasePath = '/target/node_modules/.cache/sharec/awesome-config/1.0.0'
+    const upcomingPackage = {
+      name: 'awesome-config',
+      version: '2.0.0',
+    }
+    const dir = {
+      // Upcoming
+      '/configuration-package/configs/package.json': packageFxt.upcoming,
+      '/configuration-package/configs/.eslintrc': eslintFxt.upcoming,
+      '/configuration-package/package.json': JSON.stringify(upcomingPackage),
+      // Cached
+      [path.join(cacheBasePath, 'package.json')]: packageFxt.cached,
+      [path.join(cacheBasePath, '.eslintrc')]: eslintFxt.cached,
+      // Current
+      '/target/package.json': packageFxt.current,
+    }
+    vol.fromJSON(dir, '/')
+
+    await sharec(targetProcess)
+
+    expect(vol.readdirSync('/target')).not.toContain('.eslintrc')
+    expect(vol.readFileSync('/target/package.json', 'utf8')).toWraplessEqual(packageFxt.result)
+  })
+})

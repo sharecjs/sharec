@@ -11,24 +11,19 @@ const webpackConfig = {
   entry: {
     app:
       ENV === 'development'
-        ? [
-          path.join(SOURCES_PATH, './app.js'),
-          'webpack/hot/dev-server',
-          'webpack-hot-middleware/client'
-        ]
-        : path.join(SOURCES_PATH, './app.js')
+        ? [path.join(SOURCES_PATH, './app.js'), 'webpack/hot/dev-server', 'webpack-hot-middleware/client']
+        : path.join(SOURCES_PATH, './app.js'),
   },
 
   output: {
     filename: 'app.js',
     path: path.join(DIST_PATH, './assets/js'),
-    publicPath: '/'
+    publicPath: '/',
   },
 
   context: DIST_PATH,
 
-  plugins:
-    ENV === 'development' ? [new webpack.HotModuleReplacementPlugin()] : []
+  plugins: ENV === 'development' ? [new webpack.HotModuleReplacementPlugin()] : [],
 }
 
 const scripts = () =>
@@ -41,7 +36,7 @@ const scripts = () =>
       // console.info(stats.toString())
 
       resolve()
-    })
+    }),
   )
 
 module.exports = { webpackConfig, scripts }

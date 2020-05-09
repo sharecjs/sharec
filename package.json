@@ -2,8 +2,87 @@
   "homapage": "https://lamartire.github.io/sharec/",
   "author": "Konstantin Epishev <lamartire@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "lint": "eslint 'packages/**/*.js'"
+  },
+  "lint-staged": {
+    "packages/**/*.js": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "packages/**/*.{json,ya?ml,css,html,md}": [
+      "prettier --write"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true,
+    "trailingComma": "all",
+    "printWidth": 120
+  },
+  "eslintConfig": {
+    "env": {
+      "commonjs": true,
+      "jest": true,
+      "node": true
+    },
+    "parserOptions": {
+      "ecmaVersion": 2018
+    },
+    "parser": "babel-eslint",
+    "extends": [
+      "standard",
+      "prettier",
+      "prettier/standard"
+    ],
+    "plugins": [
+      "prettier"
+    ],
+    "rules": {
+      "prettier/prettier": [
+        "error",
+        {
+          "semi": false,
+          "singleQuote": true,
+          "trailingComma": "all",
+          "printWidth": 120
+        }
+      ]
+    }
+  },
+  "eslintIgnore": [
+    "/node_modules/"
+  ],
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
+  },
   "devDependencies": {
-    "lerna": "^3.18.4"
+    "@commitlint/cli": "^8.3.5",
+    "@commitlint/config-conventional": "^8.3.4",
+    "babel-eslint": "^10.1.0",
+    "commitizen": "^4.1.2",
+    "cz-conventional-changelog": "^3.2.0",
+    "eslint": "^7.0.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-config-prettier-standard": "^3.0.1",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^3.1.3",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "husky": "^4.2.5",
+    "lerna": "^3.18.4",
+    "lint-staged": "^10.2.2",
+    "prettier": "^2.0.5"
   },
   "sharec": {
     "ignore": true

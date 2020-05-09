@@ -22,65 +22,10 @@
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch",
-    "commit": "git-cz",
-    "lint": "eslint 'src/**/*.{js,jsx,json}'",
-    "lint-staged": "lint-staged",
     "fxt:json": "hygen fixture-json with-prompt",
     "fxt:yaml": "hygen fixture-yaml with-prompt",
     "fxt:lines": "hygen fixture-lines with-prompt"
   },
-  "lint-staged": {
-    "src/**/*.{js}": [
-      "eslint --fix",
-      "prettier --write",
-      "git add"
-    ]
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-    }
-  },
-  "prettier": {
-    "semi": false,
-    "singleQuote": true,
-    "trailingComma": "all",
-    "printWidth": 120
-  },
-  "eslintConfig": {
-    "env": {
-      "commonjs": true,
-      "jest": true,
-      "node": true
-    },
-    "parserOptions": {
-      "ecmaVersion": 2018
-    },
-    "parser": "babel-eslint",
-    "extends": [
-      "standard",
-      "prettier",
-      "prettier/standard"
-    ],
-    "plugins": [
-      "prettier"
-    ],
-    "rules": {
-      "prettier/prettier": [
-        "error",
-        {
-          "semi": false,
-          "singleQuote": true,
-          "trailingComma": "all",
-          "printWidth": 120
-        }
-      ]
-    }
-  },
-  "eslintIgnore": [
-    "/node_modules"
-  ],
   "jest": {
     "moduleDirectories": [
       "node_modules",
@@ -109,34 +54,14 @@
     ]
   },
   "devDependencies": {
-    "@commitlint/cli": "^7.6.1",
-    "@commitlint/config-conventional": "^7.6.0",
-    "babel-eslint": "^10.0.1",
     "callsites": "^3.1.0",
-    "commitizen": "^3.1.1",
-    "cz-conventional-changelog": "^2.1.0",
-    "eslint": "^5.16.0",
-    "eslint-config-prettier": "^4.2.0",
-    "eslint-config-prettier-standard": "^2.0.0",
-    "eslint-config-standard": "^12.0.0",
-    "eslint-plugin-import": "^2.17.2",
-    "eslint-plugin-node": "^9.0.1",
-    "eslint-plugin-prettier": "^3.1.0",
-    "eslint-plugin-promise": "^4.1.1",
-    "eslint-plugin-standard": "^4.0.0",
-    "husky": "^2.2.0",
     "hygen": "^4.0.9",
     "jest": "^24.8.0",
     "jest-cli": "^24.8.0",
-    "lint-staged": "^8.1.6",
-    "memfs": "^2.15.2",
-    "prettier": "^1.17.1"
+    "memfs": "^2.15.2"
   },
   "dependencies": {
     "chalk": "^2.4.2",
-    "deep-diff": "^1.0.2",
-    "deepmerge": "^3.2.0",
-    "diff": "^4.0.1",
     "js-yaml": ">=3.13.1",
     "json8": "^1.0.1",
     "lodash": "^4.17.15",
@@ -146,10 +71,5 @@
     "shelljs": "^0.8.3",
     "slash": "^3.0.0"
   },
-  "gitHead": "8b056dc9aedf49a712b84b4d47ea9fa1cea45b08",
-  "config": {
-    "commitizen": {
-      "path": "cz-conventional-changelog"
-    }
-  }
+  "gitHead": "8b056dc9aedf49a712b84b4d47ea9fa1cea45b08"
 }

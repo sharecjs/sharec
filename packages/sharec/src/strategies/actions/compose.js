@@ -1,6 +1,6 @@
 const without = require('lodash/without')
 
-const applySchemaByKeys = ({ schema, keys = [], target }) => params => {
+const applySchemaByKeys = ({ schema, keys = [], target }) => (params) => {
   if (keys.length === 0) return target
 
   for (const key of keys) {
@@ -38,14 +38,14 @@ const applySchemaByKeys = ({ schema, keys = [], target }) => params => {
  * @param {Object} schema
  * @returns {Function}
  */
-const compose = schema =>
+const compose = (schema) =>
   /**
    * @param {Object} params
    * @param {Object} options
    * @param {Boolean} [options.overwrite]
    * @returns {Object}
    */
-  params => {
+  (params) => {
     const { current, upcoming } = params
 
     if (upcoming === undefined) return current
@@ -53,7 +53,7 @@ const compose = schema =>
     if (typeof current !== typeof upcoming) return upcoming
     if (Array.isArray(schema)) return schema[0](params)
 
-    let result = new Map()
+    const result = new Map()
 
     const currentKeys = Array.from(current.keys())
     const upcomingKeys = Array.from(upcoming.keys())

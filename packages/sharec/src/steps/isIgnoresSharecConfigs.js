@@ -1,7 +1,7 @@
 const get = require('lodash/get')
 const { InternalError, CAUSES } = require('../errors')
 
-const isIgnoresSharecConfigs = spinner => input => {
+const isIgnoresSharecConfigs = (spinner) => (input) => {
   const isIgnoresSharec = get(input.targetPackage, 'sharec.ignore', false)
 
   if (!isIgnoresSharec) return input

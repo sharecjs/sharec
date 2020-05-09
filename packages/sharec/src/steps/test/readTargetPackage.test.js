@@ -30,7 +30,7 @@ describe('steps > readTargetPackage', () => {
     })
   })
 
-  it('should throw an error if package.json is not exist in target project', async done => {
+  it('should throw an error if package.json is not exist in target project', async (done) => {
     const spinner = createFakeSpinner()
     const dir = {}
 

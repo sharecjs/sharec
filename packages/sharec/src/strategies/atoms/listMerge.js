@@ -1,10 +1,10 @@
-const listMergeAtom = atom => ({ current, upcoming, cached }) => {
+const listMergeAtom = (atom) => ({ current, upcoming, cached }) => {
   // TODO: what do with arrays with different length?
   if (current && upcoming === undefined) return current
   if (current === undefined && upcoming) return upcoming
 
   const resultLength = Math.max(current.length, upcoming.length)
-  let result = new Array(resultLength)
+  const result = new Array(resultLength)
 
   for (let i = 0; i < result.length; i++) {
     if (current[i] === undefined && upcoming[i]) {

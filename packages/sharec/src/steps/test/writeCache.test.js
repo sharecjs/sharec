@@ -38,7 +38,7 @@ describe('steps > writeCache', () => {
     expect(cachedConfigs).toEqual(expect.arrayContaining(Object.keys(upcomingConfigs)))
   })
 
-  it('should not write cache in disappear mode', async done => {
+  it('should not write cache in disappear mode', async (done) => {
     const spinner = createFakeSpinner()
     const targetPackage = {}
     const upcomingPackage = {

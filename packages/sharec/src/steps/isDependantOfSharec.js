@@ -1,7 +1,7 @@
 const get = require('lodash/get')
 const { InternalError, CAUSES } = require('../errors')
 
-const isDependantOfSharec = spinner => input => {
+const isDependantOfSharec = (spinner) => (input) => {
   const { targetPackage } = input
   const targetDependencies = get(targetPackage, 'dependencies', {})
 

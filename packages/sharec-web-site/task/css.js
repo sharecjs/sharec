@@ -14,27 +14,22 @@ gulp.task('css', () =>
     .src('src/css/main.css')
     .pipe(
       plumber({
-        errorHandler: plumberErrorHandler(
-          'Error was occurred during CSS compile'
-        )
-      })
+        errorHandler: plumberErrorHandler('Error was occurred during CSS compile'),
+      }),
     )
     .pipe(postCss())
     .pipe(
       cond(
         ENV === 'dev',
         sourcemaps.init({
-          loadMaps: true
-        })
-      )
+          loadMaps: true,
+        }),
+      ),
     )
     .pipe(cond(ENV === 'development', sourcemaps.write()))
     .pipe(cond(ENV === 'production', cssnano()))
-    .pipe(
-      gulp.dest('dist/assets/css'),
-      {
-        overwrite: true
-      }
-    )
-    .pipe(browserSync.stream())
+    .pipe(gulp.dest('dist/assets/css'), {
+      overwrite: true,
+    })
+    .pipe(browserSync.stream()),
 )

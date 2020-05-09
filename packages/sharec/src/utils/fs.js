@@ -6,7 +6,7 @@ const { join } = require('../utils/std').path
  * @param {String} path
  * @returns {Promise<void>}
  */
-const safeMakeDir = async path => {
+const safeMakeDir = async (path) => {
   try {
     await makeDir(path, {
       recursive: true,
@@ -15,7 +15,7 @@ const safeMakeDir = async path => {
 }
 
 const find = async (path, pattern) => {
-  let result = []
+  const result = []
   const subresult = await readDir(path)
 
   if (subresult.length === 0) return result

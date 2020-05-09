@@ -25,7 +25,7 @@ describe('sharec > disappear', () => {
     vol.reset()
   })
 
-  it('should install configs to the target project without cache and meta writing', async done => {
+  it('should install configs to the target project without cache and meta writing', async (done) => {
     const dir = {
       '/configuration-package/configs/.eslintrc': eslintFxt.upcoming,
       '/configuration-package/configs/.babelrc': babelFxt.upcoming,

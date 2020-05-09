@@ -12,7 +12,7 @@ const writeConfigs = require('./writeConfigs')
 const writeMeta = require('./writeMeta')
 const writeCache = require('./writeCache')
 
-const composeSteps = (...steps) => async input => {
+const composeSteps = (...steps) => async (input) => {
   let lastInput = input
 
   for (const step of steps) {

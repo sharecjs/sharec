@@ -1,5 +1,5 @@
 const pick = (target, keys) => {
-  let result = new Map()
+  const result = new Map()
 
   target.forEach((value, key) => {
     if (!keys.includes(key)) return
@@ -11,7 +11,7 @@ const pick = (target, keys) => {
 }
 
 const pickBy = (target, predicate) => {
-  let result = new Map()
+  const result = new Map()
 
   target.forEach((value, key) => {
     if (!predicate(value, key)) return
@@ -23,7 +23,7 @@ const pickBy = (target, predicate) => {
 }
 
 const omit = (target, keys) => {
-  let result = new Map(target)
+  const result = new Map(target)
 
   target.forEach((value, key) => {
     if (!keys.includes(key)) return
@@ -35,7 +35,7 @@ const omit = (target, keys) => {
 }
 
 const omitBy = (target, predicate) => {
-  let result = new Map(target)
+  const result = new Map(target)
 
   target.forEach((value, key) => {
     if (!predicate(value, key)) return

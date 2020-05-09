@@ -38,7 +38,7 @@ const createSpinner = ({ text, silent }) => {
      * @param {String} text
      * @returns {Spinner}
      */
-    succeed: text => {
+    succeed: (text) => {
       if (silent) {
         return spinner
       }
@@ -53,7 +53,7 @@ const createSpinner = ({ text, silent }) => {
      * @param {String} text
      * @returns {Spinner}
      */
-    fail: text => {
+    fail: (text) => {
       if (silent) {
         return spinner
       }
@@ -68,7 +68,7 @@ const createSpinner = ({ text, silent }) => {
      * @param {String} text
      * @returns {Spinner}
      */
-    frame: text => {
+    frame: (text) => {
       if (silent) {
         return spinner
       }

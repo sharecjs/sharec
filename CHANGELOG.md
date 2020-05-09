@@ -1,3 +1,13 @@
+# v2.1.2
+
+Chore:
+
+- Move all linters and other tools to the root of project
+
+Fix:
+
+- Removed configuration files now not rewrites by upcoming package
+
 # v2.1.1
 
 Fix:

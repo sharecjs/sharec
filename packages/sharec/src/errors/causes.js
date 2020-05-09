@@ -13,7 +13,7 @@ const CAUSES = {
     symbol: Symbol('IS_IGNORES_SHAREC'),
   },
   CONFIGS_NOT_FOUND: {
-    message: path => `Configuration files were not found in "${path}"`,
+    message: (path) => `Configuration files were not found in "${path}"`,
     symbol: Symbol('CONFIGS_NOT_FOUND'),
   },
 }

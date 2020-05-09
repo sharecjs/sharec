@@ -7,11 +7,7 @@ gulp.task('move-fonts', () => {
 })
 
 gulp.task('optimize-images', () => {
-  gulp
-    .src('src/assets/images/**/*')
-    .pipe(imageMin())
-    .pipe(gulp.dest('dist/assets/images'))
-    .pipe(browserSync.stream())
+  gulp.src('src/assets/images/**/*').pipe(imageMin()).pipe(gulp.dest('dist/assets/images')).pipe(browserSync.stream())
 })
 
 gulp.task('move-assets', ['move-fonts', 'optimize-images'])

@@ -25,8 +25,14 @@ At this moment, sharec supports:
 - `stylelint`
 - `commitlint`
 
-Other `.json` or `.yaml` files will be merged by keys. Files with different extension will be
-just copied.
+Other `.json` or `.yaml` files will be merged by keys.
+
+Files with different extension will be just copied.
+
+## Potential use-cases
+
+- Versionable configuration packages (try out [demo config](https://github.com/lamartire/sharec/tree/master/packages/sharec-demo-config))
+- Create boilerplates, like `create-react-app` (see dead simple example [here](github.com/lamartire/sharec-react-app))
 
 ## Options
 
@@ -92,10 +98,3 @@ everything what happens inside of sharec flow.
   }
 }
 ```
-
-## Potential use-cases
-
-You can use sharec not only for configuration management, you can also use it for:
-
-- Create boilerplates, like `create-react-app`
-- Deliver other files to your projects

@@ -10,7 +10,7 @@ const rename = require('gulp-rename')
 const ENV = process.env.NODE_ENV || 'development'
 
 const data = {
-  getData: getData('src/data')
+  getData: getData('src/data'),
 }
 
 const classFromProp = (key, value) => {
@@ -26,10 +26,8 @@ gulp.task('pug', () => {
     .src('src/**/*.pug')
     .pipe(
       plumber({
-        errorHandler: plumberErrorHandler(
-          'Error was occurred during PUG compile'
-        )
-      })
+        errorHandler: plumberErrorHandler('Error was occurred during PUG compile'),
+      }),
     )
     .pipe(filter('src/pages/*'))
     .pipe(
@@ -37,22 +35,22 @@ gulp.task('pug', () => {
         basedir: 'src',
         pretty: ENV === 'production',
         locals: {
-          cn: props =>
+          cn: (props) =>
             Object.keys(props)
               .reduce((acc, key, i) => {
                 const className = classFromProp(key, props[key])
 
                 return className ? acc.concat(className) : acc
               }, [])
-              .join(' ')
+              .join(' '),
         },
-        data
-      })
+        data,
+      }),
     )
     .pipe(
       rename({
-        dirname: '.'
-      })
+        dirname: '.',
+      }),
     )
     .pipe(gulp.dest('dist'))
     .pipe(browserSync.stream())
