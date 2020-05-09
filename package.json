@@ -8,12 +8,10 @@
   "lint-staged": {
     "packages/**/*.js": [
       "eslint --fix",
-      "prettier --write",
-      "git add"
+      "prettier --write"
     ],
     "packages/**/*.{json,ya?ml,css,html,md}": [
-      "prettier --write",
-      "git add"
+      "prettier --write"
     ]
   },
   "husky": {
