@@ -1,6 +1,6 @@
-const path = require('path')
 const { getConfigPipe } = require('../strategies/pipes')
 const { writeFile, readFile } = require('../utils/std').fs
+const { join, dirname, basename } = require('../utils/std').path
 const { safeMakeDir } = require('../utils/fs')
 
 const writeConfigs = spinner => async input => {
@@ -10,14 +10,18 @@ const writeConfigs = spinner => async input => {
   spinner.frame('writing configuration')
 
   for (const config in configs) {
-    let targetConfigPath = path.join(targetPath, config)
-    const targetConfigBasename = path.basename(config)
+    let targetConfigPath = join(targetPath, config)
+    const targetConfigBasepath = dirname(targetConfigPath)
+    const targetConfigBasename = basename(config)
     const isPackageJson = targetConfigBasename === 'package.json'
     const isOverwritePackageJson = isPackageJson && overwrite
     const targetPipe = getConfigPipe(targetConfigPath)
     const upcomingConfig = configs[config]
 
     if (!upcomingConfig) continue
+
+    await safeMakeDir(targetConfigBasepath)
+
     if (!targetPipe) {
       await writeFile(targetConfigPath, upcomingConfig)
       continue
@@ -26,7 +30,7 @@ const writeConfigs = spinner => async input => {
     const { processor, alias } = targetPipe
 
     if (alias) {
-      targetConfigPath = path.join(path.dirname(targetConfigPath), alias)
+      targetConfigPath = join(dirname(targetConfigPath), alias)
     }
 
     // package.json can't be overwrited
@@ -41,7 +45,7 @@ const writeConfigs = spinner => async input => {
     try {
       currentConfig = await readFile(targetConfigPath, 'utf8')
     } catch (err) {
-      await safeMakeDir(path.dirname(targetConfigPath))
+      await safeMakeDir(dirname(targetConfigPath))
     }
 
     const mergedConfig = processor({
