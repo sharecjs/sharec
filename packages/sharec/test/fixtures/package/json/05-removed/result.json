@@ -9,7 +9,6 @@
     "clean-publish": "^1.1.2",
     "documentation": "^12.0.3",
     "husky": "^3.0.1",
-    "jest": "^24.8.0",
     "lint-staged": "^9.2.0",
     "rimraf": "^2.6.3",
     "size-limit": "^1.3.7",
@@ -22,14 +21,6 @@
   },
   "lint-staged": {
     "*.md": "yaspeller"
-  },
-  "jest": {
-    "testEnvironment": "node",
-    "coverageThreshold": {
-      "global": {
-        "statements": 100
-      }
-    }
   },
   "yaspeller": {
     "lang": "en",
