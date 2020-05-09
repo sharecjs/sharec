@@ -1,3 +1,9 @@
+# v2.1.1
+
+Fix:
+
+- Nested configs paths fix if target directory is not exist
+
 # v2.1.0
 
 Features:

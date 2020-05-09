@@ -26,5 +26,6 @@ module.exports = {
     join: (...args) => slash(path.join(...args)),
     resolve: (...args) => slash(path.resolve(...args)),
     basename: (...args) => slash(path.basename(...args)),
+    dirname: (...args) => slash(path.dirname(...args)),
   },
 }
