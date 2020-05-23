@@ -19,8 +19,6 @@ const readCache = (spinner) => async (input) => {
     .then(async (cachedFiles) => {
       if (cachedFiles.length === 0) return input
 
-      input.cache = {}
-
       for (const configPath of cachedFiles) {
         const configKey = configPath.replace(cacheBasePath, '').replace(/^\//, '')
         const cachedConfig = await readFile(configPath, 'utf8')

@@ -7,6 +7,8 @@ const readConfigs = require('./readConfigs')
 const readTargetPackage = require('./readTargetPackage')
 const readUpcomingPackage = require('./readUpcomingPackage')
 const readCache = require('./readCache')
+// Processing
+const mergeConfigs = require('./mergeConfigs')
 // Output
 const writeConfigs = require('./writeConfigs')
 const writeMeta = require('./writeMeta')
@@ -26,6 +28,8 @@ const steps = {
   isAlreadyInstalled,
   isDependantOfSharec,
   isIgnoresSharecConfigs,
+
+  mergeConfigs,
 
   readConfigs,
   readTargetPackage,
