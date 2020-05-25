@@ -1,8 +1,5 @@
 {
-  "extends": [
-    "stylelint-config-standard",
-    "stylelint-config-recess-order"
-  ],
+  "extends": ["stylelint-config-standard", "stylelint-config-recess-order"],
   "rules": {
     "declaration-block-trailing-semicolon": null,
     "block-closing-brace-newline-before": null,
@@ -10,10 +7,7 @@
     "at-rule-no-unknown": [
       false,
       {
-        "ignoreAtRules": [
-          "define-mixin",
-          "mixin"
-        ]
+        "ignoreAtRules": ["define-mixin", "mixin"]
       }
     ],
     "color-named": "never"

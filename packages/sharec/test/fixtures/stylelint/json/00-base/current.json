@@ -12,8 +12,5 @@
     ],
     "color-named": "never"
   },
-  "processors": [
-    "stylelint-my-processor",
-    ["some-other-processor", { "optionOne": true, "optionTwo": false }]
-  ]
+  "processors": ["stylelint-my-processor", ["some-other-processor", { "optionOne": true, "optionTwo": false }]]
 }

@@ -8,7 +8,6 @@ const writeConfigs = (spinner) => async (input) => {
   spinner.frame('writing configuration')
 
   for (const config in mergedConfigs) {
-    // creating target directories to avoid ENOENT errors
     await safeMakeDir(dirname(config))
     await writeFile(config, mergedConfigs[config])
   }

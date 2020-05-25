@@ -32,8 +32,6 @@ describe('steps > mergeConfigs > package', () => {
 
     const output = await mergeConfigs(spinner)(input)
 
-    expect(output.mergedConfigs).toEqual({
-      '/target/package.json': packageBaseFxt.result,
-    })
+    expect(output.mergedConfigs['/target/package.json']).toWraplessEqual(packageBaseFxt.result, { eol: false })
   })
 })

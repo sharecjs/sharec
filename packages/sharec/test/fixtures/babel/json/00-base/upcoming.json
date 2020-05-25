@@ -5,11 +5,7 @@
       {
         "modules": false,
         "targets": {
-          "browsers": [
-            "> 1%",
-            "last 2 versions",
-            "not ie > 0"
-          ]
+          "browsers": ["> 1%", "last 2 versions", "not ie > 0"]
         }
       }
     ]
@@ -24,10 +20,7 @@
   ],
   "env": {
     "test": {
-      "presets": [
-        "env",
-        "stage-2"
-      ]
+      "presets": ["env", "stage-2"]
     }
   }
 }

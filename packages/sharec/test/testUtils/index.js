@@ -35,7 +35,7 @@ function fixture(path, format) {
     return json8.parse(file, { map: true })
   }
 
-  return file.replace(/\n$/, '')
+  return file
 }
 
 /**

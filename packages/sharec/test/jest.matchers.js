@@ -5,10 +5,16 @@ expect.extend({
    * There are a lot of different ways to do it correct, but in current moment -
    * jest-matcher is the best and simple solution
    */
-  toWraplessEqual(rawReceived, rawExpected) {
-    const normalizeWraps = (str) => str.replace(/(\r\n|\n\r|\r|\n)/g, '\n').replace(/\n$/, '')
-    const normalizedReceived = normalizeWraps(rawReceived)
-    const normalizedExpected = normalizeWraps(rawExpected)
+  toWraplessEqual(rawReceived, rawExpected, options = {}) {
+    const normalizeWraps = (str) => str.replace(/(\r\n|\n\r|\r|\n)/gm, '\n')
+
+    let normalizedReceived = normalizeWraps(rawReceived)
+    let normalizedExpected = normalizeWraps(rawExpected)
+
+    if (options.eol === false) {
+      normalizedReceived = normalizedReceived.replace(/\n$/, '')
+      normalizedExpected = normalizedExpected.replace(/\n$/, '')
+    }
 
     expect(normalizedReceived).toEqual(normalizedExpected)
 

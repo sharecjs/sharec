@@ -56,9 +56,10 @@ async function sharec(targetProcess) {
     logger.wrap(steps.readConfigs(spinner), 'readConfigs'),
     logger.wrap(steps.readCache(spinner), 'readCache'),
     logger.wrap(steps.mergeConfigs(spinner), 'mergeConfigs'),
-    logger.wrap(steps.writeConfigs(spinner, 'writeConfigs')),
+    logger.wrap(steps.insertMeta(spinner), 'insertMeta'),
+    logger.wrap(steps.insertEOL(spinner), 'insertEOL'),
     logger.wrap(steps.writeCache(spinner), 'writeCache'),
-    logger.wrap(steps.writeMeta(spinner), 'writeMeta'),
+    logger.wrap(steps.writeConfigs(spinner, 'writeConfigs')),
   )
 
   try {

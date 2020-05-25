@@ -5,7 +5,7 @@ const sharec = require('../')
 
 describe('sharec > install nested configs', () => {
   const packageFxt = fixtures('package/json/01-install')
-  const indexFxt = 'console.log("hello world")'
+  const indexFxt = 'console.log("hello world")\n'
 
   const targetProcess = {
     argv: [null, null, 'install'],

@@ -10,11 +10,7 @@
     "react": "16.0.0"
   },
   "lint-staged": {
-    "src/**/*.{js,jsx,json}": [
-      "eslint --fix",
-      "prettier --write",
-      "git add"
-    ]
+    "src/**/*.{js,jsx,json}": ["eslint --fix", "prettier --write", "git add"]
   },
   "husky": {
     "hooks": {
@@ -34,14 +30,8 @@
   },
   "eslintConfig": {
     "parser": "babel-eslint",
-    "extends": [
-      "standard",
-      "prettier",
-      "prettier/standard"
-    ],
-    "plugins": [
-      "prettier"
-    ],
+    "extends": ["standard", "prettier", "prettier/standard"],
+    "plugins": ["prettier"],
     "env": {
       "jest": true,
       "node": true
@@ -57,9 +47,7 @@
       ]
     }
   },
-  "eslintIgnore": [
-    "/node_modules"
-  ],
+  "eslintIgnore": ["/node_modules"],
   "devDependencies": {
     "@commitlint/cli": "^7.6.1",
     "@commitlint/config-conventional": "^7.6.0",

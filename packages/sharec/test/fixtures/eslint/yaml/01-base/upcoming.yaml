@@ -20,3 +20,4 @@ parserOptions:
   ecmaFeatures:
     spread: true
   sourceType: module
+

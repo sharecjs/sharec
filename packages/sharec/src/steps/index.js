@@ -9,9 +9,10 @@ const readUpcomingPackage = require('./readUpcomingPackage')
 const readCache = require('./readCache')
 // Processing
 const mergeConfigs = require('./mergeConfigs')
+const insertEOL = require('./insertEOL')
 // Output
 const writeConfigs = require('./writeConfigs')
-const writeMeta = require('./writeMeta')
+const insertMeta = require('./insertMeta')
 const writeCache = require('./writeCache')
 
 const composeSteps = (...steps) => async (input) => {
@@ -30,6 +31,8 @@ const steps = {
   isIgnoresSharecConfigs,
 
   mergeConfigs,
+  insertEOL,
+  insertMeta,
 
   readConfigs,
   readTargetPackage,
@@ -37,7 +40,6 @@ const steps = {
   readCache,
 
   writeConfigs,
-  writeMeta,
   writeCache,
 }
 

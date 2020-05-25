@@ -3,51 +3,42 @@ const { join } = require('../utils/std').path
 const { find } = require('../utils/fs')
 const { InternalError, CAUSES } = require('../errors')
 
-const readConfigs = (spinner) => (input) => {
+const readConfigs = (spinner) => async (input) => {
   spinner.frame('reading upcoming configuration files')
 
   const configsPath = join(input.configPath, '/configs')
 
-  return find(configsPath, '**/*')
-    .then((configsPaths) => {
-      const withoutLocks = configsPaths.filter((config) => !/(\.|-)lock/.test(config))
+  try {
+    const configsPaths = await find(configsPath, '**/*')
+    const withoutLocks = configsPaths.filter((config) => !/(\.|-)lock/.test(config))
+    const readedConfigs = {}
 
-      return withoutLocks
-    })
-    .then(async (configsPaths) => {
-      const readedConfigs = {}
+    for (const config of withoutLocks) {
+      spinner.frame(`reading ${config}`)
 
-      for (const config of configsPaths) {
-        spinner.frame(`reading ${config}`)
+      const configKey = config.replace(configsPath, '').replace(/^\//, '')
 
-        const configContent = await readFile(config, 'utf8')
-        const configKey = config.replace(configsPath, '').replace(/^\//, '')
+      readedConfigs[configKey] = await readFile(config, 'utf8')
+    }
 
-        readedConfigs[configKey] = configContent
-      }
+    spinner.frame('all files were readed')
 
-      return readedConfigs
-    })
-    .then((readedConfigs) => {
-      spinner.frame('all files were readed')
+    input.configs = readedConfigs
 
-      return {
-        ...input,
-        configs: readedConfigs,
-      }
-    })
-    .catch((err) => {
-      if (err.code !== 'ENOENT') {
-        spinner.fail('Config files were not readed due unexpected error')
-
-        throw err
-      }
-      if (err.message.includes('readdir')) {
-        throw new InternalError(CAUSES.CONFIGS_NOT_FOUND.message(configsPath), CAUSES.CONFIGS_NOT_FOUND.symbol)
-      }
+    return input
+  } catch (err) {
+    if (err.code !== 'ENOENT') {
+      spinner.fail('Config files were not readed due unexpected error')
 
       throw err
-    })
+    }
+
+    if (err.message.includes('readdir')) {
+      throw new InternalError(CAUSES.CONFIGS_NOT_FOUND.message(configsPath), CAUSES.CONFIGS_NOT_FOUND.symbol)
+    }
+
+    throw err
+  }
 }
 
 module.exports = readConfigs

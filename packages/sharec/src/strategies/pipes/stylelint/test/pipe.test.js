@@ -6,7 +6,9 @@ describe('pipes > stylelint > pipe', () => {
     const stylelintBaseFxt = fixtures('stylelint/json/00-base')
 
     it('should merge configs', () => {
-      expect(pipe('.stylelint')(stylelintBaseFxt)).toWraplessEqual(stylelintBaseFxt.result)
+      expect(pipe('.stylelint')(stylelintBaseFxt)).toWraplessEqual(stylelintBaseFxt.result, {
+        eol: false,
+      })
     })
   })
 })

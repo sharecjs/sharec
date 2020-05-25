@@ -44,12 +44,10 @@ describe('steps > mergeConfigs > configs', () => {
 
     const output = await mergeConfigs(spinner)(input)
 
-    expect(output.mergedConfigs).toEqual({
-      '/target/.eslintrc': eslintBaseFxt.result,
-      '/target/.babelrc': babelBaseFxt.result,
-      '/target/.npmignore': npmignoreBaseFxt.result,
-      '/target/.gitignore': gitignoreBaseFxt.result,
-      '/target/.yaspellerrc': yaspellerBaseFxt.result,
-    })
+    expect(output.mergedConfigs['/target/.eslintrc']).toWraplessEqual(eslintBaseFxt.result, { eol: false })
+    expect(output.mergedConfigs['/target/.babelrc']).toWraplessEqual(babelBaseFxt.result, { eol: false })
+    expect(output.mergedConfigs['/target/.npmignore']).toWraplessEqual(npmignoreBaseFxt.result, { eol: false })
+    expect(output.mergedConfigs['/target/.gitignore']).toWraplessEqual(gitignoreBaseFxt.result, { eol: false })
+    expect(output.mergedConfigs['/target/.yaspellerrc']).toWraplessEqual(yaspellerBaseFxt.result, { eol: false })
   })
 })
