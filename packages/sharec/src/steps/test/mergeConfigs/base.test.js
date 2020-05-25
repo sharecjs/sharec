@@ -1,8 +1,8 @@
 const { vol } = require('memfs')
 const { createFakeSpinner } = require('testUtils')
-const writeConfigs = require('../../writeConfigs')
+const mergeConfigs = require('../../mergeConfigs')
 
-describe('steps > writeConfigs > base', () => {
+describe('steps > mergeConfigs > base', () => {
   beforeEach(() => {
     vol.reset()
   })
@@ -23,6 +23,7 @@ describe('steps > writeConfigs > base', () => {
     const input = {
       targetPath: '/target',
       configs: upcomingConfigs,
+      mergedConfigs: {},
       options: {},
       upcomingPackage,
     }
@@ -31,8 +32,10 @@ describe('steps > writeConfigs > base', () => {
     }
     vol.fromJSON(dir, '/configs')
 
-    await writeConfigs(spinner)(input)
+    const output = await mergeConfigs(spinner)(input)
 
-    expect(vol.readFileSync('/target/.editorconfig', 'utf8')).toWraplessEqual(upcomingConfigs['.editorconfig'])
+    expect(output.mergedConfigs).toEqual({
+      '/target/.editorconfig': upcomingConfigs['.editorconfig'],
+    })
   })
 })

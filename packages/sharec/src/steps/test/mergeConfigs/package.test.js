@@ -1,8 +1,8 @@
 const { fixtures, createFakeSpinner } = require('testUtils')
 const { vol } = require('memfs')
-const writeConfigs = require('../../writeConfigs')
+const mergeConfigs = require('../../mergeConfigs')
 
-describe('steps > writeConfigs > package', () => {
+describe('steps > mergeConfigs > package', () => {
   const packageBaseFxt = fixtures('package/json/00-base')
 
   beforeEach(() => {
@@ -21,6 +21,7 @@ describe('steps > writeConfigs > package', () => {
     const input = {
       targetPath: '/target',
       configs: upcomingConfigs,
+      mergedConfigs: {},
       options: {},
       upcomingPackage,
     }
@@ -29,8 +30,8 @@ describe('steps > writeConfigs > package', () => {
     }
     vol.fromJSON(dir, '/configs')
 
-    await writeConfigs(spinner)(input)
+    const output = await mergeConfigs(spinner)(input)
 
-    expect(vol.readFileSync('/target/package.json', 'utf8')).toWraplessEqual(packageBaseFxt.result)
+    expect(output.mergedConfigs['/target/package.json']).toWraplessEqual(packageBaseFxt.result, { eol: false })
   })
 })

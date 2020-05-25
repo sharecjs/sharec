@@ -7,9 +7,12 @@ const readConfigs = require('./readConfigs')
 const readTargetPackage = require('./readTargetPackage')
 const readUpcomingPackage = require('./readUpcomingPackage')
 const readCache = require('./readCache')
+// Processing
+const mergeConfigs = require('./mergeConfigs')
+const insertEOL = require('./insertEOL')
 // Output
 const writeConfigs = require('./writeConfigs')
-const writeMeta = require('./writeMeta')
+const insertMeta = require('./insertMeta')
 const writeCache = require('./writeCache')
 
 const composeSteps = (...steps) => async (input) => {
@@ -27,13 +30,16 @@ const steps = {
   isDependantOfSharec,
   isIgnoresSharecConfigs,
 
+  mergeConfigs,
+  insertEOL,
+  insertMeta,
+
   readConfigs,
   readTargetPackage,
   readUpcomingPackage,
   readCache,
 
   writeConfigs,
-  writeMeta,
   writeCache,
 }
 

@@ -17,6 +17,7 @@ describe('steps > readCache', () => {
     }
     const input = {
       targetPath: '/target',
+      cache: {},
       targetPackage,
     }
     const dir = {
@@ -46,7 +47,7 @@ describe('steps > readCache', () => {
     }
     const input = {
       targetPath: '/target',
-      cache: null,
+      cache: {},
       targetPackage,
     }
     const dir = {
@@ -56,7 +57,7 @@ describe('steps > readCache', () => {
 
     const output = await readCache(spinner)(input)
 
-    expect(output.cache).toBeNull()
+    expect(output.cache).toEqual({})
   })
 
   it('should keep cache empty if previous installed cache is not contain any file', async () => {
@@ -69,7 +70,7 @@ describe('steps > readCache', () => {
     }
     const input = {
       targetPath: '/target',
-      cache: null,
+      cache: {},
       targetPackage,
     }
     const dir = {
@@ -80,6 +81,6 @@ describe('steps > readCache', () => {
 
     const output = await readCache(spinner)(input)
 
-    expect(output.cache).toBeNull()
+    expect(output.cache).toEqual({})
   })
 })

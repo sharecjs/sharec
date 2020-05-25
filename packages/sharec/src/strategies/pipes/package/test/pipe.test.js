@@ -6,7 +6,9 @@ describe('pipes > package > pipe', () => {
     const packageBaseFxt = fixtures('package/json/00-base')
 
     it('should merge configs', () => {
-      expect(pipe('package.json')(packageBaseFxt)).toWraplessEqual(packageBaseFxt.result)
+      expect(pipe('package.json')(packageBaseFxt)).toWraplessEqual(packageBaseFxt.result, {
+        eol: false,
+      })
     })
   })
 })

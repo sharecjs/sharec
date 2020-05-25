@@ -1,3 +1,14 @@
+# v2.2.0
+
+This release includes new step types - processors. These steps transforms data
+passed through them. It is better solution for any configuration post-procession,
+like meta injecting or formatting.
+
+Features:
+
+- `writeMeta` now is pure step
+- Inserting EOL wrap to each file (now it is not configurable)
+
 # v2.1.2
 
 Chore:

@@ -1,8 +1,8 @@
 const { fixtures, createFakeSpinner } = require('testUtils')
 const { vol } = require('memfs')
-const writeConfigs = require('../../writeConfigs')
+const mergeConfigs = require('../../mergeConfigs')
 
-describe('steps > writeConfigs > configs', () => {
+describe('steps > mergeConfigs > configs', () => {
   const eslintBaseFxt = fixtures('eslint/json/01-base')
   const babelBaseFxt = fixtures('babel/json/00-base')
   const npmignoreBaseFxt = fixtures('npmignore/lines/00-base')
@@ -29,6 +29,7 @@ describe('steps > writeConfigs > configs', () => {
     const input = {
       targetPath: '/target',
       configs: upcomingConfigs,
+      mergedConfigs: {},
       options: {},
       upcomingPackage,
     }
@@ -41,12 +42,12 @@ describe('steps > writeConfigs > configs', () => {
     }
     vol.fromJSON(dir, '/configs')
 
-    await writeConfigs(spinner)(input)
+    const output = await mergeConfigs(spinner)(input)
 
-    expect(vol.readFileSync('/target/.eslintrc', 'utf8')).toWraplessEqual(eslintBaseFxt.result)
-    expect(vol.readFileSync('/target/.babelrc', 'utf8')).toWraplessEqual(babelBaseFxt.result)
-    expect(vol.readFileSync('/target/.npmignore', 'utf8')).toWraplessEqual(npmignoreBaseFxt.result)
-    expect(vol.readFileSync('/target/.gitignore', 'utf8')).toWraplessEqual(gitignoreBaseFxt.result)
-    expect(vol.readFileSync('/target/.yaspellerrc', 'utf8')).toWraplessEqual(yaspellerBaseFxt.result)
+    expect(output.mergedConfigs['/target/.eslintrc']).toWraplessEqual(eslintBaseFxt.result, { eol: false })
+    expect(output.mergedConfigs['/target/.babelrc']).toWraplessEqual(babelBaseFxt.result, { eol: false })
+    expect(output.mergedConfigs['/target/.npmignore']).toWraplessEqual(npmignoreBaseFxt.result, { eol: false })
+    expect(output.mergedConfigs['/target/.gitignore']).toWraplessEqual(gitignoreBaseFxt.result, { eol: false })
+    expect(output.mergedConfigs['/target/.yaspellerrc']).toWraplessEqual(yaspellerBaseFxt.result, { eol: false })
   })
 })

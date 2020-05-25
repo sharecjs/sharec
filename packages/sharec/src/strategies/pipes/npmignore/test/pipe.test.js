@@ -5,6 +5,8 @@ describe('strategies > pipes > npmignore', () => {
   const npmignoreBaseFxt = fixtures('npmignore/lines/00-base')
 
   it('should process npmignore configs', () => {
-    expect(pipe('npmignore')(npmignoreBaseFxt)).toWraplessEqual(npmignoreBaseFxt.result)
+    expect(pipe('npmignore')(npmignoreBaseFxt)).toWraplessEqual(npmignoreBaseFxt.result, {
+      eol: false,
+    })
   })
 })

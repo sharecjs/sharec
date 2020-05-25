@@ -6,7 +6,9 @@ describe('strategies > pipes > eslint > pipe', () => {
     const defaultFxt = fixtures('default/json/00-base')
 
     it('should merge configs', () => {
-      expect(pipe('foo.json')(defaultFxt)).toWraplessEqual(defaultFxt.result)
+      expect(pipe('foo.json')(defaultFxt)).toWraplessEqual(defaultFxt.result, {
+        eol: false,
+      })
     })
   })
 
@@ -14,8 +16,12 @@ describe('strategies > pipes > eslint > pipe', () => {
     const defaultFxt = fixtures('default/yaml/00-base')
 
     it('should merge configs', () => {
-      expect(pipe('foo.yaml')(defaultFxt)).toWraplessEqual(defaultFxt.result)
-      expect(pipe('foo.yml')(defaultFxt)).toWraplessEqual(defaultFxt.result)
+      expect(pipe('foo.yaml')(defaultFxt)).toWraplessEqual(defaultFxt.result, {
+        eol: false,
+      })
+      expect(pipe('foo.yml')(defaultFxt)).toWraplessEqual(defaultFxt.result, {
+        eol: false,
+      })
     })
   })
 })

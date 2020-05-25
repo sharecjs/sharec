@@ -6,7 +6,9 @@ describe('pipes > lintStaged > pipe', () => {
     const lintStagedBaseFxt = fixtures('lintStaged/json/00-base')
 
     it('should merge configs', () => {
-      expect(pipe('.lintstagedrc')(lintStagedBaseFxt)).toWraplessEqual(lintStagedBaseFxt.result)
+      expect(pipe('.lintstagedrc')(lintStagedBaseFxt)).toWraplessEqual(lintStagedBaseFxt.result, {
+        eol: false,
+      })
     })
   })
 })
