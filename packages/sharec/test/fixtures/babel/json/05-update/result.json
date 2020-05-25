@@ -5,16 +5,28 @@
       {
         "modules": true,
         "targets": {
-          "browsers": ["> 1%", "last 2 versions"]
+          "browsers": [
+            "> 1%",
+            "last 2 versions"
+          ]
         }
       }
     ]
   ],
-  "plugins": ["syntax-dynamic-import"],
+  "plugins": [
+    "syntax-dynamic-import"
+  ],
   "env": {
     "test": {
-      "presets": ["stage-3", "stage-2"]
+      "presets": [
+        "stage-3",
+        "stage-2"
+      ]
     }
   },
-  "ignore": ["foo", "bar"]
+  "ignore": [
+    "foo",
+    "bar"
+  ]
 }
+

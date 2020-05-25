@@ -1,9 +1,16 @@
 {
   "lang": "en",
   "ignoreCapitalization": false,
-  "fileExtensions": ["bar"],
-  "excludeFiles": ["README-*.md", "CHANGELOG.md"],
-  "ignoreText": [" \\(by [^)]+\\)."],
+  "fileExtensions": [
+    "bar"
+  ],
+  "excludeFiles": [
+    "README-*.md",
+    "CHANGELOG.md"
+  ],
+  "ignoreText": [
+    " \\(by [^)]+\\)."
+  ],
   "dictionary": [
     "Async",
     "asyncGenerator",
@@ -16,3 +23,4 @@
     "generateAsync"
   ]
 }
+

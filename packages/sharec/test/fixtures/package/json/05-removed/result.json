@@ -25,10 +25,13 @@
   "yaspeller": {
     "lang": "en",
     "ignoreCapitalization": true,
-    "ignoreText": [" \\(by [^)]+\\)."]
+    "ignoreText": [
+      " \\(by [^)]+\\)."
+    ]
   },
   "sharec": {
     "config": "awesome-config",
     "version": "2.0.0"
   }
 }
+

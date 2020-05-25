@@ -49,10 +49,15 @@
   "eslintConfig": {
     "extends": "@logux/eslint-config/browser"
   },
-  "eslintIgnore": ["node_modules"],
+  "eslintIgnore": [
+    "node_modules"
+  ],
   "yaspeller": {
     "lang": "en",
     "ignoreCapitalization": true,
-    "ignoreText": [" \\(by [^)]+\\)."]
+    "ignoreText": [
+      " \\(by [^)]+\\)."
+    ]
   }
 }
+

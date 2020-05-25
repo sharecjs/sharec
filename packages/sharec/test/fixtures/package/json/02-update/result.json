@@ -44,9 +44,12 @@
       }
     }
   },
-  "eslintIgnore": ["node_modules"],
+  "eslintIgnore": [
+    "node_modules"
+  ],
   "sharec": {
     "config": "awesome-config",
     "version": "2.0.0"
   }
 }
+
