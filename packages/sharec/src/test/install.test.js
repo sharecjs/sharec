@@ -51,7 +51,7 @@ describe('sharec > install', () => {
     expect(vol.readFileSync('/target/.editorconfig', 'utf8')).toWraplessEqual('bar\n')
     expect(vol.readFileSync('/target/.gitignore', 'utf8')).toWraplessEqual(gitignoreFxt.result)
     expect(vol.readFileSync('/target/.npmignore', 'utf8')).toWraplessEqual(npmignoreFxt.result)
-    expect(vol.readFileSync('/target/package.json', 'utf8')).toEqual(packageFxt.result)
+    expect(vol.readFileSync('/target/package.json', 'utf8')).toWraplessEqual(packageFxt.result)
     expect(vol.readdirSync('/target/node_modules/.cache/sharec/awesome-config/1.0.0')).toHaveLength(6)
   })
 })
