@@ -1,7 +1,6 @@
-const path = require('path')
 const get = require('lodash/get')
-const slash = require('slash')
 const { readFile } = require('../utils/std').fs
+const { join } = require('../utils/std').path
 const { find } = require('../utils/fs')
 
 const readCache = (spinner) => async (input) => {
@@ -10,17 +9,20 @@ const readCache = (spinner) => async (input) => {
 
   if (!previousTargetMeta) return input
 
+  const { includeCache } = input.options
   const { config, version } = previousTargetMeta
-  const cacheBasePath = slash(path.join(targetPath, `node_modules/.cache/sharec/${config}/${version}`))
+  let cachePath = includeCache ? join(targetPath, '.sharec/.cache') : join(targetPath, 'node_modules/.cache/sharec')
+
+  cachePath = join(cachePath, `${config}/${version}`)
 
   spinner.frame(`reading cache for ${config}/${version}`)
 
-  return find(cacheBasePath, '**/*')
+  return find(cachePath, '**/*')
     .then(async (cachedFiles) => {
       if (cachedFiles.length === 0) return input
 
       for (const configPath of cachedFiles) {
-        const configKey = configPath.replace(cacheBasePath, '').replace(/^\//, '')
+        const configKey = configPath.replace(cachePath, '').replace(/^\//, '')
         const cachedConfig = await readFile(configPath, 'utf8')
 
         input.cache[configKey] = cachedConfig

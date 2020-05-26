@@ -73,6 +73,23 @@ Example:
 }
 ```
 
+**`--include-cache, -c`** - saves configuration cache in target project directory. It is very usefull,
+if you want always have ability to change configuration version in project without any problems.
+
+With this option, cache would be saved in `<project_path>/.sharec/.cache`, instead `node_modules`.
+
+Be sure, if you use this option, that `.sharec` directory is not ignored by git!
+
+Example:
+
+```
+{
+  "scripts": {
+    "postinstall": "sharec --include-cache"
+  }
+}
+```
+
 ## Ignoring configuration
 
 If you want to force upcoming `sharec` configs – just add `ignore` flat to your projects's `sharec` field:
