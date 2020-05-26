@@ -5,17 +5,24 @@ const { composeSteps, steps } = require('./steps')
 const { CAUSES, InternalError } = require('./errors')
 
 /**
- * @param {NodeJS.Process} targetProcess
+ * Main sharec entrance, accepts node process all files and configuration
+ * On any error will notify user and exit with status 1
+ * In other cases will exit with status 0, and notify user with informative
+ * message
+ * In the future, should be moved to sharec-core package, all CLI things
+ * should be isolated in sharec-cli package or just sharec
+ * @param {NodeJS.Process} targetProcess Node process
  * @returns {Promise<void>}
  */
 async function sharec(targetProcess) {
-  // Input options
+  // input options
   const { env } = targetProcess
   const { _, ...options } = minimist(targetProcess.argv.slice(2))
   const debugMode = env.DEBUG
   const silentMode = options.s || options.silent
   const disappearMode = options.d || options.disappear
   const overwriteMode = options.o || options.overwrite
+  const includeCacheMode = options.c || options['include-cache']
 
   // CLI utilities
   const spinner = createSpinner({
@@ -27,17 +34,21 @@ async function sharec(targetProcess) {
     silent: !debugMode,
   })
 
-  // Steps preparation and definition
+  // steps preparation and definition
   const targetPath = targetProcess.env.INIT_CWD
   const configPath = pwd().stdout
   const input = {
     targetPath,
     configPath,
+    configs: {},
+    mergedConfigs: {},
+    cache: {},
     options: {
       silent: silentMode,
       overwrite: overwriteMode,
       disappear: disappearMode,
       debug: debugMode,
+      includeCache: includeCacheMode,
     },
   }
 
@@ -52,9 +63,11 @@ async function sharec(targetProcess) {
     logger.wrap(steps.isIgnoresSharecConfigs(spinner), 'isIgnoresSharecConfigs'),
     logger.wrap(steps.readConfigs(spinner), 'readConfigs'),
     logger.wrap(steps.readCache(spinner), 'readCache'),
-    logger.wrap(steps.writeConfigs(spinner, 'writeConfigs')),
+    logger.wrap(steps.mergeConfigs(spinner), 'mergeConfigs'),
+    logger.wrap(steps.insertMeta(spinner), 'insertMeta'),
+    logger.wrap(steps.insertEOL(spinner), 'insertEOL'),
     logger.wrap(steps.writeCache(spinner), 'writeCache'),
-    logger.wrap(steps.writeMeta(spinner), 'writeMeta'),
+    logger.wrap(steps.writeConfigs(spinner, 'writeConfigs')),
   )
 
   try {
@@ -62,7 +75,6 @@ async function sharec(targetProcess) {
 
     logger.log('final input\n', finalInput)
     spinner.succeed('configuration was installed')
-
     targetProcess.exit(0)
   } catch (err) {
     if (!(err instanceof InternalError)) {
@@ -71,6 +83,7 @@ async function sharec(targetProcess) {
       targetProcess.exit(1)
     }
 
+    // errors which can be handled
     switch (err.cause) {
       case CAUSES.IS_DEPENDANT_OF_SHAREC.symbol:
       case CAUSES.IS_IGNORES_SHAREC.symbol:
@@ -79,6 +92,7 @@ async function sharec(targetProcess) {
         spinner.succeed(err.message)
         break
       default:
+        // unhadled internal errors
         spinner.fail(err.message)
         targetProcess.exit(1)
     }

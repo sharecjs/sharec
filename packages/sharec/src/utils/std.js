@@ -22,6 +22,7 @@ module.exports = {
     removeFile,
   },
 
+  // replacement of standard path utilities, but with slashes unification
   path: {
     join: (...args) => slash(path.join(...args)),
     resolve: (...args) => slash(path.resolve(...args)),

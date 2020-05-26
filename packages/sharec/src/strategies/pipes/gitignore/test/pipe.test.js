@@ -5,6 +5,8 @@ describe('strategies > pipes > gitignore', () => {
   const gitignoreBaseFxt = fixtures('gitignore/lines/00-base')
 
   it('should process gitignore configs', () => {
-    expect(pipe('gitignore')(gitignoreBaseFxt)).toWraplessEqual(gitignoreBaseFxt.result)
+    expect(pipe('gitignore')(gitignoreBaseFxt)).toWraplessEqual(gitignoreBaseFxt.result, {
+      eol: false,
+    })
   })
 })

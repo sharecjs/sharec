@@ -17,6 +17,8 @@ describe('steps > readCache', () => {
     }
     const input = {
       targetPath: '/target',
+      cache: {},
+      options: {},
       targetPackage,
     }
     const dir = {
@@ -46,7 +48,8 @@ describe('steps > readCache', () => {
     }
     const input = {
       targetPath: '/target',
-      cache: null,
+      cache: {},
+      options: {},
       targetPackage,
     }
     const dir = {
@@ -56,7 +59,7 @@ describe('steps > readCache', () => {
 
     const output = await readCache(spinner)(input)
 
-    expect(output.cache).toBeNull()
+    expect(output.cache).toEqual({})
   })
 
   it('should keep cache empty if previous installed cache is not contain any file', async () => {
@@ -69,7 +72,8 @@ describe('steps > readCache', () => {
     }
     const input = {
       targetPath: '/target',
-      cache: null,
+      cache: {},
+      options: {},
       targetPackage,
     }
     const dir = {
@@ -80,6 +84,39 @@ describe('steps > readCache', () => {
 
     const output = await readCache(spinner)(input)
 
-    expect(output.cache).toBeNull()
+    expect(output.cache).toEqual({})
+  })
+
+  it('should read cached configs from .sharec/.cache if includeCache option is passed', async () => {
+    const spinner = createFakeSpinner()
+    const targetPackage = {
+      sharec: {
+        config: 'awesome-config',
+        version: '0.0.0',
+      },
+    }
+    const input = {
+      targetPath: '/target',
+      cache: {},
+      options: {
+        includeCache: true,
+      },
+      targetPackage,
+    }
+    const dir = {
+      '/target/package.json': JSON.stringify(targetPackage),
+      '/target/.sharec/.cache/awesome-config/0.0.0/.eslintrc': 'foo',
+      '/target/.sharec/.cache/awesome-config/0.0.0/.editorconfig': 'bar',
+      '/target/.sharec/.cache/awesome-config/0.0.0/.babelrc': 'baz',
+    }
+    vol.fromJSON(dir, '/configs')
+
+    const output = await readCache(spinner)(input)
+
+    expect(output.cache).toEqual({
+      '.eslintrc': 'foo',
+      '.editorconfig': 'bar',
+      '.babelrc': 'baz',
+    })
   })
 })

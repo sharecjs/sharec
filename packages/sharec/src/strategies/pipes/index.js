@@ -1,6 +1,7 @@
 const omit = require('lodash/omit')
 const { basename } = require('../../utils/std').path
 
+// all pipes mapping
 const pipes = {
   babel: require('./babel/pipe'),
   browserslist: require('./browserslist/pipe'),
@@ -13,8 +14,18 @@ const pipes = {
   yaspeller: require('./yaspeller/pipe'),
 }
 
+// pipes for configs which not have any specific strategy
 const fallbackPipes = [require('./default/pipe')]
 
+/**
+ * Returns pipe for specific configuration file by its name
+ * If pipe is not exist - tries to resolve default pipe
+ * If default pipe is not exist too - returns null
+ * @param {String} configPath
+ * @returns {Object|null} result
+ * @property {Function} result.processor Configuration processor function
+ * @property {String} [result.alias] Configuration file name after write
+ */
 const getConfigPipe = (configPath) => {
   const configFilename = basename(configPath)
   const targetPipeKey = Object.keys(pipes).find((key) => !!pipes[key].pipe(configFilename))
@@ -29,6 +40,14 @@ const getConfigPipe = (configPath) => {
   }
 }
 
+/**
+ * Trying to find default pipe for given configuration file
+ * If it is not exist - returns null
+ * @param {String} configPath
+ * @returns {Object|null} result
+ * @property {Function} result.processor Configuration processor function
+ * @property {String} [result.alias] Configuration file name after write
+ */
 const getFallbackConfigPipe = (configPath) => {
   const configFilename = basename(configPath)
   const targetPipe = fallbackPipes.find((pipe) => !!pipe.pipe(configFilename))
