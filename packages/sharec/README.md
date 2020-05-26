@@ -78,6 +78,8 @@ if you want always have ability to change configuration version in project witho
 
 With this option, cache would be saved in `<project_path>/.sharec/.cache`, instead `node_modules`.
 
+Especially this feature can be usefull if you are using package manager which do not make `node_modules`.
+
 Be sure, if you use this option, that `.sharec` directory is not ignored by git!
 
 Example:

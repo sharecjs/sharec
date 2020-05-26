@@ -8,6 +8,7 @@ Features:
 
 - `writeMeta` now is pure step
 - Inserting EOL wrap to each file (now it is not configurable)
+- Add `--include-cache` option for storing configuration cache outside of `node_modules`
 
 # v2.1.2
 
