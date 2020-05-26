@@ -3,7 +3,9 @@ const { makeDir, readDir, lstat } = require('./std').fs
 const { join } = require('../utils/std').path
 
 /**
- * @param {String} path
+ * Makes directory with standard makeDir, but do not throws
+ * any exceptions
+ * @param {String} path Path to new directory
  * @returns {Promise<void>}
  */
 const safeMakeDir = async (path) => {
@@ -14,6 +16,16 @@ const safeMakeDir = async (path) => {
   } catch (err) {}
 }
 
+/**
+ * Find all files by given pattern in all directories located by
+ * given path
+ * @example
+ * await find('.', '*') // will find all files in current dir
+ * await find('.', '*.js') // will find all *.js files in current dir
+ * @param {String} path Target path
+ * @param {String} pattern Matching pattern
+ * @returns {Promise<Array<String>>}
+ */
 const find = async (path, pattern) => {
   const result = []
   const subresult = await readDir(path)
@@ -33,6 +45,7 @@ const find = async (path, pattern) => {
       continue
     }
 
+    // recursive search in nested directories
     const subFiles = await find(fullFilePath, pattern)
 
     result.push(...subFiles)
