@@ -12,15 +12,37 @@ const writeConfigs = require('./writeConfigs')
 const writeMeta = require('./writeMeta')
 const writeCache = require('./writeCache')
 
-const composeSteps = (...steps) => async (input) => {
-  let lastInput = input
+/**
+ * @typedef {Object} Input
+ * @property {String} targetPath Target project path
+ * @property {String} configPath Upcoming configuration path
+ * @property {Object} options Different options from CLI
+ * @property {Boolean} options.silent Disables all messages from sharec
+ * @property {Boolean} options.overwrite Forcily replaces all configs by new ones
+ * @property {Boolean} options.disappeara Do not write cache and sharec meta to target project
+ * @property {Boolean} options.debug Enables debug messages
+ */
 
-  for (const step of steps) {
-    lastInput = await step(lastInput)
+/**
+ * Composes steps in one function
+ * Executes each step and pass result to the next one
+ * @param {Array<Function>} steps Steps functions
+ * @returns {Function}
+ */
+const composeSteps = (...steps) =>
+  /**
+   * @param {Input} input
+   * @returns {Input}
+   */
+  async (input) => {
+    let lastInput = input
+
+    for (const step of steps) {
+      lastInput = await step(lastInput)
+    }
+
+    return lastInput
   }
-
-  return lastInput
-}
 
 const steps = {
   isAlreadyInstalled,
