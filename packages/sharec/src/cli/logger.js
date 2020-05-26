@@ -1,5 +1,17 @@
 const { bold } = require('chalk')
 
+/**
+ * @typedef {Object} Logger
+ */
+
+/**
+ * Creates logger for debug puporses
+ * Can be created with custom prefix for next problem scope determining
+ * @param {Object} params
+ * @param {String} [params.prefix] Prefix which would append to each logger message
+ * @param {Boolean} params.silent If silent is truthy - logger will not print any message
+ * @returns {Logger}
+ */
 const createLogger = ({ prefix = '', silent }) => {
   const logPrefixParts = ['sharec', ':']
 
@@ -10,17 +22,37 @@ const createLogger = ({ prefix = '', silent }) => {
   const logPrefix = bold(logPrefixParts.join(''))
 
   const logger = {
-    wrap: (fn, fnId = '') => (...params) => {
-      if (silent) return fn(...params)
-      if (params.length === 0) return fn(...params)
+    /**
+     * Wraps function with logger by special ID
+     * Usefull in cases when we need to see all input and output parameters from function
+     * @memberof Logger
+     * @param {Function} fn Any function
+     * @param {String} [fnId] Function name for anonymous functions logging
+     * @returns {Function}
+     */
+    wrap: (fn, fnId = '') =>
+      /**
+       * @memberof Logger
+       * @param {Array<*>} params Any arguments for logging
+       * @returns {*} Result of given function execution
+       */
+      (...params) => {
+        if (silent) return fn(...params)
+        if (params.length === 0) return fn(...params)
 
-      params.forEach((param, i) => {
-        console.dir(logPrefix, bold(`${fn.name || fnId}(arg[${i}]): \n`), param)
-      })
+        params.forEach((param, i) => {
+          console.dir(logPrefix, bold(`${fn.name || fnId}(arg[${i}]): \n`), param)
+        })
 
-      return fn(...params)
-    },
+        return fn(...params)
+      },
 
+    /**
+     * Uses for logging like common console.log, but from special logger
+     * @memberof Logger
+     * @param {Array<*>} entries Any parameters which would be logged
+     * @returns {void}
+     */
     log: (...entries) => {
       if (silent) return
 
