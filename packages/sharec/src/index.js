@@ -5,11 +5,17 @@ const { composeSteps, steps } = require('./steps')
 const { CAUSES, InternalError } = require('./errors')
 
 /**
- * @param {NodeJS.Process} targetProcess
+ * Main sharec entrance, accepts node process all files and configuration
+ * On any error will notify user and exit with status 1
+ * In other cases will exit with status 0, and notify user with informative
+ * message
+ * In the future, should be moved to sharec-core package, all CLI things
+ * should be isolated in sharec-cli package or just sharec
+ * @param {NodeJS.Process} targetProcess Node process
  * @returns {Promise<void>}
  */
 async function sharec(targetProcess) {
-  // Input options
+  // input options
   const { env } = targetProcess
   const { _, ...options } = minimist(targetProcess.argv.slice(2))
   const debugMode = env.DEBUG
@@ -27,7 +33,7 @@ async function sharec(targetProcess) {
     silent: !debugMode,
   })
 
-  // Steps preparation and definition
+  // steps preparation and definition
   const targetPath = targetProcess.env.INIT_CWD
   const configPath = pwd().stdout
   const input = {
@@ -75,6 +81,7 @@ async function sharec(targetProcess) {
       targetProcess.exit(1)
     }
 
+    // errors which can be handled
     switch (err.cause) {
       case CAUSES.IS_DEPENDANT_OF_SHAREC.symbol:
       case CAUSES.IS_IGNORES_SHAREC.symbol:
@@ -83,6 +90,7 @@ async function sharec(targetProcess) {
         spinner.succeed(err.message)
         break
       default:
+        // unhadled internal errors
         spinner.fail(err.message)
         targetProcess.exit(1)
     }
