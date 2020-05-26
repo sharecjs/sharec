@@ -22,6 +22,7 @@ async function sharec(targetProcess) {
   const silentMode = options.s || options.silent
   const disappearMode = options.d || options.disappear
   const overwriteMode = options.o || options.overwrite
+  const includeCacheMode = options.c || options['include-cache']
 
   // CLI utilities
   const spinner = createSpinner({
@@ -47,6 +48,7 @@ async function sharec(targetProcess) {
       overwrite: overwriteMode,
       disappear: disappearMode,
       debug: debugMode,
+      includeCache: includeCacheMode,
     },
   }
 

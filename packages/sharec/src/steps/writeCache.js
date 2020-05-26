@@ -5,19 +5,21 @@ const { safeMakeDir } = require('../utils/fs')
 const writeCache = (spinner) => async (input) => {
   const { upcomingPackage, configs, targetPath, options } = input
   const { name, version } = upcomingPackage
-  const { disappear, overwrite } = options
+  const { disappear, overwrite, includeCache } = options
 
   if (disappear || overwrite) return input
 
   spinner.frame(`writing cache for ${name}/${version}`)
 
-  const baseCachePath = join(targetPath, `node_modules/.cache/sharec/${name}/${version}`)
+  let cachePath = includeCache ? join(targetPath, '.sharec/.cache') : join(targetPath, 'node_modules/.cache/sharec')
 
-  await safeMakeDir(baseCachePath)
+  cachePath = join(cachePath, `${name}/${version}`)
+
+  await safeMakeDir(cachePath)
 
   for (const config in configs) {
-    await safeMakeDir(join(baseCachePath, dirname(config)))
-    await writeFile(join(baseCachePath, config), configs[config])
+    await safeMakeDir(join(cachePath, dirname(config)))
+    await writeFile(join(cachePath, config), configs[config])
   }
 
   spinner.frame(`configuration for ${name}/${version} was cached`)
