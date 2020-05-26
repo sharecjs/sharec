@@ -97,6 +97,7 @@ describe('steps > readCache', () => {
     }
     const input = {
       targetPath: '/target',
+      cache: {},
       options: {
         includeCache: true,
       },
