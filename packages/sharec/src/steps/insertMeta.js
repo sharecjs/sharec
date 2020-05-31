@@ -10,7 +10,9 @@ const insertMeta = (spinner) => async (input) => {
 
   const { name, version } = input.upcomingPackage
   const targetPackagePath = join(input.targetPath, 'package.json')
-  const targetPackage = JSON.parse(mergedConfigs[targetPackagePath])
+  const targetPackage = mergedConfigs[targetPackagePath]
+    ? JSON.parse(mergedConfigs[targetPackagePath])
+    : input.targetPackage
 
   targetPackage.sharec = {
     config: name,

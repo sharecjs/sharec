@@ -1,3 +1,9 @@
+# v2.2.1
+
+Fixes:
+
+- Crush when `package.json` not exist in upcoming configs
+
 # v2.2.0
 
 This release includes new step types - processors. These steps transforms data
