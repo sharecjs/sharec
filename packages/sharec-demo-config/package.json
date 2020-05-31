@@ -1,6 +1,6 @@
 {
   "name": "sharec-demo-config",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "Sharec example config for core functionality demonstration",
   "scripts": {
     "postinstall": "sharec"
@@ -14,7 +14,7 @@
   "keywords": [],
   "license": "MIT",
   "dependencies": {
-    "sharec": "^2.2.0"
+    "sharec": "^2.2.1"
   },
   "gitHead": "8b056dc9aedf49a712b84b4d47ea9fa1cea45b08"
 }
