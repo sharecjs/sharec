@@ -34,6 +34,11 @@ Files with different extension will be just copied.
 - Versionable configuration packages (try out [demo config](https://github.com/lamartire/sharec/tree/master/packages/sharec-demo-config))
 - Create boilerplates, like `create-react-app` (see dead simple example [here](https://github.com/lamartire/sharec-react-app))
 
+## `.gitignore` and `.npmignore`
+
+If you want to include these files, you should name them without dot - `gitignore`, `npmignore`.
+It needs, because originally named files would not be readed during installation.
+
 ## Options
 
 **`--silent, -s`** - hides all outputs from `sharec` in CLI.
