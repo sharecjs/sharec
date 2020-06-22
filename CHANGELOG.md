@@ -1,3 +1,9 @@
+# v2.2.2
+
+Fixes:
+
+- Add support of `overrides` field for `eslint`
+
 # v2.2.1
 
 Fixes:
