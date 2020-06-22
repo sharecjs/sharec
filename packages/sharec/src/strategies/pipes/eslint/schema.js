@@ -14,6 +14,7 @@ const eslintJson = compose({
   rules: compose({
     $$default: ruleAtom,
   }),
+  overrides: listConcatAtom,
   $$default: primitiveAtom,
 })
 
