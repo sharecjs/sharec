@@ -1,3 +1,10 @@
+# v2.3.0
+
+Features:
+
+- Add ability to format configs with `.editorconfig` (#104)
+- Also add step for applying unified format, which can be received from `.editorconfig` or different configs (#104)
+
 # v2.2.2
 
 Fixes:
