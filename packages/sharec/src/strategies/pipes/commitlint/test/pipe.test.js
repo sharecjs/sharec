@@ -7,7 +7,7 @@ describe('strategies > pipes > commitlint > pipe', () => {
 
     it('should merge configs', () => {
       expect(pipe('.commitlintrc.json')(commitlintFxt)).toWraplessEqual(commitlintFxt.result, {
-        eol: false,
+        eof: false,
       })
     })
   })
@@ -17,7 +17,7 @@ describe('strategies > pipes > commitlint > pipe', () => {
 
     it('should merge configs', () => {
       expect(pipe('.commitlintrc.yaml')(commitlintFxt)).toWraplessEqual(commitlintFxt.result, {
-        eol: false,
+        eof: false,
       })
     })
   })

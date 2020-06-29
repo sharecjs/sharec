@@ -1,0 +1,36 @@
+{
+	"env": {
+		"browser": true,
+		"es6": true,
+		"node": true,
+		"jest": true
+	},
+	"globals": {
+		"foo": true,
+		"bar": true
+	},
+	"extends": "airbnb",
+	"rules": {
+		"max-len": [
+			"warn",
+			120,
+			4,
+			{
+				"ignoreUrls": false,
+				"ignoreComments": true,
+				"ignoreStrings": false
+			}
+		],
+		"space-before-function-paren": 1,
+		"no-console": 0
+	},
+	"parserOptions": {
+		"parser": "babel-eslint",
+		"ecmaVersion": 7,
+		"ecmaFeatures": {
+			"spread": true
+		},
+		"sourceType": "module"
+	}
+}
+

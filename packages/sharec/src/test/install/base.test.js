@@ -1,7 +1,7 @@
 const { fixtures } = require('testUtils')
 const { vol } = require('memfs')
 const { pwd } = require('shelljs')
-const sharec = require('../')
+const sharec = require('../../')
 
 describe('sharec > install', () => {
   const packageFxt = fixtures('package/json/01-install')
