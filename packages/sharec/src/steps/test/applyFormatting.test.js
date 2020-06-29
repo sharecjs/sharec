@@ -23,12 +23,11 @@ describe('steps > applyFormatting', () => {
 
     const output = applyFormatting(spinner)(input)
 
-    expect(output).toEqual({
-      ...input,
-      mergedConfigs: {
-        '/foo.json': jsonFxt.result,
-        '/bar.yaml': yamlFxt.result,
-      },
+    expect(output.mergedConfigs['/foo.json']).toWraplessEqual(jsonFxt.result, {
+      eof: false
+    })
+    expect(output.mergedConfigs['/bar.yaml']).toWraplessEqual(yamlFxt.result, {
+      eof: false
     })
   })
 
@@ -50,12 +49,11 @@ describe('steps > applyFormatting', () => {
 
     const output = applyFormatting(spinner)(input)
 
-    expect(output).toEqual({
-      ...input,
-      mergedConfigs: {
-        '/foo.json': jsonFxt.result,
-        '/bar.yaml': yamlFxt.current,
-      },
+    expect(output.mergedConfigs['/foo.json']).toWraplessEqual(jsonFxt.result, {
+      eof: false
+    })
+    expect(output.mergedConfigs['/bar.yaml']).toWraplessEqual(yamlFxt.current, {
+      eof: false
     })
   })
 

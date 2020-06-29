@@ -7,7 +7,7 @@ describe('pipes > package > pipe', () => {
 
     it('should merge configs', () => {
       expect(pipe('package.json')(packageBaseFxt)).toWraplessEqual(packageBaseFxt.result, {
-        eol: false,
+        eof: false,
       })
     })
   })

@@ -7,7 +7,7 @@ describe('pipes > yaspeller > pipe', () => {
 
     it('should merge configs', () => {
       expect(pipe('.yaspellerrc')(yaspellerBaseFxt)).toWraplessEqual(yaspellerBaseFxt.result, {
-        eol: false,
+        eof: false,
       })
     })
   })

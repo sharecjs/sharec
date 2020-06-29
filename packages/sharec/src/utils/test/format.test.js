@@ -40,21 +40,29 @@ describe('utils > format', () => {
 
   describe('indentWithTab', () => {
     it('should replace all spaces with tabs', () => {
-      expect(indentWithTab(jsonFxt.result)).toBe(jsonFxt.current)
+      expect(indentWithTab(jsonFxt.result)).toWraplessEqual(jsonFxt.current, {
+        eof: false
+      })
     })
 
     it('should not affect string with tabs', () => {
-      expect(indentWithTab(jsonFxt.current)).toBe(jsonFxt.current)
+      expect(indentWithTab(jsonFxt.current)).toWraplessEqual(jsonFxt.current, {
+        eof: false
+      })
     })
   })
 
   describe('indentWithSpace', () => {
     it('should replace all tabs with spaces', () => {
-      expect(indentWithSpace(jsonFxt.current, 2)).toBe(jsonFxt.result)
+      expect(indentWithSpace(jsonFxt.current, 2)).toWraplessEqual(jsonFxt.result, {
+        eof: false
+      })
     })
 
     it('should not affect string with spaces', () => {
-      expect(indentWithSpace(jsonFxt.result, 2)).toBe(jsonFxt.result)
+      expect(indentWithSpace(jsonFxt.result, 2)).toWraplessEqual(jsonFxt.result, {
+        eof: false
+      })
     })
   })
 
@@ -66,31 +74,41 @@ describe('utils > format', () => {
           indentSize: 2,
           eof: false,
         }),
-      ).toBe(jsonFxt.result)
+      ).toWraplessEqual(jsonFxt.result, {
+        eof: false
+      })
       expect(
         applyFormat(yamlFxt.current, {
           indentType: 'space',
           indentSize: 2,
           eof: false,
         }),
-      ).toBe(yamlFxt.result)
+      ).toWraplessEqual(yamlFxt.result, {
+        eof: false
+      })
       expect(
         applyFormat(jsonFxt.result, {
           indentType: 'tab',
           eof: false,
         }),
-      ).toBe(jsonFxt.current)
+      ).toWraplessEqual(jsonFxt.current, {
+        eof: false
+      })
       expect(
         applyFormat(yamlFxt.result, {
           indentType: 'tab',
           eof: false,
         }),
-      ).toBe(yamlFxt.current)
+      ).toWraplessEqual(yamlFxt.current, {
+        eof: false
+      })
       expect(
         applyFormat('foo', {
           eof: true,
         }),
-      ).toBe('foo\n')
+      ).toWraplessEqual('foo\n', {
+        eof: false
+      })
     })
   })
 

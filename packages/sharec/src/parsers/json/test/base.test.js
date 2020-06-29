@@ -15,7 +15,7 @@ describe('parsers > json', () => {
   describe('toJSON', () => {
     it('should create JSON string from Map', () => {
       expect(toJSON(defaultFxtMap)).toWraplessEqual(defaultFxt.current, {
-        eol: false,
+        eof: false,
       })
     })
   })

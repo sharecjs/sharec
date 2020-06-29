@@ -18,7 +18,7 @@ describe('atoms > linesConcat', () => {
 
   it('should merge lines as lists', () => {
     expect(linesConcatAtom(concatLinesFxt)).toWraplessEqual(concatLinesFxt.result, {
-      eol: false,
+      eof: false,
     })
   })
 })

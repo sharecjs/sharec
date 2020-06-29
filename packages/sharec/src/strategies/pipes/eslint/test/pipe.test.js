@@ -7,7 +7,7 @@ describe('strategies > pipes > eslint > pipe', () => {
 
     it('should merge configs', () => {
       expect(pipe('.eslintrc')(eslintFxt)).toWraplessEqual(eslintFxt.result, {
-        eol: false,
+        eof: false,
       })
     })
   })
@@ -17,7 +17,7 @@ describe('strategies > pipes > eslint > pipe', () => {
 
     it('should merge configs', () => {
       expect(pipe('.eslintrc.yaml')(eslintFxt)).toWraplessEqual(eslintFxt.result, {
-        eol: false,
+        eof: false,
       })
     })
   })

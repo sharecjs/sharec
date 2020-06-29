@@ -6,7 +6,7 @@ describe('strategies > pipes > browserslist', () => {
 
   it('should process browserslist configs', () => {
     expect(pipe('.browserslistrc')(browserslistBaseFxt)).toWraplessEqual(browserslistBaseFxt.result, {
-      eol: false,
+      eof: false,
     })
   })
 })
