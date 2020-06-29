@@ -1,0 +1,23 @@
+{
+  "presets": [
+    "env",
+    "stage-2"
+  ],
+  "plugins": [
+    "syntax-dynamic-import",
+    "lodash"
+  ],
+  "env": {
+    "test": {
+      "presets": [
+        "env"
+      ],
+      "plugins": [
+        "dynamic-import-node"
+      ]
+    }
+  },
+  "ignore": [
+    "*.babelrc"
+  ]
+}

@@ -5,6 +5,10 @@ Features:
 - Add ability to format configs with `.editorconfig` (#104)
 - Also add step for applying unified format, which can be received from `.editorconfig` or different configs (#104)
 
+Refactor:
+
+- EOF inserts only if `.editorconfig` is provided with `insert_final_newline` option
+
 # v2.2.2
 
 Fixes:

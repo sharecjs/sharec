@@ -16,11 +16,14 @@ const readEditorconfig = (spinner) => async (input) => {
     rawEditorconfig = await readFile(configsEditorconfigPath, 'utf8')
   } catch (err) {}
 
-  try {
-    const targetEditorconfigPath = join(targetPath, '.editorconfig')
+  // if upcoming config does not contain .editorconfig, try to read it from target project
+  if (!rawEditorconfig) {
+    try {
+      const targetEditorconfigPath = join(targetPath, '.editorconfig')
 
-    rawEditorconfig = await readFile(targetEditorconfigPath, 'utf8')
-  } catch (err) {}
+      rawEditorconfig = await readFile(targetEditorconfigPath, 'utf8')
+    } catch (err) {}
+  }
 
   if (!rawEditorconfig) return input
 
