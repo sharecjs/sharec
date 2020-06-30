@@ -40,9 +40,12 @@ async function sharec(targetProcess) {
   const input = {
     targetPath,
     configPath,
+    targetPackage: null,
+    upcomingPackage: null,
     configs: {},
     mergedConfigs: {},
     cache: {},
+    format: null,
     options: {
       silent: silentMode,
       overwrite: overwriteMode,
