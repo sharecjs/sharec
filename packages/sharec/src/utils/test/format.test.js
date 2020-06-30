@@ -41,13 +41,13 @@ describe('utils > format', () => {
   describe('indentWithTab', () => {
     it('should replace all spaces with tabs', () => {
       expect(indentWithTab(jsonFxt.result)).toWraplessEqual(jsonFxt.current, {
-        eof: false
+        eof: false,
       })
     })
 
     it('should not affect string with tabs', () => {
       expect(indentWithTab(jsonFxt.current)).toWraplessEqual(jsonFxt.current, {
-        eof: false
+        eof: false,
       })
     })
   })
@@ -55,13 +55,13 @@ describe('utils > format', () => {
   describe('indentWithSpace', () => {
     it('should replace all tabs with spaces', () => {
       expect(indentWithSpace(jsonFxt.current, 2)).toWraplessEqual(jsonFxt.result, {
-        eof: false
+        eof: false,
       })
     })
 
     it('should not affect string with spaces', () => {
       expect(indentWithSpace(jsonFxt.result, 2)).toWraplessEqual(jsonFxt.result, {
-        eof: false
+        eof: false,
       })
     })
   })
@@ -75,7 +75,7 @@ describe('utils > format', () => {
           eof: false,
         }),
       ).toWraplessEqual(jsonFxt.result, {
-        eof: false
+        eof: false,
       })
       expect(
         applyFormat(yamlFxt.current, {
@@ -84,7 +84,7 @@ describe('utils > format', () => {
           eof: false,
         }),
       ).toWraplessEqual(yamlFxt.result, {
-        eof: false
+        eof: false,
       })
       expect(
         applyFormat(jsonFxt.result, {
@@ -92,7 +92,7 @@ describe('utils > format', () => {
           eof: false,
         }),
       ).toWraplessEqual(jsonFxt.current, {
-        eof: false
+        eof: false,
       })
       expect(
         applyFormat(yamlFxt.result, {
@@ -100,14 +100,14 @@ describe('utils > format', () => {
           eof: false,
         }),
       ).toWraplessEqual(yamlFxt.current, {
-        eof: false
+        eof: false,
       })
       expect(
         applyFormat('foo', {
           eof: true,
         }),
       ).toWraplessEqual('foo\n', {
-        eof: false
+        eof: false,
       })
     })
   })
