@@ -1,11 +1,21 @@
 const json8 = require('json8')
 
+const COMMENTS_REG = /\s+?(\/{2}|\/\*)\s?.+/gm
+
 /**
  * Creates map from JSON string with order saving
  * @param {String} str Raw JSON string
  * @returns {Map}
  */
-const fromJSON = (str) => json8.parse(str, { map: true })
+const fromJSON = (str) => {
+  let rawJSON = str
+
+  if (COMMENTS_REG.test(str)) {
+    rawJSON = rawJSON.replace(COMMENTS_REG, '')
+  }
+
+  return json8.parse(rawJSON, { map: true })
+}
 
 /**
  * Transforms given map to JSON string with order saving
