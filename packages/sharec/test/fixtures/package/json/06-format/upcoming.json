@@ -19,11 +19,6 @@
       "path": "cz-conventional-changelog"
     }
   },
-  "prettier": {
-    "semi": false,
-    "singleQuote": true,
-    "trailingComma": "all"
-  },
   "eslintConfig": {
     "parser": "babel-eslint",
     "extends": ["standard", "prettier", "prettier/standard"],

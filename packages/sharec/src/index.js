@@ -61,11 +61,12 @@ async function sharec(targetProcess) {
   const commonFlow = composeSteps(
     logger.wrap(steps.readTargetPackage(spinner), 'readTargetPackage'),
     logger.wrap(steps.readUpcomingPackage(spinner), 'readUpcomingPackage'),
-    logger.wrap(steps.readEditorconfig(spinner), 'readEditorconfig'),
     logger.wrap(steps.isAlreadyInstalled(spinner), 'isAlreadyInstalled'),
     logger.wrap(steps.isDependantOfSharec(spinner), 'isDependantOfSharec'),
     logger.wrap(steps.isIgnoresSharecConfigs(spinner), 'isIgnoresSharecConfigs'),
     logger.wrap(steps.readConfigs(spinner), 'readConfigs'),
+    logger.wrap(steps.readEditorconfig(spinner), 'readEditorconfig'),
+    logger.wrap(steps.readPrettier(spinner), 'readPrettier'),
     logger.wrap(steps.readCache(spinner), 'readCache'),
     logger.wrap(steps.mergeConfigs(spinner), 'mergeConfigs'),
     logger.wrap(steps.insertMeta(spinner), 'insertMeta'),

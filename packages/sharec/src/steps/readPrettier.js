@@ -5,7 +5,7 @@ const { join } = require('../utils/std').path
 const readPrettier = (spinner) => async (input) => {
   spinner.frame('reading prettier configuration')
 
-  const { targetPath, configPath, targetPackage, upcomingPackage } = input
+  const { targetPath, configPath, targetPackage, configs } = input
   let prettierrc = null
 
   try {
@@ -26,9 +26,15 @@ const readPrettier = (spinner) => async (input) => {
     } catch (err) {}
   }
 
+  const upcomingPackage = get(configs, 'package.json')
+
   // try to read prettier config from upcoming package.json
-  if (!prettierrc && get(upcomingPackage, 'prettier')) {
-    prettierrc = upcomingPackage.prettier
+  if (!prettierrc && upcomingPackage) {
+    try {
+      const { prettier = null } = JSON.parse(upcomingPackage)
+
+      prettierrc = prettier
+    } catch (err) {}
   }
 
   // try to read prettier config from target package.json

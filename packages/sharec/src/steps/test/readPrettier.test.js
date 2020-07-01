@@ -67,10 +67,12 @@ describe('steps > readPrettier', () => {
       const input = {
         targetPath: '/target',
         configPath: '/configuration-package',
-        upcomingPackage: {
-          prettier: {
-            ...JSON.parse(prettierFxt.current),
-          },
+        configs: {
+          'package.json': JSON.stringify({
+            prettier: {
+              ...JSON.parse(prettierFxt.current),
+            },
+          }),
         },
       }
 
@@ -96,10 +98,12 @@ describe('steps > readPrettier', () => {
       const input = {
         targetPath: '/target',
         configPath: '/configuration-package',
-        upcomingPackage: {
-          prettier: {
-            ...JSON.parse(prettierFxt.current),
-          },
+        configs: {
+          'package.json': JSON.stringify({
+            prettier: {
+              ...JSON.parse(prettierFxt.current),
+            },
+          }),
         },
       }
 
