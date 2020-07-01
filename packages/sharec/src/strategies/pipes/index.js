@@ -12,6 +12,7 @@ const pipes = {
   package: require('./package/pipe'),
   stylelint: require('./stylelint/pipe'),
   yaspeller: require('./yaspeller/pipe'),
+  prettier: require('./prettier/pipe'),
 }
 
 // pipes for configs which not have any specific strategy
