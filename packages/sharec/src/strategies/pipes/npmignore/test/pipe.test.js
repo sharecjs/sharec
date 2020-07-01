@@ -6,7 +6,7 @@ describe('strategies > pipes > npmignore', () => {
 
   it('should process npmignore configs', () => {
     expect(pipe('npmignore')(npmignoreBaseFxt)).toWraplessEqual(npmignoreBaseFxt.result, {
-      eol: false,
+      eof: false,
     })
   })
 })

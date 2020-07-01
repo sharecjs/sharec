@@ -1,3 +1,24 @@
+# v2.3.0
+
+This release includes formattings with `editorconfig` and `prettier`.
+
+It is not formats all the code, but can handle indent style and width.
+
+Features:
+
+- `prettier` standalone configuration files support
+- Add ability to format configs with `.editorconfig` (#104)
+- Add ability to format configs with `prettier` (#104)
+- Also add step for applying unified format, which can be received from `.editorconfig` or different configs (#104)
+
+Fixes:
+
+- `json` comments support. Parser just removes all comments from result (#124)
+
+Refactor:
+
+- EOF inserts only if `.editorconfig` is provided with `insert_final_newline` option
+
 # v2.2.2
 
 Fixes:

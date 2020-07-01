@@ -6,7 +6,7 @@ describe('strategies > pipes > babel > pipe', () => {
 
   it('should merge babel json configs', () => {
     expect(pipe('.babelrc')(babelBaseFxt)).toWraplessEqual(babelBaseFxt.result, {
-      eol: false,
+      eof: false,
     })
   })
 })

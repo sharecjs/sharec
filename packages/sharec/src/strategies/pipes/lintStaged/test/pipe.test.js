@@ -7,7 +7,7 @@ describe('pipes > lintStaged > pipe', () => {
 
     it('should merge configs', () => {
       expect(pipe('.lintstagedrc')(lintStagedBaseFxt)).toWraplessEqual(lintStagedBaseFxt.result, {
-        eol: false,
+        eof: false,
       })
     })
   })

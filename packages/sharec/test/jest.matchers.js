@@ -48,7 +48,7 @@ expect.extend({
     let normalizedExpected = normalizeWraps(rawExpected)
 
     // cases when we should ignore all EOL from comparing files
-    if (options.eol === false) {
+    if (options.eof === false) {
       normalizedReceived = removeAllEOLWraps(normalizedReceived)
       normalizedExpected = removeAllEOLWraps(normalizedExpected)
     }

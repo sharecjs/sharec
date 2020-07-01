@@ -6,7 +6,7 @@ describe('strategies > pipes > gitignore', () => {
 
   it('should process gitignore configs', () => {
     expect(pipe('gitignore')(gitignoreBaseFxt)).toWraplessEqual(gitignoreBaseFxt.result, {
-      eol: false,
+      eof: false,
     })
   })
 })

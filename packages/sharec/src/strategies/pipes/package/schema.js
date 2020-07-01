@@ -8,6 +8,7 @@ const { lintStagedJson } = require('../lintStaged/schema')
 const { yaspellerJson } = require('../yaspeller/schema')
 const { huskyJson } = require('../husky/schema')
 const { jestJson } = require('../jest/schema')
+const { prettierJson } = require('../prettier/schema')
 
 const packageJson = compose({
   // Default fields
@@ -36,6 +37,7 @@ const packageJson = compose({
   yaspeller: yaspellerJson,
   husky: huskyJson,
   jest: jestJson,
+  prettier: prettierJson,
 
   // Handle other fields
   $$ignore: [

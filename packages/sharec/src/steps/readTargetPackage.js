@@ -11,9 +11,9 @@ const readTargetPackage = (spinner) => async (input) => {
 
     spinner.frame("target package's package.json was readed")
 
-    return Object.assign(input, {
-      targetPackage,
-    })
+    input.targetPackage = targetPackage
+
+    return input
   } catch (err) {
     spinner.fail("Target project's package.json was not readed")
     throw err

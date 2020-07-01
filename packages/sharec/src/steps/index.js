@@ -7,9 +7,12 @@ const readConfigs = require('./readConfigs')
 const readTargetPackage = require('./readTargetPackage')
 const readUpcomingPackage = require('./readUpcomingPackage')
 const readCache = require('./readCache')
+const readEditorconfig = require('./readEditorconfig')
+const readPrettier = require('./readPrettier')
 // Processing
 const mergeConfigs = require('./mergeConfigs')
 const insertEOL = require('./insertEOL')
+const applyFormatting = require('./applyFormatting')
 // Output
 const writeConfigs = require('./writeConfigs')
 const insertMeta = require('./insertMeta')
@@ -55,11 +58,14 @@ const steps = {
   mergeConfigs,
   insertEOL,
   insertMeta,
+  applyFormatting,
 
   readConfigs,
   readTargetPackage,
   readUpcomingPackage,
   readCache,
+  readEditorconfig,
+  readPrettier,
 
   writeConfigs,
   writeCache,

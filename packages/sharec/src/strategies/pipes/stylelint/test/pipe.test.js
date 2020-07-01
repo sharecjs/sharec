@@ -7,7 +7,7 @@ describe('pipes > stylelint > pipe', () => {
 
     it('should merge configs', () => {
       expect(pipe('.stylelint')(stylelintBaseFxt)).toWraplessEqual(stylelintBaseFxt.result, {
-        eol: false,
+        eof: false,
       })
     })
   })

@@ -40,9 +40,12 @@ async function sharec(targetProcess) {
   const input = {
     targetPath,
     configPath,
+    targetPackage: null,
+    upcomingPackage: null,
     configs: {},
     mergedConfigs: {},
     cache: {},
+    format: null,
     options: {
       silent: silentMode,
       overwrite: overwriteMode,
@@ -62,10 +65,13 @@ async function sharec(targetProcess) {
     logger.wrap(steps.isDependantOfSharec(spinner), 'isDependantOfSharec'),
     logger.wrap(steps.isIgnoresSharecConfigs(spinner), 'isIgnoresSharecConfigs'),
     logger.wrap(steps.readConfigs(spinner), 'readConfigs'),
+    logger.wrap(steps.readEditorconfig(spinner), 'readEditorconfig'),
+    logger.wrap(steps.readPrettier(spinner), 'readPrettier'),
     logger.wrap(steps.readCache(spinner), 'readCache'),
     logger.wrap(steps.mergeConfigs(spinner), 'mergeConfigs'),
     logger.wrap(steps.insertMeta(spinner), 'insertMeta'),
     logger.wrap(steps.insertEOL(spinner), 'insertEOL'),
+    logger.wrap(steps.applyFormatting(spinner), 'applyFormatting'),
     logger.wrap(steps.writeCache(spinner), 'writeCache'),
     logger.wrap(steps.writeConfigs(spinner, 'writeConfigs')),
   )

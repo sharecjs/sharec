@@ -6,7 +6,7 @@ describe('strategies > pipes > eslintignore', () => {
 
   it('should process eslintignore configs', () => {
     expect(pipe('.eslintignore')(eslintignoreBaseFxt)).toWraplessEqual(eslintignoreBaseFxt.result, {
-      eol: false,
+      eof: false,
     })
   })
 })
