@@ -11,9 +11,9 @@ const readUpcomingPackage = (spinner) => async (input) => {
 
     spinner.frame('package.json from upcoming configuration was readed')
 
-    return Object.assign(input, {
-      upcomingPackage,
-    })
+    input.upcomingPackage = upcomingPackage
+
+    return input
   } catch (err) {
     spinner.fail("Upcoming configuration's package.json was not readed")
 

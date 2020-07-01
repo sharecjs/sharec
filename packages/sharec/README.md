@@ -24,6 +24,7 @@ At this moment, sharec supports:
 - `lint-staged`
 - `stylelint`
 - `commitlint`
+- `prettier`
 
 Other `.json` or `.yaml` files will be merged by keys.
 
