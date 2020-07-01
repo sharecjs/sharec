@@ -1,0 +1,10 @@
+{
+  "foo": "bar",
+  // Comment here
+  "bar": "baz", /* Another comment */
+  "baz": {
+    "foo": "bar",
+    /* Another comment here */
+    "bar": "baz" // Another comment
+  }
+}

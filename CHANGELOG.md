@@ -11,6 +11,10 @@ Features:
 - Add ability to format configs with `prettier` (#104)
 - Also add step for applying unified format, which can be received from `.editorconfig` or different configs (#104)
 
+Fixes:
+
+- `json` comments support. Parser just removes all comments from result (#124)
+
 Refactor:
 
 - EOF inserts only if `.editorconfig` is provided with `insert_final_newline` option
