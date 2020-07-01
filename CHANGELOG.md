@@ -6,6 +6,7 @@ It is not formats all the code, but can handle indent style and width.
 
 Features:
 
+- `prettier` standalone configuration files support
 - Add ability to format configs with `.editorconfig` (#104)
 - Add ability to format configs with `prettier` (#104)
 - Also add step for applying unified format, which can be received from `.editorconfig` or different configs (#104)
