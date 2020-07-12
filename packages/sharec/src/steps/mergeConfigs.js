@@ -2,7 +2,7 @@ const { getConfigPipe } = require('../strategies/pipes')
 const { readFile } = require('../utils/std').fs
 const { join, dirname, basename } = require('../utils/std').path
 
-const mergeConfigs = (spinner) => async (input) => {
+const mergeConfigs = ({ spinner, prompt }) => async (input) => {
   const { configs, cache = {}, targetPath, options } = input
   const { overwrite } = options
 

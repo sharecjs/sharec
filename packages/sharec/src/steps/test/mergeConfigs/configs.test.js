@@ -1,8 +1,10 @@
-const { fixtures, createFakeSpinner } = require('testUtils')
+const { fixtures, createFakeSpinner, createFakePrompt } = require('testUtils')
 const { vol } = require('memfs')
 const mergeConfigs = require('../../mergeConfigs')
 
 describe('steps > mergeConfigs > configs', () => {
+  let spinner
+  let prompt
   const eslintBaseFxt = fixtures('eslint/json/01-base')
   const babelBaseFxt = fixtures('babel/json/00-base')
   const npmignoreBaseFxt = fixtures('npmignore/lines/00-base')
@@ -10,11 +12,12 @@ describe('steps > mergeConfigs > configs', () => {
   const yaspellerBaseFxt = fixtures('yaspeller/json/00-base')
 
   beforeEach(() => {
+    spinner = createFakeSpinner()
+    prompt = createFakePrompt()
     vol.reset()
   })
 
   it('should write and merge configs from input to target dir', async () => {
-    const spinner = createFakeSpinner()
     const upcomingPackage = {
       name: 'awesome-config',
       version: '0.0.0',
@@ -42,7 +45,7 @@ describe('steps > mergeConfigs > configs', () => {
     }
     vol.fromJSON(dir, '/configs')
 
-    const output = await mergeConfigs(spinner)(input)
+    const output = await mergeConfigs({ spinner, prompt })(input)
 
     expect(output.mergedConfigs['/target/.eslintrc']).toWraplessEqual(eslintBaseFxt.result, { eof: false })
     expect(output.mergedConfigs['/target/.babelrc']).toWraplessEqual(babelBaseFxt.result, { eof: false })

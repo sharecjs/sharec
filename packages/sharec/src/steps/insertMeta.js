@@ -1,6 +1,6 @@
 const { join } = require('../utils/std').path
 
-const insertMeta = (spinner) => async (input) => {
+const insertMeta = ({ spinner, prompt }) => async (input) => {
   const { options, mergedConfigs } = input
   const { disappear, overwrite } = options
 

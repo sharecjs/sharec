@@ -1,9 +1,16 @@
-const { createFakeSpinner } = require('testUtils')
+const { createFakeSpinner, createFakePrompt } = require('testUtils')
 const insertEOL = require('../insertEOL')
 
 describe('steps > insertEOL', () => {
+  let spinner
+  let prompt
+
+  beforeEach(() => {
+    spinner = createFakeSpinner()
+    prompt = createFakePrompt()
+  })
+
   it('should write basic configs from input to target dir', async () => {
-    const spinner = createFakeSpinner()
     const input = {
       targetPath: '/target',
       mergedConfigs: {
@@ -12,7 +19,7 @@ describe('steps > insertEOL', () => {
       options: {},
     }
 
-    const output = await insertEOL(spinner)(input)
+    const output = await insertEOL({ spinner, prompt })(input)
 
     expect(output.mergedConfigs['/target/.editorconfig']).toEqual('bar\n')
   })

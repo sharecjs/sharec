@@ -1,9 +1,16 @@
-const { createFakeSpinner } = require('testUtils')
+const { createFakeSpinner, createFakePrompt } = require('testUtils')
 const insertMeta = require('../insertMeta')
 
 describe('steps > insertMeta', () => {
+  let spinner
+  let prompt
+
+  beforeEach(() => {
+    spinner = createFakeSpinner()
+    prompt = createFakePrompt()
+  })
+
   it('should insert meta to target package.json', async () => {
-    const spinner = createFakeSpinner()
     const targetPackage = {}
     const upcomingPackage = {
       name: 'awesome-config',
@@ -17,7 +24,7 @@ describe('steps > insertMeta', () => {
       },
       upcomingPackage,
     }
-    const output = await insertMeta(spinner)(input)
+    const output = await insertMeta({ spinner, prompt })(input)
 
     expect(JSON.parse(output.mergedConfigs['/target/package.json'])).toEqual({
       sharec: {
@@ -28,7 +35,6 @@ describe('steps > insertMeta', () => {
   })
 
   it('should not insert meta to target package.json if disappear option is given', async () => {
-    const spinner = createFakeSpinner()
     const targetPackage = {}
     const upcomingPackage = {
       name: 'awesome-config',
@@ -44,13 +50,12 @@ describe('steps > insertMeta', () => {
       },
       upcomingPackage,
     }
-    const output = await insertMeta(spinner)(input)
+    const output = await insertMeta({ spinner, prompt })(input)
 
     expect(JSON.parse(output.mergedConfigs['/target/package.json'])).toEqual({})
   })
 
   it('should take target package from input if it not exists in merged configs', async () => {
-    const spinner = createFakeSpinner()
     const targetPackage = {}
     const upcomingPackage = {
       name: 'awesome-config',
@@ -63,7 +68,7 @@ describe('steps > insertMeta', () => {
       options: {},
       upcomingPackage,
     }
-    const output = await insertMeta(spinner)(input)
+    const output = await insertMeta({ spinner, prompt })(input)
 
     expect(JSON.parse(output.mergedConfigs['/target/package.json'])).toEqual({
       sharec: {

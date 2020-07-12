@@ -1,11 +1,15 @@
 const { vol } = require('memfs')
-const { fixtures, createFakeSpinner } = require('testUtils')
+const { fixtures, createFakeSpinner, createFakePrompt } = require('testUtils')
 const readPrettier = require('../readPrettier')
 
 describe('steps > readPrettier', () => {
+  let spinner
+  let prompt
   const prettierFxt = fixtures('prettier/json/00-base')
 
   beforeEach(() => {
+    spinner = createFakeSpinner()
+    prompt = createFakePrompt()
     vol.reset()
   })
 
@@ -16,14 +20,13 @@ describe('steps > readPrettier', () => {
     }
 
     it('should read .prettierrc from upcoming config', async () => {
-      const spinner = createFakeSpinner()
       const dir = {
         '/configuration-package/configs/.prettierrc': prettierFxt.current,
       }
 
       vol.fromJSON(dir, input.targetPath)
 
-      const output = await readPrettier(spinner)(input)
+      const output = await readPrettier({ spinner, prompt })(input)
 
       expect(output).toEqual({
         ...input,
@@ -38,14 +41,13 @@ describe('steps > readPrettier', () => {
     })
 
     it('should read .prettierrc from target package if it is not present in upcoming config', async () => {
-      const spinner = createFakeSpinner()
       const dir = {
         '/target/.prettierrc': prettierFxt.current,
       }
 
       vol.fromJSON(dir, input.targetPath)
 
-      const output = await readPrettier(spinner)(input)
+      const output = await readPrettier({ spinner, prompt })(input)
 
       expect(output).toEqual({
         ...input,
@@ -62,7 +64,6 @@ describe('steps > readPrettier', () => {
 
   describe('without .prettierrc', () => {
     it("should read prettier configuration from upcoming config's package.json", async () => {
-      const spinner = createFakeSpinner()
       const dir = {}
       const input = {
         targetPath: '/target',
@@ -78,7 +79,7 @@ describe('steps > readPrettier', () => {
 
       vol.fromJSON(dir, input.targetPath)
 
-      const output = await readPrettier(spinner)(input)
+      const output = await readPrettier({ spinner, prompt })(input)
 
       expect(output).toEqual({
         ...input,
@@ -93,7 +94,6 @@ describe('steps > readPrettier', () => {
     })
 
     it('should read prettier configuration from target package package.json if it is not present in upcoming config', async () => {
-      const spinner = createFakeSpinner()
       const dir = {}
       const input = {
         targetPath: '/target',
@@ -109,7 +109,7 @@ describe('steps > readPrettier', () => {
 
       vol.fromJSON(dir, input.targetPath)
 
-      const output = await readPrettier(spinner)(input)
+      const output = await readPrettier({ spinner, prompt })(input)
 
       expect(output).toEqual({
         ...input,
@@ -125,7 +125,6 @@ describe('steps > readPrettier', () => {
   })
 
   it('should leave format field empty if prettier configuration is not present', async () => {
-    const spinner = createFakeSpinner()
     const dir = {}
     const input = {
       targetPath: '/target',
@@ -134,7 +133,7 @@ describe('steps > readPrettier', () => {
 
     vol.fromJSON(dir, input.targetPath)
 
-    const output = await readPrettier(spinner)(input)
+    const output = await readPrettier({ spinner, prompt })(input)
 
     expect(output).toEqual(input)
   })

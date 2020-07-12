@@ -92,8 +92,17 @@ function createFakeSpinner() {
   return spinner
 }
 
+function createFakePrompt() {
+  const prompt = {
+    confirm: jest.fn().mockResolvedValue(true),
+  }
+
+  return prompt
+}
+
 module.exports = {
   fixture,
   fixtures,
   createFakeSpinner,
+  createFakePrompt,
 }

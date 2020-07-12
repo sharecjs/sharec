@@ -1,14 +1,18 @@
 const { vol } = require('memfs')
-const { createFakeSpinner } = require('testUtils')
+const { createFakeSpinner, createFakePrompt } = require('testUtils')
 const writeCache = require('../writeCache')
 
 describe('steps > writeCache', () => {
+  let spinner
+  let prompt
+
   beforeEach(() => {
+    spinner = createFakeSpinner()
+    prompt = createFakePrompt()
     vol.reset()
   })
 
   it('should write configs from input to cache dir', async () => {
-    const spinner = createFakeSpinner()
     const targetPackage = {}
     const upcomingPackage = {
       name: 'awesome-config',
@@ -30,7 +34,7 @@ describe('steps > writeCache', () => {
     }
     vol.fromJSON(dir, '/configs')
 
-    await writeCache(spinner)(input)
+    await writeCache({ spinner, prompt })(input)
 
     const cachedConfigs = vol.readdirSync('/target/node_modules/.cache/sharec/awesome-config/0.0.0')
 
@@ -39,7 +43,6 @@ describe('steps > writeCache', () => {
   })
 
   it('should not write cache in disappear mode', async (done) => {
-    const spinner = createFakeSpinner()
     const targetPackage = {}
     const upcomingPackage = {
       name: 'awesome-config',
@@ -63,7 +66,7 @@ describe('steps > writeCache', () => {
     }
     vol.fromJSON(dir, '/configs')
 
-    await writeCache(spinner)(input)
+    await writeCache({ spinner, prompt })(input)
 
     try {
       vol.readdirSync('/target/node_modules/.cache/sharec/awesome-config/0.0.0')
@@ -73,7 +76,6 @@ describe('steps > writeCache', () => {
   })
 
   it('should write cache right in project if includeCache parameter given', async (done) => {
-    const spinner = createFakeSpinner()
     const targetPackage = {}
     const upcomingPackage = {
       name: 'awesome-config',
@@ -97,7 +99,7 @@ describe('steps > writeCache', () => {
     }
     vol.fromJSON(dir, '/configs')
 
-    await writeCache(spinner)(input)
+    await writeCache({ spinner, prompt })(input)
 
     const cachedConfigs = vol.readdirSync('/target/.sharec/.cache/awesome-config/0.0.0')
 

@@ -1,16 +1,19 @@
-const { fixtures, createFakeSpinner } = require('testUtils')
+const { fixtures, createFakeSpinner, createFakePrompt } = require('testUtils')
 const { vol } = require('memfs')
 const mergeConfigs = require('../../mergeConfigs')
 
 describe('steps > mergeConfigs > package', () => {
+  let spinner
+  let prompt
   const packageBaseFxt = fixtures('package/json/00-base')
 
   beforeEach(() => {
+    spinner = createFakeSpinner()
+    prompt = createFakePrompt()
     vol.reset()
   })
 
   it('should write and merge package.json from input to target dir', async () => {
-    const spinner = createFakeSpinner()
     const upcomingPackage = {
       name: 'awesome-config',
       version: '0.0.0',
@@ -30,7 +33,7 @@ describe('steps > mergeConfigs > package', () => {
     }
     vol.fromJSON(dir, '/configs')
 
-    const output = await mergeConfigs(spinner)(input)
+    const output = await mergeConfigs({ spinner, prompt })(input)
 
     expect(output.mergedConfigs['/target/package.json']).toWraplessEqual(packageBaseFxt.result, { eof: false })
   })

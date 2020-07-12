@@ -3,7 +3,7 @@ const { readFile } = require('../utils/std').fs
 const { join } = require('../utils/std').path
 const { find } = require('../utils/fs')
 
-const readCache = (spinner) => async (input) => {
+const readCache = ({ spinner, prompt }) => async (input) => {
   const { targetPackage, targetPath } = input
   const previousTargetMeta = get(targetPackage, 'sharec', null)
 

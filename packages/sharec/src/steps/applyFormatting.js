@@ -1,7 +1,7 @@
 const isEmpty = require('lodash/isEmpty')
 const { applyFormat, getFormatByFilename } = require('../utils/format')
 
-const applyFormatting = (spinner) => (input) => {
+const applyFormatting = ({ spinner, prompt }) => (input) => {
   spinner.frame('reading .editorconfig')
 
   const { mergedConfigs, format } = input
