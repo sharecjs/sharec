@@ -3,7 +3,7 @@ const editorconfig = require('editorconfig')
 const { readFile } = require('../utils/std').fs
 const { join } = require('../utils/std').path
 
-const readEditorconfig = (spinner) => async (input) => {
+const readEditorconfig = ({ spinner, prompt }) => async (input) => {
   spinner.frame('reading .editorconfig')
 
   const { targetPath, configPath } = input

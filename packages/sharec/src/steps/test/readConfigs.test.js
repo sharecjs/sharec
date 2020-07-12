@@ -1,15 +1,19 @@
 const { vol } = require('memfs')
-const { createFakeSpinner } = require('testUtils')
+const { createFakeSpinner, createFakePrompt } = require('testUtils')
 const { InternalError, CAUSES } = require('../../errors')
 const readConfigs = require('../readConfigs')
 
 describe('steps > readConfigs', () => {
+  let spinner
+  let prompt
+
   beforeEach(() => {
+    spinner = createFakeSpinner()
+    prompt = createFakePrompt()
     vol.reset()
   })
 
   it('should read package.json from target project', async () => {
-    const spinner = createFakeSpinner()
     const input = {
       configPath: '/',
       options: {},
@@ -22,7 +26,7 @@ describe('steps > readConfigs', () => {
     }
     vol.fromJSON(dir, '/configs')
 
-    const output = await readConfigs(spinner)(input)
+    const output = await readConfigs({ spinner, prompt })(input)
 
     expect(output).toEqual({
       ...input,
@@ -34,7 +38,6 @@ describe('steps > readConfigs', () => {
   })
 
   it('should throw an error if package.json is not exist in target project', async () => {
-    const spinner = createFakeSpinner()
     const input = {
       configPath: '/foo',
     }
@@ -42,7 +45,7 @@ describe('steps > readConfigs', () => {
     vol.fromJSON(dir, '/bar')
 
     try {
-      await readConfigs(spinner)(input)
+      await readConfigs({ spinner, prompt })(input)
     } catch (err) {
       expect(err).toBeInstanceOf(InternalError)
       expect(err.cause).toBe(CAUSES.CONFIGS_NOT_FOUND.symbol)

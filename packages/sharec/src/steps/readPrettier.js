@@ -2,7 +2,7 @@ const get = require('lodash/get')
 const { readFile } = require('../utils/std').fs
 const { join } = require('../utils/std').path
 
-const readPrettier = (spinner) => async (input) => {
+const readPrettier = ({ spinner, prompt }) => async (input) => {
   spinner.frame('reading prettier configuration')
 
   const { targetPath, configPath, targetPackage, configs } = input

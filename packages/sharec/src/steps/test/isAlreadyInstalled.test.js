@@ -1,10 +1,17 @@
-const { createFakeSpinner } = require('testUtils')
+const { createFakeSpinner, createFakePrompt } = require('testUtils')
 const { InternalError, CAUSES } = require('../../errors')
 const isAlreadyInstalled = require('../isAlreadyInstalled')
 
 describe('steps > isAlreadyInstalled', () => {
+  let spinner
+  let prompt
+
+  beforeEach(() => {
+    spinner = createFakeSpinner()
+    prompt = createFakePrompt()
+  })
+
   it('should just return given input if upcoming config is not installed', () => {
-    const spinner = createFakeSpinner()
     const input = {
       targetPath: '/configs',
       targetPackage: {
@@ -18,13 +25,12 @@ describe('steps > isAlreadyInstalled', () => {
         version: '1.0.0',
       },
     }
-    const output = isAlreadyInstalled(spinner)(input)
+    const output = isAlreadyInstalled({ spinner, prompt })(input)
 
     expect(output).toEqual(output)
   })
 
   it('should throw an error upcoming config is already installed', () => {
-    const spinner = createFakeSpinner()
     const input = {
       targetPath: '/configs',
       targetPackage: {
@@ -40,7 +46,7 @@ describe('steps > isAlreadyInstalled', () => {
     }
 
     try {
-      isAlreadyInstalled(spinner)(input)
+      isAlreadyInstalled({ spinner, prompt })(input)
     } catch (err) {
       expect(err).toBeInstanceOf(InternalError)
       expect(err.cause).toBe(CAUSES.ALREADY_INSTALLED.symbol)

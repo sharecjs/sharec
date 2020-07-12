@@ -1,14 +1,18 @@
 const { vol } = require('memfs')
-const { createFakeSpinner } = require('testUtils')
+const { createFakeSpinner, createFakePrompt } = require('testUtils')
 const readCache = require('../readCache')
 
 describe('steps > readCache', () => {
+  let spinner
+  let prompt
+
   beforeEach(() => {
+    spinner = createFakeSpinner()
+    prompt = createFakePrompt()
     vol.reset()
   })
 
   it('should read cached configs for previous installed version', async () => {
-    const spinner = createFakeSpinner()
     const targetPackage = {
       sharec: {
         config: 'awesome-config',
@@ -29,7 +33,7 @@ describe('steps > readCache', () => {
     }
     vol.fromJSON(dir, '/configs')
 
-    const output = await readCache(spinner)(input)
+    const output = await readCache({ spinner, prompt })(input)
 
     expect(output.cache).toEqual({
       '.eslintrc': 'foo',
@@ -39,7 +43,6 @@ describe('steps > readCache', () => {
   })
 
   it('should keep cache empty if previous installed cache is not exist', async () => {
-    const spinner = createFakeSpinner()
     const targetPackage = {
       sharec: {
         config: 'awesome-config',
@@ -57,13 +60,12 @@ describe('steps > readCache', () => {
     }
     vol.fromJSON(dir, '/configs')
 
-    const output = await readCache(spinner)(input)
+    const output = await readCache({ spinner, prompt })(input)
 
     expect(output.cache).toEqual({})
   })
 
   it('should keep cache empty if previous installed cache is not contain any file', async () => {
-    const spinner = createFakeSpinner()
     const targetPackage = {
       sharec: {
         config: 'awesome-config',
@@ -82,13 +84,12 @@ describe('steps > readCache', () => {
     }
     vol.fromJSON(dir, '/configs')
 
-    const output = await readCache(spinner)(input)
+    const output = await readCache({ spinner, prompt })(input)
 
     expect(output.cache).toEqual({})
   })
 
   it('should read cached configs from .sharec/.cache if includeCache option is passed', async () => {
-    const spinner = createFakeSpinner()
     const targetPackage = {
       sharec: {
         config: 'awesome-config',
@@ -111,7 +112,7 @@ describe('steps > readCache', () => {
     }
     vol.fromJSON(dir, '/configs')
 
-    const output = await readCache(spinner)(input)
+    const output = await readCache({ spinner, prompt })(input)
 
     expect(output.cache).toEqual({
       '.eslintrc': 'foo',

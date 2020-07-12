@@ -1,14 +1,18 @@
 const { vol } = require('memfs')
-const { createFakeSpinner } = require('testUtils')
+const { createFakeSpinner, createFakePrompt } = require('testUtils')
 const writeConfigs = require('../writeConfigs')
 
 describe('steps > writeConfigs', () => {
+  let spinner
+  let prompt
+
   beforeEach(() => {
+    spinner = createFakeSpinner()
+    prompt = createFakePrompt()
     vol.reset()
   })
 
   it('should write merged configs', async () => {
-    const spinner = createFakeSpinner()
     const input = {
       targetPath: '/target',
       mergedConfigs: {
@@ -20,7 +24,7 @@ describe('steps > writeConfigs', () => {
 
     vol.fromJSON({}, '/')
 
-    await writeConfigs(spinner)(input)
+    await writeConfigs({ spinner, prompt })(input)
 
     expect(vol.readFileSync('/target/foo.txt', 'utf8')).toEqual('foo')
     expect(vol.readFileSync('/target/bar.txt', 'utf8')).toEqual('bar')
