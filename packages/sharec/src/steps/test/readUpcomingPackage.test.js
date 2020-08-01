@@ -3,12 +3,10 @@ const { createFakeSpinner, createFakePrompt } = require('testUtils')
 const readUpcomingPackage = require('../readUpcomingPackage')
 
 describe('steps > readUpcomingPackage', () => {
-  let spinner
   let prompt
   const input = { configPath: '/configs' }
 
   beforeEach(() => {
-    spinner = createFakeSpinner()
     prompt = createFakePrompt()
     vol.reset()
   })
