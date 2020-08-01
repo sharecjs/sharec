@@ -5,7 +5,7 @@ const { join, dirname, basename } = require('../utils/std').path
 
 const mergeConfigs = ({ spinner, prompt }) => async (input) => {
   const { configs, cache = {}, targetPath, options } = input
-  const { overwrite } = options
+  const { overwrite, interactive } = options
 
   spinner.frame('merging configuration')
 
@@ -15,7 +15,7 @@ const mergeConfigs = ({ spinner, prompt }) => async (input) => {
     if (!upcomingConfig) continue
 
     let currentConfig
-    let isMergeConfirmed = true
+    let isMergeConfirmed = !interactive
     let targetConfigPath = join(targetPath, config)
     const targetConfigBasename = basename(config)
     const isPackageJson = targetConfigBasename === 'package.json'
@@ -30,7 +30,7 @@ const mergeConfigs = ({ spinner, prompt }) => async (input) => {
       currentConfig = await readFile(targetConfigPath, 'utf8')
     } catch (err) {}
 
-    if (currentConfig) {
+    if (currentConfig && interactive) {
       isMergeConfirmed = await prompt.confirm(`Do you want to update ${bold(targetConfigPath)}?`)
     }
 
