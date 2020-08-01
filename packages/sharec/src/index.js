@@ -56,6 +56,7 @@ async function sharec(targetProcess) {
       disappear: disappearMode,
       debug: debugMode,
       includeCache: includeCacheMode,
+      interactive: interactiveMode,
     },
   }
 
