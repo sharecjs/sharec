@@ -1,7 +1,7 @@
 const { readFile } = require('../utils/std').fs
 const { resolve } = require('../utils/std').path
 
-const readTargetPackage = ({ spinner, prompt }) => async (input) => {
+const readTargetPackage = ({ spinner }) => async (input) => {
   try {
     spinner.frame('reading package.json from target project')
 
