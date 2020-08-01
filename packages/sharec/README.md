@@ -79,6 +79,18 @@ Example:
 }
 ```
 
+**`--interactive, -i`** - interactive mode in which `sharec` asks user before merge any config.
+
+Example:
+
+```
+{
+  "scripts": {
+    "postinstall": "sharec --interactive"
+  }
+}
+```
+
 **`--include-cache, -c`** - saves configuration cache in target project directory. It is very usefull,
 if you want always have ability to change configuration version in project without any problems.
 
