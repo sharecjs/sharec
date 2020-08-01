@@ -1,4 +1,4 @@
-const {} = require('inquirer')
+const { Confirm } = require('enquirer')
 
 /**
  * @typedef {Object} Prompt
@@ -16,14 +16,24 @@ const createPrompt = ({ silent }) => {
     /**
      * Ask user to confirm something
      * @memberof Logger
-     * @param {String} msg Confirm message
+     * @param {String} message Confirm message
      * @returns {Promise<Boolean>}
      */
-    confirm: msg => {
+    confirm: async (message) => {
       if (silent) return
 
-      console.log(msg)
-    }
+      const confirm = new Confirm({
+        message,
+      })
+
+      try {
+        const res = await confirm.run()
+
+        return res
+      } catch (err) {
+        return false
+      }
+    },
   }
 
   return prompt
