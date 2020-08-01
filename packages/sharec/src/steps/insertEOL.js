@@ -1,4 +1,4 @@
-const insertEOL = (spinner) => async (input) => {
+const insertEOL = ({ spinner, prompt }) => async (input) => {
   const { mergedConfigs } = input
 
   spinner.frame('inserting EOL')

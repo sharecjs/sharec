@@ -2,7 +2,7 @@ const { writeFile } = require('../utils/std').fs
 const { dirname } = require('../utils/std').path
 const { safeMakeDir } = require('../utils/fs')
 
-const writeConfigs = (spinner) => async (input) => {
+const writeConfigs = ({ spinner, prompt }) => async (input) => {
   const { mergedConfigs } = input
 
   spinner.frame('writing configuration')

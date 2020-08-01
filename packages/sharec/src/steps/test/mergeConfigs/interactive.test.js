@@ -2,9 +2,10 @@ const { fixtures, createFakeSpinner, createFakePrompt } = require('testUtils')
 const { vol } = require('memfs')
 const mergeConfigs = require('../../mergeConfigs')
 
-describe('steps > mergeConfigs > configs', () => {
+describe('steps > mergeConfigs > interactive', () => {
   let spinner
   let prompt
+  const packageBaseFxt = fixtures('package/json/00-base')
   const eslintBaseFxt = fixtures('eslint/json/01-base')
   const babelBaseFxt = fixtures('babel/json/00-base')
   const npmignoreBaseFxt = fixtures('npmignore/lines/00-base')
@@ -17,12 +18,13 @@ describe('steps > mergeConfigs > configs', () => {
     vol.reset()
   })
 
-  it('should write and merge configs from input to target dir', async () => {
+  it('should write and merge configs and package.json from input to target dir with confirmation', async () => {
     const upcomingPackage = {
       name: 'awesome-config',
       version: '0.0.0',
     }
     const upcomingConfigs = {
+      'package.json': packageBaseFxt.upcoming,
       '.eslintrc': eslintBaseFxt.upcoming,
       '.babelrc': babelBaseFxt.upcoming,
       '.npmignore': npmignoreBaseFxt.upcoming,
@@ -33,10 +35,13 @@ describe('steps > mergeConfigs > configs', () => {
       targetPath: '/target',
       configs: upcomingConfigs,
       mergedConfigs: {},
-      options: {},
+      options: {
+        interactive: true,
+      },
       upcomingPackage,
     }
     const dir = {
+      '/target/package.json': packageBaseFxt.current,
       '/target/.eslintrc': eslintBaseFxt.current,
       '/target/.babelrc': babelBaseFxt.current,
       '/target/.npmignore': npmignoreBaseFxt.current,
@@ -52,5 +57,45 @@ describe('steps > mergeConfigs > configs', () => {
     expect(output.mergedConfigs['/target/.npmignore']).toWraplessEqual(npmignoreBaseFxt.result, { eof: false })
     expect(output.mergedConfigs['/target/.gitignore']).toWraplessEqual(gitignoreBaseFxt.result, { eof: false })
     expect(output.mergedConfigs['/target/.yaspellerrc']).toWraplessEqual(yaspellerBaseFxt.result, { eof: false })
+    expect(output.mergedConfigs['/target/package.json']).toWraplessEqual(packageBaseFxt.result, { eof: false })
+  })
+
+  it('should not update existing files on prompt decline', async () => {
+    prompt.confirm.mockResolvedValue(false)
+
+    const upcomingPackage = {
+      name: 'awesome-config',
+      version: '0.0.0',
+    }
+    const upcomingConfigs = {
+      'package.json': packageBaseFxt.upcoming,
+      '.eslintrc': eslintBaseFxt.upcoming,
+      '.babelrc': babelBaseFxt.upcoming,
+      '.npmignore': npmignoreBaseFxt.upcoming,
+      '.gitignore': gitignoreBaseFxt.upcoming,
+      '.yaspellerrc': yaspellerBaseFxt.upcoming,
+    }
+    const input = {
+      targetPath: '/target',
+      configs: upcomingConfigs,
+      mergedConfigs: {},
+      options: {
+        interactive: true,
+      },
+      upcomingPackage,
+    }
+    const dir = {
+      '/target/package.json': packageBaseFxt.current,
+      '/target/.eslintrc': eslintBaseFxt.current,
+      '/target/.babelrc': babelBaseFxt.current,
+      '/target/.npmignore': npmignoreBaseFxt.current,
+      '/target/.gitignore': gitignoreBaseFxt.current,
+      '/target/.yaspellerrc': yaspellerBaseFxt.current,
+    }
+    vol.fromJSON(dir, '/configs')
+
+    const output = await mergeConfigs({ spinner, prompt })(input)
+
+    expect(output.mergedConfigs).toEqual(input.mergedConfigs)
   })
 })

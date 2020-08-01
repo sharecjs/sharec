@@ -1,11 +1,13 @@
 const { vol } = require('memfs')
-const { createFakeSpinner } = require('testUtils')
+const { createFakeSpinner, createFakePrompt } = require('testUtils')
 const readTargetPackage = require('../readTargetPackage')
 
 describe('steps > readTargetPackage', () => {
+  let prompt
   const input = { targetPath: '/configs' }
 
   beforeEach(() => {
+    prompt = createFakePrompt()
     vol.reset()
   })
 
@@ -22,7 +24,7 @@ describe('steps > readTargetPackage', () => {
 
     vol.fromJSON(dir, input.targetPath)
 
-    const output = await readTargetPackage(spinner)(input)
+    const output = await readTargetPackage({ spinner, prompt })(input)
 
     expect(output).toEqual({
       ...input,
@@ -37,7 +39,7 @@ describe('steps > readTargetPackage', () => {
     vol.fromJSON(dir, input.targetPath)
 
     try {
-      await readTargetPackage(spinner)(input)
+      await readTargetPackage({ spinner, prompt })(input)
     } catch (err) {
       done()
     }

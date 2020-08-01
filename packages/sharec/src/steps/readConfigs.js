@@ -3,7 +3,7 @@ const { join } = require('../utils/std').path
 const { find } = require('../utils/fs')
 const { InternalError, CAUSES } = require('../errors')
 
-const readConfigs = (spinner) => async (input) => {
+const readConfigs = ({ spinner, prompt }) => async (input) => {
   spinner.frame('reading upcoming configuration files')
 
   const configsPath = join(input.configPath, '/configs')

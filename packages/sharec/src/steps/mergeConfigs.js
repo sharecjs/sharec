@@ -1,10 +1,11 @@
+const { bold } = require('chalk')
 const { getConfigPipe } = require('../strategies/pipes')
 const { readFile } = require('../utils/std').fs
 const { join, dirname, basename } = require('../utils/std').path
 
-const mergeConfigs = (spinner) => async (input) => {
+const mergeConfigs = ({ spinner, prompt }) => async (input) => {
   const { configs, cache = {}, targetPath, options } = input
-  const { overwrite } = options
+  const { overwrite, interactive } = options
 
   spinner.frame('merging configuration')
 
@@ -14,6 +15,7 @@ const mergeConfigs = (spinner) => async (input) => {
     if (!upcomingConfig) continue
 
     let currentConfig
+    let isMergeConfirmed = !interactive
     let targetConfigPath = join(targetPath, config)
     const targetConfigBasename = basename(config)
     const isPackageJson = targetConfigBasename === 'package.json'
@@ -22,6 +24,19 @@ const mergeConfigs = (spinner) => async (input) => {
 
     if (targetPipe && targetPipe.alias) {
       targetConfigPath = join(dirname(targetConfigPath), targetPipe.alias)
+    }
+
+    try {
+      currentConfig = await readFile(targetConfigPath, 'utf8')
+    } catch (err) {}
+
+    if (currentConfig && interactive) {
+      isMergeConfirmed = await prompt.confirm(`Do you want to update ${bold(targetConfigPath)}?`)
+    }
+
+    // if user has not accepted merge -- skip file
+    if (!isMergeConfirmed) {
+      continue
     }
 
     if (!targetPipe) {
@@ -34,10 +49,6 @@ const mergeConfigs = (spinner) => async (input) => {
       input.mergedConfigs[targetConfigPath] = upcomingConfig
       continue
     }
-
-    try {
-      currentConfig = await readFile(targetConfigPath, 'utf8')
-    } catch (err) {}
 
     const cachedConfig = !isOverwritePackageJson ? cache[config] : undefined
 

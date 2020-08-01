@@ -1,3 +1,11 @@
+# v2.4.0
+
+This release includes interactive mode for better UX.
+
+Features:
+
+- Add `interactive` mode (#117)
+
 # v2.3.0
 
 This release includes formattings with `editorconfig` and `prettier`.

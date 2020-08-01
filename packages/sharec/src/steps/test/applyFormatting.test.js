@@ -1,12 +1,18 @@
-const { fixtures, createFakeSpinner } = require('testUtils')
+const { fixtures, createFakeSpinner, createFakePrompt } = require('testUtils')
 const applyFormatting = require('../applyFormatting')
 
 describe('steps > applyFormatting', () => {
+  let spinner
+  let prompt
   const jsonFxt = fixtures('default/json/02-formatting')
   const yamlFxt = fixtures('default/yaml/01-formatting')
 
+  beforeEach(() => {
+    spinner = createFakeSpinner()
+    prompt = createFakePrompt()
+  })
+
   it('should apply format from input to current configs', () => {
-    const spinner = createFakeSpinner()
     const input = {
       mergedConfigs: {
         '/foo.json': jsonFxt.current,
@@ -21,7 +27,7 @@ describe('steps > applyFormatting', () => {
       },
     }
 
-    const output = applyFormatting(spinner)(input)
+    const output = applyFormatting({ spinner, prompt })(input)
 
     expect(output.mergedConfigs['/foo.json']).toWraplessEqual(jsonFxt.result, {
       eof: false,
@@ -32,7 +38,6 @@ describe('steps > applyFormatting', () => {
   })
 
   it('should apply format from input to current configs by patterns', () => {
-    const spinner = createFakeSpinner()
     const input = {
       mergedConfigs: {
         '/foo.json': jsonFxt.current,
@@ -47,7 +52,7 @@ describe('steps > applyFormatting', () => {
       },
     }
 
-    const output = applyFormatting(spinner)(input)
+    const output = applyFormatting({ spinner, prompt })(input)
 
     expect(output.mergedConfigs['/foo.json']).toWraplessEqual(jsonFxt.result, {
       eof: false,
@@ -58,15 +63,13 @@ describe('steps > applyFormatting', () => {
   })
 
   it('should not change files if format is not passing to input', () => {
-    const spinner = createFakeSpinner()
     const input = {
       mergedConfigs: {
         '/foo.json': jsonFxt.current,
         '/bar.yaml': yamlFxt.current,
       },
     }
-
-    const output = applyFormatting(spinner)(input)
+    const output = applyFormatting({ spinner, prompt })(input)
 
     expect(output).toEqual({
       ...input,

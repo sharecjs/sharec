@@ -1,6 +1,6 @@
 const minimist = require('minimist')
 const { pwd } = require('shelljs')
-const { createSpinner, createLogger } = require('./cli')
+const { createSpinner, createLogger, createPrompt } = require('./cli')
 const { composeSteps, steps } = require('./steps')
 const { CAUSES, InternalError } = require('./errors')
 
@@ -23,6 +23,7 @@ async function sharec(targetProcess) {
   const disappearMode = options.d || options.disappear
   const overwriteMode = options.o || options.overwrite
   const includeCacheMode = options.c || options['include-cache']
+  const interactiveMode = options.i || options.interactive
 
   // CLI utilities
   const spinner = createSpinner({
@@ -32,6 +33,9 @@ async function sharec(targetProcess) {
   const logger = createLogger({
     prefix: 'debugger',
     silent: !debugMode,
+  })
+  const prompt = createPrompt({
+    silent: !interactiveMode,
   })
 
   // steps preparation and definition
@@ -52,6 +56,7 @@ async function sharec(targetProcess) {
       disappear: disappearMode,
       debug: debugMode,
       includeCache: includeCacheMode,
+      interactive: interactiveMode,
     },
   }
 
@@ -59,21 +64,21 @@ async function sharec(targetProcess) {
   logger.log('initial input\n', input)
 
   const commonFlow = composeSteps(
-    logger.wrap(steps.readTargetPackage(spinner), 'readTargetPackage'),
-    logger.wrap(steps.readUpcomingPackage(spinner), 'readUpcomingPackage'),
-    logger.wrap(steps.isAlreadyInstalled(spinner), 'isAlreadyInstalled'),
-    logger.wrap(steps.isDependantOfSharec(spinner), 'isDependantOfSharec'),
-    logger.wrap(steps.isIgnoresSharecConfigs(spinner), 'isIgnoresSharecConfigs'),
-    logger.wrap(steps.readConfigs(spinner), 'readConfigs'),
-    logger.wrap(steps.readEditorconfig(spinner), 'readEditorconfig'),
-    logger.wrap(steps.readPrettier(spinner), 'readPrettier'),
-    logger.wrap(steps.readCache(spinner), 'readCache'),
-    logger.wrap(steps.mergeConfigs(spinner), 'mergeConfigs'),
-    logger.wrap(steps.insertMeta(spinner), 'insertMeta'),
-    logger.wrap(steps.insertEOL(spinner), 'insertEOL'),
-    logger.wrap(steps.applyFormatting(spinner), 'applyFormatting'),
-    logger.wrap(steps.writeCache(spinner), 'writeCache'),
-    logger.wrap(steps.writeConfigs(spinner, 'writeConfigs')),
+    logger.wrap(steps.readTargetPackage({ spinner, prompt }), 'readTargetPackage'),
+    logger.wrap(steps.readUpcomingPackage({ spinner, prompt }), 'readUpcomingPackage'),
+    logger.wrap(steps.isAlreadyInstalled({ spinner, prompt }), 'isAlreadyInstalled'),
+    logger.wrap(steps.isDependantOfSharec({ spinner, prompt }), 'isDependantOfSharec'),
+    logger.wrap(steps.isIgnoresSharecConfigs({ spinner, prompt }), 'isIgnoresSharecConfigs'),
+    logger.wrap(steps.readConfigs({ spinner, prompt }), 'readConfigs'),
+    logger.wrap(steps.readEditorconfig({ spinner, prompt }), 'readEditorconfig'),
+    logger.wrap(steps.readPrettier({ spinner, prompt }), 'readPrettier'),
+    logger.wrap(steps.readCache({ spinner, prompt }), 'readCache'),
+    logger.wrap(steps.mergeConfigs({ spinner, prompt }), 'mergeConfigs'),
+    logger.wrap(steps.insertMeta({ spinner, prompt }), 'insertMeta'),
+    logger.wrap(steps.insertEOL({ spinner, prompt }), 'insertEOL'),
+    logger.wrap(steps.applyFormatting({ spinner, prompt }), 'applyFormatting'),
+    logger.wrap(steps.writeCache({ spinner, prompt }), 'writeCache'),
+    logger.wrap(steps.writeConfigs({ spinner, prompt }), 'writeConfigs'),
   )
 
   try {

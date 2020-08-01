@@ -1,7 +1,7 @@
 const get = require('lodash/get')
 const { InternalError, CAUSES } = require('../errors')
 
-const isAlreadyInstalled = (spinner) => (input) => {
+const isAlreadyInstalled = ({ spinner, prompt }) => (input) => {
   const { upcomingPackage, targetPackage } = input
   const installedConfigName = get(targetPackage, 'sharec.config', null)
   const installedConfigVersion = get(targetPackage, 'sharec.version', null)
