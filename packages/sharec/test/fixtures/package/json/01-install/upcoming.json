@@ -1,6 +1,7 @@
 {
   "name": "my-awesome-package",
   "scripts": {
+    "start": "rimraf && NODE_ENV=dev start-script",
     "commit": "git-cz",
     "lint": "eslint 'src/**/*.{js,jsx,json}'",
     "lint-staged": "lint-staged"

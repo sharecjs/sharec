@@ -1,3 +1,9 @@
+# 2.5.0
+
+Features:
+
+- Add special logic for npm scripts merging (#61)
+
 # v2.4.0
 
 This release includes interactive mode for better UX.
