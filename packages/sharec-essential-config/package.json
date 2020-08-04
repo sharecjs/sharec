@@ -1,6 +1,6 @@
 {
   "name": "sharec-essential-config",
-  "version": "2.4.0",
+  "version": "2.5.0",
   "description": "",
   "author": "Konstantin Epishev <lamartire@gmail.com>",
   "keywords": [],
@@ -14,7 +14,7 @@
     "url": "git+https://github.com/lamartire/sharec"
   },
   "dependencies": {
-    "sharec": "^2.4.0"
+    "sharec": "^2.5.0"
   },
   "scripts": {
     "postinstall": "sharec"
