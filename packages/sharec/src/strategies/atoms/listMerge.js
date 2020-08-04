@@ -1,3 +1,5 @@
+const identity = require('lodash/identity')
+
 const listMergeAtom = (atom) => ({ current, upcoming, cached }) => {
   // TODO: what do with arrays with different length?
   if (current && upcoming === undefined) return current
@@ -7,6 +9,10 @@ const listMergeAtom = (atom) => ({ current, upcoming, cached }) => {
   const result = new Array(resultLength)
 
   for (let i = 0; i < result.length; i++) {
+    const cachedElement = cached ? cached[i] : undefined
+
+    console.log(i, current[i], cachedElement)
+
     if (current[i] === undefined && upcoming[i]) {
       result[i] = upcoming[i]
       continue
@@ -17,14 +23,28 @@ const listMergeAtom = (atom) => ({ current, upcoming, cached }) => {
       continue
     }
 
+    console.log(1, {
+      current: current[i],
+      upcoming: upcoming[i],
+      cached: cachedElement,
+    })
+    console.log(
+      2,
+      atom({
+        current: current[i],
+        upcoming: upcoming[i],
+        cached: cachedElement,
+      }),
+    )
+
     result[i] = atom({
       current: current[i],
       upcoming: upcoming[i],
-      cached: cached && cached[i],
+      cached: cachedElement,
     })
   }
 
-  return result
+  return result.filter(identity)
 }
 
 module.exports = listMergeAtom

@@ -7,6 +7,12 @@ describe('atoms > command', () => {
     cached: 'NODE_ENV=test foo && bar --baz && baz',
     result: 'NODE_ENV=production foo && bar && baz --foo',
   }
+  const commandRemovedFxt = {
+    current: 'bar && baz',
+    upcoming: 'NODE_ENV=production foo && bar --foo && baz --foo',
+    cached: 'NODE_ENV=test foo && bar --baz && baz',
+    result: 'bar && baz --foo',
+  }
 
   it('should return current if upcoming is not passed', () => {
     const result = commandAtom({ current: commandFxt.current })
@@ -26,10 +32,9 @@ describe('atoms > command', () => {
     expect(result).toEqual(commandFxt.result)
   })
 
-  // TODO:
-  // it('should handle removed fields', () => {
-  //   const result = commandAtom(commandRemovedFxt)
+  it('should handle removed parts', () => {
+    const result = commandAtom(commandRemovedFxt)
 
-  //   expect(result).toEqual(commandRemovedFxt.result)
-  // })
+    expect(result).toEqual(commandRemovedFxt.result)
+  })
 })
