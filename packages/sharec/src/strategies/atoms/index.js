@@ -6,6 +6,7 @@ const listConcatAtom = require('./listConcat')
 const pairAtom = require('./pair')
 const linesMergeAtom = require('./linesMerge')
 const linesConcatAtom = require('./linesConcat')
+const commandAtom = require('./command')
 
 module.exports = {
   hashAtom,
@@ -16,4 +17,5 @@ module.exports = {
   pairAtom,
   linesMergeAtom,
   linesConcatAtom,
+  commandAtom,
 }

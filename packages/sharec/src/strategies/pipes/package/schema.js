@@ -1,6 +1,6 @@
 const isMap = require('lodash/isMap')
 const { compose, fork } = require('../../actions')
-const { hashAtom, listConcatAtom, primitiveAtom } = require('../../atoms')
+const { hashAtom, listConcatAtom, primitiveAtom, commandAtom } = require('../../atoms')
 const { eslintJson } = require('../eslint/schema')
 const { babelJson } = require('../babel/schema')
 const { postcssJson } = require('../postcss/schema')
@@ -18,7 +18,9 @@ const packageJson = compose({
   license: fork([[isMap, hashAtom], primitiveAtom]),
   author: fork([[isMap, hashAtom], primitiveAtom]),
   repository: fork([[isMap, hashAtom], primitiveAtom]),
-  scripts: hashAtom,
+  scripts: compose({
+    $$default: commandAtom,
+  }),
   config: hashAtom,
   engines: hashAtom,
   dependencies: hashAtom,
