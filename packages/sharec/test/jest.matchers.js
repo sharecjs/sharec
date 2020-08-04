@@ -31,8 +31,6 @@ const removeDoubleEOL = (str, eol = EOL) => {
 
   if (doubleEOLIdx === -1) return str
 
-  // console.log(`${str.slice(0, doubleEOLIdx)}\n`)
-
   return `${str.slice(0, doubleEOLIdx)}\n`
 }
 

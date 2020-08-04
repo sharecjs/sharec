@@ -6,6 +6,13 @@ const head = require('lodash/head')
 function commandsToLists(params) {
   return Object.keys(params).reduce((acc, key) => {
     const parsedCommand = new Map()
+
+    if (!params[key]) {
+      return Object.assign(acc, {
+        [key]: undefined,
+      })
+    }
+
     const splittedCommand = params[key].split(/(\||&{1,2})/).map(trim)
 
     for (let i = 0; i < splittedCommand.length; i++) {
