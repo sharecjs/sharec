@@ -1,0 +1,16 @@
+baseURL = "http://example.org/"
+languageCode = "en-us"
+title = "Sharec"
+author = "lamartire"
+theme = "sharec"
+
+[menu]
+  [[menu.sidebar]]
+    identifier = "overview"
+    title = "Overview"
+    url = "/overview"
+
+  [[menu.sidebar]]
+    identifier = "examples"
+    title = "Recipes and examples"
+    url = "/examples"

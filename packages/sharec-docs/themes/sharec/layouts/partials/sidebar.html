@@ -1,0 +1,7 @@
+<aside class="sidebar">
+	 <ul>
+	 	 {{ range .Site.Menus.sidebar }}
+	 	 <li><a href="{{ .URL }}">{{ .Title }}</a></li>
+	 	 {{ end }}
+	 </ul>
+</aside>
