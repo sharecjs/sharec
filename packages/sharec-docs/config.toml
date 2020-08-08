@@ -4,6 +4,7 @@ title = "Sharec"
 author = "lamartire"
 theme = "sharec"
 pygmentsUseClasses = true
+assetDir = "."
 
 [menu]
   [[menu.sidebar]]
