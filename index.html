@@ -1,86 +1,176 @@
 <!DOCTYPE html>
+<html lang="en-us">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta>
-  <link rel="stylesheet" href="./assets/css/main.css">
-  <title>Sharec. One tool – many configurations</title>
+	<meta name="generator" content="Hugo 0.68.3" />
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	
+	
+	<link rel="stylesheet" href="/sharec/css/main.css">
+	<link rel="alternate" type="application/rss+xml" href="/sharec/index.xml" title="Sharec">
 </head>
 <body>
-  <main>
-    <div class="welcome">
-      <div class="container">
-        <h1>Sharec 📦</h1>
-        <ul class="welcome__badges">
-          <li><a href="https://www.npmjs.com/package/sharec"><img src="https://img.shields.io/npm/v/sharec.svg?style=flat-square"/></a></li>
-          <li><a href="https://www.npmjs.com/package/prettier"><img src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square"/></a></li>
-          <li><a href="https://travis-ci.org/lamartire/sharec"><img src="https://travis-ci.org/lamartire/sharec.svg?branch=master"/></a></li>
-          <li><a href="https://ci.appveyor.com/project/lamartire/sharec/branch/master"><img src="https://ci.appveyor.com/api/projects/status/mjtiauhp4xmvr9w7/branch/master?svg=true"/></a></li>
-        </ul>
-        <blockquote>One tool – many configurations</blockquote>
-      </div>
-    </div>
-    <section class="section">
-      <div class="container">
-        <h2 class="section__title">Introduction
-        </h2>
-        <section class="section__content">
-          <p><strong>sharec</strong> – is a new tool for sharing bloat and difficult configuration between many projects.</p>
-          <p>With this tool you can place all your configuration files in single repository and install it with <strong>npm</strong> or other package manager. That will make configuration process pretty simple.</p>
-        </section>
-      </div>
+  <div class="grid grid-cols-10 gap-10">
+    <aside class="col-span-2 bg-indigo-800 shadow-md">
+      <section class="sticky top-0 left-0 w-full min-h-screen">
+  <div class="mb-4 p-4 border-b border-solid border-indigo-700">
+    <a class="no-underline flex items-center justify-center" href="/">
+      <img class="w-8 mr-4" src="/sharec/images/logo.svg" alt="Sharec logo">
+      <span class="lowercase text-2xl">Sharec</span>
+    </a>
+  </div>
+	<ul class="p-4">
+	 	 
+	 	 <li class="mb-6 last:mb-0">
+       <a class="link" href="/sharec/">Introduction</a>
+     </li>
+	 	 
+	 	 <li class="mb-6 last:mb-0">
+       <a class="link" href="/sharec/overview">Overview</a>
+     </li>
+	 	 
+	</ul>
+  <section class="p-8 absolute bottom-0 left-0 w-full border-t border-solid border-indigo-700 text-center">
+	  <ul>
+	   	<li class="mb-4">
+        <a class="link" target="_blank" href="https://github.com/lamartire/sharec">Github</a>
+      </li>
+	   	<li>
+        <a class="link" target="_blank" href="https://github.com/lamartire/sharec/issues">Issues</a>
+      </li>
+	  </ul>
+  </section>
+</section>
+
+    </aside>
+    <section class="col-start-4 col-span-6 py-10">
+      <section class="content">
+	      
+  <h1 id="introduction">Introduction</h1>
+<p>With <strong>sharec</strong> you can share and management configuration across projects,
+keep your code up to date and start new projects in one command.</p>
+<h2 id="quick-start">Quick start</h2>
+<!-- raw HTML omitted -->
+<ol>
+<li>Create configuration project and init <code>npm</code> inside.</li>
+<li>Install <code>sharec</code> as dependency:</li>
+</ol>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">npm i --save sharec
+</code></pre></div><ol start="3">
+<li>Add <code>postinstall</code> script to root <code>package.json</code> file:</li>
+</ol>
+<div class="highlight"><pre class="chroma"><code class="language-json" data-lang="json"><span class="s2">&#34;scripts&#34;</span><span class="err">:</span> <span class="p">{</span>
+  <span class="nt">&#34;postinstall&#34;</span><span class="p">:</span> <span class="s2">&#34;sharec&#34;</span>
+<span class="p">}</span>
+</code></pre></div><ol start="4">
+<li>Create <code>configs</code> directory.</li>
+<li>Place some configuration files to the created <code>configs</code> directory.</li>
+<li>Create <code>package.json</code> file inside <code>configs</code> directory and add required dependencies for tool what you need.</li>
+<li>Publish configuration with <code>npm publish</code> command or just push it to git repository.</li>
+<li>Install it wherever you want with <code>npm install</code> command.</li>
+</ol>
+<p>If you want read more detailed manual – look at <a href="packages/sharec-demo-config">official demo config</a>
+and check <a href="packages/sharec">sharec</a> package if you looking for API reference.</p>
+<h2 id="example">Example</h2>
+<p>With sharec you can transform this:</p>
+<div class="highlight"><pre class="chroma"><code class="language-diff" data-lang="diff">{
+  &#34;name&#34;: &#34;my-awesome-project&#34;,
+  &#34;version&#34;: &#34;1.0.0&#34;,
+  &#34;scripts&#34;: {
+    &#34;start&#34;: &#34;NODE_ENV=development ./dev&#34;,
+    &#34;build&#34;: &#34;rimraf dist &amp;&amp; NODE_ENV=production ./build&#34;,
+<span class="gd">-   &#34;eslint&#34;: &#34;eslint ./src/**/*.js&#34;
+</span><span class="gd"></span>  },
+<span class="gd">- &#34;husky&#34;: {
+</span><span class="gd">-   &#34;hooks&#34;: {
+</span><span class="gd">-     &#34;pre-commit&#34;: &#34;lint-staged&#34;
+</span><span class="gd">-   }
+</span><span class="gd">- },
+</span><span class="gd">- &#34;lint-staged&#34;: {
+</span><span class="gd">-   &#34;src/**/*.js&#34;: [
+</span><span class="gd">-     &#34;eslint&#34;,
+</span><span class="gd">-     &#34;prettier --write&#34;,
+</span><span class="gd">-     &#34;git add&#34;
+</span><span class="gd">-   ]
+</span><span class="gd">- },
+</span><span class="gd">- &#34;browserslist&#34;: [
+</span><span class="gd">-   &#34;last 2 version&#34;,
+</span><span class="gd">-   &#34;&gt; 1%&#34;
+</span><span class="gd">- ],
+</span><span class="gd">- &#34;babel&#34;: {
+</span><span class="gd">-   &#34;presets&#34;: [
+</span><span class="gd">-     &#34;@babel/preset-env&#34;
+</span><span class="gd">-   ]
+</span><span class="gd">- },
+</span><span class="gd">- &#34;prettier&#34;: {
+</span><span class="gd">-   &#34;singleQuote&#34;: true,
+</span><span class="gd">-   &#34;semi&#34;: false
+</span><span class="gd">- },
+</span><span class="gd">- &#34;jest&#34;: {
+</span><span class="gd">-   &#34;testURL&#34;: &#34;http://localhost/&#34;,
+</span><span class="gd">-   &#34;moduleNameMapper&#34;: {
+</span><span class="gd">-     &#34;^src/(.*)$&#34;: &#34;&lt;rootDir&gt;/src/$1&#34;
+</span><span class="gd">-   }
+</span><span class="gd">- },
+</span><span class="gd">- &#34;eslintConfig&#34;: {
+</span><span class="gd">-   &#34;parser&#34;: &#34;babel-eslint&#34;,
+</span><span class="gd">-   &#34;env&#34;: {
+</span><span class="gd">-     &#34;browser&#34;: true,
+</span><span class="gd">-     &#34;es6&#34;: true,
+</span><span class="gd">-     &#34;node&#34;: true,
+</span><span class="gd">-     &#34;jest&#34;: true
+</span><span class="gd">-   },
+</span><span class="gd">-   &#34;extends&#34;: &#34;standard&#34;,
+</span><span class="gd">-   &#34;rules&#34;: {
+</span><span class="gd">-     &#34;space-before-function-paren&#34;: 0
+</span><span class="gd">-   },
+</span><span class="gd">-   &#34;parserOptions&#34;: {
+</span><span class="gd">-     &#34;ecmaVersion&#34;: 8,
+</span><span class="gd">-     &#34;ecmaFeatures&#34;: {
+</span><span class="gd">-       &#34;spread&#34;: true
+</span><span class="gd">-     },
+</span><span class="gd">-     &#34;sourceType&#34;: &#34;module&#34;
+</span><span class="gd">-   }
+</span><span class="gd">- },
+</span><span class="gd">- &#34;eslintIgnore&#34;: [
+</span><span class="gd">-   &#34;/node_modules&#34;,
+</span><span class="gd">-   &#34;/dist&#34;
+</span><span class="gd">- ],
+</span><span class="gd"></span>  &#34;devDependencies&#34;: {
+<span class="gd">-   &#34;@babel/core&#34;: &#34;^7.0.1&#34;,
+</span><span class="gd">-   &#34;@babel/preset-env&#34;: &#34;^7.0.0&#34;,
+</span><span class="gd">-   &#34;babel-core&#34;: &#34;7.0.0-bridge.0&#34;,
+</span><span class="gd">-   &#34;babel-eslint&#34;: &#34;^10.0.0&#34;,
+</span><span class="gd">-   &#34;babel-jest&#34;: &#34;^23.6.0&#34;,
+</span><span class="gd">-   &#34;eslint&#34;: &#34;^5.6.0&#34;,
+</span><span class="gd">-   &#34;eslint-config-standard&#34;: &#34;^12.0.0&#34;,
+</span><span class="gd">-   &#34;eslint-plugin-import&#34;: &#34;^2.9.0&#34;,
+</span><span class="gd">-   &#34;eslint-plugin-node&#34;: &#34;^9.0.0&#34;,
+</span><span class="gd">-   &#34;eslint-plugin-promise&#34;: &#34;^4.0.1&#34;,
+</span><span class="gd">-   &#34;eslint-plugin-standard&#34;: &#34;^4.0.0&#34;,
+</span><span class="gd">-   &#34;husky&#34;: &#34;^2.0.0&#34;,
+</span><span class="gd">-   &#34;lint-staged&#34;: &#34;^8.0.4&#34;,
+</span><span class="gd">-   &#34;prettier&#34;: &#34;^1.11.1&#34;
+</span><span class="gd"></span>  }
+}
+</code></pre></div><p>To this:</p>
+<div class="highlight"><pre class="chroma"><code class="language-diff" data-lang="diff">{
+  &#34;name&#34;: &#34;my-awesome-project&#34;,
+  &#34;version&#34;: &#34;1.0.0&#34;,
+  &#34;scripts&#34;: {
+    &#34;start&#34;: &#34;NODE_ENV=development ./dev&#34;,
+    &#34;build&#34;: &#34;rimraf dist &amp;&amp; NODE_ENV=production ./build&#34;,
+  },
+  &#34;devDependencies&#34;: {
+<span class="gi">+    &#34;my-awesome-config&#34;: &#34;1.0.0&#34;
+</span><span class="gi"></span>  }
+}
+</code></pre></div>
+
+      </section>
     </section>
-    <section class="section">
-      <div class="container">
-        <h2 class="section__title">Installation
-        </h2>
-        <section class="section__content">
-          <p>You should create new package and install <strong>sharec</strong> into as dependency.</p><pre class="core"><code class="shell">
-            npm i --save sharec # With npm
-            yarn add sharec     # Or with yarn</code></pre>
-          <p>Next step – add <strong>sharec</strong> to <strong>postinstall</strong> hook of your configs:</p><pre class="core"><code class="json">
-            {
-              "name": "my-awesome-configs",
-              "scripts": {
-                "postinstall": "sharec"
-              },
-              "dependencies": {
-                "sharec": "1.0.0"
-              }
-            }</code></pre>
-          <p>All done! You are ready to create configs.</p>
-        </section>
-      </div>
-    </section>
-    <section class="section">
-      <div class="container">
-        <h2 class="section__title">Configuration creating
-        </h2>
-        <section class="section__content">
-          <p>After installing you must create <strong>configs</strong> directory and init <strong>npm</strong> here.</p><pre class="core"><code class="shell">
-            mkdir configs
-            cd ./configs
-            npm init -y</code></pre>
-          <p>Now, you allowed to create sharable configs! <a href="https://www.npmjs.com/package/sharec-demo-config">Check this simple example</a>.</p>
-        </section>
-      </div>
-    </section>
-    <section class="section">
-      <div class="container">
-        <h2 class="section__title">Configuration installation
-        </h2>
-        <section class="section__content">
-          <p>When you will be ready to share – push your configs or publish at npm-registry. After publishing/pushin you can install new configuration to any project.</p><pre class="core"><code class="shell">npm i --save-dev my-awesome-configs</code></pre>
-          <p>When configuration will be installed you can see a new entry in the project's `package.json` file:</p><pre class="core"><code class="json">
-            "sharec": {
-              "injected": true
-            }</code></pre>
-          <p>It means – configs were injected and on the next `npm install` – `sharec` will not inject configurations again.</p>
-        </section>
-      </div>
-    </section>
-  </main>
-  <footer class="footer"><span>2019, <a href="https://github.com/lamartire/sharec" target="_blank">Sharec</a> created with ❤️ by <a href="https://github.com/lamartire" target="_blank">lamartire</a></span>
-  </footer>
-  <script src="./assets/js/app.js"></script>
+  </div>
 </body>
+</html>
