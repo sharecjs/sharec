@@ -3,14 +3,23 @@ languageCode = "en-us"
 title = "Sharec"
 author = "lamartire"
 theme = "sharec"
+pygmentsUseClasses = true
 
 [menu]
+  [[menu.sidebar]]
+    identifier = "home"
+    title = "Home"
+    url = "/"
+    weight = 8
+
   [[menu.sidebar]]
     identifier = "overview"
     title = "Overview"
     url = "/overview"
+    weight = 9
 
   [[menu.sidebar]]
     identifier = "examples"
     title = "Recipes and examples"
     url = "/examples"
+    weight = 10

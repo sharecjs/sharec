@@ -1,0 +1,30 @@
+{
+  "scripts": {
+    "start": "gulp",
+    "build": "gulp build"
+  },
+  "author": "Konstantin Epishev <lamartire@gmail.com>",
+  "license": "MIT",
+  "postcss": {
+    "plugins": {
+      "postcss-import": {},
+      "postcss-nested": {},
+      "tailwindcss": {},
+      "autoprefixer": {}
+    }
+  },
+  "devDependencies": {
+    "autoprefixer": "^9.8.6",
+    "gulp": "^4.0.2",
+    "gulp-cli": "^2.3.0",
+    "gulp-cssnano": "^2.1.3",
+    "gulp-plumber": "^1.2.1",
+    "gulp-postcss": "^8.0.0",
+    "postcss-import": "^12.0.1",
+    "postcss-nested": "^4.2.3"
+  },
+  "dependencies": {
+    "reset.css": "^2.0.2",
+    "tailwindcss": "^1.6.2"
+  }
+}

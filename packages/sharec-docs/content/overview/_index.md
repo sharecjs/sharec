@@ -71,7 +71,7 @@ you do that by yourself.
 
 Example:
 
-```
+```json
 {
   "scripts": {
     "postinstall": "sharec --disappear"
@@ -83,7 +83,7 @@ Example:
 
 Example:
 
-```
+```json
 {
   "scripts": {
     "postinstall": "sharec --interactive"
@@ -102,7 +102,7 @@ Be sure, if you use this option, that `.sharec` directory is not ignored by git!
 
 Example:
 
-```
+```json
 {
   "scripts": {
     "postinstall": "sharec --include-cache"
@@ -128,7 +128,7 @@ If you see some unexpected behavior and want to help with solution - you can pro
 some debug information about with `DEBUG` environment variable. It allows to see
 everything what happens inside of sharec flow.
 
-```
+```json
 {
   "scripts": {
     "postinstall": "DEBUG=true sharec"

@@ -4,134 +4,136 @@
 [![npm](https://img.shields.io/npm/v/sharec)](https://npmjs.com/sharec)
 ![MIT License](https://camo.githubusercontent.com/4481c7672053be9c676fbc983c040ca59fddfa19/68747470733a2f2f696d672e736869656c64732e696f2f6e706d2f6c2f6c6f6775782d70726f636573736f722e737667)
 
-Sharec allows you install configuration via CLI with short and friendly commands.
-Use it in your configuration packages.
+With **sharec** you can share and management configuration across projects,
+keep your code up to date and start new projects in one command.
 
-## Supported configs
+## Quick start
 
-At this moment, sharec supports:
+<img src="public/logo-alt.svg" alt="Sharec logo by Ivashkina Xenia <xeniaowl112@mail.ru>" align="right" width="100">
 
-- `npmignore`
-- `eslint`
-- `eslintignore`
-- `babel`
-- `yaspeller`
-- `browserslist`
-- `postcss`
-- `gitignore`
-- `husky`
-- `jest`
-- `lint-staged`
-- `stylelint`
-- `commitlint`
-- `prettier`
+1. Create configuration project and init `npm` inside.
+2. Install `sharec` as dependency:
 
-Other `.json` or `.yaml` files will be merged by keys.
+```shell
+npm i --save sharec
+```
 
-Files with different extension will be just copied.
-
-## Potential use-cases
-
-- Versionable configuration packages (try out [demo config](https://github.com/lamartire/sharec/tree/master/packages/sharec-demo-config))
-- Create boilerplates, like `create-react-app` (see dead simple example [here](https://github.com/lamartire/sharec-react-app))
-
-## `.gitignore` and `.npmignore`
-
-If you want to include these files, you should name them without dot - `gitignore`, `npmignore`.
-It needs, because originally named files would not be readed during installation.
-
-## Options
-
-**`--silent, -s`** - hides all outputs from `sharec` in CLI.
-
-Example:
+3. Add `postinstall` script to root `package.json` file:
 
 ```json
+"scripts": {
+  "postinstall": "sharec"
+}
+```
+
+4. Create `configs` directory.
+5. Place some configuration files to the created `configs` directory.
+6. Create `package.json` file inside `configs` directory and add required dependencies for tool what you need.
+7. Publish configuration with `npm publish` command or just push it to git repository.
+8. Install it wherever you want with `npm install` command.
+
+If you want read more detailed manual – look at [official demo config](packages/sharec-demo-config)
+and check [sharec](packages/sharec) package if you looking for API reference.
+
+## Example
+
+With sharec you can transform this:
+
+```diff
 {
+  "name": "my-awesome-project",
+  "version": "1.0.0",
   "scripts": {
-    "postinstall": "sharec --silent"
+    "start": "NODE_ENV=development ./dev",
+    "build": "rimraf dist && NODE_ENV=production ./build",
+-   "eslint": "eslint ./src/**/*.js"
+  },
+- "husky": {
+-   "hooks": {
+-     "pre-commit": "lint-staged"
+-   }
+- },
+- "lint-staged": {
+-   "src/**/*.js": [
+-     "eslint",
+-     "prettier --write",
+-     "git add"
+-   ]
+- },
+- "browserslist": [
+-   "last 2 version",
+-   "> 1%"
+- ],
+- "babel": {
+-   "presets": [
+-     "@babel/preset-env"
+-   ]
+- },
+- "prettier": {
+-   "singleQuote": true,
+-   "semi": false
+- },
+- "jest": {
+-   "testURL": "http://localhost/",
+-   "moduleNameMapper": {
+-     "^src/(.*)$": "<rootDir>/src/$1"
+-   }
+- },
+- "eslintConfig": {
+-   "parser": "babel-eslint",
+-   "env": {
+-     "browser": true,
+-     "es6": true,
+-     "node": true,
+-     "jest": true
+-   },
+-   "extends": "standard",
+-   "rules": {
+-     "space-before-function-paren": 0
+-   },
+-   "parserOptions": {
+-     "ecmaVersion": 8,
+-     "ecmaFeatures": {
+-       "spread": true
+-     },
+-     "sourceType": "module"
+-   }
+- },
+- "eslintIgnore": [
+-   "/node_modules",
+-   "/dist"
+- ],
+  "devDependencies": {
+-   "@babel/core": "^7.0.1",
+-   "@babel/preset-env": "^7.0.0",
+-   "babel-core": "7.0.0-bridge.0",
+-   "babel-eslint": "^10.0.0",
+-   "babel-jest": "^23.6.0",
+-   "eslint": "^5.6.0",
+-   "eslint-config-standard": "^12.0.0",
+-   "eslint-plugin-import": "^2.9.0",
+-   "eslint-plugin-node": "^9.0.0",
+-   "eslint-plugin-promise": "^4.0.1",
+-   "eslint-plugin-standard": "^4.0.0",
+-   "husky": "^2.0.0",
+-   "lint-staged": "^8.0.4",
+-   "prettier": "^1.11.1"
   }
 }
 ```
 
-**`--overwrite, -o`** - force `sharec` to replace all configs without merging and caching.
+To this:
 
-Example:
-
-```json
+```diff
 {
+  "name": "my-awesome-project",
+  "version": "1.0.0",
   "scripts": {
-    "postinstall": "sharec --overwrite"
-  }
-}
-```
-
-**`--disappear, -d`** - installs configuration without meta injecting and caching, like
-you do that by yourself.
-
-Example:
-
-```
-{
-  "scripts": {
-    "postinstall": "sharec --disappear"
-  }
-}
-```
-
-**`--interactive, -i`** - interactive mode in which `sharec` asks user before merge any config.
-
-Example:
-
-```
-{
-  "scripts": {
-    "postinstall": "sharec --interactive"
-  }
-}
-```
-
-**`--include-cache, -c`** - saves configuration cache in target project directory. It is very usefull,
-if you want always have ability to change configuration version in project without any problems.
-
-With this option, cache would be saved in `<project_path>/.sharec/.cache`, instead `node_modules`.
-
-Especially this feature can be usefull if you are using package manager which do not make `node_modules`.
-
-Be sure, if you use this option, that `.sharec` directory is not ignored by git!
-
-Example:
-
-```
-{
-  "scripts": {
-    "postinstall": "sharec --include-cache"
-  }
-}
-```
-
-## Ignoring configuration
-
-If you want to force upcoming `sharec` configs – just add `ignore` flat to your projects's `sharec` field:
-
-```json
-{
-  "sharec": {
-    "ignore": true
-  }
-}
-```
-
-## Debugging
-
-If you see some unexpected behavior and want to help with solution - you can provide
-some debug information about with `DEBUG` environment variable. It allows to see
-everything what happens inside of sharec flow.
-
-```
-{
-  "scripts": {
-    "postinstall": "DEBUG=true sharec"
+    "start": "NODE_ENV=development ./dev",
+    "build": "rimraf dist && NODE_ENV=production ./build",
+  },
+  "devDependencies": {
++    "my-awesome-config": "1.0.0"
   }
 }
 ```
