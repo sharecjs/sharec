@@ -1,4 +1,4 @@
-baseURL = "http://example.org/"
+baseURL = "https://lamartire.github.io/sharec/"
 languageCode = "en-us"
 title = "Sharec"
 author = "lamartire"
