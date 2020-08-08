@@ -1,21 +1,25 @@
-<section class="sticky top-0 left-0 w-full min-h-screen p-4 border-r-2 border-gray-500">
-  <div class="mb-16">
+<section class="sticky top-0 left-0 w-full min-h-screen">
+  <div class="mb-4 p-4 border-b border-solid border-indigo-700">
     <a class="no-underline flex items-center justify-center" href="/">
       <img class="w-8 mr-4" src="{{ "images/logo.svg" | relURL }}" alt="Sharec logo">
       <span class="lowercase text-2xl">Sharec</span>
     </a>
   </div>
-	<ul>
+	<ul class="p-4">
 	 	 {{ range .Site.Menus.sidebar }}
 	 	 <li class="mb-6 last:mb-0">
        <a class="link" href="{{ .URL }}">{{ .Title }}</a>
      </li>
 	 	 {{ end }}
 	</ul>
-  <section class="px-8 py-4 absolute bottom-0 left-0 w-full text-center">
-    <p class="mb-1 text-sm">
-      Created by <a class="link" href="https://github.com/lamartire" target="_blank">lamartire</a>
-    </p>
-    <p class="text-xs">2020, <a href="https://github.com/lamartire/sharec/blob/master/LICENSE" target="_blank" class="link">MIT License</a></p>
+  <section class="p-8 absolute bottom-0 left-0 w-full border-t border-solid border-indigo-700 text-center">
+	  <ul>
+	   	<li class="mb-4">
+        <a class="link" target="_blank" href="https://github.com/lamartire/sharec">Github</a>
+      </li>
+	   	<li>
+        <a class="link" target="_blank" href="https://github.com/lamartire/sharec/issues">Issues</a>
+      </li>
+	  </ul>
   </section>
 </section>

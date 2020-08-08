@@ -17,14 +17,11 @@
     <aside class="col-span-2 bg-indigo-800 shadow-md">
       {{ partial "sidebar" . }}
     </aside>
-    <section class="col-span-6">
+    <section class="col-start-4 col-span-6 py-10">
       <section class="content">
 	      {{ block "main" . }}{{ end }}
       </section>
     </section>
-    <!--<section class="layout__footer">
-	    {{ partial "footer" . }}
-    </section>-->
   </div>
 </body>
 </html>

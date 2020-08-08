@@ -1,9 +1,9 @@
 .content h1 {
-  @apply text-4xl my-8;
+  @apply text-5xl my-8;
 }
 
 .content h2 {
-  @apply text-2xl my-6;
+  @apply text-3xl my-6;
 }
 
 .content h3 {
@@ -12,14 +12,27 @@
 
 .content a,
 .link {
-  @apply underline cursor-pointer text-yellow-500;
+  @apply cursor-pointer text-yellow-500;
+
+  &:hover {
+    @apply text-yellow-700;
+  }
+}
+
+.content a {
+  @apply underline;
 }
 
 .content p,
 .content pre,
 .content ul,
 .content ol {
-  @apply mb-6;
+  @apply mb-6 leading-normal;
+}
+
+.content code {
+  @apply py-1 px-2 rounded-md border-t border-indigo-700 border-solid shadow-md mx-1;
+  background-color: #282a36;
 }
 
 .content ul {
@@ -40,5 +53,10 @@
 }
 
 .content pre {
-  @apply rounded-md leading-normal px-8 py-4;
+  @apply rounded-md px-8 py-4 border-t border-indigo-700 border-solid shadow-md;
+}
+
+.content pre > code {
+  @apply p-0 m-0 shadow-none border-none;
+  background-color: transparent;
 }

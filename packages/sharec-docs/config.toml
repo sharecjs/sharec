@@ -7,8 +7,8 @@ pygmentsUseClasses = true
 
 [menu]
   [[menu.sidebar]]
-    identifier = "home"
-    title = "Home"
+    identifier = "intro"
+    title = "Introduction"
     url = "/"
     weight = 8
 
@@ -17,9 +17,3 @@ pygmentsUseClasses = true
     title = "Overview"
     url = "/overview"
     weight = 9
-
-  [[menu.sidebar]]
-    identifier = "examples"
-    title = "Recipes and examples"
-    url = "/examples"
-    weight = 10
