@@ -2,12 +2,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Sharec - configuration management utility on Sharec</title>
-    <link>https://sharec.js.org/</link>
+    <link>https://lamartire.github.io/sharec/</link>
     <description>Recent content in Sharec - configuration management utility on Sharec</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     
-	<atom:link href="https://sharec.js.org/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://lamartire.github.io/sharec/index.xml" rel="self" type="application/rss+xml" />
     
     
   </channel>
