@@ -1,3 +1,9 @@
+# 2.5.1
+
+Fixes:
+
+- Handle commands merge when duplicates eixist (#142)
+
 # 2.5.0
 
 Features:
