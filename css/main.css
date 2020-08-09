@@ -13691,7 +13691,7 @@ video {
   color: #ff79c6;
 }
 .chroma .gd {
-  color: #8b080b;
+  color: red;
 }
 .chroma .ge {
   text-decoration: underline;
@@ -13699,6 +13699,9 @@ video {
 .chroma .gh,
 .chroma .gi {
   font-weight: 700;
+}
+.chroma .gi {
+  color: #50fa7b;
 }
 .chroma .go {
   color: #44475a;
