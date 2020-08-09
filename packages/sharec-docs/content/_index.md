@@ -1,5 +1,6 @@
 ---
 type: 'page'
+title: 'Sharec - configuration management utility'
 ---
 
 # Introduction
