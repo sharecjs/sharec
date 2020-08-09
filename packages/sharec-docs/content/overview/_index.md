@@ -1,3 +1,7 @@
+---
+type: 'page'
+---
+
 # Overview
 
 Sharec allows you install configuration via CLI with short and friendly commands.

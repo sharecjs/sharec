@@ -1,3 +1,7 @@
+---
+type: 'page'
+---
+
 # Introduction
 
 With **sharec** you can share and management configuration across projects,
