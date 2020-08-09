@@ -235,7 +235,7 @@
 }
 /* GenericDeleted */
 .chroma .gd {
-  color: #8b080b;
+  color: #f00;
 }
 /* GenericEmph */
 .chroma .ge {
@@ -248,6 +248,7 @@
 /* GenericInserted */
 .chroma .gi {
   font-weight: bold;
+  color: #50fa7b;
 }
 /* GenericOutput */
 .chroma .go {
