@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	
+	
+	<link rel="stylesheet" href="/sharec/css/main.css">
+	<link rel="alternate" type="application/rss+xml" href="/sharec/overview/index.xml" title="Sharec">
+</head>
+<body>
+  <div class="grid grid-cols-10 gap-10">
+    <aside class="col-span-2 bg-indigo-800 shadow-md">
+      <section class="sticky top-0 left-0 w-full min-h-screen">
+  <div class="mb-4 p-4 border-b border-solid border-indigo-700">
+    <a class="no-underline flex items-center justify-center" href="/">
+      <img class="w-8 mr-4" src="/sharec/images/logo.svg" alt="Sharec logo">
+      <span class="lowercase text-2xl">Sharec</span>
+    </a>
+  </div>
+	<ul class="p-4">
+	 	 
+	 	 <li class="mb-6 last:mb-0">
+       <a class="link" href="/sharec/">Introduction</a>
+     </li>
+	 	 
+	 	 <li class="mb-6 last:mb-0">
+       <a class="link" href="/sharec/overview">Overview</a>
+     </li>
+	 	 
+	</ul>
+  <section class="p-8 absolute bottom-0 left-0 w-full border-t border-solid border-indigo-700 text-center">
+	  <ul>
+	   	<li class="mb-4">
+        <a class="link" target="_blank" href="https://github.com/lamartire/sharec">Github</a>
+      </li>
+	   	<li>
+        <a class="link" target="_blank" href="https://github.com/lamartire/sharec/issues">Issues</a>
+      </li>
+	  </ul>
+  </section>
+</section>
+
+    </aside>
+    <section class="col-start-4 col-span-6 py-10">
+      <section class="content">
+	      
+  <h1 id="overview">Overview</h1>
+<p>Sharec allows you install configuration via CLI with short and friendly commands.
+Use it in your configuration packages.</p>
+<h2 id="supported-configs">Supported configs</h2>
+<p>At this moment, sharec supports:</p>
+<ul>
+<li><code>npmignore</code></li>
+<li><code>eslint</code></li>
+<li><code>eslintignore</code></li>
+<li><code>babel</code></li>
+<li><code>yaspeller</code></li>
+<li><code>browserslist</code></li>
+<li><code>postcss</code></li>
+<li><code>gitignore</code></li>
+<li><code>husky</code></li>
+<li><code>jest</code></li>
+<li><code>lint-staged</code></li>
+<li><code>stylelint</code></li>
+<li><code>commitlint</code></li>
+<li><code>prettier</code></li>
+</ul>
+<p>Other <code>.json</code> or <code>.yaml</code> files will be merged by keys.</p>
+<p>Files with different extension will be just copied.</p>
+<h2 id="potential-use-cases">Potential use-cases</h2>
+<ul>
+<li>Versionable configuration packages (try out <a href="https://github.com/lamartire/sharec/tree/master/packages/sharec-demo-config">demo config</a>)</li>
+<li>Create boilerplates, like <code>create-react-app</code> (see dead simple example <a href="https://github.com/lamartire/sharec-react-app">here</a>)</li>
+</ul>
+<h2 id="gitignore-and-npmignore"><code>.gitignore</code> and <code>.npmignore</code></h2>
+<p>If you want to include these files, you should name them without dot - <code>gitignore</code>, <code>npmignore</code>.
+It needs, because originally named files would not be readed during installation.</p>
+<h2 id="options">Options</h2>
+<p><strong><code>--silent, -s</code></strong> - hides all outputs from <code>sharec</code> in CLI.</p>
+<p>Example:</p>
+<div class="highlight"><pre class="chroma"><code class="language-json" data-lang="json"><span class="p">{</span>
+  <span class="nt">&#34;scripts&#34;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&#34;postinstall&#34;</span><span class="p">:</span> <span class="s2">&#34;sharec --silent&#34;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><p><strong><code>--overwrite, -o</code></strong> - force <code>sharec</code> to replace all configs without merging and caching.</p>
+<p>Example:</p>
+<div class="highlight"><pre class="chroma"><code class="language-json" data-lang="json"><span class="p">{</span>
+  <span class="nt">&#34;scripts&#34;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&#34;postinstall&#34;</span><span class="p">:</span> <span class="s2">&#34;sharec --overwrite&#34;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><p><strong><code>--disappear, -d</code></strong> - installs configuration without meta injecting and caching, like
+you do that by yourself.</p>
+<p>Example:</p>
+<div class="highlight"><pre class="chroma"><code class="language-json" data-lang="json"><span class="p">{</span>
+  <span class="nt">&#34;scripts&#34;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&#34;postinstall&#34;</span><span class="p">:</span> <span class="s2">&#34;sharec --disappear&#34;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><p><strong><code>--interactive, -i</code></strong> - interactive mode in which <code>sharec</code> asks user before merge any config.</p>
+<p>Example:</p>
+<div class="highlight"><pre class="chroma"><code class="language-json" data-lang="json"><span class="p">{</span>
+  <span class="nt">&#34;scripts&#34;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&#34;postinstall&#34;</span><span class="p">:</span> <span class="s2">&#34;sharec --interactive&#34;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><p><strong><code>--include-cache, -c</code></strong> - saves configuration cache in target project directory. It is very usefull,
+if you want always have ability to change configuration version in project without any problems.</p>
+<p>With this option, cache would be saved in <code>&lt;project_path&gt;/.sharec/.cache</code>, instead <code>node_modules</code>.</p>
+<p>Especially this feature can be usefull if you are using package manager which do not make <code>node_modules</code>.</p>
+<p>Be sure, if you use this option, that <code>.sharec</code> directory is not ignored by git!</p>
+<p>Example:</p>
+<div class="highlight"><pre class="chroma"><code class="language-json" data-lang="json"><span class="p">{</span>
+  <span class="nt">&#34;scripts&#34;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&#34;postinstall&#34;</span><span class="p">:</span> <span class="s2">&#34;sharec --include-cache&#34;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><h2 id="ignoring-configuration">Ignoring configuration</h2>
+<p>If you want to force upcoming <code>sharec</code> configs – just add <code>ignore</code> flat to your projects&rsquo;s <code>sharec</code> field:</p>
+<div class="highlight"><pre class="chroma"><code class="language-json" data-lang="json"><span class="p">{</span>
+  <span class="nt">&#34;sharec&#34;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&#34;ignore&#34;</span><span class="p">:</span> <span class="kc">true</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><h2 id="debugging">Debugging</h2>
+<p>If you see some unexpected behavior and want to help with solution - you can provide
+some debug information about with <code>DEBUG</code> environment variable. It allows to see
+everything what happens inside of sharec flow.</p>
+<div class="highlight"><pre class="chroma"><code class="language-json" data-lang="json"><span class="p">{</span>
+  <span class="nt">&#34;scripts&#34;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&#34;postinstall&#34;</span><span class="p">:</span> <span class="s2">&#34;DEBUG=true sharec&#34;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+      </section>
+    </section>
+  </div>
+</body>
+</html>
