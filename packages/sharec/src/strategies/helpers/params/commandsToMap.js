@@ -3,7 +3,7 @@ const identity = require('lodash/identity')
 const last = require('lodash/last')
 const head = require('lodash/head')
 
-function commandsToLists(params) {
+function commandsToMap(params) {
   return Object.keys(params).reduce((acc, key) => {
     const parsedCommand = new Map()
 
@@ -30,7 +30,12 @@ function commandsToLists(params) {
 
       parsedSubcommand.set('env', env)
       parsedSubcommand.set('args', args)
-      parsedCommand.set(subcommand, parsedSubcommand)
+
+      if (!parsedCommand.has(subcommand)) {
+        parsedCommand.set(subcommand, [])
+      }
+
+      parsedCommand.set(subcommand, parsedCommand.get(subcommand).concat(parsedSubcommand))
 
       i++
     }
@@ -41,4 +46,4 @@ function commandsToLists(params) {
   }, {})
 }
 
-module.exports = commandsToLists
+module.exports = commandsToMap
