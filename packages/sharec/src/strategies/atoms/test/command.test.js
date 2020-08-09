@@ -13,6 +13,11 @@ describe('atoms > command', () => {
     cached: 'NODE_ENV=test foo && bar --baz && baz',
     result: 'bar && baz --foo',
   }
+  const commandWithDuplicatesFxt = {
+    current: 'foo bar',
+    upcoming: 'foo bar && foo baz',
+    result: 'foo bar && foo baz',
+  }
 
   it('should return current if upcoming is not passed', () => {
     const result = commandAtom({ current: commandFxt.current })
@@ -36,5 +41,11 @@ describe('atoms > command', () => {
     const result = commandAtom(commandRemovedFxt)
 
     expect(result).toEqual(commandRemovedFxt.result)
+  })
+
+  it('should handle commands sequences with duplicates', () => {
+    const result = commandAtom(commandWithDuplicatesFxt)
+
+    expect(result).toEqual(commandWithDuplicatesFxt.result)
   })
 })

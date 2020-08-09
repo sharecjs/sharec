@@ -11,53 +11,91 @@ describe('strategies > helpers > params > commandsToMap', () => {
       current: new Map([
         [
           'foo',
-          new Map([
-            ['separator', '&&'],
-            ['env', []],
-            ['args', ['--bar', '--baz', 'foo']],
-          ]),
+          [
+            new Map([
+              ['separator', '&&'],
+              ['env', []],
+              ['args', ['--bar', '--baz', 'foo']],
+            ]),
+          ],
         ],
         [
           'bar',
-          new Map([
-            ['separator', '&'],
-            ['env', []],
-            ['args', ['-a=b']],
-          ]),
+          [
+            new Map([
+              ['separator', '&'],
+              ['env', []],
+              ['args', ['-a=b']],
+            ]),
+          ],
         ],
         [
           'baz',
-          new Map([
-            ['separator', null],
-            ['env', []],
-            ['args', ['--a=b']],
-          ]),
+          [
+            new Map([
+              ['separator', null],
+              ['env', []],
+              ['args', ['--a=b']],
+            ]),
+          ],
         ],
       ]),
       upcoming: new Map([
         [
           'foo',
-          new Map([
-            ['separator', '&'],
-            ['env', []],
-            ['args', []],
-          ]),
+          [
+            new Map([
+              ['separator', '&'],
+              ['env', []],
+              ['args', []],
+            ]),
+          ],
         ],
         [
           'bar',
-          new Map([
-            ['separator', '|'],
-            ['env', []],
-            ['args', []],
-          ]),
+          [
+            new Map([
+              ['separator', '|'],
+              ['env', []],
+              ['args', []],
+            ]),
+          ],
         ],
         [
           'baz',
-          new Map([
-            ['separator', null],
-            ['env', ['FOO=bar', 'BAR=baz']],
-            ['args', []],
-          ]),
+          [
+            new Map([
+              ['separator', null],
+              ['env', ['FOO=bar', 'BAR=baz']],
+              ['args', []],
+            ]),
+          ],
+        ],
+      ]),
+    })
+  })
+
+  it('should handle multiple usage of one command', () => {
+    expect(
+      commandsToMap({
+        current: 'foo --bar=foo && foo --bar=baz',
+      }),
+    ).toEqual({
+      current: new Map([
+        [
+          'foo',
+          [
+            new Map([
+              ['separator', '&&'],
+              ['env', []],
+              ['args', ['--bar=foo']],
+            ]),
+            new Map([
+              ['separator', null],
+              ['env', []],
+              ['args', ['--bar=baz']],
+            ]),
+          ],
         ],
       ]),
     })
