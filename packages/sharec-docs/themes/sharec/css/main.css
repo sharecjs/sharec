@@ -1,0 +1,13 @@
+@import './external.css';
+@import './root.css';
+@import './code.css';
+@import './content.css';
+
+body {
+  @apply relative bg-indigo-900;
+}
+
+* {
+  @apply text-yellow-100;
+  box-sizing: border-box;
+}

@@ -1,0 +1,20 @@
+baseURL = "https://lamartire.github.io/sharec/"
+languageCode = "en-us"
+title = "Sharec"
+author = "lamartire"
+theme = "sharec"
+pygmentsUseClasses = true
+assetDir = "."
+
+[menu]
+  [[menu.sidebar]]
+    identifier = "intro"
+    title = "Introduction"
+    url = "/"
+    weight = 8
+
+  [[menu.sidebar]]
+    identifier = "overview"
+    title = "Overview"
+    url = "/overview"
+    weight = 9
