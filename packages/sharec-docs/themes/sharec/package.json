@@ -1,7 +1,7 @@
 {
   "scripts": {
-    "start": "gulp",
-    "build": "gulp build"
+    "start": "NODE_ENV=development gulp",
+    "build": "NODE_ENV=production gulp build"
   },
   "author": "Konstantin Epishev <lamartire@gmail.com>",
   "license": "MIT",
