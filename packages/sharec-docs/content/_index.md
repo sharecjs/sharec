@@ -8,33 +8,30 @@ title: 'Sharec - configuration management utility'
 With **sharec** you can share and management configuration across projects,
 keep your code up to date and start new projects in one command.
 
+
 ## Quick start
 
-<img src="images/logo-alt.svg" alt="Sharec logo by Ivashkina Xenia <xeniaowl112@mail.ru>" align="right" width="100">
+<img src="https://sharec.js.org/images/logo-alt.svg" alt="Sharec logo by Ivashkina Xenia <xeniaowl112@mail.ru>" align="right" width="100">
 
 1. Create configuration project and init `npm` inside.
 2. Install `sharec` as dependency:
-
 ```shell
 npm i --save sharec
 ```
-
 3. Add `postinstall` script to root `package.json` file:
-
 ```json
 "scripts": {
   "postinstall": "sharec"
 }
 ```
-
 4. Create `configs` directory.
 5. Place some configuration files to the created `configs` directory.
 6. Create `package.json` file inside `configs` directory and add required dependencies for tool what you need.
 7. Publish configuration with `npm publish` command or just push it to git repository.
 8. Install it wherever you want with `npm install` command.
 
-If you want read more detailed manual – look at [official demo config](https://github.com/lamartire/sharec/tree/master/packages/sharec-demo-config)
-and check [sharec](https://github.com/lamartire/sharec/tree/master/packages/sharec) package if you looking for API reference.
+If you want read more detailed manual – look at [official demo config](packages/sharec-demo-config)
+and check [sharec](packages/sharec) package if you looking for API reference.
 
 ## Example
 
