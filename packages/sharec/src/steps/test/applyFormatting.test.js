@@ -62,6 +62,27 @@ describe('steps > applyFormatting', () => {
     })
   })
 
+  it('should not apply tabs to yaml files', () => {
+    const input = {
+      mergedConfigs: {
+        '/bar.yaml': yamlFxt.current,
+      },
+      format: {
+        '*.yaml': {
+          indentSize: 4,
+          indentType: 'tab',
+          eof: false,
+        },
+      },
+    }
+
+    const output = applyFormatting({ spinner, prompt })(input)
+
+    expect(output.mergedConfigs['/bar.yaml']).toWraplessEqual(yamlFxt.current, {
+      eof: false,
+    })
+  })
+
   it('should not change files if format is not passing to input', () => {
     const input = {
       mergedConfigs: {
