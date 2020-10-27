@@ -18,7 +18,11 @@ const applyFormatting = ({ spinner, prompt }) => (input) => {
       continue
     }
 
-    formattedConfigs[config] = applyFormat(mergedConfigs[config], formatRules)
+    formattedConfigs[config] = applyFormat({
+      config: config,
+      content: mergedConfigs[config],
+      rules: formatRules,
+    })
   }
 
   input.mergedConfigs = formattedConfigs
