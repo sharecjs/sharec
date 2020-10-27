@@ -1,3 +1,9 @@
+# 2.5.2
+
+Fixes:
+
+- Prevent tabs in `yaml` files formatting (#156)
+
 # 2.5.1
 
 Fixes:
