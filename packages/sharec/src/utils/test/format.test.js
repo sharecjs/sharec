@@ -18,7 +18,6 @@ describe('utils > format', () => {
       expect(hasSpacesIndent(jsonFxt.result)).toBe(true)
       expect(hasSpacesIndent(yamlFxt.result)).toBe(true)
       expect(hasSpacesIndent(jsonFxt.current)).toBe(false)
-      expect(hasSpacesIndent(yamlFxt.current)).toBe(false)
     })
   })
 
@@ -27,7 +26,6 @@ describe('utils > format', () => {
       expect(hasTabsIndent(jsonFxt.result)).toBe(false)
       expect(hasTabsIndent(yamlFxt.result)).toBe(false)
       expect(hasTabsIndent(jsonFxt.current)).toBe(true)
-      expect(hasTabsIndent(yamlFxt.current)).toBe(true)
     })
   })
 
@@ -69,42 +67,59 @@ describe('utils > format', () => {
   describe('applyFormat', () => {
     it('should apply format to given string', () => {
       expect(
-        applyFormat(jsonFxt.current, {
-          indentType: 'space',
-          indentSize: 2,
-          eof: false,
+        applyFormat({
+          content: jsonFxt.current,
+          rules: {
+            indentType: 'space',
+            indentSize: 2,
+            eof: false,
+          },
         }),
       ).toWraplessEqual(jsonFxt.result, {
         eof: false,
       })
       expect(
-        applyFormat(yamlFxt.current, {
-          indentType: 'space',
-          indentSize: 2,
-          eof: false,
+        applyFormat({
+          filename: 'foo.yaml',
+          content: yamlFxt.current,
+          rules: {
+            indentType: 'space',
+            indentSize: 2,
+            eof: false,
+          },
         }),
       ).toWraplessEqual(yamlFxt.result, {
         eof: false,
       })
       expect(
-        applyFormat(jsonFxt.result, {
-          indentType: 'tab',
-          eof: false,
+        applyFormat({
+          content: jsonFxt.result,
+          rules: {
+            indentType: 'tab',
+            eof: false,
+          },
         }),
       ).toWraplessEqual(jsonFxt.current, {
         eof: false,
       })
       expect(
-        applyFormat(yamlFxt.result, {
-          indentType: 'tab',
-          eof: false,
+        applyFormat({
+          filename: 'bar.yml',
+          content: yamlFxt.result,
+          rules: {
+            indentType: 'tab',
+            eof: false,
+          },
         }),
       ).toWraplessEqual(yamlFxt.current, {
         eof: false,
       })
       expect(
-        applyFormat('foo', {
-          eof: true,
+        applyFormat({
+          content: 'foo',
+          rules: {
+            eof: true,
+          },
         }),
       ).toWraplessEqual('foo\n', {
         eof: false,

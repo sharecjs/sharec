@@ -65,23 +65,26 @@ const indentWithSpace = (str = '', size = 2) => {
 
 /**
  * Formats string (probably file's content) with given formatting options
- * @param {String} str
- * @param {Format} [format = {}]
+ * @param {Object} params
+ * @param {String} params.filename
+ * @param {String} params.content
+ * @param {Format} [params.format = {}]
  * @returns {String}
  */
-const applyFormat = (str, format = {}) => {
-  const { indentType = 'space', indentSize = 2, eof = true } = format
-  let result = str
+const applyFormat = ({ filename, content, rules = {} }) => {
+  const { indentType = 'space', indentSize = 2, eof = true } = rules
+  const isYaml = filename && /\.ya?ml/.test(filename)
+  let result = content
 
-  if (indentType === 'tab') {
+  if (indentType === 'tab' && !isYaml) {
     result = indentWithTab(result)
   }
 
-  if (indentType === 'space') {
+  if (indentType === 'space' || isYaml) {
     result = indentWithSpace(result, indentSize)
   }
 
-  if (eof && !hasEOF(str)) {
+  if (eof && !hasEOF(content)) {
     result += '\n'
   }
 
