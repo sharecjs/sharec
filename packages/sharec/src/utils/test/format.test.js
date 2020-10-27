@@ -86,10 +86,10 @@ describe('utils > format', () => {
             indentType: 'space',
             indentSize: 2,
             eof: false,
-          }
+          },
         }),
       ).toWraplessEqual(yamlFxt.result, {
-        eof: false
+        eof: false,
       })
       expect(
         applyFormat({
@@ -97,7 +97,7 @@ describe('utils > format', () => {
           rules: {
             indentType: 'tab',
             eof: false,
-          }
+          },
         }),
       ).toWraplessEqual(jsonFxt.current, {
         eof: false,
@@ -106,10 +106,10 @@ describe('utils > format', () => {
         applyFormat({
           filename: 'bar.yml',
           content: yamlFxt.result,
-            rules: {
+          rules: {
             indentType: 'tab',
             eof: false,
-          }
+          },
         }),
       ).toWraplessEqual(yamlFxt.current, {
         eof: false,
@@ -119,7 +119,7 @@ describe('utils > format', () => {
           content: 'foo',
           rules: {
             eof: true,
-          }
+          },
         }),
       ).toWraplessEqual('foo\n', {
         eof: false,

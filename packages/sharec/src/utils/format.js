@@ -71,7 +71,7 @@ const indentWithSpace = (str = '', size = 2) => {
  * @param {Format} [params.format = {}]
  * @returns {String}
  */
-const applyFormat = ({ filename, content, rules = {}  }) => {
+const applyFormat = ({ filename, content, rules = {} }) => {
   const { indentType = 'space', indentSize = 2, eof = true } = rules
   const isYaml = filename && /\.ya?ml/.test(filename)
   let result = content
