@@ -22,7 +22,7 @@ const applyFormatting = ({ spinner, prompt }) => (input) => {
       // FIXME: very fast and dirty hot fix
       // need to move formatting rules determining on `readEditorconfig` or `readPrettier` level
       // or, need to add new step for formatting rules merge and normalization
-      config: config,
+      filename: config,
       content: mergedConfigs[config],
       rules: formatRules,
     })
