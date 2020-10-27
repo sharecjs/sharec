@@ -1,3 +1,9 @@
+# 2.5.3
+
+Fixes:
+
+- Apply fomatting parameter name fix (#156)
+
 # 2.5.2
 
 Fixes:
