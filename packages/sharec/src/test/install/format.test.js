@@ -9,6 +9,7 @@ describe('sharec > install > format', () => {
   const eslintFxt = fixtures('eslint/json/04-format')
   const editorconfigFxt = fixtures('editorconfig/lines/01-tabs')
   const prettierFxt = fixtures('prettier/json/01-tabs')
+  const yamlFxt = fixtures('default/yaml/01-formatting')
 
   beforeEach(() => {
     jest.clearAllMocks()
@@ -62,6 +63,7 @@ describe('sharec > install > format', () => {
         '/target/package.json': packageFxt.current,
         '/target/.eslintrc': eslintFxt.current,
         '/target/.babelrc': babelFxt.current,
+        '/target/foo.yaml': yamlFxt.current,
         '/configuration-package/package.json': JSON.stringify({
           name: 'awesome-config',
           version: '1.0.0',
@@ -69,6 +71,7 @@ describe('sharec > install > format', () => {
         '/configuration-package/configs/.prettierrc': prettierFxt.current,
         '/configuration-package/configs/.eslintrc': eslintFxt.upcoming,
         '/configuration-package/configs/.babelrc': babelFxt.upcoming,
+        '/configuration-package/configs/foo.yaml': yamlFxt.upcoming,
         '/configuration-package/configs/package.json': packageFxt.upcoming,
       }
       vol.fromJSON(dir, '/')
@@ -85,6 +88,9 @@ describe('sharec > install > format', () => {
         eof: false,
       })
       expect(vol.readFileSync('/target/package.json', 'utf8')).toWraplessEqual(packageFxt.result, {
+        eof: false,
+      })
+      expect(vol.readFileSync('/target/foo.yaml', 'utf8')).toWraplessEqual(yamlFxt.result, {
         eof: false,
       })
     })
