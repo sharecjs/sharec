@@ -81,6 +81,18 @@ merge and caching.</p>
   <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div><p><code>.eslintrc</code> will be always equal to upcoming one.</p>
+<hr>
+<p><code>configs[name: string].format: boolean</code> – enables or disables formatting with
+<code>prettier</code> or <code>editorconfig</code>.</p>
+<p>Example:</p>
+<div class="highlight"><pre class="chroma"><code class="language-json" data-lang="json"><span class="p">{</span>
+  <span class="nt">&#34;configs&#34;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&#34;.eslintrc&#34;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&#34;format&#34;</span><span class="p">:</span> <span class="kc">false</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><p><code>.eslintrc</code> will not be formatted.</p>
 
 
       </section>
