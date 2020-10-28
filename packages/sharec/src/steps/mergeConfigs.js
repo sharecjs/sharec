@@ -1,10 +1,11 @@
+const get = require('lodash/get')
 const { bold } = require('chalk')
 const { getConfigPipe } = require('../strategies/pipes')
 const { readFile } = require('../utils/std').fs
 const { join, dirname, basename } = require('../utils/std').path
 
 const mergeConfigs = ({ spinner, prompt }) => async (input) => {
-  const { configs, cache = {}, targetPath, options } = input
+  const { configs, cache = {}, sharecConfig = {}, targetPath, options } = input
   const { overwrite, interactive } = options
 
   spinner.frame('merging configuration')
@@ -18,8 +19,10 @@ const mergeConfigs = ({ spinner, prompt }) => async (input) => {
     let isMergeConfirmed = !interactive
     let targetConfigPath = join(targetPath, config)
     const targetConfigBasename = basename(config)
+    const configParams = get(sharecConfig, `configs['${config}']`, {})
     const isPackageJson = targetConfigBasename === 'package.json'
-    const isOverwritePackageJson = isPackageJson && overwrite
+    const isOverwriteMode = overwrite || configParams.overwrite
+    const isOverwritePackageJson = isPackageJson && isOverwriteMode
     const targetPipe = getConfigPipe(targetConfigPath)
 
     if (targetPipe && targetPipe.alias) {
@@ -45,7 +48,7 @@ const mergeConfigs = ({ spinner, prompt }) => async (input) => {
     }
 
     // package.json can't be overwrited
-    if (overwrite && !isPackageJson) {
+    if (isOverwriteMode && !isPackageJson) {
       input.mergedConfigs[targetConfigPath] = upcomingConfig
       continue
     }

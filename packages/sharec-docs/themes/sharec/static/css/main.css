@@ -712,6 +712,13 @@ video {
   border-style: none;
   background-color: transparent;
 }
+.content hr {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  --border-opacity: 1;
+  border-color: #4c51bf;
+  border-color: rgba(76, 81, 191, var(--border-opacity));
+}
 body {
   position: relative;
   --bg-opacity: 1;

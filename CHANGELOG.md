@@ -1,3 +1,10 @@
+# 2.6.0
+
+Features:
+
+- Add inner configuration support via `.sharecrc.json` or `sharec` field in
+configuration package's `package.json` file
+
 # 2.5.3
 
 Fixes:

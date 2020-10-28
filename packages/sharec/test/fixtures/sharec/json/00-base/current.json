@@ -1,0 +1,10 @@
+{
+  "configs": {
+    ".eslintrc": {
+      "overwrite": true
+    },
+    "foo.yaml": {
+      "ignore": true
+    }
+  }
+}

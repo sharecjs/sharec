@@ -18,3 +18,9 @@ assetDir = "."
     title = "Overview"
     url = "/overview"
     weight = 9
+
+  [[menu.sidebar]]
+    identifier = "configuration"
+    title = "Configuration"
+    url = "/configuration"
+    weight = 10
