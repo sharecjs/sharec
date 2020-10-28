@@ -47,6 +47,7 @@
       "node_modules"
     ],
     "setupFiles": [
+      "jest-plugin-context/setup",
       "./test/jest.setup.js"
     ],
     "setupFilesAfterEnv": [
@@ -58,6 +59,7 @@
     "hygen": "^4.0.9",
     "jest": "^24.8.0",
     "jest-cli": "^24.8.0",
+    "jest-plugin-context": "^2.9.0",
     "memfs": "^2.15.2"
   },
   "dependencies": {
