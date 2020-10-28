@@ -45,3 +45,22 @@ Example:
 ```
 
 `.eslintrc` will be always equal to upcoming one.
+
+---
+
+`configs[name: string].format: boolean` – enables or disables formatting with
+`prettier` or `editorconfig`.
+
+Example:
+
+```json
+{
+  "configs": {
+    ".eslintrc": {
+      "format": false
+    }
+  }
+}
+```
+
+`.eslintrc` will not be formatted.
