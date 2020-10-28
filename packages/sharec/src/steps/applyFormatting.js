@@ -1,19 +1,21 @@
 const isEmpty = require('lodash/isEmpty')
+const get = require('lodash/get')
 const { applyFormat, getFormatByFilename } = require('../utils/format')
 
 const applyFormatting = ({ spinner, prompt }) => (input) => {
   spinner.frame('reading .editorconfig')
 
-  const { mergedConfigs, format } = input
+  const { mergedConfigs, format, sharecConfig } = input
 
   if (!format || isEmpty(format)) return input
 
   const formattedConfigs = {}
 
   for (const config in mergedConfigs) {
+    const configParams = get(sharecConfig, `configs['${config}']`, {})
     const formatRules = getFormatByFilename(format, config)
 
-    if (!formatRules) {
+    if (!formatRules || configParams.format === false) {
       formattedConfigs[config] = mergedConfigs[config]
       continue
     }
