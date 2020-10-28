@@ -60,3 +60,7 @@
   @apply p-0 m-0 shadow-none border-none;
   background-color: transparent;
 }
+
+.content hr {
+  @apply my-8 border-indigo-700;
+}
