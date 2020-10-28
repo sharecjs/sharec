@@ -1,3 +1,10 @@
+# 2.7.0
+
+Features:
+
+- Add `format` option to runtime configuration, which allows user to disable
+formatting with `prettier` or `editorconfig` for specific configs
+
 # 2.6.0
 
 Features:
