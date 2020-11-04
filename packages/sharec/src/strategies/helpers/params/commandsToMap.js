@@ -19,7 +19,7 @@ function commandsToMap(params) {
       const command = splittedCommand[i]
       const splittedSubcommand = command.split(/([A-Z0-9_-]+=\S+)\s/).filter(identity)
       const subcommandWithArgs = last(splittedSubcommand).split(' ')
-      const subcommand = head(subcommandWithArgs)
+      const subcommand = head(subcommandWithArgs).trim()
       const args = subcommandWithArgs.slice(1)
       const env = splittedSubcommand.slice(0, splittedSubcommand.length - 1)
       const parsedSubcommand = new Map([['separator', null]])
@@ -28,8 +28,8 @@ function commandsToMap(params) {
         parsedSubcommand.set('separator', splittedCommand[i + 1])
       }
 
-      parsedSubcommand.set('env', env)
-      parsedSubcommand.set('args', args)
+      parsedSubcommand.set('env', env.map(trim))
+      parsedSubcommand.set('args', args.map(trim))
 
       if (!parsedCommand.has(subcommand)) {
         parsedCommand.set(subcommand, [])
