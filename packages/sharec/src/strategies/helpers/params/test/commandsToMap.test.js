@@ -100,4 +100,35 @@ describe('strategies > helpers > params > commandsToMap', () => {
       ]),
     })
   })
+
+  it('handles command before env variables', () => {
+    expect(
+      commandsToMap({
+        current: 'cross-env NODE_ENV=development webpack & gulp',
+      }),
+    ).toEqual({
+      current: new Map([
+        [
+          'webpack',
+          [
+            new Map([
+              ['separator', '&'],
+              ['env', ['cross-env', 'NODE_ENV=development']],
+              ['args', []],
+            ]),
+          ],
+        ],
+        [
+          'gulp',
+          [
+            new Map([
+              ['separator', null],
+              ['env', []],
+              ['args', []],
+            ]),
+          ],
+        ],
+      ]),
+    })
+  })
 })
