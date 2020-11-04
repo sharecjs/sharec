@@ -1,3 +1,9 @@
+# 2.7.1
+
+Fixes:
+
+- Trim all the parts of commands (`package.json` scripts section)
+
 # 2.7.0
 
 Features:
