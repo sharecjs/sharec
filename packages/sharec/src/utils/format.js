@@ -1,3 +1,5 @@
+// @ts-check
+const get = require('lodash/get')
 const detectIndent = require('detect-indent')
 const minimatch = require('minimatch')
 const { basename } = require('../utils/std').path
@@ -10,7 +12,7 @@ const { basename } = require('../utils/std').path
  */
 
 /**
- * @typedef {{ [x: String]: Format }} Formats
+ * @typedef {{ [x: string]: Format }} Formats
  */
 
 /**
@@ -51,7 +53,7 @@ const indentWithTab = (str = '') => {
  * Replaces all indents in string by spaces with given size
  * @param {String} [str = '']
  * @param {Number} [size = 2]
- * @returns {Boolean}
+ * @returns {String}
  */
 const indentWithSpace = (str = '', size = 2) => {
   const { type, indent } = detectIndent(str)
@@ -68,11 +70,13 @@ const indentWithSpace = (str = '', size = 2) => {
  * @param {Object} params
  * @param {String} params.filename
  * @param {String} params.content
- * @param {Format} [params.format = {}]
+ * @param {Format} [params.rules]
  * @returns {String}
  */
-const applyFormat = ({ filename, content, rules = {} }) => {
-  const { indentType = 'space', indentSize = 2, eof = true } = rules
+const applyFormat = ({ filename, content, rules }) => {
+  const indentType = get(rules, 'indentType', 'space')
+  const indentSize = get(rules, 'indentSize', 2)
+  const eof = get(rules, 'eof', true)
   const isYaml = filename && /\.ya?ml/.test(filename)
   let result = content
 

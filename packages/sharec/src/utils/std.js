@@ -42,7 +42,7 @@ module.exports = {
     /**
      * Original node `path.basename`, but with normalized slashes
      * @param {String} p
-     * @param {String} ext
+     * @param {String=} ext
      * @returns {String}
      */
     basename: (p, ext) => slash(path.basename(p, ext)),
