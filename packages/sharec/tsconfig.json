@@ -3,6 +3,10 @@
     "allowJs": true,
     "noEmit": true
   },
+  "paths": {
+    "types": "./types"
+  },
+  "types": ["./types"],
   "include": ["src/**/*.js"],
   "exclude": ["node_modules", "src/**/*.test.js", "test"]
 }

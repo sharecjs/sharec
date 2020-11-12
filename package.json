@@ -35,7 +35,7 @@
     "parserOptions": {
       "ecmaVersion": 2018
     },
-    "parser": "babel-eslint",
+    "parser": "@typescript-eslint/parser",
     "extends": [
       "standard",
       "prettier",
@@ -70,7 +70,7 @@
   "devDependencies": {
     "@commitlint/cli": "^8.3.5",
     "@commitlint/config-conventional": "^8.3.4",
-    "babel-eslint": "^10.1.0",
+    "@typescript-eslint/parser": "^4.7.0",
     "commitizen": "^4.1.2",
     "cz-conventional-changelog": "^3.2.0",
     "eslint": "^7.0.0",

@@ -5,14 +5,8 @@ const minimatch = require('minimatch')
 const { basename } = require('../utils/std').path
 
 /**
- * @typedef {Object} Format
- * @property {Number} indentSize
- * @property {String} indentType
- * @property {Boolean} eof
- */
-
-/**
- * @typedef {{ [x: string]: Format }} Formats
+ * @typedef {import('../../types/FormattingRules').MappedFormattingRules} MappedFormattingRules
+ * @typedef {import('../../types/FormattingRules').FormattingRules} FormattingRules
  */
 
 /**
@@ -70,7 +64,7 @@ const indentWithSpace = (str = '', size = 2) => {
  * @param {Object} params
  * @param {String} params.filename
  * @param {String} params.content
- * @param {Format} [params.rules]
+ * @param {FormattingRules} [params.rules]
  * @returns {String}
  */
 const applyFormat = ({ filename, content, rules }) => {
@@ -96,9 +90,9 @@ const applyFormat = ({ filename, content, rules }) => {
 }
 
 /**
- * @param {Formats} formats
+ * @param {MappedFormattingRules} formats
  * @param {String} filename
- * @returns {Format|null}
+ * @returns {FormattingRules|null}
  */
 const getFormatByFilename = (formats, filename) => {
   if (formats['*']) return formats['*']
