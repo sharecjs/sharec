@@ -1,3 +1,4 @@
+// @ts-check
 const fs = require('fs')
 const path = require('path')
 const { promisify } = require('util')
@@ -24,9 +25,32 @@ module.exports = {
 
   // replacement of standard path utilities, but with slashes unification
   path: {
-    join: (...args) => slash(path.join(...args)),
-    resolve: (...args) => slash(path.resolve(...args)),
-    basename: (...args) => slash(path.basename(...args)),
-    dirname: (...args) => slash(path.dirname(...args)),
+    /**
+     * Original node `path.join`, but with normalized slashes
+     * @param {String} p
+     * @param {...String} parts
+     * @returns {String}
+     */
+    join: (p, ...parts) => slash(path.join(p, ...parts)),
+    /**
+     * Original node `path.resolve`, but with normalized slashes
+     * @param {String} p
+     * @param {...String} parts
+     * @returns {String}
+     */
+    resolve: (p, ...parts) => slash(path.resolve(p, ...parts)),
+    /**
+     * Original node `path.basename`, but with normalized slashes
+     * @param {String} p
+     * @param {String=} ext
+     * @returns {String}
+     */
+    basename: (p, ext) => slash(path.basename(p, ext)),
+    /**
+     * Original node `path.dirname`, but with normalized slashes
+     * @param {String} p
+     * @returns {String}
+     */
+    dirname: (p) => slash(path.dirname(p)),
   },
 }

@@ -1,3 +1,4 @@
+// @ts-check
 const nanomatch = require('nanomatch')
 const { makeDir, readDir, lstat } = require('./std').fs
 const { join } = require('../utils/std').path
@@ -24,7 +25,7 @@ const safeMakeDir = async (path) => {
  * await find('.', '*.js') // will find all *.js files in current dir
  * @param {String} path Target path
  * @param {String} pattern Matching pattern
- * @returns {Promise<Array<String>>}
+ * @returns {Promise<String[]>}
  */
 const find = async (path, pattern) => {
   const result = []

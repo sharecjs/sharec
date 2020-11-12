@@ -1,3 +1,5 @@
+// @ts-check
+
 /**
  * Works like lodash/pick, but with maps
  * Picks entries from target map by given keys and returns new map

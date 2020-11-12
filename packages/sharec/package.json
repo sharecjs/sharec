@@ -21,6 +21,7 @@
   "bin": "./bin/sharec",
   "scripts": {
     "test": "jest",
+    "types": "tsc",
     "test:watch": "jest --watch",
     "fxt:json": "hygen fixture-json with-prompt",
     "fxt:yaml": "hygen fixture-yaml with-prompt",
