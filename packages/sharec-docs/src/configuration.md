@@ -1,8 +1,3 @@
----
-type: 'page'
-title: 'Sharec - Configuration'
----
-
 # Configuration
 
 Sharec provides optional runtime configuration for your packages. For example

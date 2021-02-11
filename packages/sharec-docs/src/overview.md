@@ -1,8 +1,3 @@
----
-type: 'page'
-title: 'Sharec - Overview'
----
-
 # Overview
 
 Sharec allows you install configuration via CLI with short and friendly commands.
