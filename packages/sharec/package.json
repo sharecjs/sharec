@@ -10,7 +10,7 @@
     "codemods",
     "codegeneration"
   ],
-  "homepage": "https://lamartire.github.io/sharec/",
+  "homepage": "https://sharec.js.org",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lamartire/sharec"

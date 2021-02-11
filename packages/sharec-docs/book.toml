@@ -1,0 +1,10 @@
+[book]
+authors = ["lamartire"]
+language = "en"
+multilingual = false
+src = "src"
+title = "Sharec"
+
+[output.html]
+cname = "sharec.js.org"
+git-repository-url = "https://github.com/lamartire/sharec"
