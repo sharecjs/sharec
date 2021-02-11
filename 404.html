@@ -3,8 +3,10 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Introduction - Sharec</title>
+        <title></title>
         
+        
+        <base href="/">
         
 
 
@@ -167,128 +169,8 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#introduction" id="introduction">Introduction</a></h1>
-<p>With <strong>sharec</strong> you can share and management configuration across projects,
-keep your code up to date and start new projects in one command.</p>
-<h2><a class="header" href="#quick-start" id="quick-start">Quick start</a></h2>
-<ol>
-<li>Create configuration project and init <code>npm</code> inside.</li>
-<li>Install <code>sharec</code> as dependency:</li>
-</ol>
-<pre><code class="language-shell">npm i --save sharec
-</code></pre>
-<ol start="3">
-<li>Add <code>postinstall</code> script to root <code>package.json</code> file:</li>
-</ol>
-<pre><code class="language-json">&quot;scripts&quot;: {
-  &quot;postinstall&quot;: &quot;sharec&quot;
-}
-</code></pre>
-<ol start="4">
-<li>Create <code>configs</code> directory.</li>
-<li>Place some configuration files to the created <code>configs</code> directory.</li>
-<li>Create <code>package.json</code> file inside <code>configs</code> directory and add required dependencies for tool what you need.</li>
-<li>Publish configuration with <code>npm publish</code> command or just push it to git repository.</li>
-<li>Install it wherever you want with <code>npm install</code> command.</li>
-</ol>
-<p>If you want read more detailed manual – look at <a href="packages/sharec-demo-config">official demo config</a>
-and check <a href="packages/sharec">sharec</a> package if you looking for API reference.</p>
-<h2><a class="header" href="#example" id="example">Example</a></h2>
-<p>With sharec you can transform this:</p>
-<pre><code class="language-diff">{
-  &quot;name&quot;: &quot;my-awesome-project&quot;,
-  &quot;version&quot;: &quot;1.0.0&quot;,
-  &quot;scripts&quot;: {
-    &quot;start&quot;: &quot;NODE_ENV=development ./dev&quot;,
-    &quot;build&quot;: &quot;rimraf dist &amp;&amp; NODE_ENV=production ./build&quot;,
--   &quot;eslint&quot;: &quot;eslint ./src/**/*.js&quot;
-  },
-- &quot;husky&quot;: {
--   &quot;hooks&quot;: {
--     &quot;pre-commit&quot;: &quot;lint-staged&quot;
--   }
-- },
-- &quot;lint-staged&quot;: {
--   &quot;src/**/*.js&quot;: [
--     &quot;eslint&quot;,
--     &quot;prettier --write&quot;,
--     &quot;git add&quot;
--   ]
-- },
-- &quot;browserslist&quot;: [
--   &quot;last 2 version&quot;,
--   &quot;&gt; 1%&quot;
-- ],
-- &quot;babel&quot;: {
--   &quot;presets&quot;: [
--     &quot;@babel/preset-env&quot;
--   ]
-- },
-- &quot;prettier&quot;: {
--   &quot;singleQuote&quot;: true,
--   &quot;semi&quot;: false
-- },
-- &quot;jest&quot;: {
--   &quot;testURL&quot;: &quot;http://localhost/&quot;,
--   &quot;moduleNameMapper&quot;: {
--     &quot;^src/(.*)$&quot;: &quot;&lt;rootDir&gt;/src/$1&quot;
--   }
-- },
-- &quot;eslintConfig&quot;: {
--   &quot;parser&quot;: &quot;babel-eslint&quot;,
--   &quot;env&quot;: {
--     &quot;browser&quot;: true,
--     &quot;es6&quot;: true,
--     &quot;node&quot;: true,
--     &quot;jest&quot;: true
--   },
--   &quot;extends&quot;: &quot;standard&quot;,
--   &quot;rules&quot;: {
--     &quot;space-before-function-paren&quot;: 0
--   },
--   &quot;parserOptions&quot;: {
--     &quot;ecmaVersion&quot;: 8,
--     &quot;ecmaFeatures&quot;: {
--       &quot;spread&quot;: true
--     },
--     &quot;sourceType&quot;: &quot;module&quot;
--   }
-- },
-- &quot;eslintIgnore&quot;: [
--   &quot;/node_modules&quot;,
--   &quot;/dist&quot;
-- ],
-  &quot;devDependencies&quot;: {
--   &quot;@babel/core&quot;: &quot;^7.0.1&quot;,
--   &quot;@babel/preset-env&quot;: &quot;^7.0.0&quot;,
--   &quot;babel-core&quot;: &quot;7.0.0-bridge.0&quot;,
--   &quot;babel-eslint&quot;: &quot;^10.0.0&quot;,
--   &quot;babel-jest&quot;: &quot;^23.6.0&quot;,
--   &quot;eslint&quot;: &quot;^5.6.0&quot;,
--   &quot;eslint-config-standard&quot;: &quot;^12.0.0&quot;,
--   &quot;eslint-plugin-import&quot;: &quot;^2.9.0&quot;,
--   &quot;eslint-plugin-node&quot;: &quot;^9.0.0&quot;,
--   &quot;eslint-plugin-promise&quot;: &quot;^4.0.1&quot;,
--   &quot;eslint-plugin-standard&quot;: &quot;^4.0.0&quot;,
--   &quot;husky&quot;: &quot;^2.0.0&quot;,
--   &quot;lint-staged&quot;: &quot;^8.0.4&quot;,
--   &quot;prettier&quot;: &quot;^1.11.1&quot;
-  }
-}
-</code></pre>
-<p>To this:</p>
-<pre><code class="language-diff">{
-  &quot;name&quot;: &quot;my-awesome-project&quot;,
-  &quot;version&quot;: &quot;1.0.0&quot;,
-  &quot;scripts&quot;: {
-    &quot;start&quot;: &quot;NODE_ENV=development ./dev&quot;,
-    &quot;build&quot;: &quot;rimraf dist &amp;&amp; NODE_ENV=production ./build&quot;,
-  },
-  &quot;devDependencies&quot;: {
-+    &quot;my-awesome-config&quot;: &quot;1.0.0&quot;
-  }
-}
-</code></pre>
+                        <h1><a class="header" href="#document-not-found-404" id="document-not-found-404">Document not found (404)</a></h1>
+<p>This URL is invalid, sorry. Please use the navigation bar or search to continue.</p>
 
                     </main>
 
@@ -296,10 +178,6 @@ and check <a href="packages/sharec">sharec</a> package if you looking for API re
                         <!-- Mobile navigation buttons -->
                         
 
-                        
-                            <a rel="next" href="overview.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                                <i class="fa fa-angle-right"></i>
-                            </a>
                         
 
                         <div style="clear: both"></div>
@@ -310,10 +188,6 @@ and check <a href="packages/sharec">sharec</a> package if you looking for API re
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
 
-                
-                    <a rel="next" href="overview.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                        <i class="fa fa-angle-right"></i>
-                    </a>
                 
             </nav>
 

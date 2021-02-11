@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Introduction - Sharec</title>
+        <title>Overview - Sharec</title>
         
         
 
@@ -95,7 +95,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded affix "><li class="part-title">Docs</li><li class="chapter-item expanded "><a href="overview.html"><strong aria-hidden="true">2.</strong> Overview</a></li><li class="chapter-item expanded "><a href="configuration.html"><strong aria-hidden="true">3.</strong> Configuration</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded affix "><li class="part-title">Docs</li><li class="chapter-item expanded "><a href="overview.html" class="active"><strong aria-hidden="true">2.</strong> Overview</a></li><li class="chapter-item expanded "><a href="configuration.html"><strong aria-hidden="true">3.</strong> Configuration</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -167,125 +167,98 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#introduction" id="introduction">Introduction</a></h1>
-<p>With <strong>sharec</strong> you can share and management configuration across projects,
-keep your code up to date and start new projects in one command.</p>
-<h2><a class="header" href="#quick-start" id="quick-start">Quick start</a></h2>
-<ol>
-<li>Create configuration project and init <code>npm</code> inside.</li>
-<li>Install <code>sharec</code> as dependency:</li>
-</ol>
-<pre><code class="language-shell">npm i --save sharec
-</code></pre>
-<ol start="3">
-<li>Add <code>postinstall</code> script to root <code>package.json</code> file:</li>
-</ol>
-<pre><code class="language-json">&quot;scripts&quot;: {
-  &quot;postinstall&quot;: &quot;sharec&quot;
-}
-</code></pre>
-<ol start="4">
-<li>Create <code>configs</code> directory.</li>
-<li>Place some configuration files to the created <code>configs</code> directory.</li>
-<li>Create <code>package.json</code> file inside <code>configs</code> directory and add required dependencies for tool what you need.</li>
-<li>Publish configuration with <code>npm publish</code> command or just push it to git repository.</li>
-<li>Install it wherever you want with <code>npm install</code> command.</li>
-</ol>
-<p>If you want read more detailed manual – look at <a href="packages/sharec-demo-config">official demo config</a>
-and check <a href="packages/sharec">sharec</a> package if you looking for API reference.</p>
-<h2><a class="header" href="#example" id="example">Example</a></h2>
-<p>With sharec you can transform this:</p>
-<pre><code class="language-diff">{
-  &quot;name&quot;: &quot;my-awesome-project&quot;,
-  &quot;version&quot;: &quot;1.0.0&quot;,
+                        <h1><a class="header" href="#overview" id="overview">Overview</a></h1>
+<p>Sharec allows you install configuration via CLI with short and friendly commands.
+Use it in your configuration packages.</p>
+<h2><a class="header" href="#supported-configs" id="supported-configs">Supported configs</a></h2>
+<p>At this moment, sharec supports:</p>
+<ul>
+<li><code>npmignore</code></li>
+<li><code>eslint</code></li>
+<li><code>eslintignore</code></li>
+<li><code>babel</code></li>
+<li><code>yaspeller</code></li>
+<li><code>browserslist</code></li>
+<li><code>postcss</code></li>
+<li><code>gitignore</code></li>
+<li><code>husky</code></li>
+<li><code>jest</code></li>
+<li><code>lint-staged</code></li>
+<li><code>stylelint</code></li>
+<li><code>commitlint</code></li>
+<li><code>prettier</code></li>
+</ul>
+<p>Other <code>.json</code> or <code>.yaml</code> files will be merged by keys.</p>
+<p>Files with different extension will be just copied.</p>
+<h2><a class="header" href="#potential-use-cases" id="potential-use-cases">Potential use-cases</a></h2>
+<ul>
+<li>Versionable configuration packages (try out <a href="https://github.com/lamartire/sharec/tree/master/packages/sharec-demo-config">demo config</a>)</li>
+<li>Create boilerplates, like <code>create-react-app</code> (see dead simple example <a href="https://github.com/lamartire/sharec-react-app">here</a>)</li>
+</ul>
+<h2><a class="header" href="#gitignore-and-npmignore" id="gitignore-and-npmignore"><code>.gitignore</code> and <code>.npmignore</code></a></h2>
+<p>If you want to include these files, you should name them without dot - <code>gitignore</code>, <code>npmignore</code>.
+It needs, because originally named files would not be readed during installation.</p>
+<h2><a class="header" href="#options" id="options">Options</a></h2>
+<p><strong><code>--silent, -s</code></strong> - hides all outputs from <code>sharec</code> in CLI.</p>
+<p>Example:</p>
+<pre><code class="language-json">{
   &quot;scripts&quot;: {
-    &quot;start&quot;: &quot;NODE_ENV=development ./dev&quot;,
-    &quot;build&quot;: &quot;rimraf dist &amp;&amp; NODE_ENV=production ./build&quot;,
--   &quot;eslint&quot;: &quot;eslint ./src/**/*.js&quot;
-  },
-- &quot;husky&quot;: {
--   &quot;hooks&quot;: {
--     &quot;pre-commit&quot;: &quot;lint-staged&quot;
--   }
-- },
-- &quot;lint-staged&quot;: {
--   &quot;src/**/*.js&quot;: [
--     &quot;eslint&quot;,
--     &quot;prettier --write&quot;,
--     &quot;git add&quot;
--   ]
-- },
-- &quot;browserslist&quot;: [
--   &quot;last 2 version&quot;,
--   &quot;&gt; 1%&quot;
-- ],
-- &quot;babel&quot;: {
--   &quot;presets&quot;: [
--     &quot;@babel/preset-env&quot;
--   ]
-- },
-- &quot;prettier&quot;: {
--   &quot;singleQuote&quot;: true,
--   &quot;semi&quot;: false
-- },
-- &quot;jest&quot;: {
--   &quot;testURL&quot;: &quot;http://localhost/&quot;,
--   &quot;moduleNameMapper&quot;: {
--     &quot;^src/(.*)$&quot;: &quot;&lt;rootDir&gt;/src/$1&quot;
--   }
-- },
-- &quot;eslintConfig&quot;: {
--   &quot;parser&quot;: &quot;babel-eslint&quot;,
--   &quot;env&quot;: {
--     &quot;browser&quot;: true,
--     &quot;es6&quot;: true,
--     &quot;node&quot;: true,
--     &quot;jest&quot;: true
--   },
--   &quot;extends&quot;: &quot;standard&quot;,
--   &quot;rules&quot;: {
--     &quot;space-before-function-paren&quot;: 0
--   },
--   &quot;parserOptions&quot;: {
--     &quot;ecmaVersion&quot;: 8,
--     &quot;ecmaFeatures&quot;: {
--       &quot;spread&quot;: true
--     },
--     &quot;sourceType&quot;: &quot;module&quot;
--   }
-- },
-- &quot;eslintIgnore&quot;: [
--   &quot;/node_modules&quot;,
--   &quot;/dist&quot;
-- ],
-  &quot;devDependencies&quot;: {
--   &quot;@babel/core&quot;: &quot;^7.0.1&quot;,
--   &quot;@babel/preset-env&quot;: &quot;^7.0.0&quot;,
--   &quot;babel-core&quot;: &quot;7.0.0-bridge.0&quot;,
--   &quot;babel-eslint&quot;: &quot;^10.0.0&quot;,
--   &quot;babel-jest&quot;: &quot;^23.6.0&quot;,
--   &quot;eslint&quot;: &quot;^5.6.0&quot;,
--   &quot;eslint-config-standard&quot;: &quot;^12.0.0&quot;,
--   &quot;eslint-plugin-import&quot;: &quot;^2.9.0&quot;,
--   &quot;eslint-plugin-node&quot;: &quot;^9.0.0&quot;,
--   &quot;eslint-plugin-promise&quot;: &quot;^4.0.1&quot;,
--   &quot;eslint-plugin-standard&quot;: &quot;^4.0.0&quot;,
--   &quot;husky&quot;: &quot;^2.0.0&quot;,
--   &quot;lint-staged&quot;: &quot;^8.0.4&quot;,
--   &quot;prettier&quot;: &quot;^1.11.1&quot;
+    &quot;postinstall&quot;: &quot;sharec --silent&quot;
   }
 }
 </code></pre>
-<p>To this:</p>
-<pre><code class="language-diff">{
-  &quot;name&quot;: &quot;my-awesome-project&quot;,
-  &quot;version&quot;: &quot;1.0.0&quot;,
+<p><strong><code>--overwrite, -o</code></strong> - force <code>sharec</code> to replace all configs without merging and caching.</p>
+<p>Example:</p>
+<pre><code class="language-json">{
   &quot;scripts&quot;: {
-    &quot;start&quot;: &quot;NODE_ENV=development ./dev&quot;,
-    &quot;build&quot;: &quot;rimraf dist &amp;&amp; NODE_ENV=production ./build&quot;,
-  },
-  &quot;devDependencies&quot;: {
-+    &quot;my-awesome-config&quot;: &quot;1.0.0&quot;
+    &quot;postinstall&quot;: &quot;sharec --overwrite&quot;
+  }
+}
+</code></pre>
+<p><strong><code>--disappear, -d</code></strong> - installs configuration without meta injecting and caching, like
+you do that by yourself.</p>
+<p>Example:</p>
+<pre><code class="language-json">{
+  &quot;scripts&quot;: {
+    &quot;postinstall&quot;: &quot;sharec --disappear&quot;
+  }
+}
+</code></pre>
+<p><strong><code>--interactive, -i</code></strong> - interactive mode in which <code>sharec</code> asks user before merge any config.</p>
+<p>Example:</p>
+<pre><code class="language-json">{
+  &quot;scripts&quot;: {
+    &quot;postinstall&quot;: &quot;sharec --interactive&quot;
+  }
+}
+</code></pre>
+<p><strong><code>--include-cache, -c</code></strong> - saves configuration cache in target project directory. It is very usefull,
+if you want always have ability to change configuration version in project without any problems.</p>
+<p>With this option, cache would be saved in <code>&lt;project_path&gt;/.sharec/.cache</code>, instead <code>node_modules</code>.</p>
+<p>Especially this feature can be usefull if you are using package manager which do not make <code>node_modules</code>.</p>
+<p>Be sure, if you use this option, that <code>.sharec</code> directory is not ignored by git!</p>
+<p>Example:</p>
+<pre><code class="language-json">{
+  &quot;scripts&quot;: {
+    &quot;postinstall&quot;: &quot;sharec --include-cache&quot;
+  }
+}
+</code></pre>
+<h2><a class="header" href="#ignoring-configuration" id="ignoring-configuration">Ignoring configuration</a></h2>
+<p>If you want to force upcoming <code>sharec</code> configs – just add <code>ignore</code> flat to your projects's <code>sharec</code> field:</p>
+<pre><code class="language-json">{
+  &quot;sharec&quot;: {
+    &quot;ignore&quot;: true
+  }
+}
+</code></pre>
+<h2><a class="header" href="#debugging" id="debugging">Debugging</a></h2>
+<p>If you see some unexpected behavior and want to help with solution - you can provide
+some debug information about with <code>DEBUG</code> environment variable. It allows to see
+everything what happens inside of sharec flow.</p>
+<pre><code class="language-json">{
+  &quot;scripts&quot;: {
+    &quot;postinstall&quot;: &quot;DEBUG=true sharec&quot;
   }
 }
 </code></pre>
@@ -295,9 +268,13 @@ and check <a href="packages/sharec">sharec</a> package if you looking for API re
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
+                            <a rel="prev" href="introduction.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
 
                         
-                            <a rel="next" href="overview.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="configuration.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -309,9 +286,13 @@ and check <a href="packages/sharec">sharec</a> package if you looking for API re
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
+                    <a rel="prev" href="introduction.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
 
                 
-                    <a rel="next" href="overview.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="configuration.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 

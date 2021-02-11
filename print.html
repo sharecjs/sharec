@@ -3,7 +3,9 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Introduction - Sharec</title>
+        <title>Sharec</title>
+        
+        <meta name="robots" content="noindex" />
         
         
 
@@ -289,6 +291,142 @@ and check <a href="packages/sharec">sharec</a> package if you looking for API re
   }
 }
 </code></pre>
+<h1><a class="header" href="#overview" id="overview">Overview</a></h1>
+<p>Sharec allows you install configuration via CLI with short and friendly commands.
+Use it in your configuration packages.</p>
+<h2><a class="header" href="#supported-configs" id="supported-configs">Supported configs</a></h2>
+<p>At this moment, sharec supports:</p>
+<ul>
+<li><code>npmignore</code></li>
+<li><code>eslint</code></li>
+<li><code>eslintignore</code></li>
+<li><code>babel</code></li>
+<li><code>yaspeller</code></li>
+<li><code>browserslist</code></li>
+<li><code>postcss</code></li>
+<li><code>gitignore</code></li>
+<li><code>husky</code></li>
+<li><code>jest</code></li>
+<li><code>lint-staged</code></li>
+<li><code>stylelint</code></li>
+<li><code>commitlint</code></li>
+<li><code>prettier</code></li>
+</ul>
+<p>Other <code>.json</code> or <code>.yaml</code> files will be merged by keys.</p>
+<p>Files with different extension will be just copied.</p>
+<h2><a class="header" href="#potential-use-cases" id="potential-use-cases">Potential use-cases</a></h2>
+<ul>
+<li>Versionable configuration packages (try out <a href="https://github.com/lamartire/sharec/tree/master/packages/sharec-demo-config">demo config</a>)</li>
+<li>Create boilerplates, like <code>create-react-app</code> (see dead simple example <a href="https://github.com/lamartire/sharec-react-app">here</a>)</li>
+</ul>
+<h2><a class="header" href="#gitignore-and-npmignore" id="gitignore-and-npmignore"><code>.gitignore</code> and <code>.npmignore</code></a></h2>
+<p>If you want to include these files, you should name them without dot - <code>gitignore</code>, <code>npmignore</code>.
+It needs, because originally named files would not be readed during installation.</p>
+<h2><a class="header" href="#options" id="options">Options</a></h2>
+<p><strong><code>--silent, -s</code></strong> - hides all outputs from <code>sharec</code> in CLI.</p>
+<p>Example:</p>
+<pre><code class="language-json">{
+  &quot;scripts&quot;: {
+    &quot;postinstall&quot;: &quot;sharec --silent&quot;
+  }
+}
+</code></pre>
+<p><strong><code>--overwrite, -o</code></strong> - force <code>sharec</code> to replace all configs without merging and caching.</p>
+<p>Example:</p>
+<pre><code class="language-json">{
+  &quot;scripts&quot;: {
+    &quot;postinstall&quot;: &quot;sharec --overwrite&quot;
+  }
+}
+</code></pre>
+<p><strong><code>--disappear, -d</code></strong> - installs configuration without meta injecting and caching, like
+you do that by yourself.</p>
+<p>Example:</p>
+<pre><code class="language-json">{
+  &quot;scripts&quot;: {
+    &quot;postinstall&quot;: &quot;sharec --disappear&quot;
+  }
+}
+</code></pre>
+<p><strong><code>--interactive, -i</code></strong> - interactive mode in which <code>sharec</code> asks user before merge any config.</p>
+<p>Example:</p>
+<pre><code class="language-json">{
+  &quot;scripts&quot;: {
+    &quot;postinstall&quot;: &quot;sharec --interactive&quot;
+  }
+}
+</code></pre>
+<p><strong><code>--include-cache, -c</code></strong> - saves configuration cache in target project directory. It is very usefull,
+if you want always have ability to change configuration version in project without any problems.</p>
+<p>With this option, cache would be saved in <code>&lt;project_path&gt;/.sharec/.cache</code>, instead <code>node_modules</code>.</p>
+<p>Especially this feature can be usefull if you are using package manager which do not make <code>node_modules</code>.</p>
+<p>Be sure, if you use this option, that <code>.sharec</code> directory is not ignored by git!</p>
+<p>Example:</p>
+<pre><code class="language-json">{
+  &quot;scripts&quot;: {
+    &quot;postinstall&quot;: &quot;sharec --include-cache&quot;
+  }
+}
+</code></pre>
+<h2><a class="header" href="#ignoring-configuration" id="ignoring-configuration">Ignoring configuration</a></h2>
+<p>If you want to force upcoming <code>sharec</code> configs – just add <code>ignore</code> flat to your projects's <code>sharec</code> field:</p>
+<pre><code class="language-json">{
+  &quot;sharec&quot;: {
+    &quot;ignore&quot;: true
+  }
+}
+</code></pre>
+<h2><a class="header" href="#debugging" id="debugging">Debugging</a></h2>
+<p>If you see some unexpected behavior and want to help with solution - you can provide
+some debug information about with <code>DEBUG</code> environment variable. It allows to see
+everything what happens inside of sharec flow.</p>
+<pre><code class="language-json">{
+  &quot;scripts&quot;: {
+    &quot;postinstall&quot;: &quot;DEBUG=true sharec&quot;
+  }
+}
+</code></pre>
+<h1><a class="header" href="#configuration" id="configuration">Configuration</a></h1>
+<p>Sharec provides optional runtime configuration for your packages. For example
+you can overwrite specific files without merge.</p>
+<h2><a class="header" href="#configuration-file" id="configuration-file">Configuration file</a></h2>
+<p>Configuration file should be placed in the root of your configuration package.
+It can be defined in <code>.sharecrc.json</code> file, or in <code>sharec</code> filed in <code>package.json</code>.</p>
+<p>Your project's stucture should looks like:</p>
+<pre><code class="language-text">my-awesome-configs/
+  ├── configs/
+  │  └── ...
+  ├── package.json
+  └── .sharecrc.json
+</code></pre>
+<h2><a class="header" href="#reference" id="reference">Reference</a></h2>
+<p><code>configs</code> – configuration files options</p>
+<hr />
+<p><code>configs[name: string].overwrite: boolean</code> – forcily rewrite file without
+merge and caching.</p>
+<p>Example:</p>
+<pre><code class="language-json">{
+  &quot;configs&quot;: {
+    &quot;.eslintrc&quot;: {
+      &quot;overwrite&quot;: true
+    }
+  }
+}
+</code></pre>
+<p><code>.eslintrc</code> will be always equal to upcoming one.</p>
+<hr />
+<p><code>configs[name: string].format: boolean</code> – enables or disables formatting with
+<code>prettier</code> or <code>editorconfig</code>.</p>
+<p>Example:</p>
+<pre><code class="language-json">{
+  &quot;configs&quot;: {
+    &quot;.eslintrc&quot;: {
+      &quot;format&quot;: false
+    }
+  }
+}
+</code></pre>
+<p><code>.eslintrc</code> will not be formatted.</p>
 
                     </main>
 
@@ -296,10 +434,6 @@ and check <a href="packages/sharec">sharec</a> package if you looking for API re
                         <!-- Mobile navigation buttons -->
                         
 
-                        
-                            <a rel="next" href="overview.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                                <i class="fa fa-angle-right"></i>
-                            </a>
                         
 
                         <div style="clear: both"></div>
@@ -310,10 +444,6 @@ and check <a href="packages/sharec">sharec</a> package if you looking for API re
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
 
-                
-                    <a rel="next" href="overview.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                        <i class="fa fa-angle-right"></i>
-                    </a>
                 
             </nav>
 
@@ -346,6 +476,14 @@ and check <a href="packages/sharec">sharec</a> package if you looking for API re
         <!-- Custom JS scripts -->
         
 
+        
+        
+        <script type="text/javascript">
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+        
         
 
     </body>
