@@ -97,7 +97,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded affix "><li class="part-title">Docs</li><li class="chapter-item expanded "><a href="overview.html"><strong aria-hidden="true">2.</strong> Overview</a></li><li class="chapter-item expanded "><a href="configuration.html"><strong aria-hidden="true">3.</strong> Configuration</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded affix "><li class="part-title">Docs</li><li class="chapter-item expanded "><a href="overview.html"><strong aria-hidden="true">2.</strong> Overview</a></li><li class="chapter-item expanded "><a href="quick-start.html"><strong aria-hidden="true">3.</strong> Quick start</a></li><li class="chapter-item expanded "><a href="configuration.html"><strong aria-hidden="true">4.</strong> Configuration</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -386,6 +386,39 @@ everything what happens inside of sharec flow.</p>
   }
 }
 </code></pre>
+<h1><a class="header" href="#quick-start-1" id="quick-start-1">Quick start</a></h1>
+<h2><a class="header" href="#1-initialize-new-package" id="1-initialize-new-package">1. Initialize new package</a></h2>
+<pre><code>mkdir my-awesome-configs
+cd my-awesome-configs
+npm init -y
+</code></pre>
+<h2><a class="header" href="#2-install-sharec" id="2-install-sharec">2. Install <code>sharec</code></a></h2>
+<pre><code>npm i --save sharec
+</code></pre>
+<h2><a class="header" href="#3-add-sharec-to-npm-postinstall-script" id="3-add-sharec-to-npm-postinstall-script">3. Add <code>sharec</code> to npm <code>postinstall</code> script</a></h2>
+<p>You can easily inatall your config with <code>postinstall</code> script, just add following
+line into your <code>package.json</code> <code>sciprts</code> section:</p>
+<pre><code>&quot;postinstall&quot;: &quot;sharec&quot;
+</code></pre>
+<p>After this it should looks like:</p>
+<pre><code class="language-json">{
+  &quot;name&quot;: &quot;my-awesome-configs&quot;,
+  &quot;scripts&quot;: {
+    &quot;postinstall&quot;: &quot;sharec&quot;
+  },
+  &quot;dependencies&quot;: {
+    &quot;sharec&quot;: &quot;1.0.0&quot;
+  }
+}
+</code></pre>
+<h2><a class="header" href="#4-publish-your-configs-package" id="4-publish-your-configs-package">4. Publish your configs package</a></h2>
+<p>Congratulations, you are ready to share your configuration. You can publish it
+with <code>npm publish</code> or just push it to github.</p>
+<h2><a class="header" href="#5-share-it" id="5-share-it">5. Share it!</a></h2>
+<p>Install your previously published configuration package:</p>
+<pre><code>npm i --save-dev my-awesome-configs
+</code></pre>
+<p>Configs were successfully installed 🙌</p>
 <h1><a class="header" href="#configuration" id="configuration">Configuration</a></h1>
 <p>Sharec provides optional runtime configuration for your packages. For example
 you can overwrite specific files without merge.</p>
