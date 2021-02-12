@@ -1,6 +1,6 @@
 # Sharec
 
-<img src="https://raw.githubusercontent.com/lamartire/sharec/d91504a64409b3f3db531a7bca749295a3b20d92/packages/sharec-docs/static/images/logo.svg" alt="Sharec logo by Ivashkina Xenia <xeniaowl112@mail.ru>" align="right" width="100">
+<img src="https://raw.githubusercontent.com/lamartire/sharec/d91504a64409b3f3db531a7bca749295a3b20d92/packages/sharec-docs/static/images/logo-alt.svg" alt="Sharec logo by Ivashkina Xenia <xeniaowl112@mail.ru>" align="right" width="100">
 
 [![.github/workflows/main.yml](https://github.com/lamartire/sharec/workflows/.github/workflows/main.yml/badge.svg)](https://github.com/lamartire/sharec/actions)
 [![npm](https://img.shields.io/npm/v/sharec)](https://npmjs.com/sharec)
