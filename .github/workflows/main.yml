@@ -5,7 +5,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        node_version: ['12.x']
+        node_version: ['14.x']
     runs-on: ${{ matrix.os }}
     steps:
     - uses: actions/checkout@v1
@@ -14,19 +14,19 @@ jobs:
         version: ${{ matrix.node_version }}
     - name: Lerna installing
       run: |
-        npm i -g lerna
-    - name: Install packages dependencies
+        npm install -g lerna
+    - name: Install dependencies
       run: |
-        npm i
+        yarn
     - name: Running linters
       run: |
-        npm run lint
+        yarn lint
 
   test:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macOS-latest]
-        node_version: ['10.x', '12.x', '13.x', '14.x']
+        node_version: ['12.x', '14.x']
     runs-on: ${{ matrix.os }}
     steps:
     - uses: actions/checkout@v1
@@ -35,10 +35,13 @@ jobs:
         version: ${{ matrix.node_version }}
     - name: Lerna installing
       run: |
-        npm i -g lerna
+        npm install -g lerna
+    - name: Install dependencies
+      run: |
+        yarn
     - name: Install packages dependencies
       run: |
-        lerna bootstrap
+        lerna exec yarn
     - name: Running tests
       run: |
         lerna run test
