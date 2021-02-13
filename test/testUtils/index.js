@@ -5,40 +5,6 @@ const zipObject = require('lodash/zipObject')
 const pickBy = require('lodash/pickBy')
 
 /**
- * Fixtures files set mapped by potential state
- * All fields are optional!
- * @typedef {Object} Fixtures
- * @property {String} [current] Current file state fixture
- * @property {String} [upcoming] Upcoming file state fixture
- * @property {String} [result] File state fixture after merge
- * @property {String} [restored] File state fixture after unapply
- * @property {String} [cached] Cached file state fixture
- * @property {String} [uncached] Uncached file state fixture
- */
-
-/**
- * Returns fixture by given path
- * @param {String} path Path to fixture from test fixtures folder root
- * @param {String} format Fixture format. If it is not passed – returns fixture as
- *  string in UTF8
- * @returns {String|Object|Array}
- */
-function fixture(path, format) {
-  const fixturePath = resolve(__dirname, `../fixtures/${path}`)
-  const file = readFileSync(fixturePath, 'utf8')
-
-  if (format === 'json') {
-    return JSON.parse(file)
-  }
-
-  if (format === 'map') {
-    return json8.parse(file, { map: true })
-  }
-
-  return file
-}
-
-/**
  * Returns fixtures set from given directory
  * If some file is not exists – skip it
  * @example
@@ -48,14 +14,12 @@ function fixture(path, format) {
  *   current: '...',
  *   upcoming: '...',
  *   result: '...',
- *   restored: '...',
  *   cached: '...',
- *   uncached: '...'
  * }
  * @param {String} path Path to fixtures folder from test fixtures folder root
  * @param {String} [format] Fixture format. If it is not passed – returns fixture as
  *  string in UTF8
- * @returns {Fixtures}
+ * @returns {Object}
  */
 function fixtures(path, format) {
   const findFixtureFileByKey = (arr, key) => arr.find((item) => new RegExp(`^${key}`).test(item))
@@ -101,7 +65,11 @@ function createFakePrompt() {
 }
 
 module.exports = {
-  fixture,
+  createFakePrompt,
+  createFakeSpinner,
+}
+
+module.exports = {
   fixtures,
   createFakeSpinner,
   createFakePrompt,

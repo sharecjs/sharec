@@ -22,16 +22,13 @@
   "scripts": {
     "test": "jest",
     "types": "tsc",
-    "test:watch": "jest --watch",
-    "fxt:json": "hygen fixture-json with-prompt",
-    "fxt:yaml": "hygen fixture-yaml with-prompt",
-    "fxt:lines": "hygen fixture-lines with-prompt"
+    "test:watch": "jest --watch"
   },
   "jest": {
     "moduleDirectories": [
       "node_modules",
-      "test",
-      "src"
+      "src",
+      "../../test"
     ],
     "moduleFileExtensions": [
       "js",
@@ -49,15 +46,14 @@
     ],
     "setupFiles": [
       "jest-plugin-context/setup",
-      "./test/jest.setup.js"
+      "./jest.setup.js"
     ],
     "setupFilesAfterEnv": [
-      "./test/jest.matchers.js"
+      "../../test/jest/index.js"
     ]
   },
   "devDependencies": {
     "callsites": "^3.1.0",
-    "hygen": "^4.0.9",
     "jest": "^24.8.0",
     "jest-cli": "^24.8.0",
     "jest-plugin-context": "^2.9.0",

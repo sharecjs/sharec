@@ -3,7 +3,10 @@
   "author": "Konstantin Epishev <lamartire@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "lint": "eslint 'packages/**/*.js'"
+    "lint": "eslint 'packages/**/*.js'",
+    "fxt:json": "hygen fixture-json with-prompt",
+    "fxt:yaml": "hygen fixture-yaml with-prompt",
+    "fxt:lines": "hygen fixture-lines with-prompt"
   },
   "lint-staged": {
     "packages/**/*.js": [
@@ -84,8 +87,11 @@
     "eslint-plugin-standard": "^4.0.1",
     "gh-pages": "^3.1.0",
     "husky": "^4.3.0",
+    "hygen": "^6.0.4",
+    "json8": "^1.0.3",
     "lerna": "^3.18.4",
     "lint-staged": "^10.2.2",
+    "lodash": "^4.17.20",
     "prettier": "^2.0.5",
     "typescript": "^4.0.5"
   },
