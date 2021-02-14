@@ -35,17 +35,16 @@
       "**/*.test.js"
     ],
     "testPathIgnorePatterns": [
-      "node_modules",
-      "src/__legacy__"
+      "node_modules"
     ],
     "coveragePathIgnorePatterns": [
       "node_modules"
     ],
     "setupFiles": [
-      "jest-plugin-context/setup",
-      "./jest.setup.js"
+      "jest-plugin-context/setup"
     ],
     "setupFilesAfterEnv": [
+      "./jest.setup.js",
       "../../test/jest/index.js"
     ]
   },
