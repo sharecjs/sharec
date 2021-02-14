@@ -1,5 +1,5 @@
 const { resolve, join } = require('path')
-const { readFileSync, readdirSync } = require.requireActual('fs')
+const { readFileSync, readdirSync } = jest.requireActual('fs')
 const json8 = require('json8')
 const zipObject = require('lodash/zipObject')
 const pickBy = require('lodash/pickBy')

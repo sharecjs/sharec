@@ -1,8 +1,8 @@
-jest.mock('utils/std', () => {
-  const stdUtils = jest.requireActual('./src/utils/std')
+jest.mock('sharec-utils', () => {
+  const utils = jest.requireActual('sharec-utils')
   const fs = require('memfs').promises
 
-  stdUtils.fs = {
+  utils.std.fs = {
     readDir: fs.readdir,
     makeDir: fs.mkdir,
     readFile: fs.readFile,
@@ -12,9 +12,5 @@ jest.mock('utils/std', () => {
     removeFile: fs.unlink,
   }
 
-  return stdUtils
+  return utils
 })
-
-jest.mock('shelljs', () => ({
-  pwd: jest.fn(),
-}))

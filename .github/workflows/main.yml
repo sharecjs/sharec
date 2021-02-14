@@ -8,16 +8,11 @@ jobs:
         node_version: ['14.x']
     runs-on: ${{ matrix.os }}
     steps:
-    - uses: actions/checkout@v1
-    - uses: actions/setup-node@v1
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
       with:
-        version: ${{ matrix.node_version }}
-    - name: Lerna installing
-      run: |
-        npm install -g lerna
-    - name: Install dependencies
-      run: |
-        yarn
+        version: '14.x'
+    - uses: bahmutov/npm-install@v1
     - name: Running linters
       run: |
         yarn lint
@@ -25,23 +20,18 @@ jobs:
   test:
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macOS-latest]
+        os: [ubuntu-latest, macOS-latest, windows-latest]
         node_version: ['12.x', '14.x']
     runs-on: ${{ matrix.os }}
     steps:
-    - uses: actions/checkout@v1
-    - uses: actions/setup-node@v1
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
       with:
         version: ${{ matrix.node_version }}
-    - name: Lerna installing
-      run: |
-        npm install -g lerna
-    - name: Install dependencies
-      run: |
-        yarn
+    - uses: bahmutov/npm-install@v1
     - name: Install packages dependencies
       run: |
-        lerna exec yarn
+        npx lerna bootstrap
     - name: Running tests
       run: |
-        lerna run test
+        npx lerna run test

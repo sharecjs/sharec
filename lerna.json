@@ -3,7 +3,9 @@
   "packages": [
     "packages/sharec",
     "packages/sharec-demo-config",
-    "packages/sharec-essential-config"
+    "packages/sharec-essential-config",
+    "packages/sharec-utils",
+    "packages/sharec-schema"
   ],
   "npmClient": "yarn",
   "version": "2.7.1"
