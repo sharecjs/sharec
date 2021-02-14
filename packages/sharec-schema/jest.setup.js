@@ -1,5 +1,5 @@
 jest.mock('sharec-utils', () => {
-  const utils = require.requireActual('sharec-utils')
+  const utils = jest.requireActual('sharec-utils')
   const fs = require('memfs').promises
 
   utils.std.fs = {
