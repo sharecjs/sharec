@@ -10,7 +10,7 @@
     "codemods",
     "codegeneration"
   ],
-  "homepage": "https://lamartire.github.io/sharec/",
+  "homepage": "https://sharec.js.org",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lamartire/sharec"
@@ -21,16 +21,14 @@
   "bin": "./bin/sharec",
   "scripts": {
     "test": "jest",
-    "test:watch": "jest --watch",
-    "fxt:json": "hygen fixture-json with-prompt",
-    "fxt:yaml": "hygen fixture-yaml with-prompt",
-    "fxt:lines": "hygen fixture-lines with-prompt"
+    "types": "tsc",
+    "test:watch": "jest --watch"
   },
   "jest": {
     "moduleDirectories": [
       "node_modules",
-      "test",
-      "src"
+      "src",
+      "../../test"
     ],
     "moduleFileExtensions": [
       "js",
@@ -48,17 +46,16 @@
     ],
     "setupFiles": [
       "jest-plugin-context/setup",
-      "./test/jest.setup.js"
+      "./jest.setup.js"
     ],
     "setupFilesAfterEnv": [
-      "./test/jest.matchers.js"
+      "../../test/jest/index.js"
     ]
   },
   "devDependencies": {
     "callsites": "^3.1.0",
-    "hygen": "^4.0.9",
-    "jest": "^24.8.0",
-    "jest-cli": "^24.8.0",
+    "jest": "^26.6.3",
+    "jest-cli": "^26.6.3",
     "jest-plugin-context": "^2.9.0",
     "memfs": "^2.15.2"
   },

@@ -5,40 +5,33 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        node_version: ['12.x']
+        node_version: ['14.x']
     runs-on: ${{ matrix.os }}
     steps:
-    - uses: actions/checkout@v1
-    - uses: actions/setup-node@v1
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
       with:
-        version: ${{ matrix.node_version }}
-    - name: Lerna installing
-      run: |
-        npm i -g lerna
-    - name: Install packages dependencies
-      run: |
-        npm i
+        version: '14.x'
+    - uses: bahmutov/npm-install@v1
     - name: Running linters
       run: |
-        npm run lint
+        yarn lint
 
   test:
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macOS-latest]
-        node_version: ['10.x', '12.x', '13.x', '14.x']
+        os: [ubuntu-latest, macOS-latest, windows-latest]
+        node_version: ['12.x', '14.x']
     runs-on: ${{ matrix.os }}
     steps:
-    - uses: actions/checkout@v1
-    - uses: actions/setup-node@v1
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
       with:
         version: ${{ matrix.node_version }}
-    - name: Lerna installing
-      run: |
-        npm i -g lerna
+    - uses: bahmutov/npm-install@v1
     - name: Install packages dependencies
       run: |
-        lerna bootstrap
+        npx lerna bootstrap
     - name: Running tests
       run: |
-        lerna run test
+        npx lerna run test

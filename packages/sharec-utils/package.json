@@ -1,0 +1,65 @@
+{
+  "name": "sharec-utils",
+  "version": "2.7.1",
+  "keywords": [
+    "configuration",
+    "sharec",
+    "sharing",
+    "reusable code",
+    "codemods",
+    "codegeneration"
+  ],
+  "homepage": "https://sharec.js.org",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lamartire/sharec"
+  },
+  "author": "Konstantin Epishev <lamartire@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "test": "jest",
+    "types": "tsc",
+    "test:watch": "jest --watch"
+  },
+  "main": "./src/index.js",
+  "jest": {
+    "moduleDirectories": [
+      "node_modules",
+      "src",
+      "../../test"
+    ],
+    "moduleFileExtensions": [
+      "js",
+      "json"
+    ],
+    "testMatch": [
+      "**/*.test.js"
+    ],
+    "testPathIgnorePatterns": [
+      "node_modules",
+      "src/__legacy__"
+    ],
+    "coveragePathIgnorePatterns": [
+      "node_modules"
+    ],
+    "setupFiles": [
+      "jest-plugin-context/setup",
+      "./jest.setup.js"
+    ],
+    "setupFilesAfterEnv": [
+      "../../test/jest/index.js"
+    ]
+  },
+  "devDependencies": {
+    "jest": "^26.6.3",
+    "jest-cli": "^26.6.3",
+    "jest-plugin-context": "^2.9.0",
+    "memfs": "^3.2.0"
+  },
+  "dependencies": {
+    "detect-indent": "^6.0.0",
+    "lodash": "^4.17.20",
+    "nanomatch": "^1.2.13",
+    "slash": "^3.0.0"
+  }
+}

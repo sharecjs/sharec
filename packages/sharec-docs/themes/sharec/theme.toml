@@ -1,9 +1,0 @@
-name = "sharec"
-license = "MIT"
-licenselink = "https://github.com/lamartire/sharec/blob/master/LICENSE"
-homepage = "https://github.com/lamartire/sharec/"
-min_version = "0.20"
-
-[author]
-  name = "lamartire"
-  homepage = "https://github.com/lamartire"

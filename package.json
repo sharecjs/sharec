@@ -1,9 +1,12 @@
 {
-  "homapage": "https://lamartire.github.io/sharec/",
+  "homapage": "https://sharec.js.org",
   "author": "Konstantin Epishev <lamartire@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "lint": "eslint 'packages/**/*.js'"
+    "lint": "eslint 'packages/**/*.js'",
+    "fxt:json": "hygen fixture-json with-prompt",
+    "fxt:yaml": "hygen fixture-yaml with-prompt",
+    "fxt:lines": "hygen fixture-lines with-prompt"
   },
   "lint-staged": {
     "packages/**/*.js": [
@@ -16,7 +19,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged",
+      "pre-commit": "npm run types --prefix ./packages/sharec && lint-staged",
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   },
@@ -35,7 +38,7 @@
     "parserOptions": {
       "ecmaVersion": 2018
     },
-    "parser": "babel-eslint",
+    "parser": "@typescript-eslint/parser",
     "extends": [
       "standard",
       "prettier",
@@ -70,7 +73,7 @@
   "devDependencies": {
     "@commitlint/cli": "^8.3.5",
     "@commitlint/config-conventional": "^8.3.4",
-    "babel-eslint": "^10.1.0",
+    "@typescript-eslint/parser": "^4.7.0",
     "commitizen": "^4.1.2",
     "cz-conventional-changelog": "^3.2.0",
     "eslint": "^7.0.0",
@@ -84,9 +87,13 @@
     "eslint-plugin-standard": "^4.0.1",
     "gh-pages": "^3.1.0",
     "husky": "^4.3.0",
+    "hygen": "^6.0.4",
+    "json8": "^1.0.3",
     "lerna": "^3.18.4",
     "lint-staged": "^10.2.2",
-    "prettier": "^2.0.5"
+    "lodash": "^4.17.20",
+    "prettier": "^2.0.5",
+    "typescript": "^4.0.5"
   },
   "sharec": {
     "ignore": true
