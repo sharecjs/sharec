@@ -1,3 +1,11 @@
+# 2.8.0
+
+Refactor:
+
+- Migrate docs site to `mdbook`
+- Create `sharec-utils` package
+- Create `sharec-schema` package
+
 # 2.7.1
 
 Fixes:
