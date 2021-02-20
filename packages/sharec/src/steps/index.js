@@ -9,6 +9,7 @@ const readUpcomingPackage = require('./readUpcomingPackage')
 const readCache = require('./readCache')
 const readEditorconfig = require('./readEditorconfig')
 const readPrettier = require('./readPrettier')
+const readSharecConfig = require('./readSharecConfig')
 // Processing
 const mergeConfigs = require('./mergeConfigs')
 const insertEOL = require('./insertEOL')
@@ -66,6 +67,7 @@ const steps = {
   readCache,
   readEditorconfig,
   readPrettier,
+  readSharecConfig,
 
   writeConfigs,
   writeCache,
