@@ -69,6 +69,7 @@ async function sharec(targetProcess) {
     logger.wrap(steps.isAlreadyInstalled({ spinner, prompt }), 'isAlreadyInstalled'),
     logger.wrap(steps.isDependantOfSharec({ spinner, prompt }), 'isDependantOfSharec'),
     logger.wrap(steps.isIgnoresSharecConfigs({ spinner, prompt }), 'isIgnoresSharecConfigs'),
+    logger.wrap(steps.readSharecConfig({ spinner }), 'readSharecConfig'),
     logger.wrap(steps.readConfigs({ spinner, prompt }), 'readConfigs'),
     logger.wrap(steps.readEditorconfig({ spinner, prompt }), 'readEditorconfig'),
     logger.wrap(steps.readPrettier({ spinner, prompt }), 'readPrettier'),
