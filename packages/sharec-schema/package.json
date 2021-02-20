@@ -1,6 +1,6 @@
 {
   "name": "sharec-schema",
-  "version": "2.8.0",
+  "version": "2.8.1",
   "keywords": [
     "configuration",
     "sharec",
@@ -58,6 +58,6 @@
     "js-yaml": "^4.0.0",
     "json8": "^1.0.3",
     "lodash": "^4.17.20",
-    "sharec-utils": "^2.8.0"
+    "sharec-utils": "^2.8.1"
   }
 }
