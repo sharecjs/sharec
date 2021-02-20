@@ -16,7 +16,7 @@ At this moment, sharec supports:
 - `postcss`
 - `gitignore`
 - `husky`
-- `jest` (only via package.json)
+- `jest` (only via `package.json` filed)
 - `lint-staged`
 - `stylelint`
 - `commitlint`
