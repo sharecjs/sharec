@@ -1,3 +1,9 @@
+# 2.8.1
+
+Fix:
+
+- Return back missing sharec config reading step (#182)
+
 # 2.8.0
 
 Refactor:
@@ -17,14 +23,14 @@ Fixes:
 Features:
 
 - Add `format` option to runtime configuration, which allows user to disable
-formatting with `prettier` or `editorconfig` for specific configs
+  formatting with `prettier` or `editorconfig` for specific configs
 
 # 2.6.0
 
 Features:
 
 - Add inner configuration support via `.sharecrc.json` or `sharec` field in
-configuration package's `package.json` file
+  configuration package's `package.json` file
 
 # 2.5.3
 
