@@ -1,8 +1,22 @@
+// @ts-check
+
+// TODO: move to parsers
 const trim = require('lodash/trim')
 const identity = require('lodash/identity')
 const last = require('lodash/last')
 const head = require('lodash/head')
 
+/**
+ * @typedef {import('types/Schema').SchemaParams<string>} SchemaStringParams
+ * @typedef {import('types/Schema').SchemaCommandsParams} SchemaCommandsParams
+ */
+
+/**
+ * Parse given object with cli-commands and returns ready to merge
+ * schema params
+ * @param {SchemaStringParams} params
+ * @returns {SchemaCommandsParams}
+ */
 function commandsToMap(params) {
   return Object.keys(params).reduce((acc, key) => {
     const parsedCommand = new Map()
