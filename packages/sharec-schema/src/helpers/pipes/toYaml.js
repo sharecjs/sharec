@@ -1,6 +1,13 @@
+// @ts-check
+
 const last = require('lodash/last')
 const { toYAML } = require('../../parsers/yaml')
 
+/**
+ * Transforms JSON-string to YAML-string
+ * @param {string} input
+ * @returns {string}
+ */
 const toYaml = (input) => {
   const yamlInput = toYAML(input)
   const yamlLines = yamlInput.split(/\n|\r\n/)

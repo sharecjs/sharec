@@ -1,17 +1,35 @@
+// @ts-check
+
 const flow = require('lodash/flow')
 const toJson = require('./toJson')
 const fromJson = require('./fromJson')
 const toYaml = require('./toYaml')
 const fromYaml = require('./fromYaml')
 
-const createYamlPipe = (...handlers) => (params) => {
-  const isSingleQuote = params.current && /'/gm.test(params.current)
-  const pipe = flow(fromYaml, fromJson, ...handlers, toJson, toYaml)
-  const result = pipe(params)
+/**
+ * @typedef {import('types/Schema').SchemaParams<string>} SchemaYamlParams
+ */
 
-  if (isSingleQuote) return result.replace(/"/gm, "'")
+/**
+ * Creates function with given handlers which accepts params in YAML format
+ * and returns data in the same format
+ * @param {...Function[]} handlers
+ * @returns {Function}
+ */
+const createYamlPipe = (...handlers) =>
+  /**
+   * @param {SchemaYamlParams} params
+   * @returns {SchemaYamlParams}
+   */
+  (params) => {
+    const isSingleQuote = params.current && /'/gm.test(params.current)
+    // @ts-ignore
+    const pipe = flow(fromYaml, fromJson, ...handlers, toJson, toYaml)
+    const result = pipe(params)
 
-  return result.replace(/'/gm, '"')
-}
+    if (isSingleQuote) return result.replace(/"/gm, "'")
+
+    return result.replace(/'/gm, '"')
+  }
 
 module.exports = createYamlPipe
