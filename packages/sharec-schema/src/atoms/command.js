@@ -1,10 +1,25 @@
+// @ts-check
+
 const commandsToMap = require('../helpers/params/commandsToMap')
 const hashAtom = require('./hash')
 
-function unwrapCommandsMap(maps) {
+/**
+ * @typedef {import('types/Schema').ParsedCommand} ParsedCommand
+ * @typedef {import('types/Schema').SchemaParams<string>} SchemaRawCommandParams
+ * @typedef {import('types/Schema').SchemaCommandParam} SchemaCommandParam
+ * @typedef {import('types/Schema').SchemaCommandsParams} SchemaCommandsParams
+ */
+
+/**
+ * Transforms passed with parsed command map to ready to execution or
+ * using in `package.json` string
+ * @param {ParsedCommand} commandMap
+ * @returns {string}
+ */
+function unwrapCommandsMap(commandMap) {
   const subcommands = []
 
-  maps.forEach((value, key) => {
+  commandMap.forEach((value, key) => {
     if (value.length === 0) {
       subcommands.push(key)
       return
@@ -17,10 +32,14 @@ function unwrapCommandsMap(maps) {
       const separator = item.get('separator')
 
       if (env.length > 0) {
+        // just because it is not possible to correctly define type for this
+        // @ts-ignore
         subcommand = `${env.join(' ')} ${subcommand}`
       }
 
       if (args.length > 0) {
+        // for this either
+        // @ts-ignore
         subcommand = `${subcommand} ${args.join(' ')}`
       }
 
@@ -35,6 +54,11 @@ function unwrapCommandsMap(maps) {
   return subcommands.join(' ')
 }
 
+/**
+ * Merges parsed cli-commands and returns cli-command string
+ * @param {SchemaRawCommandParams} params
+ * @returns {string}
+ */
 function commandAtom(params) {
   const { current, upcoming, cached } = commandsToMap(params)
 
@@ -47,6 +71,7 @@ function commandAtom(params) {
     cached,
   })
 
+  // @ts-ignore
   return unwrapCommandsMap(result)
 }
 

@@ -12,7 +12,8 @@ const head = require('lodash/head')
  */
 
 /**
- * Parse given object with cli-commands and returns ready to merge
+ * Parse given object with raw cli-commands and returns parsed ones
+ * for next merge
  * schema params
  * @param {SchemaStringParams} params
  * @returns {SchemaCommandsParams}
