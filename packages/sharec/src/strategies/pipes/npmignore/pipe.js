@@ -1,5 +1,5 @@
-const { map } = require('../../actions')
-const { linesConcatAtom } = require('../../atoms')
+const { map } = require('sharec-schema/actions')
+const { linesConcatAtom } = require('sharec-schema/atoms')
 
 const npmignorePipe = map([/^\.?npmignore$/, linesConcatAtom])
 

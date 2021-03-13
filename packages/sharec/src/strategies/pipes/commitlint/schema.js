@@ -1,5 +1,5 @@
-const { compose } = require('../../actions')
-const { ruleAtom, primitiveAtom } = require('../../atoms')
+const { compose } = require('sharec-schema/actions')
+const { ruleAtom, primitiveAtom } = require('sharec-schema/atoms')
 
 const commitlintJson = compose({
   parserPreset: primitiveAtom,

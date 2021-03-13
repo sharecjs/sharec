@@ -1,6 +1,6 @@
-const { map } = require('../../actions')
+const { map } = require('sharec-schema/actions')
 const { defaultJson } = require('./schema')
-const { createJsonPipe, createYamlPipe } = require('../../helpers/pipes')
+const { createJsonPipe, createYamlPipe } = require('sharec-schema/helpers/pipes')
 
 const defaultJsonPipe = createJsonPipe(defaultJson)
 const defaultYamlPipe = createYamlPipe(defaultJson)

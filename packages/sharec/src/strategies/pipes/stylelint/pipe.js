@@ -1,6 +1,6 @@
-const { map } = require('../../actions')
+const { map } = require('sharec-schema/actions')
 const { stylelintJson } = require('./schema')
-const { createJsonPipe } = require('../../helpers/pipes')
+const { createJsonPipe } = require('sharec-schema/helpers/pipes')
 
 const stylelintJsonPipe = createJsonPipe(stylelintJson)
 

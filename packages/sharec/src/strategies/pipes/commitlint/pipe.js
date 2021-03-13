@@ -1,6 +1,6 @@
-const { map } = require('../../actions')
+const { map } = require('sharec-schema/actions')
+const { createJsonPipe, createYamlPipe } = require('sharec-schema/helpers/pipes')
 const { commitlintJson } = require('./schema')
-const { createJsonPipe, createYamlPipe } = require('../../helpers/pipes')
 
 const commitlintJsonPipe = createJsonPipe(commitlintJson)
 const commitlintYamlPipe = createYamlPipe(commitlintJson)

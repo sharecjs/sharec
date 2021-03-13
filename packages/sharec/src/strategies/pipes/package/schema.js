@@ -1,6 +1,6 @@
 const isMap = require('lodash/isMap')
-const { compose, fork } = require('../../actions')
-const { hashAtom, listConcatAtom, primitiveAtom, commandAtom } = require('../../atoms')
+const { compose, fork } = require('sharec-schema/actions')
+const { hashAtom, listConcatAtom, primitiveAtom, commandAtom } = require('sharec-schema/atoms')
 const { eslintJson } = require('../eslint/schema')
 const { babelJson } = require('../babel/schema')
 const { postcssJson } = require('../postcss/schema')
