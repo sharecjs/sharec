@@ -1,6 +1,6 @@
-const { readFile } = require('../utils/std').fs
-const { join } = require('../utils/std').path
-const { find } = require('../utils/fs')
+const { readFile } = require('sharec-utils/std').fs
+const { join } = require('sharec-utils/std').path
+const { find } = require('sharec-utils/fs')
 const { InternalError, CAUSES } = require('../errors')
 
 const readConfigs = ({ spinner, prompt }) => async (input) => {

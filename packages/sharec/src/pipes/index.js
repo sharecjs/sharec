@@ -1,5 +1,5 @@
 const omit = require('lodash/omit')
-const { basename } = require('../../utils/std').path
+const { basename } = require('sharec-utils/std').path
 
 // all pipes mapping
 const pipes = {

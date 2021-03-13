@@ -1,6 +1,6 @@
-const { writeFile } = require('../utils/std').fs
-const { dirname } = require('../utils/std').path
-const { safeMakeDir } = require('../utils/fs')
+const { writeFile } = require('sharec-utils/std').fs
+const { dirname } = require('sharec-utils/std').path
+const { safeMakeDir } = require('sharec-utils/fs')
 
 const writeConfigs = ({ spinner, prompt }) => async (input) => {
   const { mergedConfigs } = input

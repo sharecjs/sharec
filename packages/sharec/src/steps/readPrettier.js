@@ -1,6 +1,6 @@
 const get = require('lodash/get')
-const { readFile } = require('../utils/std').fs
-const { join } = require('../utils/std').path
+const { readFile } = require('sharec-utils/std').fs
+const { join } = require('sharec-utils/std').path
 
 const readPrettier = ({ spinner, prompt }) => async (input) => {
   spinner.frame('reading prettier configuration')

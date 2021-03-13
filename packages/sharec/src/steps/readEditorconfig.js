@@ -1,7 +1,7 @@
 const get = require('lodash/get')
 const editorconfig = require('editorconfig')
-const { readFile } = require('../utils/std').fs
-const { join } = require('../utils/std').path
+const { readFile } = require('sharec-utils/std').fs
+const { join } = require('sharec-utils/std').path
 
 const readEditorconfig = ({ spinner, prompt }) => async (input) => {
   spinner.frame('reading .editorconfig')
