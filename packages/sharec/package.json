@@ -71,6 +71,8 @@
     "minimist": "^1.2.0",
     "nanomatch": "^1.2.13",
     "ora": "^3.4.0",
+    "sharec-schema": "^2.8.1",
+    "sharec-utils": "^2.8.1",
     "shelljs": "^0.8.3",
     "slash": "^3.0.0"
   },
