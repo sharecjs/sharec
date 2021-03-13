@@ -1,7 +1,7 @@
 const get = require('lodash/get')
-const { readFile } = require('../utils/std').fs
-const { join } = require('../utils/std').path
-const { find } = require('../utils/fs')
+const { readFile } = require('sharec-utils/std').fs
+const { join } = require('sharec-utils/std').path
+const { find } = require('sharec-utils/fs')
 
 const readCache = ({ spinner, prompt }) => async (input) => {
   const { targetPackage, targetPath } = input
