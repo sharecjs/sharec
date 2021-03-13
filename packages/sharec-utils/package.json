@@ -21,7 +21,7 @@
     "types": "tsc",
     "test:watch": "jest --watch"
   },
-  "main": "./src/index.js",
+  "main": "./index.js",
   "jest": {
     "moduleDirectories": [
       "node_modules",
