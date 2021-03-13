@@ -1,3 +1,20 @@
+# 2.9.0
+
+This release is very important, because it's a beginning for a new approach and
+architecture.
+
+All the inner utils were moved to external independant packages and now, they partially
+support typescript and have detailed documentation.
+
+In future these packages will be splitted too on much smaller packages, but at this
+moment, we should cover existing API with types and start preparation for `v3.0.0`.
+
+Refactor:
+
+- `sharec-schema`
+- `sharec-utils`
+- `sharec` now use these packages instead of inner ones
+
 # 2.8.1
 
 Fix:
@@ -209,7 +226,7 @@ Fixes:
 This release includes updated installing flow and fixes a lot of bugs with
 cache handing and updating.
 
-The new algorithm should works as expected in the beggining:
+The new algorithm should works as expected in the beginning:
 
 - Removes cached configs
 - Saves fields changed by user
