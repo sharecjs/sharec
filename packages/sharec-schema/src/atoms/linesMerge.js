@@ -6,13 +6,13 @@ const listMergeAtom = require('./listMerge')
 const primitiveAtom = require('./primitive')
 
 /**
- * @typedef {import('types/Schema').SchemaParams<string[]>} SchemaListParams
+ * @typedef {import('types/Schema').SchemaParams<string>} SchemaLinesParams
  */
 
 /**
  * Creates list of unique values from lists-params
- * @param {SchemaListParams} params
- * @returns {string[]}
+ * @param {SchemaLinesParams} params
+ * @returns {string}
  */
 function linesMergeAtom(params) {
   const { current, upcoming } = params
