@@ -1,7 +1,7 @@
 const { fixtures } = require('testUtils')
 const fork = require('../fork')
 const compose = require('../compose')
-const { primitiveAtom, listConcatAtom } = require('../../atoms')
+const { primitiveAtom, listConcatAtom } = require('sharec-schema/atoms')
 
 describe('actions > fork', () => {
   const listFxt = fixtures('list/json/00-concat-primitives', 'map')
