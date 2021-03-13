@@ -1,3 +1,17 @@
+// @ts-check
+
+// TODO: move to parsers
+
+/**
+ * @typedef {import('types/Schema').SchemaParams<string>} SchemaStringParams
+ * @typedef {import('types/Schema').SchemaParams<string[]>} SchemaListParams
+ */
+
+/**
+ * Splits given lines to mapped strings lists
+ * @param {SchemaStringParams} params
+ * @returns {SchemaListParams}
+ */
 function linesToLists(params) {
   return Object.keys(params).reduce(
     (acc, key) =>

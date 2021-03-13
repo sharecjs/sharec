@@ -1,6 +1,18 @@
+// @ts-check
+
 const isEqual = require('lodash/isEqual')
 const { pickBy, omitBy } = require('sharec-utils').map
 
+/**
+ * @typedef {import('types/Schema').SchemaHashParam} SchemaHashParam
+ * @typedef {import('types/Schema').SchemaHashParams} SchemaHashParams
+ */
+
+/**
+ * Merges objects preseted as maps
+ * @param {SchemaHashParams} params
+ * @returns {SchemaHashParam}
+ */
 function hashAtom({ current, upcoming, cached }) {
   if (current && upcoming === undefined) return current
   if (current === undefined && upcoming) return upcoming

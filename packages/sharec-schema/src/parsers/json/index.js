@@ -1,10 +1,12 @@
+// @ts-check
+
 const json8 = require('json8')
 
 const COMMENTS_REG = /\s+?(\/{2}|\/\*)\s?.+/gm
 
 /**
  * Creates map from JSON string with order saving
- * @param {String} str Raw JSON string
+ * @param {string} str Raw JSON string
  * @returns {Map}
  */
 const fromJSON = (str) => {
@@ -20,8 +22,8 @@ const fromJSON = (str) => {
 /**
  * Transforms given map to JSON string with order saving
  * @param {Map} map Any map
- * @param {Number} [space] Indent spaces count
- * @returns {String}
+ * @param {number} [space] Indent spaces count
+ * @returns {string}
  */
 const toJSON = (map, space = 2) => json8.serialize(map, { space })
 

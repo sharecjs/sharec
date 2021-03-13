@@ -1,5 +1,14 @@
+// @ts-check
+
 const eofRegexp = /(\n|\n\r)$/
 
+/** @typedef {import('types/Schema').SchemaParams<string>} SchemaParams */
+
+/**
+ * Trims EOL from all given strings mapped by any keys
+ * @param {SchemaParams} params
+ * @returns {SchemaParams}
+ */
 function trimEOF(params) {
   return Object.keys(params).reduce(
     (acc, key) =>
