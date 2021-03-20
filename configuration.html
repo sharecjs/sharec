@@ -168,12 +168,12 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#configuration" id="configuration">Configuration</a></h1>
-<p>Sharec provides optional runtime configuration for your packages. For example
+<p>Sharec provides optional runtime configuration for your packages. For example,
 you can overwrite specific files without merge.</p>
 <h2><a class="header" href="#configuration-file" id="configuration-file">Configuration file</a></h2>
 <p>Configuration file should be placed in the root of your configuration package.
 It can be defined in <code>.sharecrc.json</code> file, or in <code>sharec</code> filed in <code>package.json</code>.</p>
-<p>Your project's stucture should looks like:</p>
+<p>Your project's stucture should look like this:</p>
 <pre><code class="language-text">my-awesome-configs/
   ├── configs/
   │  └── ...
@@ -183,8 +183,7 @@ It can be defined in <code>.sharecrc.json</code> file, or in <code>sharec</code>
 <h2><a class="header" href="#reference" id="reference">Reference</a></h2>
 <p><code>configs</code> – configuration files options</p>
 <hr />
-<p><code>configs[name: string].overwrite: boolean</code> – forcily rewrite file without
-merge and caching.</p>
+<p><code>configs[name: string].overwrite: boolean</code> – forcibly rewrite the file without merge and caching.</p>
 <p>Example:</p>
 <pre><code class="language-json">{
   &quot;configs&quot;: {
@@ -194,7 +193,7 @@ merge and caching.</p>
   }
 }
 </code></pre>
-<p><code>.eslintrc</code> will be always equal to upcoming one.</p>
+<p><code>.eslintrc</code> will be always equal to the upcoming one.</p>
 <hr />
 <p><code>configs[name: string].format: boolean</code> – enables or disables formatting with
 <code>prettier</code> or <code>editorconfig</code>.</p>

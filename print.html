@@ -170,7 +170,7 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#introduction" id="introduction">Introduction</a></h1>
-<p>With <strong>sharec</strong> you can share and management configuration across projects,
+<p>With <strong>sharec</strong> you can share and manage configuration across projects,
 keep your code up to date and start new projects in one command.</p>
 <h2><a class="header" href="#quick-start" id="quick-start">Quick start</a></h2>
 <ol>
@@ -193,7 +193,7 @@ keep your code up to date and start new projects in one command.</p>
 <li>Publish configuration with <code>npm publish</code> command or just push it to git repository.</li>
 <li>Install it wherever you want with <code>npm install</code> command.</li>
 </ol>
-<p>If you want read more detailed manual – look at <a href="packages/sharec-demo-config">official demo config</a>
+<p>If you want to read the more detailed manual – look at <a href="packages/sharec-demo-config">official demo config</a>
 and check <a href="packages/sharec">sharec</a> package if you looking for API reference.</p>
 <h2><a class="header" href="#example" id="example">Example</a></h2>
 <p>With sharec you can transform this:</p>
@@ -292,7 +292,7 @@ and check <a href="packages/sharec">sharec</a> package if you looking for API re
 }
 </code></pre>
 <h1><a class="header" href="#overview" id="overview">Overview</a></h1>
-<p>Sharec allows you install configuration via CLI with short and friendly commands.
+<p>Sharec allows you to install configuration via CLI with short and friendly commands.
 Use it in your configuration packages.</p>
 <h2><a class="header" href="#supported-configs" id="supported-configs">Supported configs</a></h2>
 <p>At this moment, sharec supports:</p>
@@ -321,7 +321,7 @@ Use it in your configuration packages.</p>
 </ul>
 <h2><a class="header" href="#gitignore-and-npmignore" id="gitignore-and-npmignore"><code>.gitignore</code> and <code>.npmignore</code></a></h2>
 <p>If you want to include these files, you should name them without dot - <code>gitignore</code>, <code>npmignore</code>.
-It needs, because originally named files would not be readed during installation.</p>
+It's necessary because originally named files would not be read during installation.</p>
 <h2><a class="header" href="#options" id="options">Options</a></h2>
 <p><strong><code>--silent, -s</code></strong> - hides all outputs from <code>sharec</code> in CLI.</p>
 <p>Example:</p>
@@ -356,11 +356,11 @@ you do that by yourself.</p>
   }
 }
 </code></pre>
-<p><strong><code>--include-cache, -c</code></strong> - saves configuration cache in target project directory. It is very usefull,
-if you want always have ability to change configuration version in project without any problems.</p>
+<p><strong><code>--include-cache, -c</code></strong> - saves configuration cache in target project directory. It is very useful,
+if you want to always have the ability to change configuration version in project without any problems.</p>
 <p>With this option, cache would be saved in <code>&lt;project_path&gt;/.sharec/.cache</code>, instead <code>node_modules</code>.</p>
-<p>Especially this feature can be usefull if you are using package manager which do not make <code>node_modules</code>.</p>
-<p>Be sure, if you use this option, that <code>.sharec</code> directory is not ignored by git!</p>
+<p>This feature might be especially useful if you are using package manager which does not make <code>node_modules</code>.</p>
+<p>If you use this option, ensure that <code>.sharec</code> directory is not ignored by git!</p>
 <p>Example:</p>
 <pre><code class="language-json">{
   &quot;scripts&quot;: {
@@ -369,7 +369,7 @@ if you want always have ability to change configuration version in project witho
 }
 </code></pre>
 <h2><a class="header" href="#ignoring-configuration" id="ignoring-configuration">Ignoring configuration</a></h2>
-<p>If you want to force upcoming <code>sharec</code> configs – just add <code>ignore</code> flat to your projects's <code>sharec</code> field:</p>
+<p>If you want to force upcoming <code>sharec</code> configs – just add <code>ignore</code> flag to your projects' <code>sharec</code> field:</p>
 <pre><code class="language-json">{
   &quot;sharec&quot;: {
     &quot;ignore&quot;: true
@@ -377,8 +377,8 @@ if you want always have ability to change configuration version in project witho
 }
 </code></pre>
 <h2><a class="header" href="#debugging" id="debugging">Debugging</a></h2>
-<p>If you see some unexpected behavior and want to help with solution - you can provide
-some debug information about with <code>DEBUG</code> environment variable. It allows to see
+<p>If you see some unexpected behavior and want to help with solution - you can get
+some debug information with <code>DEBUG</code> environment variable. It allows to see
 everything what happens inside of sharec flow.</p>
 <pre><code class="language-json">{
   &quot;scripts&quot;: {
@@ -396,11 +396,11 @@ npm init -y
 <pre><code>npm i --save sharec
 </code></pre>
 <h2><a class="header" href="#3-add-sharec-to-npm-postinstall-script" id="3-add-sharec-to-npm-postinstall-script">3. Add <code>sharec</code> to npm <code>postinstall</code> script</a></h2>
-<p>You can easily inatall your config with <code>postinstall</code> script, just add following
-line into your <code>package.json</code> <code>sciprts</code> section:</p>
+<p>You can easily install your config with <code>postinstall</code> script, just add the following
+line into your <code>package.json</code> <code>scripts</code> section:</p>
 <pre><code>&quot;postinstall&quot;: &quot;sharec&quot;
 </code></pre>
-<p>After this it should looks like:</p>
+<p>After that it should look like this:</p>
 <pre><code class="language-json">{
   &quot;name&quot;: &quot;my-awesome-configs&quot;,
   &quot;scripts&quot;: {
@@ -420,12 +420,12 @@ with <code>npm publish</code> or just push it to github.</p>
 </code></pre>
 <p>Configs were successfully installed 🙌</p>
 <h1><a class="header" href="#configuration" id="configuration">Configuration</a></h1>
-<p>Sharec provides optional runtime configuration for your packages. For example
+<p>Sharec provides optional runtime configuration for your packages. For example,
 you can overwrite specific files without merge.</p>
 <h2><a class="header" href="#configuration-file" id="configuration-file">Configuration file</a></h2>
 <p>Configuration file should be placed in the root of your configuration package.
 It can be defined in <code>.sharecrc.json</code> file, or in <code>sharec</code> filed in <code>package.json</code>.</p>
-<p>Your project's stucture should looks like:</p>
+<p>Your project's stucture should look like this:</p>
 <pre><code class="language-text">my-awesome-configs/
   ├── configs/
   │  └── ...
@@ -435,8 +435,7 @@ It can be defined in <code>.sharecrc.json</code> file, or in <code>sharec</code>
 <h2><a class="header" href="#reference" id="reference">Reference</a></h2>
 <p><code>configs</code> – configuration files options</p>
 <hr />
-<p><code>configs[name: string].overwrite: boolean</code> – forcily rewrite file without
-merge and caching.</p>
+<p><code>configs[name: string].overwrite: boolean</code> – forcibly rewrite the file without merge and caching.</p>
 <p>Example:</p>
 <pre><code class="language-json">{
   &quot;configs&quot;: {
@@ -446,7 +445,7 @@ merge and caching.</p>
   }
 }
 </code></pre>
-<p><code>.eslintrc</code> will be always equal to upcoming one.</p>
+<p><code>.eslintrc</code> will be always equal to the upcoming one.</p>
 <hr />
 <p><code>configs[name: string].format: boolean</code> – enables or disables formatting with
 <code>prettier</code> or <code>editorconfig</code>.</p>
