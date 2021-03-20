@@ -1,6 +1,6 @@
 # Overview
 
-Sharec allows you install configuration via CLI with short and friendly commands.
+Sharec allows you to install configuration via CLI with short and friendly commands.
 Use it in your configuration packages.
 
 ## Supported configs
@@ -34,7 +34,7 @@ Files with different extension will be just copied.
 ## `.gitignore` and `.npmignore`
 
 If you want to include these files, you should name them without dot - `gitignore`, `npmignore`.
-It needs, because originally named files would not be readed during installation.
+It's necessary because originally named files would not be read during installation.
 
 ## Options
 
@@ -87,14 +87,14 @@ Example:
 }
 ```
 
-**`--include-cache, -c`** - saves configuration cache in target project directory. It is very usefull,
-if you want always have ability to change configuration version in project without any problems.
+**`--include-cache, -c`** - saves configuration cache in target project directory. It is very useful,
+if you want to always have the ability to change configuration version in project without any problems.
 
 With this option, cache would be saved in `<project_path>/.sharec/.cache`, instead `node_modules`.
 
-Especially this feature can be usefull if you are using package manager which do not make `node_modules`.
+This feature might be especially useful if you are using package manager which does not make `node_modules`.
 
-Be sure, if you use this option, that `.sharec` directory is not ignored by git!
+If you use this option, ensure that `.sharec` directory is not ignored by git!
 
 Example:
 
@@ -108,7 +108,7 @@ Example:
 
 ## Ignoring configuration
 
-If you want to force upcoming `sharec` configs – just add `ignore` flat to your projects's `sharec` field:
+If you want to force upcoming `sharec` configs – just add `ignore` flag to your projects' `sharec` field:
 
 ```json
 {
@@ -120,8 +120,8 @@ If you want to force upcoming `sharec` configs – just add `ignore` flat to you
 
 ## Debugging
 
-If you see some unexpected behavior and want to help with solution - you can provide
-some debug information about with `DEBUG` environment variable. It allows to see
+If you see some unexpected behavior and want to help with solution - you can get
+some debug information with `DEBUG` environment variable. It allows to see
 everything what happens inside of sharec flow.
 
 ```json
