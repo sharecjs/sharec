@@ -1,6 +1,6 @@
 # Introduction
 
-With **sharec** you can share and management configuration across projects,
+With **sharec** you can share and manage configuration across projects,
 keep your code up to date and start new projects in one command.
 
 ## Quick start
@@ -26,7 +26,7 @@ npm i --save sharec
 7. Publish configuration with `npm publish` command or just push it to git repository.
 8. Install it wherever you want with `npm install` command.
 
-If you want read more detailed manual – look at [official demo config](packages/sharec-demo-config)
+If you want to read the more detailed manual – look at [official demo config](packages/sharec-demo-config)
 and check [sharec](packages/sharec) package if you looking for API reference.
 
 ## Example

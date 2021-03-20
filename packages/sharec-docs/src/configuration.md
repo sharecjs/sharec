@@ -1,6 +1,6 @@
 # Configuration
 
-Sharec provides optional runtime configuration for your packages. For example
+Sharec provides optional runtime configuration for your packages. For example,
 you can overwrite specific files without merge.
 
 ## Configuration file
@@ -8,7 +8,7 @@ you can overwrite specific files without merge.
 Configuration file should be placed in the root of your configuration package.
 It can be defined in `.sharecrc.json` file, or in `sharec` filed in `package.json`.
 
-Your project's stucture should looks like:
+Your project's stucture should look like this:
 
 ```text
 my-awesome-configs/
@@ -24,8 +24,7 @@ my-awesome-configs/
 
 ---
 
-`configs[name: string].overwrite: boolean` – forcily rewrite file without
-merge and caching.
+`configs[name: string].overwrite: boolean` – forcibly rewrite the file without merge and caching.
 
 Example:
 
@@ -39,7 +38,7 @@ Example:
 }
 ```
 
-`.eslintrc` will be always equal to upcoming one.
+`.eslintrc` will be always equal to the upcoming one.
 
 ---
 

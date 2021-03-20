@@ -16,14 +16,14 @@ npm i --save sharec
 
 ## 3. Add `sharec` to npm `postinstall` script
 
-You can easily inatall your config with `postinstall` script, just add following
-line into your `package.json` `sciprts` section:
+You can easily install your config with `postinstall` script, just add the following
+line into your `package.json` `scripts` section:
 
 ```
 "postinstall": "sharec"
 ```
 
-After this it should looks like:
+After that it should look like this:
 
 ```json
 {
