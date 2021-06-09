@@ -13,6 +13,9 @@
       "eslint --fix",
       "prettier --write"
     ],
+    "packages/**/*.d.ts": [
+      "prettier --write"
+    ],
     "packages/**/*.{json,ya?ml,css,html,md}": [
       "prettier --write"
     ]

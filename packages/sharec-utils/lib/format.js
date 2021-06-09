@@ -5,35 +5,35 @@ const minimatch = require('minimatch')
 const { basename } = require('./std').path
 
 /**
- * @typedef {import('../../types/FormattingRules').MappedFormattingRules} MappedFormattingRules
- * @typedef {import('../../types/FormattingRules').FormattingRules} FormattingRules
+ * @typedef {import('./index').FormattingRules} FormattingRules
+ * @typedef {import('./index').MappedFormattingRules} MappedFormattingRules
  */
 
 /**
  * Returns true if given string contains tab indent
- * @param {String} str
- * @returns {Boolean}
+ * @param {string} str
+ * @returns {boolean}
  */
 const hasTabsIndent = (str) => detectIndent(str).type === 'tab'
 
 /**
  * Returns true if given string containse space indent
- * @param {String} str
- * @returns {Boolean}
+ * @param {string} str
+ * @returns {boolean}
  */
 const hasSpacesIndent = (str) => detectIndent(str).type === 'space'
 
 /**
  * Returns true if given string contains empty line at the end
- * @param {String} str
- * @returns {Boolean}
+ * @param {string} str
+ * @returns {boolean}
  */
 const hasEOF = (str) => /^\s*$/gm.test(str)
 
 /**
  * Replaces all indents in string by tabs
- * @param {String} [str = '']
- * @returns {String}
+ * @param {string} [str = '']
+ * @returns {string}
  */
 const indentWithTab = (str = '') => {
   const { type, indent } = detectIndent(str)
@@ -45,9 +45,9 @@ const indentWithTab = (str = '') => {
 
 /**
  * Replaces all indents in string by spaces with given size
- * @param {String} [str = '']
- * @param {Number} [size = 2]
- * @returns {String}
+ * @param {string} [str = '']
+ * @param {number} [size = 2]
+ * @returns {string}
  */
 const indentWithSpace = (str = '', size = 2) => {
   const { type, indent } = detectIndent(str)
@@ -62,10 +62,10 @@ const indentWithSpace = (str = '', size = 2) => {
 /**
  * Formats string (probably file's content) with given formatting options
  * @param {Object} params
- * @param {String} params.filename
- * @param {String} params.content
+ * @param {string} params.filename
+ * @param {string} params.content
  * @param {FormattingRules} [params.rules]
- * @returns {String}
+ * @returns {string}
  */
 const applyFormat = ({ filename, content, rules }) => {
   const indentType = get(rules, 'indentType', 'space')
@@ -91,7 +91,7 @@ const applyFormat = ({ filename, content, rules }) => {
 
 /**
  * @param {MappedFormattingRules} formats
- * @param {String} filename
+ * @param {string} filename
  * @returns {FormattingRules|null}
  */
 const getFormatByFilename = (formats, filename) => {
