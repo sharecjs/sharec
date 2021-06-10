@@ -1,5 +1,5 @@
 /**
- * Makes directory with standard makeDir, but do not throws
+ * Makes directory with standard makedir, but do not throws
  * any exceptions
  * @param {String} path Path to new directory
  * @returns {Promise<void>}

@@ -1,5 +1,5 @@
-const { map } = require('sharec-schema/actions')
-const { createJsonPipe } = require('sharec-schema/helpers/pipes')
+const { map } = require('sharec-schema').actions
+const { createJsonPipe } = require('sharec-schema').pipes
 const { babelJson } = require('./schema')
 
 const babelJsonPipe = createJsonPipe(babelJson)

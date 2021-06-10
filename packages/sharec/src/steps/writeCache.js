@@ -1,6 +1,6 @@
-const { writeFile } = require('sharec-utils/lib/std').fs
-const { join, dirname } = require('sharec-utils/lib/std').path
-const { safeMakeDir } = require('sharec-utils/lib/fs')
+const { writeFile } = require('sharec-utils').std.fs
+const { join, dirname } = require('sharec-utils').std.path
+const { safeMakeDir } = require('sharec-utils').fs
 
 const writeCache = ({ spinner, prompt }) => async (input) => {
   const { upcomingPackage, configs, targetPath, options } = input

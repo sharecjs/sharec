@@ -1,6 +1,6 @@
-const { map } = require('sharec-schema/actions')
+const { map } = require('sharec-schema').actions
 const { eslintJson } = require('./schema')
-const { createJsonPipe, createYamlPipe } = require('sharec-schema/helpers/pipes')
+const { createJsonPipe, createYamlPipe } = require('sharec-schema').pipes
 
 const eslintJsonPipe = createJsonPipe(eslintJson)
 const eslintYamlPipe = createYamlPipe(eslintJson)

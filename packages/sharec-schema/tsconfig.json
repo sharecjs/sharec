@@ -1,15 +1,12 @@
 {
   "compilerOptions": {
-    "allowJs": true,
-    "noEmit": true,
-    "module": "commonjs",
+    "outDir": "./types",
     "moduleResolution": "node",
-    "baseUrl": ".",
-    "paths": {
-      "types": ["./types/*"]
-    }
+    "allowJs": true,
+    "checkJs": true,
+    "declaration": true,
+    "types": ["node", "jest"]
   },
-  "types": ["./types"],
-  "include": ["src/**/*.js"],
-  "exclude": ["node_modules", "src/**/*.test.js", "test"]
+  "include": ["./lib/*.js"],
+  "exclude": ["./lib/*.test.js"]
 }

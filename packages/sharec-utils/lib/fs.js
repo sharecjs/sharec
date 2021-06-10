@@ -1,17 +1,17 @@
 // @ts-check
 const nanomatch = require('nanomatch')
-const { makeDir, readDir, lstat } = require('./std').fs
+const { makedir, readdir, lstat } = require('./std').fs
 const { join } = require('./std').path
 
 /**
- * Makes directory with standard makeDir, but do not throws
+ * Makes directory with standard makedir, but do not throws
  * any exceptions
  * @param {String} path Path to new directory
  * @returns {Promise<void>}
  */
 const safeMakeDir = async (path) => {
   try {
-    await makeDir(path, {
+    await makedir(path, {
       recursive: true,
     })
   } catch (err) {}
@@ -29,7 +29,7 @@ const safeMakeDir = async (path) => {
  */
 const find = async (path, pattern) => {
   const result = []
-  const subresult = await readDir(path)
+  const subresult = await readdir(path)
 
   if (subresult.length === 0) return result
 

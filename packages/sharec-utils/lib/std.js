@@ -1,28 +1,18 @@
 // @ts-check
-const fs = require('fs')
+const { readdir, mkdir, readFile, copyFile, writeFile, lstat, unlink } = require('fs')
 const path = require('path')
 const { promisify } = require('util')
 const slash = require('slash')
 
-// @ts-nocheck
-const readDir = promisify(fs.readdir)
-const makeDir = promisify(fs.mkdir)
-const readFile = promisify(fs.readFile)
-const copyFile = promisify(fs.copyFile)
-const writeFile = promisify(fs.writeFile)
-const lstat = promisify(fs.lstat)
-const removeFile = promisify(fs.unlink)
-// @ts-check
-
 module.exports = {
   fs: {
-    readDir,
-    makeDir,
-    readFile,
-    copyFile,
-    writeFile,
-    lstat,
-    removeFile,
+    readdir: promisify(readdir),
+    makedir: promisify(mkdir),
+    readFile: promisify(readFile),
+    copyFile: promisify(copyFile),
+    writeFile: promisify(writeFile),
+    lstat: promisify(lstat),
+    removeFile: promisify(unlink),
   },
 
   // replacement of standard path utilities, but with slashes unification
