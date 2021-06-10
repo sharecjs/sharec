@@ -1,4 +1,4 @@
-const { join } = require('sharec-utils/lib/std').path
+const { join } = require('sharec-utils').std.path
 
 const insertMeta = ({ spinner, prompt }) => async (input) => {
   const { options, mergedConfigs } = input

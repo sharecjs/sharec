@@ -1,7 +1,7 @@
 const get = require('lodash/get')
 const { bold } = require('chalk')
-const { readFile } = require('sharec-utils/lib/std').fs
-const { join, dirname, basename } = require('sharec-utils/lib/std').path
+const { readFile } = require('sharec-utils').std.fs
+const { join, dirname, basename } = require('sharec-utils').std.path
 const { getConfigPipe } = require('../pipes')
 const mergeConfigs = ({ spinner, prompt }) => async (input) => {
   const { configs, cache = {}, sharecConfig = {}, targetPath, options } = input

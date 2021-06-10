@@ -23,4 +23,5 @@ import actions = require('./actions')
 import atoms = require('./atoms')
 import helpers = require('./helpers')
 import parsers = require('./parsers')
-export { actions, atoms, helpers, parsers }
+import pipes = require('./pipes')
+export { actions, atoms, helpers, parsers, pipes }

@@ -2,6 +2,7 @@ const actions = require('./actions')
 const atoms = require('./atoms')
 const helpers = require('./helpers')
 const parsers = require('./parsers')
+const pipes = require('./pipes')
 
 /**
  * @typedef {Map<string, any>} ParsedCommand
@@ -48,4 +49,5 @@ module.exports = {
   atoms,
   helpers,
   parsers,
+  pipes,
 }
