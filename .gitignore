@@ -8,3 +8,4 @@ node_modules
 **/.eslintcache
 *.log
 **/*.log
+.DS_Store

@@ -1,5 +1,5 @@
-jest.mock('./std', () => {
-  const stdUtils = jest.requireActual('./std')
+jest.mock('./lib/std', () => {
+  const stdUtils = jest.requireActual('./lib/std')
   const fs = require('memfs').promises
 
   stdUtils.fs = {
