@@ -1,5 +1,5 @@
 const { vol } = require('memfs')
-const { safeMakeDir, find } = require('../fs')
+const { safeMakeDir, find } = require('./fs')
 
 describe('utils > fs >', () => {
   beforeEach(() => {

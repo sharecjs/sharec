@@ -4,6 +4,7 @@ const path = require('path')
 const { promisify } = require('util')
 const slash = require('slash')
 
+// @ts-nocheck
 const readDir = promisify(fs.readdir)
 const makeDir = promisify(fs.mkdir)
 const readFile = promisify(fs.readFile)
@@ -11,6 +12,7 @@ const copyFile = promisify(fs.copyFile)
 const writeFile = promisify(fs.writeFile)
 const lstat = promisify(fs.lstat)
 const removeFile = promisify(fs.unlink)
+// @ts-check
 
 module.exports = {
   fs: {

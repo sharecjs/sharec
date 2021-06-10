@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "outDir": "./types",
+    "moduleResolution": "node",
+    "allowJs": true,
+    "checkJs": true,
+    "declaration": true,
+    "types": ["node", "jest"]
+  },
+  "include": ["./lib/*.js"],
+  "exclude": ["./lib/*.test.js"]
+}

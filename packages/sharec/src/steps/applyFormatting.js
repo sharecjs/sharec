@@ -1,6 +1,6 @@
 const isEmpty = require('lodash/isEmpty')
 const get = require('lodash/get')
-const { applyFormat, getFormatByFilename } = require('sharec-utils/format')
+const { applyFormat, getFormatByFilename } = require('sharec-utils/lib/format')
 
 const applyFormatting = ({ spinner, prompt }) => (input) => {
   spinner.frame('reading .editorconfig')
