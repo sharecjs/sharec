@@ -1,5 +1,5 @@
-const { readFile } = require('sharec-utils/std').fs
-const { resolve } = require('sharec-utils/std').path
+const { readFile } = require('sharec-utils/lib/std').fs
+const { resolve } = require('sharec-utils/lib/std').path
 
 const readTargetPackage = ({ spinner }) => async (input) => {
   try {
