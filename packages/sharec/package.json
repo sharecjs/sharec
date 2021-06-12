@@ -1,6 +1,6 @@
 {
   "name": "sharec",
-  "version": "2.9.0",
+  "version": "2.10.0",
   "description": "The secret weapon against bloat configuration",
   "keywords": [
     "configuration",
@@ -71,8 +71,8 @@
     "minimist": "^1.2.0",
     "nanomatch": "^1.2.13",
     "ora": "^3.4.0",
-    "sharec-schema": "^2.9.0",
-    "sharec-utils": "^2.9.0",
+    "sharec-schema": "^2.10.0",
+    "sharec-utils": "^2.10.0",
     "shelljs": "^0.8.3",
     "slash": "^3.0.0"
   },
