@@ -1,3 +1,18 @@
+# 2.10.0
+
+In this release were added automatically generated types definition files to
+main packages.
+
+Core package `sharec` was just covered with `jsdoc` and `typescript`.
+
+Now, it's much easier to support the project.
+
+Features:
+
+- Added `d.ts` for `sharec-utils`
+- Added `d.ts` for `sharec-schema`
+- All packages were covered by types
+
 # 2.9.0
 
 This release is very important, because it's a beginning for a new approach and
