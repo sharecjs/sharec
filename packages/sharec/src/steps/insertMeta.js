@@ -2,10 +2,15 @@
 const { join } = require('sharec-utils').path
 
 /**
+ * @typedef {import('../').StepWrapperPayload} StepWrapperPayload
  * @typedef {import('../').Input} Input
  */
 
-const insertMeta = ({ spinner, prompt }) =>
+/**
+ * @param {StepWrapperPayload} [payload]
+ * @returns {Function}
+ */
+const insertMeta = ({ spinner }) =>
   /**
    * @param {Input} input
    * @returns {Promise<Input>}

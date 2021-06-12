@@ -1,16 +1,16 @@
 // @ts-check
-const { bold } = require('chalk')
+const { bold } = require('chalk').default
 
 /**
- * @typedef {Object} Logger
+ * @typedef {import('../').Logger} Logger
  */
 
 /**
  * Creates logger for debug puporses
  * Can be created with custom prefix for next problem scope determining
- * @param {Object} params
- * @param {String} [params.prefix] Prefix which would append to each logger message
- * @param {Boolean} params.silent If silent is truthy - logger will not print any message
+ * @param {object} params
+ * @param {string} [params.prefix] Prefix which would append to each logger message
+ * @param {boolean} params.silent If silent is truthy - logger will not print any message
  * @returns {Logger}
  */
 const createLogger = ({ prefix = '', silent }) => {
@@ -42,6 +42,7 @@ const createLogger = ({ prefix = '', silent }) => {
         if (params.length === 0) return fn(...params)
 
         params.forEach((param, i) => {
+          // @ts-ignore
           console.dir(logPrefix, bold(`${fn.name || fnId}(arg[${i}]): \n`), param)
         })
 

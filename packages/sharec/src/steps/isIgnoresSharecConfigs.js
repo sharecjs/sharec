@@ -3,10 +3,15 @@ const get = require('lodash/get')
 const { InternalError, CAUSES } = require('../errors')
 
 /**
+ * @typedef {import('../').StepWrapperPayload} StepWrapperPayload
  * @typedef {import('../').Input} Input
  */
 
-const isIgnoresSharecConfigs = ({ spinner, prompt }) =>
+/**
+ * @param {StepWrapperPayload} [payload]
+ * @returns {Function}
+ */
+const isIgnoresSharecConfigs = (payload) =>
   /**
    * @param {Input} input
    * @returns {Input}

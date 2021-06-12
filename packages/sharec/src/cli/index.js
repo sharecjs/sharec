@@ -4,8 +4,8 @@ const { pwd } = require('shelljs')
 const { createSpinner } = require('./spinner')
 const { createLogger } = require('./logger')
 const { createPrompt } = require('./prompt')
-const { composeSteps, steps } = require('./steps')
-const { CAUSES, InternalError } = require('./errors')
+const { composeSteps, steps } = require('../steps')
+const { CAUSES, InternalError } = require('../errors')
 
 /**
  * Main sharec entrance, accepts node process all files and configuration

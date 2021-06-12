@@ -1,14 +1,19 @@
 // @ts-check
 const get = require('lodash/get')
-const { bold } = require('chalk')
-const { fs } = require('sharec-utils').std
+const { bold } = require('chalk').default
+const { readFile } = require('sharec-utils').std
 const { join, dirname, basename } = require('sharec-utils').path
 const { getConfigPipe } = require('../pipes')
 
 /**
+ * @typedef {import('../').StepWrapperPayload} StepWrapperPayload
  * @typedef {import('../').Input} Input
  */
 
+/**
+ * @param {StepWrapperPayload} [payload]
+ * @returns {Function}
+ */
 const mergeConfigs = ({ spinner, prompt }) =>
   /**
    * @param {Input} input
@@ -40,7 +45,7 @@ const mergeConfigs = ({ spinner, prompt }) =>
       }
 
       try {
-        currentConfig = await fs.readFile(targetConfigPath, 'utf8')
+        currentConfig = await readFile(targetConfigPath, 'utf8')
       } catch (err) {}
 
       if (currentConfig && interactive) {

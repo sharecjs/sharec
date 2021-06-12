@@ -1,3 +1,4 @@
+// @ts-check
 const isMap = require('lodash/isMap')
 const { compose, fork } = require('sharec-schema').actions
 const { hashAtom, listConcatAtom, primitiveAtom, commandAtom } = require('sharec-schema').atoms

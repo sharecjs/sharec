@@ -46,4 +46,22 @@ const sharec = require('./cli')
  *  directory instead of `node_modules/.cache`
  */
 
+/**
+ * @typedef {object} Logger
+ */
+
+/**
+ * @typedef {object} Prompt
+ */
+
+/**
+ * @typedef {object} Spinner
+ */
+
+/**
+ * @typedef {object} StepWrapperPayload
+ * @property {Prompt} [prompt]
+ * @property {Spinner} [spinner]
+ */
+
 module.exports = sharec

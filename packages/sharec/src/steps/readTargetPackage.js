@@ -1,11 +1,16 @@
 // @ts-check
-const { fs } = require('sharec-utils').std
+const { readFile } = require('sharec-utils').std
 const { resolve } = require('sharec-utils').path
 
 /**
+ * @typedef {import('../').StepWrapperPayload} StepWrapperPayload
  * @typedef {import('../').Input} Input
  */
 
+/**
+ * @param {StepWrapperPayload} [payload]
+ * @returns {Function}
+ */
 const readTargetPackage = ({ spinner }) =>
   /**
    * @param {Input} input
@@ -16,7 +21,7 @@ const readTargetPackage = ({ spinner }) =>
       spinner.frame('reading package.json from target project')
 
       const targetPackageJsonPath = resolve(input.targetPath, 'package.json')
-      const rawTargetPackageJson = await fs.readFile(targetPackageJsonPath, 'utf8')
+      const rawTargetPackageJson = await readFile(targetPackageJsonPath, 'utf8')
       const targetPackage = JSON.parse(rawTargetPackageJson)
 
       spinner.frame("target package's package.json was readed")

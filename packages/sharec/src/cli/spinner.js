@@ -2,15 +2,15 @@
 const ora = require('ora')
 
 /**
- * @typedef {Object} Spinner
+ * @typedef {import('../').Spinner} Spinner
  */
 
 /**
  * Creates wrapper below ora spinner
  * Can be silenced by parameters
- * @param {Object} params
- * @param {String} params.text Spinner's initial text
- * @param {Boolean} [params.silent] Ignores all spinner messages and frames
+ * @param {object} params
+ * @param {string} params.text Spinner's initial text
+ * @param {boolean} [params.silent] Ignores all spinner messages and frames
  * @returns {Spinner}
  */
 const createSpinner = ({ text, silent }) => {
@@ -40,7 +40,7 @@ const createSpinner = ({ text, silent }) => {
     /**
      * Checks spinner's current frame as succeed and returns spinner
      * @memberof Spinner
-     * @param {String} text
+     * @param {string} text
      * @returns {Spinner}
      */
     succeed: (text) => {
@@ -56,7 +56,7 @@ const createSpinner = ({ text, silent }) => {
     /**
      * Checks spinner's current frame as failed and returns spinner
      * @memberof Spinner
-     * @param {String} text
+     * @param {string} text
      * @returns {Spinner}
      */
     fail: (text) => {
@@ -72,7 +72,7 @@ const createSpinner = ({ text, silent }) => {
     /**
      * Just changes spinner's current text
      * @memberof Spinner
-     * @param {String} text
+     * @param {string} text
      * @returns {Spinner}
      */
     frame: (text) => {

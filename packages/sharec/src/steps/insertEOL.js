@@ -1,10 +1,15 @@
 // @ts-check
 
 /**
+ * @typedef {import('../').StepWrapperPayload} StepWrapperPayload
  * @typedef {import('../').Input} Input
  */
 
-const insertEOL = ({ spinner, prompt }) =>
+/**
+ * @param {StepWrapperPayload} [payload]
+ * @returns {Function}
+ */
+const insertEOL = ({ spinner }) =>
   /**
    * @param {Input} input
    * @returns {Promise<Input>}

@@ -1,14 +1,19 @@
 // @ts-check
 const get = require('lodash/get')
 const editorconfig = require('editorconfig')
-const { fs } = require('sharec-utils').std
+const { readFile } = require('sharec-utils').std
 const { join } = require('sharec-utils').path
 
 /**
+ * @typedef {import('../').StepWrapperPayload} StepWrapperPayload
  * @typedef {import('../').Input} Input
  */
 
-const readEditorconfig = ({ spinner, prompt }) =>
+/**
+ * @param {StepWrapperPayload} [payload]
+ * @returns {Function}
+ */
+const readEditorconfig = ({ spinner }) =>
   /**
    * @param {Input} input
    * @returns {Promise<Input>}
@@ -23,7 +28,7 @@ const readEditorconfig = ({ spinner, prompt }) =>
       const configsPath = join(configPath, '/configs')
       const configsEditorconfigPath = join(configsPath, '.editorconfig')
 
-      rawEditorconfig = await fs.readFile(configsEditorconfigPath, 'utf8')
+      rawEditorconfig = await readFile(configsEditorconfigPath, 'utf8')
     } catch (err) {}
 
     // if upcoming config does not contain .editorconfig, try to read it from target project
@@ -31,7 +36,7 @@ const readEditorconfig = ({ spinner, prompt }) =>
       try {
         const targetEditorconfigPath = join(targetPath, '.editorconfig')
 
-        rawEditorconfig = await fs.readFile(targetEditorconfigPath, 'utf8')
+        rawEditorconfig = await readFile(targetEditorconfigPath, 'utf8')
       } catch (err) {}
     }
 

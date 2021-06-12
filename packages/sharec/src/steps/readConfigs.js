@@ -1,14 +1,19 @@
 // @ts-check
-const { fs } = require('sharec-utils').std
+const { readFile } = require('sharec-utils').std
 const { join } = require('sharec-utils').path
 const { find } = require('sharec-utils').fs
 const { InternalError, CAUSES } = require('../errors')
 
 /**
+ * @typedef {import('../').StepWrapperPayload} StepWrapperPayload
  * @typedef {import('../').Input} Input
  */
 
-const readConfigs = ({ spinner, prompt }) =>
+/**
+ * @param {StepWrapperPayload} [payload]
+ * @returns {Function}
+ */
+const readConfigs = ({ spinner }) =>
   /**
    * @param {Input} input
    * @returns {Promise<Input>}
@@ -28,7 +33,7 @@ const readConfigs = ({ spinner, prompt }) =>
 
         const configKey = config.replace(configsPath, '').replace(/^\//, '')
 
-        readedConfigs[configKey] = await fs.readFile(config, 'utf8')
+        readedConfigs[configKey] = await readFile(config, 'utf8')
       }
 
       spinner.frame('all files were readed')

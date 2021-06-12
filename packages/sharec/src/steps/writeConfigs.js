@@ -1,13 +1,18 @@
 // @ts-check
-const { fs } = require('sharec-utils').std
+const { writeFile } = require('sharec-utils').std
 const { dirname } = require('sharec-utils').path
 const { safeMakeDir } = require('sharec-utils').fs
 
 /**
+ * @typedef {import('../').StepWrapperPayload} StepWrapperPayload
  * @typedef {import('../').Input} Input
  */
 
-const writeConfigs = ({ spinner, prompt }) =>
+/**
+ * @param {StepWrapperPayload} [payload]
+ * @returns {Function}
+ */
+const writeConfigs = ({ spinner }) =>
   /**
    * @param {Input} input
    * @returns {Promise<Input>}
@@ -19,7 +24,7 @@ const writeConfigs = ({ spinner, prompt }) =>
 
     for (const config in mergedConfigs) {
       await safeMakeDir(dirname(config))
-      await fs.writeFile(config, mergedConfigs[config])
+      await writeFile(config, mergedConfigs[config])
     }
 
     spinner.frame('configuration was writed')

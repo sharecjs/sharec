@@ -1,13 +1,18 @@
 // @ts-check
 const get = require('lodash/get')
-const { fs } = require('sharec-utils').std
+const { readFile } = require('sharec-utils').std
 const { join } = require('sharec-utils').path
 
 /**
+ * @typedef {import('../').StepWrapperPayload} StepWrapperPayload
  * @typedef {import('../').Input} Input
  */
 
-const readPrettier = ({ spinner, prompt }) =>
+/**
+ * @param {StepWrapperPayload} [payload]
+ * @returns {Function}
+ */
+const readPrettier = ({ spinner }) =>
   /**
    * @param {Input} input
    * @returns {Promise<Input>}
@@ -21,7 +26,7 @@ const readPrettier = ({ spinner, prompt }) =>
     try {
       const configsPath = join(configPath, '/configs')
       const configsPrettierrcPath = join(configsPath, '.prettierrc')
-      const rawPrettierrc = await fs.readFile(configsPrettierrcPath, 'utf8')
+      const rawPrettierrc = await readFile(configsPrettierrcPath, 'utf8')
 
       prettierrc = JSON.parse(rawPrettierrc)
     } catch (err) {}
@@ -30,7 +35,7 @@ const readPrettier = ({ spinner, prompt }) =>
     if (!prettierrc) {
       try {
         const targetPrettierrcPath = join(targetPath, '.prettierrc')
-        const rawPrettierrc = await fs.readFile(targetPrettierrcPath, 'utf8')
+        const rawPrettierrc = await readFile(targetPrettierrcPath, 'utf8')
 
         prettierrc = JSON.parse(rawPrettierrc)
       } catch (err) {}

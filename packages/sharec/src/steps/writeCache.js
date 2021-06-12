@@ -1,13 +1,18 @@
 // @ts-check
-const { fs } = require('sharec-utils').std
+const { writeFile } = require('sharec-utils').std
 const { join, dirname } = require('sharec-utils').path
 const { safeMakeDir } = require('sharec-utils').fs
 
 /**
+ * @typedef {import('../').StepWrapperPayload} StepWrapperPayload
  * @typedef {import('../').Input} Input
  */
 
-const writeCache = ({ spinner, prompt }) =>
+/**
+ * @param {StepWrapperPayload} [payload]
+ * @returns {Function}
+ */
+const writeCache = ({ spinner }) =>
   /**
    * @param {Input} input
    * @returns {Promise<Input>}
@@ -29,7 +34,7 @@ const writeCache = ({ spinner, prompt }) =>
 
     for (const config in configs) {
       await safeMakeDir(join(cachePath, dirname(config)))
-      await fs.writeFile(join(cachePath, config), configs[config])
+      await writeFile(join(cachePath, config), configs[config])
     }
 
     spinner.frame(`configuration for ${name}/${version} was cached`)

@@ -1,14 +1,19 @@
 // @ts-check
 const get = require('lodash/get')
-const { fs } = require('sharec-utils').std
+const { readFile } = require('sharec-utils').std
 const { join } = require('sharec-utils').path
 const { find } = require('sharec-utils').fs
 
 /**
+ * @typedef {import('../').StepWrapperPayload} StepWrapperPayload
  * @typedef {import('../').Input} Input
  */
 
-const readCache = ({ spinner, prompt }) =>
+/**
+ * @param {StepWrapperPayload} [payload]
+ * @returns {Function}
+ */
+const readCache = ({ spinner }) =>
   /**
    * @param {Input} input
    * @returns {Promise<Input>}
@@ -33,7 +38,7 @@ const readCache = ({ spinner, prompt }) =>
 
         for (const configPath of cachedFiles) {
           const configKey = configPath.replace(cachePath, '').replace(/^\//, '')
-          const cachedConfig = await fs.readFile(configPath, 'utf8')
+          const cachedConfig = await readFile(configPath, 'utf8')
 
           input.cache[configKey] = cachedConfig
         }

@@ -4,10 +4,15 @@ const get = require('lodash/get')
 const { applyFormat, getFormatByFilename } = require('sharec-utils').format
 
 /**
+ * @typedef {import('../').StepWrapperPayload} StepWrapperPayload
  * @typedef {import('../').Input} Input
  */
 
-const applyFormatting = ({ spinner, prompt }) =>
+/**
+ * @param {StepWrapperPayload} [payload]
+ * @returns {Function}
+ */
+const applyFormatting = ({ spinner }) =>
   /**
    * @param {Input} input
    * @returns {Input}

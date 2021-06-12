@@ -1,8 +1,7 @@
 jest.mock('./lib/std', () => {
-  const stdUtils = jest.requireActual('./lib/std')
   const fs = require('memfs').promises
 
-  stdUtils.fs = {
+  return {
     readdir: fs.readdir,
     makedir: fs.mkdir,
     readFile: fs.readFile,
@@ -11,6 +10,4 @@ jest.mock('./lib/std', () => {
     lstat: fs.lstat,
     removeFile: fs.unlink,
   }
-
-  return stdUtils
 })

@@ -1,11 +1,16 @@
 // @ts-check
-const { fs } = require('sharec-utils').std
+const { readFile } = require('sharec-utils').std
 const { resolve } = require('sharec-utils').path
 
 /**
+ * @typedef {import('../').StepWrapperPayload} StepWrapperPayload
  * @typedef {import('../').Input} Input
  */
 
+/**
+ * @param {StepWrapperPayload} [payload]
+ * @returns {Function}
+ */
 const readSharecConfig = ({ spinner }) =>
   /**
    * @param {Input} input
@@ -19,7 +24,7 @@ const readSharecConfig = ({ spinner }) =>
 
       try {
         const upcomingSharecrcPath = resolve(input.configPath, '.sharecrc.json')
-        const rawSharecrc = await fs.readFile(upcomingSharecrcPath, 'utf8')
+        const rawSharecrc = await readFile(upcomingSharecrcPath, 'utf8')
         const sharecrc = JSON.parse(rawSharecrc)
 
         if (sharecrc) {
@@ -32,7 +37,7 @@ const readSharecConfig = ({ spinner }) =>
       } catch (err) {}
 
       const upcomingPackageJsonPath = resolve(input.configPath, 'package.json')
-      const rawUpcomingPackageJson = await fs.readFile(upcomingPackageJsonPath, 'utf8')
+      const rawUpcomingPackageJson = await readFile(upcomingPackageJsonPath, 'utf8')
       const upcomingPackage = JSON.parse(rawUpcomingPackageJson)
 
       if (upcomingPackage.sharec) {

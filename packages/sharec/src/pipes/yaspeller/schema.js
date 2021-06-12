@@ -1,3 +1,4 @@
+// @ts-check
 const { compose } = require('sharec-schema').actions
 const { primitiveAtom, listConcatAtom } = require('sharec-schema').atoms
 
