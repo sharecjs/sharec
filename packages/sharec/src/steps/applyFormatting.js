@@ -1,38 +1,48 @@
+// @ts-check
 const isEmpty = require('lodash/isEmpty')
 const get = require('lodash/get')
 const { applyFormat, getFormatByFilename } = require('sharec-utils').format
 
-const applyFormatting = ({ spinner, prompt }) => (input) => {
-  spinner.frame('reading .editorconfig')
+/**
+ * @typedef {import('../').Input} Input
+ */
 
-  const { mergedConfigs, format, sharecConfig } = input
+const applyFormatting = ({ spinner, prompt }) =>
+  /**
+   * @param {Input} input
+   * @returns {Input}
+   */
+  (input) => {
+    spinner.frame('reading .editorconfig')
 
-  if (!format || isEmpty(format)) return input
+    const { mergedConfigs, format, sharecConfig } = input
 
-  const formattedConfigs = {}
+    if (!format || isEmpty(format)) return input
 
-  for (const config in mergedConfigs) {
-    const configParams = get(sharecConfig, `configs['${config}']`, {})
-    const formatRules = getFormatByFilename(format, config)
+    const formattedConfigs = {}
 
-    if (!formatRules || configParams.format === false) {
-      formattedConfigs[config] = mergedConfigs[config]
-      continue
+    for (const config in mergedConfigs) {
+      const configParams = get(sharecConfig, `configs['${config}']`, {})
+      const formatRules = getFormatByFilename(format, config)
+
+      if (!formatRules || configParams.format === false) {
+        formattedConfigs[config] = mergedConfigs[config]
+        continue
+      }
+
+      formattedConfigs[config] = applyFormat({
+        // FIXME: very fast and dirty hot fix
+        // need to move formatting rules determining on `readEditorconfig` or `readPrettier` level
+        // or, need to add new step for formatting rules merge and normalization
+        filename: config,
+        content: mergedConfigs[config],
+        rules: formatRules,
+      })
     }
 
-    formattedConfigs[config] = applyFormat({
-      // FIXME: very fast and dirty hot fix
-      // need to move formatting rules determining on `readEditorconfig` or `readPrettier` level
-      // or, need to add new step for formatting rules merge and normalization
-      filename: config,
-      content: mergedConfigs[config],
-      rules: formatRules,
-    })
+    input.mergedConfigs = formattedConfigs
+
+    return input
   }
-
-  input.mergedConfigs = formattedConfigs
-
-  return input
-}
 
 module.exports = applyFormatting

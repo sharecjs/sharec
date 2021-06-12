@@ -1,19 +1,30 @@
-const insertEOL = ({ spinner, prompt }) => async (input) => {
-  const { mergedConfigs } = input
+// @ts-check
 
-  spinner.frame('inserting EOL')
+/**
+ * @typedef {import('../').Input} Input
+ */
 
-  for (const config in mergedConfigs) {
-    const withEOL = /^\s*$/gm.test(mergedConfigs[config])
+const insertEOL = ({ spinner, prompt }) =>
+  /**
+   * @param {Input} input
+   * @returns {Promise<Input>}
+   */
+  async (input) => {
+    const { mergedConfigs } = input
 
-    if (withEOL) continue
+    spinner.frame('inserting EOL')
 
-    input.mergedConfigs[config] = mergedConfigs[config] + '\n'
+    for (const config in mergedConfigs) {
+      const withEOL = /^\s*$/gm.test(mergedConfigs[config])
+
+      if (withEOL) continue
+
+      input.mergedConfigs[config] = mergedConfigs[config] + '\n'
+    }
+
+    spinner.frame('EOL was inserted')
+
+    return input
   }
-
-  spinner.frame('EOL was inserted')
-
-  return input
-}
 
 module.exports = insertEOL

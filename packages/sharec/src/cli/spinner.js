@@ -1,3 +1,4 @@
+// @ts-check
 const ora = require('ora')
 
 /**
@@ -86,4 +87,6 @@ const createSpinner = ({ text, silent }) => {
   }
 }
 
-module.exports = createSpinner
+module.exports = {
+  createSpinner,
+}

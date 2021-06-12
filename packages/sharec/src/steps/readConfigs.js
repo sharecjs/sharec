@@ -1,44 +1,54 @@
-const { readFile } = require('sharec-utils').std.fs
-const { join } = require('sharec-utils').std.path
+// @ts-check
+const { fs } = require('sharec-utils').std
+const { join } = require('sharec-utils').path
 const { find } = require('sharec-utils').fs
 const { InternalError, CAUSES } = require('../errors')
 
-const readConfigs = ({ spinner, prompt }) => async (input) => {
-  spinner.frame('reading upcoming configuration files')
+/**
+ * @typedef {import('../').Input} Input
+ */
 
-  const configsPath = join(input.configPath, '/configs')
+const readConfigs = ({ spinner, prompt }) =>
+  /**
+   * @param {Input} input
+   * @returns {Promise<Input>}
+   */
+  async (input) => {
+    spinner.frame('reading upcoming configuration files')
 
-  try {
-    const configsPaths = await find(configsPath, '**/*')
-    const withoutLocks = configsPaths.filter((config) => !/(\.|-)lock/.test(config))
-    const readedConfigs = {}
+    const configsPath = join(input.configPath, '/configs')
 
-    for (const config of withoutLocks) {
-      spinner.frame(`reading ${config}`)
+    try {
+      const configsPaths = await find(configsPath, '**/*')
+      const withoutLocks = configsPaths.filter((config) => !/(\.|-)lock/.test(config))
+      const readedConfigs = {}
 
-      const configKey = config.replace(configsPath, '').replace(/^\//, '')
+      for (const config of withoutLocks) {
+        spinner.frame(`reading ${config}`)
 
-      readedConfigs[configKey] = await readFile(config, 'utf8')
-    }
+        const configKey = config.replace(configsPath, '').replace(/^\//, '')
 
-    spinner.frame('all files were readed')
+        readedConfigs[configKey] = await fs.readFile(config, 'utf8')
+      }
 
-    input.configs = readedConfigs
+      spinner.frame('all files were readed')
 
-    return input
-  } catch (err) {
-    if (err.code !== 'ENOENT') {
-      spinner.fail('Config files were not readed due unexpected error')
+      input.configs = readedConfigs
+
+      return input
+    } catch (err) {
+      if (err.code !== 'ENOENT') {
+        spinner.fail('Config files were not readed due unexpected error')
+
+        throw err
+      }
+
+      if (err.message.includes('readdir')) {
+        throw new InternalError(CAUSES.CONFIGS_NOT_FOUND.message(configsPath), CAUSES.CONFIGS_NOT_FOUND.symbol)
+      }
 
       throw err
     }
-
-    if (err.message.includes('readdir')) {
-      throw new InternalError(CAUSES.CONFIGS_NOT_FOUND.message(configsPath), CAUSES.CONFIGS_NOT_FOUND.symbol)
-    }
-
-    throw err
   }
-}
 
 module.exports = readConfigs

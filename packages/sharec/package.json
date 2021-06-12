@@ -20,9 +20,7 @@
   "main": "./src/sharec.js",
   "bin": "./bin/sharec",
   "scripts": {
-    "test": "jest",
-    "types": "tsc",
-    "test:watch": "jest --watch"
+    "test": "tsc --noEmit && jest"
   },
   "jest": {
     "moduleDirectories": [

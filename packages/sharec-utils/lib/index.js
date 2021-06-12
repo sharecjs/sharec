@@ -2,6 +2,7 @@ const format = require('./format')
 const fs = require('./fs')
 const map = require('./map')
 const std = require('./std')
+const path = require('./path')
 
 /**
  * @typedef {object} FormattingRules
@@ -19,4 +20,5 @@ module.exports = {
   fs,
   map,
   std,
+  path,
 }

@@ -1,3 +1,4 @@
+// @ts-check
 const { bold } = require('chalk')
 
 /**
@@ -63,4 +64,6 @@ const createLogger = ({ prefix = '', silent }) => {
   return logger
 }
 
-module.exports = createLogger
+module.exports = {
+  createLogger,
+}

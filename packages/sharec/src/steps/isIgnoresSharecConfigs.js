@@ -1,12 +1,22 @@
+// @ts-check
 const get = require('lodash/get')
 const { InternalError, CAUSES } = require('../errors')
 
-const isIgnoresSharecConfigs = ({ spinner, prompt }) => (input) => {
-  const isIgnoresSharec = get(input.targetPackage, 'sharec.ignore', false)
+/**
+ * @typedef {import('../').Input} Input
+ */
 
-  if (!isIgnoresSharec) return input
+const isIgnoresSharecConfigs = ({ spinner, prompt }) =>
+  /**
+   * @param {Input} input
+   * @returns {Input}
+   */
+  (input) => {
+    const isIgnoresSharec = get(input.targetPackage, 'sharec.ignore', false)
 
-  throw new InternalError(CAUSES.IS_IGNORES_SHAREC.message(), CAUSES.IS_IGNORES_SHAREC.symbol)
-}
+    if (!isIgnoresSharec) return input
+
+    throw new InternalError(CAUSES.IS_IGNORES_SHAREC.message(), CAUSES.IS_IGNORES_SHAREC.symbol)
+  }
 
 module.exports = isIgnoresSharecConfigs

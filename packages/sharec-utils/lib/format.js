@@ -2,7 +2,7 @@
 const get = require('lodash/get')
 const detectIndent = require('detect-indent')
 const minimatch = require('minimatch')
-const { basename } = require('./std').path
+const { basename } = require('./path')
 
 /**
  * @typedef {import('./index').FormattingRules} FormattingRules

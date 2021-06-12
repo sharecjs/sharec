@@ -1,24 +1,34 @@
-const { readFile } = require('sharec-utils').std.fs
-const { resolve } = require('sharec-utils').std.path
+// @ts-check
+const { fs } = require('sharec-utils').std
+const { resolve } = require('sharec-utils').path
 
-const readUpcomingPackage = ({ spinner }) => async (input) => {
-  try {
-    spinner.frame('reading package.json from upcoming configuration')
+/**
+ * @typedef {import('../').Input} Input
+ */
 
-    const upcomingPackageJsonPath = resolve(input.configPath, 'package.json')
-    const rawUpcomingPackageJson = await readFile(upcomingPackageJsonPath, 'utf8')
-    const upcomingPackage = JSON.parse(rawUpcomingPackageJson)
+const readUpcomingPackage = ({ spinner }) =>
+  /**
+   * @param {Input} input
+   * @returns {Promise<Input>}
+   */
+  async (input) => {
+    try {
+      spinner.frame('reading package.json from upcoming configuration')
 
-    spinner.frame('package.json from upcoming configuration was readed')
+      const upcomingPackageJsonPath = resolve(input.configPath, 'package.json')
+      const rawUpcomingPackageJson = await fs.readFile(upcomingPackageJsonPath, 'utf8')
+      const upcomingPackage = JSON.parse(rawUpcomingPackageJson)
 
-    input.upcomingPackage = upcomingPackage
+      spinner.frame('package.json from upcoming configuration was readed')
 
-    return input
-  } catch (err) {
-    spinner.fail("Upcoming configuration's package.json was not readed")
+      input.upcomingPackage = upcomingPackage
 
-    throw err
+      return input
+    } catch (err) {
+      spinner.fail("Upcoming configuration's package.json was not readed")
+
+      throw err
+    }
   }
-}
 
 module.exports = readUpcomingPackage

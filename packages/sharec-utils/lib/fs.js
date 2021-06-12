@@ -1,7 +1,7 @@
 // @ts-check
 const nanomatch = require('nanomatch')
-const { makedir, readdir, lstat } = require('./std').fs
-const { join } = require('./std').path
+const { makedir, readdir, lstat } = require('./std')
+const { join } = require('./path')
 
 /**
  * Makes directory with standard makedir, but do not throws

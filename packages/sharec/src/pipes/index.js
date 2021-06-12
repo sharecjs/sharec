@@ -1,5 +1,6 @@
+// @ts-check
 const omit = require('lodash/omit')
-const { basename } = require('sharec-utils').std.path
+const { basename } = require('sharec-utils').path
 
 // all pipes mapping
 const pipes = {

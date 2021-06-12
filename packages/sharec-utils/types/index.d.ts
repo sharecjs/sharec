@@ -10,4 +10,5 @@ import format = require('./format')
 import fs = require('./fs')
 import map = require('./map')
 import std = require('./std')
-export { format, fs, map, std }
+import path = require('./path')
+export { format, fs, map, std, path }

@@ -1,3 +1,4 @@
+// @ts-check
 const { Confirm } = require('enquirer')
 
 /**
@@ -39,4 +40,6 @@ const createPrompt = ({ silent }) => {
   return prompt
 }
 
-module.exports = createPrompt
+module.exports = {
+  createPrompt,
+}

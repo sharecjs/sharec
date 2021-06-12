@@ -1,29 +1,39 @@
-const { join } = require('sharec-utils').std.path
+// @ts-check
+const { join } = require('sharec-utils').path
 
-const insertMeta = ({ spinner, prompt }) => async (input) => {
-  const { options, mergedConfigs } = input
-  const { disappear, overwrite } = options
+/**
+ * @typedef {import('../').Input} Input
+ */
 
-  if (disappear || overwrite) return input
+const insertMeta = ({ spinner, prompt }) =>
+  /**
+   * @param {Input} input
+   * @returns {Promise<Input>}
+   */
+  async (input) => {
+    const { options, mergedConfigs } = input
+    const { disappear, overwrite } = options
 
-  spinner.frame('inserting sharec meta data')
+    if (disappear || overwrite) return input
 
-  const { name, version } = input.upcomingPackage
-  const targetPackagePath = join(input.targetPath, 'package.json')
-  const targetPackage = mergedConfigs[targetPackagePath]
-    ? JSON.parse(mergedConfigs[targetPackagePath])
-    : input.targetPackage
+    spinner.frame('inserting sharec meta data')
 
-  targetPackage.sharec = {
-    config: name,
-    version,
+    const { name, version } = input.upcomingPackage
+    const targetPackagePath = join(input.targetPath, 'package.json')
+    const targetPackage = mergedConfigs[targetPackagePath]
+      ? JSON.parse(mergedConfigs[targetPackagePath])
+      : input.targetPackage
+
+    targetPackage.sharec = {
+      config: name,
+      version,
+    }
+
+    input.mergedConfigs[targetPackagePath] = JSON.stringify(targetPackage, null, 2)
+
+    spinner.frame('sharec meta data was inserted')
+
+    return input
   }
-
-  input.mergedConfigs[targetPackagePath] = JSON.stringify(targetPackage, null, 2)
-
-  spinner.frame('sharec meta data was inserted')
-
-  return input
-}
 
 module.exports = insertMeta
