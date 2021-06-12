@@ -1,9 +1,10 @@
-const { map } = require('sharec-schema/actions')
+// @ts-check
+const { map } = require('sharec-schema').actions
 const { eslintJson } = require('./schema')
-const { createJsonPipe, createYamlPipe } = require('sharec-schema/helpers/pipes')
+const { createJsonPipe, createYamlPipe } = require('sharec-schema').pipes
 
-const eslintJsonPipe = createJsonPipe(eslintJson)
-const eslintYamlPipe = createYamlPipe(eslintJson)
+const eslintJsonPipe = createJsonPipe([eslintJson])
+const eslintYamlPipe = createYamlPipe([eslintJson])
 
 const eslintPipe = map(
   ['.eslintrc', eslintJsonPipe],

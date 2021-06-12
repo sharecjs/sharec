@@ -1,5 +1,6 @@
-const { compose } = require('sharec-schema/actions')
-const { primitiveAtom, listConcatAtom } = require('sharec-schema/atoms')
+// @ts-check
+const { compose } = require('sharec-schema').actions
+const { primitiveAtom, listConcatAtom } = require('sharec-schema').atoms
 
 const yaspellerJson = compose({
   excludeFiles: listConcatAtom,

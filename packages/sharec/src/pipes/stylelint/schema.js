@@ -1,5 +1,6 @@
-const { compose, fork } = require('sharec-schema/actions')
-const { ruleAtom, listConcatAtom, listMergeAtom, primitiveAtom, pairAtom } = require('sharec-schema/atoms')
+// @ts-check
+const { compose, fork } = require('sharec-schema').actions
+const { ruleAtom, listConcatAtom, listMergeAtom, primitiveAtom, pairAtom } = require('sharec-schema').atoms
 
 const stylelintJson = compose({
   extends: fork([[Array.isArray, listConcatAtom], primitiveAtom]),

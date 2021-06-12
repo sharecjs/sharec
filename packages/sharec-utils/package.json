@@ -17,11 +17,12 @@
   "author": "Konstantin Epishev <lamartire@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "test": "jest",
-    "types": "tsc",
+    "test": "tsc --noEmit && jest",
+    "types": "tsc --emitDeclarationOnly",
     "test:watch": "jest --watch"
   },
-  "main": "./index.js",
+  "main": "./lib/index.js",
+  "types": "./types/index.d.ts",
   "jest": {
     "moduleDirectories": [
       "node_modules",

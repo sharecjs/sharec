@@ -13,15 +13,16 @@
       "eslint --fix",
       "prettier --write"
     ],
+    "packages/**/*.d.ts": [
+      "prettier --write"
+    ],
     "packages/**/*.{json,ya?ml,css,html,md}": [
       "prettier --write"
     ]
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run types --prefix ./packages/sharec && lint-staged",
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-    }
+  "simple-git-hooks": {
+    "pre-commit": "npm run types --prefix ./packages/sharec && npx lint-staged",
+    "commit-msg": "npx commitlint -e"
   },
   "prettier": {
     "semi": false,
@@ -86,13 +87,13 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
     "gh-pages": "^3.1.0",
-    "husky": "^4.3.0",
     "hygen": "^6.0.4",
     "json8": "^1.0.3",
     "lerna": "^3.18.4",
     "lint-staged": "^10.2.2",
     "lodash": "^4.17.20",
     "prettier": "^2.0.5",
+    "simple-git-hooks": "^2.4.1",
     "typescript": "^4.0.5"
   },
   "sharec": {

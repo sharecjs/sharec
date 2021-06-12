@@ -1,51 +1,66 @@
+// @ts-check
 const get = require('lodash/get')
 const editorconfig = require('editorconfig')
-const { readFile } = require('sharec-utils/std').fs
-const { join } = require('sharec-utils/std').path
+const { readFile } = require('sharec-utils').std
+const { join } = require('sharec-utils').path
 
-const readEditorconfig = ({ spinner, prompt }) => async (input) => {
-  spinner.frame('reading .editorconfig')
+/**
+ * @typedef {import('../').StepWrapperPayload} StepWrapperPayload
+ * @typedef {import('../').Input} Input
+ */
 
-  const { targetPath, configPath } = input
-  let rawEditorconfig = null
+/**
+ * @param {StepWrapperPayload} [payload]
+ * @returns {Function}
+ */
+const readEditorconfig = ({ spinner }) =>
+  /**
+   * @param {Input} input
+   * @returns {Promise<Input>}
+   */
+  async (input) => {
+    spinner.frame('reading .editorconfig')
 
-  try {
-    const configsPath = join(configPath, '/configs')
-    const configsEditorconfigPath = join(configsPath, '.editorconfig')
+    const { targetPath, configPath } = input
+    let rawEditorconfig = null
 
-    rawEditorconfig = await readFile(configsEditorconfigPath, 'utf8')
-  } catch (err) {}
-
-  // if upcoming config does not contain .editorconfig, try to read it from target project
-  if (!rawEditorconfig) {
     try {
-      const targetEditorconfigPath = join(targetPath, '.editorconfig')
+      const configsPath = join(configPath, '/configs')
+      const configsEditorconfigPath = join(configsPath, '.editorconfig')
 
-      rawEditorconfig = await readFile(targetEditorconfigPath, 'utf8')
+      rawEditorconfig = await readFile(configsEditorconfigPath, 'utf8')
     } catch (err) {}
+
+    // if upcoming config does not contain .editorconfig, try to read it from target project
+    if (!rawEditorconfig) {
+      try {
+        const targetEditorconfigPath = join(targetPath, '.editorconfig')
+
+        rawEditorconfig = await readFile(targetEditorconfigPath, 'utf8')
+      } catch (err) {}
+    }
+
+    if (!rawEditorconfig) return input
+
+    const [, ...filesConfigs] = editorconfig.parseString(rawEditorconfig)
+    const format = filesConfigs.reduce((acc, item) => {
+      const [extension, config] = item
+      // editorconfig can't return boolean or numeric value
+      const eof = get(config, 'insert_final_newline', 'true') === 'true'
+      const indentSize = Number(get(config, 'indent_size', '2'))
+
+      return Object.assign(acc, {
+        [extension]: {
+          indentType: config.indent_style || 'space',
+          indentSize,
+          eof,
+        },
+      })
+    }, {})
+
+    input.format = format
+
+    return input
   }
-
-  if (!rawEditorconfig) return input
-
-  const [, ...filesConfigs] = editorconfig.parseString(rawEditorconfig)
-  const format = filesConfigs.reduce((acc, item) => {
-    const [extension, config] = item
-    // editorconfig can't return boolean or numeric value
-    const eof = get(config, 'insert_final_newline', 'true') === 'true'
-    const indentSize = Number(get(config, 'indent_size', '2'))
-
-    return Object.assign(acc, {
-      [extension]: {
-        indentType: config.indent_style || 'space',
-        indentSize,
-        eof,
-      },
-    })
-  }, {})
-
-  input.format = format
-
-  return input
-}
 
 module.exports = readEditorconfig

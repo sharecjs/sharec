@@ -1,48 +1,63 @@
+// @ts-check
 const get = require('lodash/get')
-const { readFile } = require('sharec-utils/std').fs
-const { join } = require('sharec-utils/std').path
-const { find } = require('sharec-utils/fs')
+const { readFile } = require('sharec-utils').std
+const { join } = require('sharec-utils').path
+const { find } = require('sharec-utils').fs
 
-const readCache = ({ spinner, prompt }) => async (input) => {
-  const { targetPackage, targetPath } = input
-  const previousTargetMeta = get(targetPackage, 'sharec', null)
+/**
+ * @typedef {import('../').StepWrapperPayload} StepWrapperPayload
+ * @typedef {import('../').Input} Input
+ */
 
-  if (!previousTargetMeta) return input
+/**
+ * @param {StepWrapperPayload} [payload]
+ * @returns {Function}
+ */
+const readCache = ({ spinner }) =>
+  /**
+   * @param {Input} input
+   * @returns {Promise<Input>}
+   */
+  async (input) => {
+    const { targetPackage, targetPath } = input
+    const previousTargetMeta = get(targetPackage, 'sharec', null)
 
-  const { includeCache } = input.options
-  const { config, version } = previousTargetMeta
-  let cachePath = includeCache ? join(targetPath, '.sharec/.cache') : join(targetPath, 'node_modules/.cache/sharec')
+    if (!previousTargetMeta) return input
 
-  cachePath = join(cachePath, `${config}/${version}`)
+    const { includeCache } = input.options
+    const { config, version } = previousTargetMeta
+    let cachePath = includeCache ? join(targetPath, '.sharec/.cache') : join(targetPath, 'node_modules/.cache/sharec')
 
-  spinner.frame(`reading cache for ${config}/${version}`)
+    cachePath = join(cachePath, `${config}/${version}`)
 
-  return find(cachePath, '**/*')
-    .then(async (cachedFiles) => {
-      if (cachedFiles.length === 0) return input
+    spinner.frame(`reading cache for ${config}/${version}`)
 
-      for (const configPath of cachedFiles) {
-        const configKey = configPath.replace(cachePath, '').replace(/^\//, '')
-        const cachedConfig = await readFile(configPath, 'utf8')
+    return find(cachePath, '**/*')
+      .then(async (cachedFiles) => {
+        if (cachedFiles.length === 0) return input
 
-        input.cache[configKey] = cachedConfig
-      }
+        for (const configPath of cachedFiles) {
+          const configKey = configPath.replace(cachePath, '').replace(/^\//, '')
+          const cachedConfig = await readFile(configPath, 'utf8')
 
-      spinner.frame('cache was readed')
+          input.cache[configKey] = cachedConfig
+        }
 
-      return input
-    })
-    .catch((err) => {
-      if (err.message.includes('ENOENT')) {
-        spinner.frame('cache was not found, skipping')
+        spinner.frame('cache was readed')
 
         return input
-      }
+      })
+      .catch((err) => {
+        if (err.message.includes('ENOENT')) {
+          spinner.frame('cache was not found, skipping')
 
-      spinner.fail('Cache was not readed due unexpected error')
+          return input
+        }
 
-      throw err
-    })
-}
+        spinner.fail('Cache was not readed due unexpected error')
+
+        throw err
+      })
+  }
 
 module.exports = readCache
