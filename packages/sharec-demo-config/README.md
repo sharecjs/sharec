@@ -53,9 +53,9 @@ Your configuration package should looks like:
     └── package.json
 ```
 
-`my-awesome-configs/configs/package.json` – should includes `dependencies` and `devDependencies`
-which using by your configuration. For example, if you using `eslint` – it should contain `eslint`
-as dependency. It would be injected in `package.json` of target project.
+`my-awesome-configs/configs/package.json` – should include `dependencies` and `devDependencies`
+which is used by your configuration. For example, if you're using `eslint` – it should contain `eslint`
+as a dependency. It would be injected in `package.json` of target project.
 
 **5. Publish it and install.**
 

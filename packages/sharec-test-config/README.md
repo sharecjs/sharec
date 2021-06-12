@@ -5,4 +5,4 @@
 
 ## Notice
 
-This package needs for local manual testing of current vesion of sharec core.
+This package is required for local manual testing of current vesion of sharec core.
