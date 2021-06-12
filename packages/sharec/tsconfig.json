@@ -1,12 +1,10 @@
 {
   "compilerOptions": {
+    "moduleResolution": "node",
     "allowJs": true,
-    "noEmit": true
+    "checkJs": true,
+    "types": ["node", "jest"]
   },
-  "paths": {
-    "types": "./types"
-  },
-  "types": ["./types"],
-  "include": ["src/**/*.js"],
-  "exclude": ["node_modules", "src/**/*.test.js", "test"]
+  "include": ["./src/*.js"],
+  "exclude": ["./src/*.test.js"]
 }

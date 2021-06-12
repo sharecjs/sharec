@@ -1,3 +1,4 @@
+// @ts-check
 const { map } = require('sharec-schema').actions
 const { linesConcatAtom } = require('sharec-schema').atoms
 

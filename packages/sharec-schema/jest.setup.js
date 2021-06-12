@@ -1,21 +1,13 @@
-const sharecUtils = require('sharec-utils')
-
-jest.doMock('sharec-utils', () => {
+jest.mock('sharec-utils/lib/std', () => {
   const fs = require('memfs').promises
 
   return {
-    ...sharecUtils,
-    std: {
-      ...sharecUtils.std,
-      fs: {
-        readDir: fs.readdir,
-        makeDir: fs.mkdir,
-        readFile: fs.readFile,
-        copyFile: fs.copyFile,
-        writeFile: fs.writeFile,
-        lstat: fs.lstat,
-        removeFile: fs.unlink,
-      },
-    },
+    readdir: fs.readdir,
+    makedir: fs.mkdir,
+    readFile: fs.readFile,
+    copyFile: fs.copyFile,
+    writeFile: fs.writeFile,
+    lstat: fs.lstat,
+    removeFile: fs.unlink,
   }
 })

@@ -1,8 +1,7 @@
-// Guards
+// @ts-check
 const isAlreadyInstalled = require('./isAlreadyInstalled')
 const isDependantOfSharec = require('./isDependantOfSharec')
 const isIgnoresSharecConfigs = require('./isIgnoresSharecConfigs')
-// Input
 const readConfigs = require('./readConfigs')
 const readTargetPackage = require('./readTargetPackage')
 const readUpcomingPackage = require('./readUpcomingPackage')
@@ -10,24 +9,15 @@ const readCache = require('./readCache')
 const readEditorconfig = require('./readEditorconfig')
 const readPrettier = require('./readPrettier')
 const readSharecConfig = require('./readSharecConfig')
-// Processing
 const mergeConfigs = require('./mergeConfigs')
 const insertEOL = require('./insertEOL')
 const applyFormatting = require('./applyFormatting')
-// Output
 const writeConfigs = require('./writeConfigs')
 const insertMeta = require('./insertMeta')
 const writeCache = require('./writeCache')
 
 /**
- * @typedef {Object} Input
- * @property {String} targetPath Target project path
- * @property {String} configPath Upcoming configuration path
- * @property {Object} options Different options from CLI
- * @property {Boolean} options.silent Disables all messages from sharec
- * @property {Boolean} options.overwrite Forcily replaces all configs by new ones
- * @property {Boolean} options.disappeara Do not write cache and sharec meta to target project
- * @property {Boolean} options.debug Enables debug messages
+ * @typedef {import('../').Input} Input
  */
 
 /**
@@ -39,7 +29,7 @@ const writeCache = require('./writeCache')
 const composeSteps = (...steps) =>
   /**
    * @param {Input} input
-   * @returns {Input}
+   * @returns {Promise<Input>}
    */
   async (input) => {
     let lastInput = input
@@ -55,12 +45,10 @@ const steps = {
   isAlreadyInstalled,
   isDependantOfSharec,
   isIgnoresSharecConfigs,
-
   mergeConfigs,
   insertEOL,
   insertMeta,
   applyFormatting,
-
   readConfigs,
   readTargetPackage,
   readUpcomingPackage,
@@ -68,7 +56,6 @@ const steps = {
   readEditorconfig,
   readPrettier,
   readSharecConfig,
-
   writeConfigs,
   writeCache,
 }

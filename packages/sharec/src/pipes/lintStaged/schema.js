@@ -1,3 +1,4 @@
+// @ts-check
 const { compose, fork } = require('sharec-schema').actions
 const { listMergeAtom, primitiveAtom } = require('sharec-schema').atoms
 

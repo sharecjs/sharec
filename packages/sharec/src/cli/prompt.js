@@ -1,13 +1,14 @@
-const { Confirm } = require('enquirer')
+// @ts-check
+const enquirer = require('enquirer')
 
 /**
- * @typedef {Object} Prompt
+ * @typedef {import('../').Prompt} Prompt
  */
 
 /**
  * Creates prompt for handling user input
- * @param {Object} params
- * @param {Boolean} params.silent If silent is truthy - logger will not print any message
+ * @param {object} params
+ * @param {boolean} params.silent If silent is truthy - logger will not print any message
  * @returns {Prompt}
  */
 
@@ -22,7 +23,8 @@ const createPrompt = ({ silent }) => {
     confirm: async (message) => {
       if (silent) return
 
-      const confirm = new Confirm({
+      // @ts-ignore
+      const confirm = new enquirer.Confirm({
         message,
       })
 
@@ -39,4 +41,6 @@ const createPrompt = ({ silent }) => {
   return prompt
 }
 
-module.exports = createPrompt
+module.exports = {
+  createPrompt,
+}

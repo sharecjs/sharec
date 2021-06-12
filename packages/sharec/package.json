@@ -20,9 +20,8 @@
   "main": "./src/sharec.js",
   "bin": "./bin/sharec",
   "scripts": {
-    "test": "jest",
-    "types": "tsc",
-    "test:watch": "jest --watch"
+    "test": "tsc --noEmit && jest",
+    "types": "echo 'types generation not applicable in this package yet'"
   },
   "jest": {
     "moduleDirectories": [
@@ -53,6 +52,7 @@
     ]
   },
   "devDependencies": {
+    "@types/chalk": "^2.2.0",
     "callsites": "^3.1.0",
     "jest": "^26.6.3",
     "jest-cli": "^26.6.3",

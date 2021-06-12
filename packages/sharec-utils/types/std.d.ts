@@ -1,18 +1,9 @@
 /// <reference types="node" />
-import { mkdir } from 'fs'
-import { unlink } from 'fs'
-export namespace fs {
-  const readdir: typeof import('fs').readdir.__promisify__
-  const makedir: typeof mkdir.__promisify__
-  const readFile: typeof import('fs').readFile.__promisify__
-  const copyFile: typeof import('fs').copyFile.__promisify__
-  const writeFile: typeof import('fs').writeFile.__promisify__
-  const lstat: typeof import('fs').lstat.__promisify__
-  const removeFile: typeof unlink.__promisify__
-}
-export namespace path {
-  function join(p: string, ...parts: string[]): string
-  function resolve(p: string, ...parts: string[]): string
-  function basename(p: string, ext?: string): string
-  function dirname(p: string): string
-}
+import nativeFS = require('fs')
+export const readdir: typeof nativeFS.readdir.__promisify__
+export const makedir: typeof nativeFS.mkdir.__promisify__
+export const readFile: typeof nativeFS.readFile.__promisify__
+export const copyFile: typeof nativeFS.copyFile.__promisify__
+export const writeFile: typeof nativeFS.writeFile.__promisify__
+export const lstat: typeof nativeFS.lstat.__promisify__
+export const removeFile: typeof nativeFS.unlink.__promisify__
