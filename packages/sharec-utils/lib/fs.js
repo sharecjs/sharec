@@ -1,5 +1,5 @@
 // @ts-check
-const nanomatch = require('nanomatch')
+const nanomatch = require('sharec-nanomatch')
 const { makedir, readdir, lstat } = require('./std')
 const { join } = require('./path')
 
