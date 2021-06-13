@@ -7,6 +7,5 @@
     "packages/sharec-utils",
     "packages/sharec-schema",
     "packages/sharec-nanomatch"
-  ],
-  "version": "independent"
+  ]
 }
