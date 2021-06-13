@@ -1,3 +1,13 @@
+# 2.10.1
+
+Features:
+
+- `sharec-nanomatch` added
+
+Fixes:
+
+- Correct reading format optons for specific config from `.sharecrc.json` (#182)
+
 # 2.10.0
 
 In this release were added automatically generated types definition files to
