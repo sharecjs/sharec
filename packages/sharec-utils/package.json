@@ -60,7 +60,7 @@
   "dependencies": {
     "detect-indent": "^6.0.0",
     "lodash": "^4.17.21",
-    "nanomatch": "^1.2.13",
+    "sharec-nanomatch": "^1.2.0",
     "slash": "^3.0.0"
   }
 }
