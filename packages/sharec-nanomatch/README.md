@@ -86,18 +86,18 @@ If you need support for the other [bash "expansion" types](#bash-expansion-libs)
 
 ## Getting started
 
-### Installing nanomatch
+### Installing sharec-nanomatch
 
 **Install with [yarn](https://yarnpkg.com/)**
 
 ```sh
-$ yarn add nanomatch
+$ yarn add sharec-nanomatch
 ```
 
 **Install with [npm](https://npmjs.com)**
 
 ```sh
-$ npm install nanomatch
+$ npm install sharec-nanomatch
 ```
 
 ### Usage

@@ -11,7 +11,7 @@ Changelog entries are classified using the following labels _(from [keep-a-chang
 - `fixed`: for any bug fixes
 - `bumped`: updated dependencies, only minor or higher will be listed.
 
-### 2.11.0 – 2021-06-13
+### 1.2.0 – 2021-06-13
 
 This is the first release as a part of `sharec`.
 

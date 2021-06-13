@@ -5,8 +5,7 @@
     "packages/sharec-demo-config",
     "packages/sharec-essential-config",
     "packages/sharec-utils",
-    "packages/sharec-schema",
-    "packages/sharec-nanomatch"
+    "packages/sharec-schema"
   ],
   "version": "2.10.0"
 }
