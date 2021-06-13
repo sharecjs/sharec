@@ -21,8 +21,7 @@
     ]
   },
   "simple-git-hooks": {
-    "pre-commit": "npm run types --prefix ./packages/sharec && npx lint-staged",
-    "commit-msg": "npx commitlint -e"
+    "pre-commit": "npx lint-staged"
   },
   "prettier": {
     "semi": false,
@@ -67,17 +66,8 @@
     "/node_modules/",
     "packages/sharec-nanomatch/examples/**/*"
   ],
-  "config": {
-    "commitizen": {
-      "path": "cz-conventional-changelog"
-    }
-  },
   "devDependencies": {
-    "@commitlint/cli": "^8.3.5",
-    "@commitlint/config-conventional": "^8.3.4",
     "@typescript-eslint/parser": "^4.7.0",
-    "commitizen": "^4.1.2",
-    "cz-conventional-changelog": "^3.2.0",
     "eslint": "^7.0.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-config-prettier-standard": "^3.0.1",
