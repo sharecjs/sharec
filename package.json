@@ -64,7 +64,8 @@
     }
   },
   "eslintIgnore": [
-    "/node_modules/"
+    "/node_modules/",
+    "packages/sharec-nanomatch/examples/**/*"
   ],
   "config": {
     "commitizen": {
