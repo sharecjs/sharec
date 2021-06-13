@@ -1,6 +1,8 @@
 // @ts-check
 const isEmpty = require('lodash/isEmpty')
 const get = require('lodash/get')
+const pick = require('lodash/pick')
+const nanomatch = require('sharec-nanomatch')
 const { applyFormat, getFormatByFilename } = require('sharec-utils').format
 
 /**
@@ -25,20 +27,20 @@ const applyFormatting = ({ spinner }) =>
     if (!format || isEmpty(format)) return input
 
     const formattedConfigs = {}
+    const configsOptions = get(sharecConfig, 'configs') || {}
 
     for (const config in mergedConfigs) {
-      const configParams = get(sharecConfig, `configs['${config}']`, {})
+      const configParamsKeys = nanomatch([config], Object.keys(configsOptions))
+      const configParams = pick(configsOptions, configParamsKeys)
+      const formatPreventedg = Object.values(configParams).find(({ format }) => format === false)
       const formatRules = getFormatByFilename(format, config)
 
-      if (!formatRules || configParams.format === false) {
+      if (!formatRules || formatPreventedg) {
         formattedConfigs[config] = mergedConfigs[config]
         continue
       }
 
       formattedConfigs[config] = applyFormat({
-        // FIXME: very fast and dirty hot fix
-        // need to move formatting rules determining on `readEditorconfig` or `readPrettier` level
-        // or, need to add new step for formatting rules merge and normalization
         filename: config,
         content: mergedConfigs[config],
         rules: formatRules,
