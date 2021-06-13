@@ -107,7 +107,7 @@ describe('steps > applyFormatting', () => {
     it('does not apply format if config is ignored', () => {
       const input = {
         mergedConfigs: {
-          '/foo.json': jsonFxt.current,
+          '/bar/foo.json': jsonFxt.current,
           '/bar.yaml': yamlFxt.current,
         },
         format: {
@@ -119,7 +119,7 @@ describe('steps > applyFormatting', () => {
         },
         sharecConfig: {
           configs: {
-            '/foo.json': {
+            '/bar/foo.json': {
               format: false,
             },
           },
@@ -128,7 +128,7 @@ describe('steps > applyFormatting', () => {
 
       const output = applyFormatting({ spinner, prompt })(input)
 
-      expect(output.mergedConfigs['/foo.json']).toWraplessEqual(jsonFxt.current, {
+      expect(output.mergedConfigs['/bar/foo.json']).toWraplessEqual(jsonFxt.current, {
         eof: false,
       })
       expect(output.mergedConfigs['/bar.yaml']).toWraplessEqual(yamlFxt.result, {
