@@ -1,5 +1,5 @@
 // @ts-check
-const { bold } = require('chalk').default
+const { bold } = require('colorette')
 
 /**
  * @typedef {import('../').Logger} Logger
