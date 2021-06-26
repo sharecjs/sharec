@@ -1,3 +1,10 @@
+# 2.10.2
+
+Refactor:
+
+- `chalk` replacement by `colorette` (#211)
+- `ora` replacement by `mico-spinner` (#211)
+
 # 2.10.1
 
 Features:
