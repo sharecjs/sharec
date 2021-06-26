@@ -8,5 +8,5 @@
     "packages/sharec-schema",
     "packages/sharec-nanomatch"
   ],
-  "version": "2.10.1"
+  "version": "2.10.2"
 }

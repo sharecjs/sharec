@@ -1,6 +1,6 @@
 {
   "name": "sharec-utils",
-  "version": "2.10.1",
+  "version": "2.10.2",
   "keywords": [
     "configuration",
     "sharec",
@@ -60,7 +60,7 @@
   "dependencies": {
     "detect-indent": "^6.0.0",
     "lodash": "^4.17.21",
-    "sharec-nanomatch": "^1.2.1",
+    "sharec-nanomatch": "^2.10.2",
     "slash": "^3.0.0"
   }
 }
