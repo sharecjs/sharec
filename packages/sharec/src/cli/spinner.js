@@ -1,5 +1,5 @@
 // @ts-check
-const ora = require('ora')
+const micoSpinner = require('mico-spinner')
 
 /**
  * @typedef {import('../').Spinner} Spinner
@@ -14,12 +14,7 @@ const ora = require('ora')
  * @returns {Spinner}
  */
 const createSpinner = ({ text, silent }) => {
-  const spinner = ora({
-    spinner: 'line',
-    prefixText: 'sharec:',
-    interval: 50,
-    text,
-  })
+  const spinner = micoSpinner(text)
 
   return {
     /**
