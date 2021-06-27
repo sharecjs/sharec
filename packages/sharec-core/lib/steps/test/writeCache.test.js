@@ -1,8 +1,14 @@
 const { vol } = require('memfs')
+const { createFakeSpinner, createFakePrompt } = require('testUtils')
 const writeCache = require('../writeCache')
 
 describe('steps > writeCache', () => {
+  let spinner
+  let prompt
+
   beforeEach(() => {
+    spinner = createFakeSpinner()
+    prompt = createFakePrompt()
     vol.reset()
   })
 
@@ -28,7 +34,7 @@ describe('steps > writeCache', () => {
     }
     vol.fromJSON(dir, '/configs')
 
-    await writeCache(input)
+    await writeCache({ spinner, prompt })(input)
 
     const cachedConfigs = vol.readdirSync('/target/node_modules/.cache/sharec/awesome-config/0.0.0')
 
@@ -60,7 +66,7 @@ describe('steps > writeCache', () => {
     }
     vol.fromJSON(dir, '/configs')
 
-    await writeCache(input)
+    await writeCache({ spinner, prompt })(input)
 
     try {
       vol.readdirSync('/target/node_modules/.cache/sharec/awesome-config/0.0.0')
@@ -93,7 +99,7 @@ describe('steps > writeCache', () => {
     }
     vol.fromJSON(dir, '/configs')
 
-    await writeCache(input)
+    await writeCache({ spinner, prompt })(input)
 
     const cachedConfigs = vol.readdirSync('/target/.sharec/.cache/awesome-config/0.0.0')
 

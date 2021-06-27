@@ -1,8 +1,14 @@
 const { vol } = require('memfs')
+const { createFakeSpinner, createFakePrompt } = require('testUtils')
 const readCache = require('../readCache')
 
 describe('steps > readCache', () => {
+  let spinner
+  let prompt
+
   beforeEach(() => {
+    spinner = createFakeSpinner()
+    prompt = createFakePrompt()
     vol.reset()
   })
 
@@ -27,7 +33,7 @@ describe('steps > readCache', () => {
     }
     vol.fromJSON(dir, '/configs')
 
-    const output = await readCache(input)
+    const output = await readCache({ spinner, prompt })(input)
 
     expect(output.cache).toEqual({
       '.eslintrc': 'foo',
@@ -54,7 +60,7 @@ describe('steps > readCache', () => {
     }
     vol.fromJSON(dir, '/configs')
 
-    const output = await readCache(input)
+    const output = await readCache({ spinner, prompt })(input)
 
     expect(output.cache).toEqual({})
   })
@@ -78,7 +84,7 @@ describe('steps > readCache', () => {
     }
     vol.fromJSON(dir, '/configs')
 
-    const output = await readCache(input)
+    const output = await readCache({ spinner, prompt })(input)
 
     expect(output.cache).toEqual({})
   })
@@ -106,7 +112,7 @@ describe('steps > readCache', () => {
     }
     vol.fromJSON(dir, '/configs')
 
-    const output = await readCache(input)
+    const output = await readCache({ spinner, prompt })(input)
 
     expect(output.cache).toEqual({
       '.eslintrc': 'foo',

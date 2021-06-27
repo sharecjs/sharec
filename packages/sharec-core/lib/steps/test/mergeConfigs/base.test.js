@@ -1,11 +1,15 @@
 const { vol } = require('memfs')
-const { fixtures } = require('testUtils')
+const { fixtures, createFakeSpinner, createFakePrompt } = require('testUtils')
 const mergeConfigs = require('../../mergeConfigs')
 
 describe('steps > mergeConfigs > base', () => {
+  let spinner
+  let prompt
   const defaultFxt = fixtures('default/json/00-base')
 
   beforeEach(() => {
+    spinner = createFakeSpinner()
+    prompt = createFakePrompt()
     vol.reset()
   })
 
@@ -34,7 +38,7 @@ describe('steps > mergeConfigs > base', () => {
       }
       vol.fromJSON(dir, '/configs')
 
-      const output = await mergeConfigs(input)
+      const output = await mergeConfigs({ spinner, prompt })(input)
 
       expect(output.mergedConfigs).toEqual({
         '/target/.editorconfig': upcomingConfigs['.editorconfig'],
@@ -65,7 +69,7 @@ describe('steps > mergeConfigs > base', () => {
       }
       vol.fromJSON(dir, '/configs')
 
-      const output = await mergeConfigs(input)
+      const output = await mergeConfigs({ spinner, prompt })(input)
 
       expect(output.mergedConfigs).toEqual({
         '/target/foo.json': defaultFxt.upcoming,

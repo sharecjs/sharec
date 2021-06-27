@@ -1,8 +1,10 @@
 const { vol } = require('memfs')
-const { fixtures } = require('testUtils')
+const { fixtures, createFakeSpinner, createFakePrompt } = require('testUtils')
 const readEditorconfig = require('../readEditorconfig')
 
 describe('steps > readEditorconfig', () => {
+  let spinner
+  let prompt
   const editorconfigFxt = fixtures('editorconfig/lines/00-base')
   const input = {
     targetPath: '/target',
@@ -10,6 +12,8 @@ describe('steps > readEditorconfig', () => {
   }
 
   beforeEach(() => {
+    spinner = createFakeSpinner()
+    prompt = createFakePrompt()
     vol.reset()
   })
 
@@ -20,7 +24,7 @@ describe('steps > readEditorconfig', () => {
 
     vol.fromJSON(dir, input.targetPath)
 
-    const output = await readEditorconfig(input)
+    const output = await readEditorconfig({ spinner, prompt })(input)
 
     expect(output).toEqual({
       ...input,
@@ -41,7 +45,7 @@ describe('steps > readEditorconfig', () => {
 
     vol.fromJSON(dir, input.targetPath)
 
-    const output = await readEditorconfig(input)
+    const output = await readEditorconfig({ spinner, prompt })(input)
 
     expect(output).toEqual({
       ...input,
