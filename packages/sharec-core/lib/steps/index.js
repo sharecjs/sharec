@@ -15,6 +15,7 @@ const applyFormatting = require('./applyFormatting')
 const writeConfigs = require('./writeConfigs')
 const insertMeta = require('./insertMeta')
 const writeCache = require('./writeCache')
+const filterChanged = require('./filterChanged')
 
 /**
  * @typedef {import('../').Input} Input
@@ -58,6 +59,7 @@ const steps = {
   readSharecConfig,
   writeConfigs,
   writeCache,
+  filterChanged,
 }
 
 module.exports = {

@@ -47,6 +47,7 @@ const { errorCauses, InternalError } = require('./errors')
  * @property {SharecRuntimeConfiguration} [sharecConfig]
  * @property {object} [format] //TODO: Formatting rules
  * @property {object} [configs] Original configs from upcoming package
+ * @property {object} [local] Configs from target package
  * @property {object} [mergedConfigs] Processed configs from upcoming package
  * @property {object} [cache] Previously installed configuration
  * @property {object} options Different options from CLI
