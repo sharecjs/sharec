@@ -1,10 +1,8 @@
 const { vol } = require('memfs')
-const { fixtures, createFakeSpinner, createFakePrompt } = require('testUtils')
+const { fixtures } = require('testUtils')
 const readSharecConfig = require('../readSharecConfig')
 
 describe('steps > readSharecConfig', () => {
-  let spinner
-  let prompt
   const sharecPackageFxt = fixtures('package/json/07-sharec-config')
   const sharecPackageJSONFxt = fixtures('package/json/07-sharec-config', 'json')
   const sharecFxt = fixtures('sharec/json/00-base')
@@ -15,8 +13,6 @@ describe('steps > readSharecConfig', () => {
   }
 
   beforeEach(() => {
-    spinner = createFakeSpinner()
-    prompt = createFakePrompt()
     vol.reset()
   })
 
@@ -28,7 +24,7 @@ describe('steps > readSharecConfig', () => {
 
       vol.fromJSON(dir, input.targetPath)
 
-      const output = await readSharecConfig({ spinner, prompt })(input)
+      const output = await readSharecConfig(input)
 
       expect(output).toEqual({
         ...input,
@@ -45,7 +41,7 @@ describe('steps > readSharecConfig', () => {
 
       vol.fromJSON(dir, input.targetPath)
 
-      const output = await readSharecConfig({ spinner, prompt })(input)
+      const output = await readSharecConfig(input)
 
       expect(output).toEqual({
         ...input,
@@ -60,7 +56,7 @@ describe('steps > readSharecConfig', () => {
 
       vol.fromJSON(dir, input.targetPath)
 
-      const output = await readSharecConfig({ spinner, prompt })(input)
+      const output = await readSharecConfig(input)
 
       expect(output).toEqual({
         ...input,

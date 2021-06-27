@@ -1,15 +1,6 @@
-const { createFakeSpinner, createFakePrompt } = require('testUtils')
 const insertMeta = require('../insertMeta')
 
 describe('steps > insertMeta', () => {
-  let spinner
-  let prompt
-
-  beforeEach(() => {
-    spinner = createFakeSpinner()
-    prompt = createFakePrompt()
-  })
-
   it('should insert meta to target package.json', async () => {
     const targetPackage = {}
     const upcomingPackage = {
@@ -24,7 +15,7 @@ describe('steps > insertMeta', () => {
       },
       upcomingPackage,
     }
-    const output = await insertMeta({ spinner, prompt })(input)
+    const output = await insertMeta(input)
 
     expect(JSON.parse(output.mergedConfigs['/target/package.json'])).toEqual({
       sharec: {
@@ -50,7 +41,7 @@ describe('steps > insertMeta', () => {
       },
       upcomingPackage,
     }
-    const output = await insertMeta({ spinner, prompt })(input)
+    const output = await insertMeta(input)
 
     expect(JSON.parse(output.mergedConfigs['/target/package.json'])).toEqual({})
   })
@@ -68,7 +59,7 @@ describe('steps > insertMeta', () => {
       options: {},
       upcomingPackage,
     }
-    const output = await insertMeta({ spinner, prompt })(input)
+    const output = await insertMeta(input)
 
     expect(JSON.parse(output.mergedConfigs['/target/package.json'])).toEqual({
       sharec: {

@@ -1,23 +1,14 @@
-const { createFakeSpinner, createFakePrompt } = require('testUtils')
 const { InternalError, CAUSES } = require('../../errors')
 const isDependantOfSharec = require('../isDependantOfSharec')
 
 describe('steps > isDependantOfSharec', () => {
-  let spinner
-  let prompt
-
-  beforeEach(() => {
-    spinner = createFakeSpinner()
-    prompt = createFakePrompt()
-  })
-
   it('should just return given input if target project is independant of sharec', () => {
     const input = {
       targetPackage: {
         dependencies: {},
       },
     }
-    const output = isDependantOfSharec({ spinner, prompt })(input)
+    const output = isDependantOfSharec(input)
 
     expect(output).toEqual(output)
   })
@@ -32,7 +23,7 @@ describe('steps > isDependantOfSharec', () => {
     }
 
     try {
-      isDependantOfSharec({ spinner, prompt })(input)
+      isDependantOfSharec(input)
     } catch (err) {
       expect(err).toBeInstanceOf(InternalError)
       expect(err.cause).toBe(CAUSES.IS_DEPENDANT_OF_SHAREC.symbol)

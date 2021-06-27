@@ -1,15 +1,11 @@
-const { fixtures, createFakeSpinner, createFakePrompt } = require('testUtils')
+const { fixtures } = require('testUtils')
 const { vol } = require('memfs')
 const mergeConfigs = require('../../mergeConfigs')
 
 describe('steps > mergeConfigs > package', () => {
-  let spinner
-  let prompt
   const packageBaseFxt = fixtures('package/json/00-base')
 
   beforeEach(() => {
-    spinner = createFakeSpinner()
-    prompt = createFakePrompt()
     vol.reset()
   })
 
@@ -33,7 +29,7 @@ describe('steps > mergeConfigs > package', () => {
     }
     vol.fromJSON(dir, '/configs')
 
-    const output = await mergeConfigs({ spinner, prompt })(input)
+    const output = await mergeConfigs(input)
 
     expect(output.mergedConfigs['/target/package.json']).toWraplessEqual(packageBaseFxt.result, { eof: false })
   })

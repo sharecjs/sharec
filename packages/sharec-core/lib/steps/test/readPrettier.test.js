@@ -1,15 +1,11 @@
 const { vol } = require('memfs')
-const { fixtures, createFakeSpinner, createFakePrompt } = require('testUtils')
+const { fixtures } = require('testUtils')
 const readPrettier = require('../readPrettier')
 
 describe('steps > readPrettier', () => {
-  let spinner
-  let prompt
   const prettierFxt = fixtures('prettier/json/00-base')
 
   beforeEach(() => {
-    spinner = createFakeSpinner()
-    prompt = createFakePrompt()
     vol.reset()
   })
 
@@ -26,7 +22,7 @@ describe('steps > readPrettier', () => {
 
       vol.fromJSON(dir, input.targetPath)
 
-      const output = await readPrettier({ spinner, prompt })(input)
+      const output = await readPrettier(input)
 
       expect(output).toEqual({
         ...input,
@@ -47,7 +43,7 @@ describe('steps > readPrettier', () => {
 
       vol.fromJSON(dir, input.targetPath)
 
-      const output = await readPrettier({ spinner, prompt })(input)
+      const output = await readPrettier(input)
 
       expect(output).toEqual({
         ...input,
@@ -79,7 +75,7 @@ describe('steps > readPrettier', () => {
 
       vol.fromJSON(dir, input.targetPath)
 
-      const output = await readPrettier({ spinner, prompt })(input)
+      const output = await readPrettier(input)
 
       expect(output).toEqual({
         ...input,
@@ -109,7 +105,7 @@ describe('steps > readPrettier', () => {
 
       vol.fromJSON(dir, input.targetPath)
 
-      const output = await readPrettier({ spinner, prompt })(input)
+      const output = await readPrettier(input)
 
       expect(output).toEqual({
         ...input,
@@ -133,7 +129,7 @@ describe('steps > readPrettier', () => {
 
     vol.fromJSON(dir, input.targetPath)
 
-    const output = await readPrettier({ spinner, prompt })(input)
+    const output = await readPrettier(input)
 
     expect(output).toEqual(input)
   })
