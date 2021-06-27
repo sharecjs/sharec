@@ -11,7 +11,7 @@ const { resolve } = require('sharec-utils').path
  * @returns {Promise<Input>}
  */
 const readTargetPackage = async (input) => {
-  const targetPackageJsonPath = resolve(input.targetPath, 'package.json')
+  const targetPackageJsonPath = resolve(input.targetPath, './package.json')
   const rawTargetPackageJson = await readFile(targetPackageJsonPath, 'utf8')
   const targetPackage = JSON.parse(rawTargetPackageJson)
 

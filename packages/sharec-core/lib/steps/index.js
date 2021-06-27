@@ -3,6 +3,7 @@ const isAlreadyInstalled = require('./isAlreadyInstalled')
 const isDependantOfSharec = require('./isDependantOfSharec')
 const isIgnoresSharecConfigs = require('./isIgnoresSharecConfigs')
 const readConfigs = require('./readConfigs')
+const readLocalConfigs = require('./readLocalConfigs')
 const readTargetPackage = require('./readTargetPackage')
 const readUpcomingPackage = require('./readUpcomingPackage')
 const readCache = require('./readCache')
@@ -51,6 +52,7 @@ const steps = {
   insertMeta,
   applyFormatting,
   readConfigs,
+  readLocalConfigs,
   readTargetPackage,
   readUpcomingPackage,
   readCache,
