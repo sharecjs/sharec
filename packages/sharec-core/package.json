@@ -1,5 +1,5 @@
 {
-  "name": "sharec-utils",
+  "name": "sharec-core",
   "version": "2.10.2",
   "keywords": [
     "configuration",
@@ -16,12 +16,12 @@
   },
   "author": "Konstantin Epishev <lamartire@gmail.com>",
   "license": "MIT",
+  "main": "./lib/index.js",
+  "types": "./types/index.d.ts",
   "scripts": {
     "test": "tsc --noEmit && jest",
     "types": "tsc --emitDeclarationOnly"
   },
-  "main": "./lib/index.js",
-  "types": "./types/index.d.ts",
   "jest": {
     "moduleDirectories": [
       "node_modules",
@@ -51,15 +51,29 @@
     ]
   },
   "devDependencies": {
+    "@types/chalk": "^2.2.0",
+    "callsites": "^3.1.0",
     "jest": "^26.6.3",
     "jest-cli": "^26.6.3",
     "jest-plugin-context": "^2.9.0",
-    "memfs": "^3.2.0"
+    "memfs": "^2.15.2"
   },
   "dependencies": {
+    "colorette": "^1.2.2",
     "detect-indent": "^6.0.0",
-    "lodash": "^4.17.21",
+    "editorconfig": "^0.15.3",
+    "enquirer": "^2.3.6",
+    "js-yaml": ">=3.13.1",
+    "json8": "^1.0.1",
+    "lodash": "^4.17.15",
+    "mico-spinner": "^1.1.0",
+    "minimatch": "^3.0.4",
+    "minimist": "^1.2.0",
     "sharec-nanomatch": "^2.10.2",
+    "sharec-schema": "^2.10.2",
+    "sharec-utils": "^2.10.2",
+    "shelljs": "^0.8.3",
     "slash": "^3.0.0"
-  }
+  },
+  "gitHead": "8b056dc9aedf49a712b84b4d47ea9fa1cea45b08"
 }
