@@ -1,0 +1,8 @@
+{
+  "scripts": {
+    "start": "rimraf && start-script"
+  },
+  "dependencies": {
+    "react": "16.0.0"
+  }
+}

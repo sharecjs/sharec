@@ -27,13 +27,17 @@ const applySchemaByKeys = ({ schema, keys = [], target }) =>
     for (const key of keys) {
       const strategy = schema[key] || schema.$$default
       const ignoreList = schema.$$ignore || []
+      const current = params.current.get(key)
 
       if (!strategy || !params.upcoming.has(key) || ignoreList.includes(key)) {
+        if (current !== undefined) {
+          target.set(key, current)
+        }
+
         target.set(key, params.current.get(key))
         continue
       }
 
-      const current = params.current.get(key)
       const upcoming = params.upcoming.get(key)
       const cached = params.cached && params.cached.get(key)
 
