@@ -5,6 +5,6 @@
     "checkJs": true,
     "types": ["node", "jest"]
   },
-  "include": ["./src/*.js"],
-  "exclude": ["./src/*.test.js"]
+  "include": ["./lib/*.js"],
+  "exclude": ["./lib/*.test.js"]
 }

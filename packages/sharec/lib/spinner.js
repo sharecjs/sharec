@@ -2,7 +2,7 @@
 const micoSpinner = require('mico-spinner')
 
 /**
- * @typedef {import('../').Spinner} Spinner
+ * @typedef {Object} Spinner
  */
 
 /**
