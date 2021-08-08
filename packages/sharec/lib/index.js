@@ -1,11 +1,8 @@
 // @ts-check
 const minimist = require('minimist')
 const { pwd } = require('shelljs')
+const { sharec: sharecCore, errorCauses, InternalError } = require('sharec-core')
 const { createSpinner } = require('./spinner')
-const { createLogger } = require('./logger')
-const { createPrompt } = require('./prompt')
-const { composeSteps, steps } = require('../steps')
-const { CAUSES, InternalError } = require('../errors')
 
 /**
  * Main sharec entrance, accepts node process all files and configuration
@@ -26,19 +23,11 @@ async function sharec(targetProcess) {
   const disappearMode = options.d || options.disappear
   const overwriteMode = options.o || options.overwrite
   const includeCacheMode = options.c || options['include-cache']
-  const interactiveMode = options.i || options.interactive
 
   // CLI utilities
   const spinner = createSpinner({
     text: 'Initializing sharec',
     silent: silentMode,
-  })
-  const logger = createLogger({
-    prefix: 'debugger',
-    silent: !debugMode,
-  })
-  const prompt = createPrompt({
-    silent: !interactiveMode,
   })
 
   // steps preparation and definition
@@ -59,36 +48,12 @@ async function sharec(targetProcess) {
       disappear: disappearMode,
       debug: debugMode,
       includeCache: includeCacheMode,
-      interactive: interactiveMode,
     },
   }
 
-  logger.log('process env\n', env)
-  logger.log('initial input\n', input)
-
-  const commonFlow = composeSteps(
-    logger.wrap(steps.readTargetPackage({ spinner, prompt }), 'readTargetPackage'),
-    logger.wrap(steps.readUpcomingPackage({ spinner, prompt }), 'readUpcomingPackage'),
-    logger.wrap(steps.isAlreadyInstalled({ spinner, prompt }), 'isAlreadyInstalled'),
-    logger.wrap(steps.isDependantOfSharec({ spinner, prompt }), 'isDependantOfSharec'),
-    logger.wrap(steps.isIgnoresSharecConfigs({ spinner, prompt }), 'isIgnoresSharecConfigs'),
-    logger.wrap(steps.readSharecConfig({ spinner }), 'readSharecConfig'),
-    logger.wrap(steps.readConfigs({ spinner, prompt }), 'readConfigs'),
-    logger.wrap(steps.readEditorconfig({ spinner, prompt }), 'readEditorconfig'),
-    logger.wrap(steps.readPrettier({ spinner, prompt }), 'readPrettier'),
-    logger.wrap(steps.readCache({ spinner, prompt }), 'readCache'),
-    logger.wrap(steps.mergeConfigs({ spinner, prompt }), 'mergeConfigs'),
-    logger.wrap(steps.insertMeta({ spinner, prompt }), 'insertMeta'),
-    logger.wrap(steps.insertEOL({ spinner, prompt }), 'insertEOL'),
-    logger.wrap(steps.applyFormatting({ spinner, prompt }), 'applyFormatting'),
-    logger.wrap(steps.writeCache({ spinner, prompt }), 'writeCache'),
-    logger.wrap(steps.writeConfigs({ spinner, prompt }), 'writeConfigs'),
-  )
-
   try {
-    const finalInput = await commonFlow(input)
+    await sharecCore(input)
 
-    logger.log('final input\n', finalInput)
     spinner.succeed('configuration was installed')
     targetProcess.exit(0)
   } catch (err) {
@@ -100,10 +65,10 @@ async function sharec(targetProcess) {
 
     // errors which can be handled
     switch (err.cause) {
-      case CAUSES.IS_DEPENDANT_OF_SHAREC.symbol:
-      case CAUSES.IS_IGNORES_SHAREC.symbol:
+      case errorCauses.IS_DEPENDANT_OF_SHAREC.symbol:
+      case errorCauses.IS_IGNORES_SHAREC.symbol:
         break
-      case CAUSES.ALREADY_INSTALLED.symbol:
+      case errorCauses.ALREADY_INSTALLED.symbol:
         spinner.succeed(err.message)
         break
       default:
