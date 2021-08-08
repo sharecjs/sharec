@@ -30,7 +30,10 @@ const applySchemaByKeys = ({ schema, keys = [], target }) =>
       const current = params.current.get(key)
       const notChanged = !strategy || !params.upcoming.has(key) || ignoreList.includes(key)
 
-      if (notChanged && current !== undefined) target.set(key, current)
+      if (notChanged && current !== undefined) {
+        target.set(key, current)
+        continue
+      }
       if (notChanged) continue
 
       const upcoming = params.upcoming.get(key)
