@@ -34,7 +34,6 @@ const applySchemaByKeys = ({ schema, keys = [], target }) =>
           target.set(key, current)
         }
 
-        target.set(key, params.current.get(key))
         continue
       }
 
