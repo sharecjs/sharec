@@ -1,6 +1,3 @@
-import { steps } from './steps'
-import { InternalError, errorCauses } from './errors'
-
 export type RuntimeConfigOptions = {
   /**
    * Can be used to prevent file formatting after the merge
@@ -76,6 +73,10 @@ export type Input = {
    */
   configs?: object
   /**
+   * Configs from target package
+   */
+  local?: object
+  /**
    * Processed configs from upcoming package
    */
   mergedConfigs?: object
@@ -101,6 +102,24 @@ export type Input = {
  * @returns {Promise<void>}
  */
 export function sharec(baseInput: BaseInput): Promise<void>
+export const steps: {
+  isAlreadyInstalled: (input: Input) => Input
+  isDependantOfSharec: (input: Input) => Input
+  isIgnoresSharecConfigs: (input: Input) => Input
+  mergeConfigs: (input: Input) => Promise<Input>
+  insertEOL: (input: Input) => Promise<Input>
+  insertMeta: (input: Input) => Promise<Input>
+  applyFormatting: (input: Input) => Input
+  readConfigs: (input: Input) => Promise<Input>
+  readTargetPackage: (input: Input) => Promise<Input>
+  readUpcomingPackage: (input: Input) => Promise<Input>
+  readCache: (input: Input) => Promise<Input>
+  readEditorconfig: (input: Input) => Promise<Input>
+  readPrettier: (input: Input) => Promise<Input>
+  readSharecConfig: (input: Input) => Promise<Input>
+  writeConfigs: (input: Input) => Promise<Input>
+  writeCache: (input: Input) => Promise<Input>
+}
 /**
  * @typedef {object} RuntimeConfigOptions
  * @property {boolean} [format] Can be used to prevent file formatting after the merge
@@ -143,6 +162,7 @@ export function sharec(baseInput: BaseInput): Promise<void>
  * @property {SharecRuntimeConfiguration} [sharecConfig]
  * @property {object} [format] //TODO: Formatting rules
  * @property {object} [configs] Original configs from upcoming package
+ * @property {object} [local] Configs from target package
  * @property {object} [mergedConfigs] Processed configs from upcoming package
  * @property {object} [cache] Previously installed configuration
  * @property {object} options Different options from CLI
@@ -154,4 +174,22 @@ export function sharec(baseInput: BaseInput): Promise<void>
  *  directory instead of `node_modules/.cache`
  */
 export const commonFlow: Function
-export { steps, InternalError, errorCauses }
+export const InternalError: typeof import('./errors/InternalError')
+export const errorCauses: {
+  ALREADY_INSTALLED: {
+    message: () => string
+    symbol: symbol
+  }
+  IS_DEPENDANT_OF_SHAREC: {
+    message: () => string
+    symbol: symbol
+  }
+  IS_IGNORES_SHAREC: {
+    message: () => string
+    symbol: symbol
+  }
+  CONFIGS_NOT_FOUND: {
+    message: (path: any) => string
+    symbol: symbol
+  }
+}

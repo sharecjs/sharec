@@ -34,6 +34,10 @@ type Input = {
    */
   configs?: any
   /**
+   * Configs from target package
+   */
+  local?: any
+  /**
    * Processed configs from upcoming package
    */
   mergedConfigs?: any

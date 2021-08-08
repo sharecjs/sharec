@@ -22,6 +22,10 @@ export type Input = {
    */
   configs?: any
   /**
+   * Configs from target package
+   */
+  local?: any
+  /**
    * Processed configs from upcoming package
    */
   mergedConfigs?: any
@@ -84,19 +88,20 @@ export namespace steps {
   export { writeConfigs }
   export { writeCache }
 }
-import isAlreadyInstalled = require('./isAlreadyInstalled')
-import isDependantOfSharec = require('./isDependantOfSharec')
-import isIgnoresSharecConfigs = require('./isIgnoresSharecConfigs')
-import mergeConfigs = require('./mergeConfigs')
-import insertEOL = require('./insertEOL')
-import insertMeta = require('./insertMeta')
-import applyFormatting = require('./applyFormatting')
-import readConfigs = require('./readConfigs')
-import readTargetPackage = require('./readTargetPackage')
-import readUpcomingPackage = require('./readUpcomingPackage')
-import readCache = require('./readCache')
-import readEditorconfig = require('./readEditorconfig')
-import readPrettier = require('./readPrettier')
-import readSharecConfig = require('./readSharecConfig')
-import writeConfigs = require('./writeConfigs')
-import writeCache = require('./writeCache')
+declare const isAlreadyInstalled: (input: import('..').Input) => import('..').Input
+declare const isDependantOfSharec: (input: import('..').Input) => import('..').Input
+declare const isIgnoresSharecConfigs: (input: import('..').Input) => import('..').Input
+declare const mergeConfigs: (input: import('..').Input) => Promise<import('..').Input>
+declare const insertEOL: (input: import('..').Input) => Promise<import('..').Input>
+declare const insertMeta: (input: import('..').Input) => Promise<import('..').Input>
+declare const applyFormatting: (input: import('..').Input) => import('..').Input
+declare const readConfigs: (input: import('..').Input) => Promise<import('..').Input>
+declare const readTargetPackage: (input: import('..').Input) => Promise<import('..').Input>
+declare const readUpcomingPackage: (input: import('..').Input) => Promise<import('..').Input>
+declare const readCache: (input: import('..').Input) => Promise<import('..').Input>
+declare const readEditorconfig: (input: import('..').Input) => Promise<import('..').Input>
+declare const readPrettier: (input: import('..').Input) => Promise<import('..').Input>
+declare const readSharecConfig: (input: import('..').Input) => Promise<import('..').Input>
+declare const writeConfigs: (input: import('..').Input) => Promise<import('..').Input>
+declare const writeCache: (input: import('..').Input) => Promise<import('..').Input>
+export {}
