@@ -1,10 +1,8 @@
-const { fixtures, createFakeSpinner, createFakePrompt } = require('testUtils')
+const { fixtures } = require('testUtils')
 const { vol } = require('memfs')
 const mergeConfigs = require('../../mergeConfigs')
 
 describe('steps > mergeConfigs > mixed', () => {
-  let spinner
-  let prompt
   const packageBaseFxt = fixtures('package/json/00-base')
   const eslintBaseFxt = fixtures('eslint/json/01-base')
   const babelBaseFxt = fixtures('babel/json/00-base')
@@ -13,8 +11,6 @@ describe('steps > mergeConfigs > mixed', () => {
   const yaspellerBaseFxt = fixtures('yaspeller/json/00-base')
 
   beforeEach(() => {
-    spinner = createFakeSpinner()
-    prompt = createFakePrompt()
     vol.reset()
   })
 
@@ -48,7 +44,7 @@ describe('steps > mergeConfigs > mixed', () => {
     }
     vol.fromJSON(dir, '/configs')
 
-    const output = await mergeConfigs({ spinner, prompt })(input)
+    const output = await mergeConfigs(input)
 
     expect(output.mergedConfigs['/target/.eslintrc']).toWraplessEqual(eslintBaseFxt.result, { eof: false })
     expect(output.mergedConfigs['/target/.babelrc']).toWraplessEqual(babelBaseFxt.result, { eof: false })

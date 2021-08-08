@@ -1,8 +1,7 @@
 const path = require('path')
 const { fixtures } = require('testUtils')
 const { vol } = require('memfs')
-const { pwd } = require('shelljs')
-const sharec = require('../')
+const { sharec } = require('../')
 
 describe('sharec > update > linear', () => {
   const packageFxt = fixtures('package/json/02-update')
@@ -14,21 +13,17 @@ describe('sharec > update > linear', () => {
   const defaultJsonFxt = fixtures('default/json/00-base')
   const defaultYamlFxt = fixtures('default/yaml/00-base')
 
-  const targetProcess = {
-    argv: [null, null, 'install'],
-    env: {
-      INIT_CWD: '/target',
-    },
-    exit: jest.fn(),
+  const input = {
+    targetPath: '/target',
+    configPath: '/configuration-package',
   }
 
   beforeEach(() => {
     jest.clearAllMocks()
-    pwd.mockReturnValueOnce({ stdout: '/configuration-package' })
     vol.reset()
   })
 
-  it('should update configs in the target project', async () => {
+  it.only('should update configs in the target project', async () => {
     const cacheBasePath = '/target/node_modules/.cache/sharec/awesome-config/1.0.0'
     const upcomingPackage = {
       name: 'awesome-config',
@@ -66,7 +61,7 @@ describe('sharec > update > linear', () => {
     }
     vol.fromJSON(dir, '/')
 
-    await sharec(targetProcess)
+    await sharec(input)
 
     expect(vol.readFileSync('/target/.babelrc', 'utf8')).toWraplessEqual(babelFxt.result)
     expect(vol.readFileSync('/target/.eslintrc', 'utf8')).toWraplessEqual(eslintFxt.result)
@@ -82,17 +77,13 @@ describe('sharec > update > linear', () => {
 describe('sharec > update > with removed fields', () => {
   const packageFxt = fixtures('package/json/05-removed')
 
-  const targetProcess = {
-    argv: [null, null, 'install'],
-    env: {
-      INIT_CWD: '/target',
-    },
-    exit: jest.fn(),
+  const input = {
+    targetPath: '/target',
+    configPath: '/configuration-package',
   }
 
   beforeEach(() => {
     jest.clearAllMocks()
-    pwd.mockReturnValueOnce({ stdout: '/configuration-package' })
     vol.reset()
   })
 
@@ -113,7 +104,7 @@ describe('sharec > update > with removed fields', () => {
     }
     vol.fromJSON(dir, '/')
 
-    await sharec(targetProcess)
+    await sharec(input)
 
     expect(vol.readFileSync('/target/package.json', 'utf8')).toWraplessEqual(packageFxt.result)
   })
@@ -123,17 +114,13 @@ describe('sharec > update > with removed configs', () => {
   const eslintFxt = fixtures('eslint/json/02-update')
   const packageFxt = fixtures('package/json/05-removed')
 
-  const targetProcess = {
-    argv: [null, null, 'install'],
-    env: {
-      INIT_CWD: '/target',
-    },
-    exit: jest.fn(),
+  const input = {
+    targetPath: '/target',
+    configPath: '/configuration-package',
   }
 
   beforeEach(() => {
     jest.clearAllMocks()
-    pwd.mockReturnValueOnce({ stdout: '/configuration-package' })
     vol.reset()
   })
 
@@ -156,7 +143,7 @@ describe('sharec > update > with removed configs', () => {
     }
     vol.fromJSON(dir, '/')
 
-    await sharec(targetProcess)
+    await sharec(input)
 
     expect(vol.readdirSync('/target')).not.toContain('.eslintrc')
     expect(vol.readFileSync('/target/package.json', 'utf8')).toWraplessEqual(packageFxt.result)

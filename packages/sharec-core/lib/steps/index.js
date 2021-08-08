@@ -3,7 +3,6 @@ const isAlreadyInstalled = require('./isAlreadyInstalled')
 const isDependantOfSharec = require('./isDependantOfSharec')
 const isIgnoresSharecConfigs = require('./isIgnoresSharecConfigs')
 const readConfigs = require('./readConfigs')
-const readLocalConfigs = require('./readLocalConfigs')
 const readTargetPackage = require('./readTargetPackage')
 const readUpcomingPackage = require('./readUpcomingPackage')
 const readCache = require('./readCache')
@@ -16,7 +15,6 @@ const applyFormatting = require('./applyFormatting')
 const writeConfigs = require('./writeConfigs')
 const insertMeta = require('./insertMeta')
 const writeCache = require('./writeCache')
-const filterChanged = require('./filterChanged')
 
 /**
  * @typedef {import('../').Input} Input
@@ -52,7 +50,6 @@ const steps = {
   insertMeta,
   applyFormatting,
   readConfigs,
-  readLocalConfigs,
   readTargetPackage,
   readUpcomingPackage,
   readCache,
@@ -61,7 +58,6 @@ const steps = {
   readSharecConfig,
   writeConfigs,
   writeCache,
-  filterChanged,
 }
 
 module.exports = {

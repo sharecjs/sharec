@@ -1,7 +1,6 @@
 const { fixtures } = require('testUtils')
 const { vol } = require('memfs')
-const { pwd } = require('shelljs')
-const sharec = require('../')
+const { sharec } = require('../')
 
 describe('sharec > disappear', () => {
   const packageFxt = fixtures('package/json/03-disappear')
@@ -11,17 +10,14 @@ describe('sharec > disappear', () => {
   const npmignoreFxt = fixtures('npmignore/lines/00-base')
   const gitignoreFxt = fixtures('gitignore/lines/00-base')
 
-  const targetProcess = {
-    argv: [null, null, '--disappear'],
-    env: {
-      INIT_CWD: '/target',
-    },
-    exit: jest.fn(),
+  const input = {
+    targetPath: '/target',
+    configPath: '/configuration-package',
+    disappear: true,
   }
 
   beforeEach(() => {
     jest.clearAllMocks()
-    pwd.mockReturnValueOnce({ stdout: '/configuration-package' })
     vol.reset()
   })
 
@@ -46,7 +42,7 @@ describe('sharec > disappear', () => {
     }
     vol.fromJSON(dir, '/')
 
-    await sharec(targetProcess)
+    await sharec(input)
 
     expect(vol.readFileSync('/target/.babelrc', 'utf8')).toWraplessEqual(babelFxt.result)
     expect(vol.readFileSync('/target/.eslintrc', 'utf8')).toWraplessEqual(eslintFxt.result)

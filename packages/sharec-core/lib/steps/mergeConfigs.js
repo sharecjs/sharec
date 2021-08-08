@@ -16,15 +16,16 @@ const mergeConfigs = async (input) => {
   const { configs, cache = {}, sharecConfig = {}, targetPath, options } = input
   const { overwrite } = options
 
-  for (const config in configs) {
-    const upcomingConfig = configs[config]
+  for (const configKey in configs) {
+    const upcomingConfig = configs[configKey]
 
     if (!upcomingConfig) continue
 
     let currentConfig
-    let targetConfigPath = join(targetPath, config)
-    const targetConfigBasename = basename(config)
-    const configParams = get(sharecConfig, `configs['${config}']`, {})
+    let targetConfigPath = join(targetPath, configKey)
+
+    const targetConfigBasename = basename(configKey)
+    const configParams = get(sharecConfig, `configs['${configKey}']`, {})
     const isPackageJson = targetConfigBasename === 'package.json'
     const isOverwriteMode = overwrite || configParams.overwrite
     const isOverwritePackageJson = isPackageJson && isOverwriteMode
@@ -38,6 +39,13 @@ const mergeConfigs = async (input) => {
       currentConfig = await readFile(targetConfigPath, 'utf8')
     } catch (err) {}
 
+    const cachedConfig = !isOverwritePackageJson ? cache[configKey] : undefined
+
+    // current file was changed by user
+    if (!targetPipe && cachedConfig !== currentConfig) {
+      continue
+    }
+
     if (!targetPipe) {
       input.mergedConfigs[targetConfigPath] = upcomingConfig
       continue
@@ -46,13 +54,6 @@ const mergeConfigs = async (input) => {
     // package.json can't be overwrited
     if (isOverwriteMode && !isPackageJson) {
       input.mergedConfigs[targetConfigPath] = upcomingConfig
-      continue
-    }
-
-    const cachedConfig = !isOverwritePackageJson ? cache[config] : undefined
-
-    // skip config if it was fully removed by user
-    if (!currentConfig && cachedConfig) {
       continue
     }
 

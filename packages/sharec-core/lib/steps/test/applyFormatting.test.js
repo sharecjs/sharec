@@ -1,16 +1,9 @@
-const { fixtures, createFakeSpinner, createFakePrompt } = require('testUtils')
+const { fixtures } = require('testUtils')
 const applyFormatting = require('../applyFormatting')
 
 describe('steps > applyFormatting', () => {
-  let spinner
-  let prompt
   const jsonFxt = fixtures('default/json/02-formatting')
   const yamlFxt = fixtures('default/yaml/01-formatting')
-
-  beforeEach(() => {
-    spinner = createFakeSpinner()
-    prompt = createFakePrompt()
-  })
 
   context('without config', () => {
     it('applies format to configs', () => {
@@ -28,7 +21,7 @@ describe('steps > applyFormatting', () => {
         },
       }
 
-      const output = applyFormatting({ spinner, prompt })(input)
+      const output = applyFormatting(input)
 
       expect(output.mergedConfigs['/foo.json']).toWraplessEqual(jsonFxt.result, {
         eof: false,
@@ -53,7 +46,7 @@ describe('steps > applyFormatting', () => {
         },
       }
 
-      const output = applyFormatting({ spinner, prompt })(input)
+      const output = applyFormatting(input)
 
       expect(output.mergedConfigs['/foo.json']).toWraplessEqual(jsonFxt.result, {
         eof: false,
@@ -77,7 +70,7 @@ describe('steps > applyFormatting', () => {
         },
       }
 
-      const output = applyFormatting({ spinner, prompt })(input)
+      const output = applyFormatting(input)
 
       expect(output.mergedConfigs['/bar.yaml']).toWraplessEqual(yamlFxt.current, {
         eof: false,
@@ -91,7 +84,7 @@ describe('steps > applyFormatting', () => {
           '/bar.yaml': yamlFxt.current,
         },
       }
-      const output = applyFormatting({ spinner, prompt })(input)
+      const output = applyFormatting(input)
 
       expect(output).toEqual({
         ...input,
@@ -126,7 +119,7 @@ describe('steps > applyFormatting', () => {
         },
       }
 
-      const output = applyFormatting({ spinner, prompt })(input)
+      const output = applyFormatting(input)
 
       expect(output.mergedConfigs['/bar/foo.json']).toWraplessEqual(jsonFxt.current, {
         eof: false,

@@ -1,7 +1,7 @@
 const { fixtures } = require('testUtils')
 const { vol } = require('memfs')
 const { pwd } = require('shelljs')
-const sharec = require('../../')
+const { sharec } = require('../../')
 
 describe('sharec > install > format', () => {
   const packageFxt = fixtures('package/json/06-format')
@@ -19,12 +19,10 @@ describe('sharec > install > format', () => {
 
   describe('.editorconfig', () => {
     it('should install configs to the target project and apply formatting rules from upcoming .editorconfig', async () => {
-      const targetProcess = {
-        argv: [null, null, 'install'],
-        env: {
-          INIT_CWD: '/target',
-        },
-        exit: jest.fn(),
+      const input = {
+        targetPath: '/target',
+        configPath: '/configuration-package',
+        includeCache: true,
       }
       const dir = {
         '/target/package.json': packageFxt.current,
@@ -41,7 +39,7 @@ describe('sharec > install > format', () => {
       }
       vol.fromJSON(dir, '/')
 
-      await sharec(targetProcess)
+      await sharec(input)
 
       expect(vol.readFileSync('/target/.editorconfig', 'utf8')).toWraplessEqual(editorconfigFxt.current)
       expect(vol.readFileSync('/target/.eslintrc', 'utf8')).toWraplessEqual(eslintFxt.result)
@@ -52,12 +50,10 @@ describe('sharec > install > format', () => {
 
   describe('prettier', () => {
     it('should install configs to the target project and apply formatting rules from upcoming .prettierrc', async () => {
-      const targetProcess = {
-        argv: [null, null, 'install'],
-        env: {
-          INIT_CWD: '/target',
-        },
-        exit: jest.fn(),
+      const input = {
+        targetPath: '/target',
+        configPath: '/configuration-package',
+        includeCache: true,
       }
       const dir = {
         '/target/package.json': packageFxt.current,
@@ -76,7 +72,7 @@ describe('sharec > install > format', () => {
       }
       vol.fromJSON(dir, '/')
 
-      await sharec(targetProcess)
+      await sharec(input)
 
       expect(vol.readFileSync('/target/.prettierrc', 'utf8')).toWraplessEqual(prettierFxt.current, {
         eof: false,
@@ -96,12 +92,10 @@ describe('sharec > install > format', () => {
     })
 
     it('should install configs to the target project and apply formatting rules from upcoming prettier package.json field', async () => {
-      const targetProcess = {
-        argv: [null, null, 'install'],
-        env: {
-          INIT_CWD: '/target',
-        },
-        exit: jest.fn(),
+      const input = {
+        targetPath: '/target',
+        configPath: '/configuration-package',
+        includeCache: true,
       }
       const dir = {
         '/target/package.json': packageFxt.current,
@@ -117,7 +111,7 @@ describe('sharec > install > format', () => {
       }
       vol.fromJSON(dir, '/')
 
-      await sharec(targetProcess)
+      await sharec(input)
 
       expect(vol.readFileSync('/target/.eslintrc', 'utf8')).toWraplessEqual(eslintFxt.result)
       expect(vol.readFileSync('/target/.babelrc', 'utf8')).toWraplessEqual(babelFxt.result)

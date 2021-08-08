@@ -1,15 +1,9 @@
 const { vol } = require('memfs')
-const { createFakeSpinner, createFakePrompt } = require('testUtils')
-const { InternalError, CAUSES } = require('../../errors')
+const { InternalError, errorCauses } = require('../../errors')
 const readConfigs = require('../readConfigs')
 
 describe('steps > readConfigs', () => {
-  let spinner
-  let prompt
-
   beforeEach(() => {
-    spinner = createFakeSpinner()
-    prompt = createFakePrompt()
     vol.reset()
   })
 
@@ -26,7 +20,7 @@ describe('steps > readConfigs', () => {
     }
     vol.fromJSON(dir, '/configs')
 
-    const output = await readConfigs({ spinner, prompt })(input)
+    const output = await readConfigs(input)
 
     expect(output).toEqual({
       ...input,
@@ -45,10 +39,10 @@ describe('steps > readConfigs', () => {
     vol.fromJSON(dir, '/bar')
 
     try {
-      await readConfigs({ spinner, prompt })(input)
+      await readConfigs(input)
     } catch (err) {
       expect(err).toBeInstanceOf(InternalError)
-      expect(err.cause).toBe(CAUSES.CONFIGS_NOT_FOUND.symbol)
+      expect(err.cause).toBe(errorCauses.CONFIGS_NOT_FOUND.symbol)
       expect(err.message).toEqual('Configuration files were not found in "/foo/configs"')
     }
   })

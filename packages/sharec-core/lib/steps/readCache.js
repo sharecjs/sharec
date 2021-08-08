@@ -24,26 +24,26 @@ const readCache = async (input) => {
 
   cachePath = join(cachePath, `${config}/${version}`)
 
-  return find(cachePath, '**/*')
-    .then(async (cachedFiles) => {
-      if (cachedFiles.length === 0) return input
+  try {
+    const cachedFiles = await find(cachePath, '**/*')
 
-      for (const configPath of cachedFiles) {
-        const configKey = configPath.replace(cachePath, '').replace(/^\//, '')
-        const cachedConfig = await readFile(configPath, 'utf8')
+    if (cachedFiles.length === 0) return input
 
-        input.cache[configKey] = cachedConfig
-      }
+    for (const configPath of cachedFiles) {
+      const configKey = configPath.replace(cachePath, '').replace(/^\//, '')
+      const cachedConfig = await readFile(configPath, 'utf8')
 
+      input.cache[configKey] = cachedConfig
+    }
+
+    return input
+  } catch (err) {
+    if (err.message.includes('ENOENT')) {
       return input
-    })
-    .catch((err) => {
-      if (err.message.includes('ENOENT')) {
-        return input
-      }
+    }
 
-      throw err
-    })
+    throw err
+  }
 }
 
 module.exports = readCache

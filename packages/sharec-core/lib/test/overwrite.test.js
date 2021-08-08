@@ -1,7 +1,6 @@
 const { fixtures } = require('testUtils')
 const { vol } = require('memfs')
-const { pwd } = require('shelljs')
-const sharec = require('../')
+const { sharec } = require('../')
 
 describe('sharec > overwrite', () => {
   const packageFxt = fixtures('package/json/04-overwrite')
@@ -10,17 +9,14 @@ describe('sharec > overwrite', () => {
   const npmignoreFxt = fixtures('npmignore/lines/00-base')
   const gitignoreFxt = fixtures('gitignore/lines/00-base')
 
-  const targetProcess = {
-    argv: [null, null, '--overwrite'],
-    env: {
-      INIT_CWD: '/target',
-    },
-    exit: jest.fn(),
+  const input = {
+    targetPath: '/target',
+    configPath: '/configuration-package',
+    overwrite: true,
   }
 
   beforeEach(() => {
     jest.clearAllMocks()
-    pwd.mockReturnValueOnce({ stdout: '/configuration-package' })
     vol.reset()
   })
 
@@ -43,7 +39,7 @@ describe('sharec > overwrite', () => {
     }
     vol.fromJSON(dir, '/')
 
-    await sharec(targetProcess)
+    await sharec(input)
 
     expect(vol.readFileSync('/target/.babelrc', 'utf8')).toWraplessEqual(babelFxt.upcoming)
     expect(vol.readFileSync('/target/.eslintrc', 'utf8')).toWraplessEqual(eslintFxt.upcoming)

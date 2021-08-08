@@ -1,7 +1,6 @@
 const { fixtures } = require('testUtils')
 const { vol } = require('memfs')
-const { pwd } = require('shelljs')
-const sharec = require('../../')
+const { sharec } = require('../../')
 
 describe('sharec > install', () => {
   const packageFxt = fixtures('package/json/01-install')
@@ -12,17 +11,13 @@ describe('sharec > install', () => {
 
   beforeEach(() => {
     jest.clearAllMocks()
-    pwd.mockReturnValueOnce({ stdout: '/configuration-package' })
     vol.reset()
   })
 
   it('should install configs to the target project', async () => {
-    const targetProcess = {
-      argv: [null, null, 'install'],
-      env: {
-        INIT_CWD: '/target',
-      },
-      exit: jest.fn(),
+    const input = {
+      targetPath: '/target',
+      configPath: '/configuration-package',
     }
     const dir = {
       '/target/.eslintrc': eslintFxt.current,
@@ -43,7 +38,7 @@ describe('sharec > install', () => {
     }
     vol.fromJSON(dir, '/')
 
-    await sharec(targetProcess)
+    await sharec(input)
 
     expect(vol.readFileSync('/target/.eslintrc', 'utf8')).toWraplessEqual(eslintFxt.result)
     expect(vol.readFileSync('/target/.babelrc', 'utf8')).toWraplessEqual(babelFxt.result)
@@ -55,12 +50,10 @@ describe('sharec > install', () => {
   })
 
   it('should place cache in target project if includeCache mode is active', async (done) => {
-    const targetProcess = {
-      argv: [null, null, '--include-cache'],
-      env: {
-        INIT_CWD: '/target',
-      },
-      exit: jest.fn(),
+    const input = {
+      targetPath: '/target',
+      configPath: '/configuration-package',
+      includeCache: true,
     }
     const dir = {
       '/target/.eslintrc': eslintFxt.current,
@@ -81,7 +74,7 @@ describe('sharec > install', () => {
     }
     vol.fromJSON(dir, '/')
 
-    await sharec(targetProcess)
+    await sharec(input)
 
     expect(vol.readFileSync('/target/.eslintrc', 'utf8')).toWraplessEqual(eslintFxt.result)
     expect(vol.readFileSync('/target/.babelrc', 'utf8')).toWraplessEqual(babelFxt.result)
