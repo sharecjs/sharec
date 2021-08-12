@@ -3,6 +3,7 @@ const { readFile } = require('sharec-utils').std
 const { join } = require('sharec-utils').path
 const { find } = require('sharec-utils').fs
 const { InternalError, errorCauses } = require('../errors')
+const binaryExtensions = require('binary-extensions')
 
 /**
  * @typedef {import('../').Input} Input
@@ -18,12 +19,36 @@ const readConfigs = async (input) => {
   try {
     const configsPaths = await find(configsPath, '**/*')
     const withoutLocks = configsPaths.filter((config) => !/(\.|-)lock/.test(config))
+
+    const withoutBinaries = []
+
+    for (const file of withoutLocks) {
+      const match = /.+\.([a-zA-Z0-9]+)$/.exec(file)
+
+      if (match && binaryExtensions.includes(match[1])) {
+        input.binaries.push({
+          filename: file.replace(configsPath, '').replace(/^\//, ''),
+          original: file
+        });
+      } else {
+        withoutBinaries.push(file)
+      }
+    }
+
     const readedConfigs = {}
 
-    for (const config of withoutLocks) {
+    for (const config of withoutBinaries) {
       const configKey = config.replace(configsPath, '').replace(/^\//, '')
+      const data = await readFile(config, 'utf8')
 
-      readedConfigs[configKey] = await readFile(config, 'utf8')
+      if (data.startsWith('#!')) {
+        input.binaries.push({
+          filename: configKey,
+          original: config
+        });
+      } else {
+        readedConfigs[configKey] = data
+      }
     }
 
     input.configs = readedConfigs

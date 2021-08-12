@@ -50,6 +50,7 @@ const { errorCauses, InternalError } = require('./errors')
  * @property {object} [local] Configs from target package
  * @property {object} [mergedConfigs] Processed configs from upcoming package
  * @property {object} [cache] Previously installed configuration
+ * @property {array} [binaries] Binary files
  * @property {object} options Different options from CLI
  * @property {boolean} options.silent Disables all messages from sharec
  * @property {boolean} options.overwrite Forcily replaces all configs by new ones
@@ -76,6 +77,7 @@ const commonFlow = composeSteps(
   steps.applyFormatting,
   steps.writeCache,
   steps.writeConfigs,
+  steps.writeBinaries,
 )
 
 /**
@@ -94,6 +96,7 @@ async function sharec(baseInput) {
     mergedConfigs: {},
     cache: {},
     format: null,
+    binaries: [],
     options: {
       silent: baseInput.silent,
       overwrite: baseInput.overwrite,

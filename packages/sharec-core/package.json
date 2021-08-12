@@ -59,6 +59,7 @@
     "memfs": "^2.15.2"
   },
   "dependencies": {
+    "binary-extensions": "^2.2.0",
     "colorette": "^1.2.2",
     "detect-indent": "^6.0.0",
     "editorconfig": "^0.15.3",
