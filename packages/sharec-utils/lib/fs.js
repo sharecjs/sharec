@@ -1,6 +1,6 @@
 // @ts-check
 const nanomatch = require('sharec-nanomatch')
-const { makedir, readdir, lstat } = require('./std')
+const { makedir, readdir, lstat, open, close, read } = require('./std')
 const { join } = require('./path')
 
 /**
@@ -55,7 +55,30 @@ const find = async (path, pattern) => {
   return result
 }
 
+/**
+ * Read data from a file
+ * @param {string} path Path of the file
+ * @param {number} size Size of the data to read
+ * @param {number} offset
+ * @returns {Promise<Buffer>}
+ */
+const readBuffer = async (path, size, offset = 0) => {
+  console.log(path)
+  console.log(open, read, close)
+  const buffer = Buffer.alloc(size)
+  const fd = await open(path, 'r')
+
+  try {
+    await read(fd, buffer, offset, size, 0)
+
+    return buffer
+  } finally {
+    await close(fd)
+  }
+}
+
 module.exports = {
   safeMakeDir,
   find,
+  readBuffer,
 }

@@ -16,3 +16,11 @@ export function safeMakeDir(path: string): Promise<void>
  * @returns {Promise<string[]>}
  */
 export function find(path: string, pattern: string): Promise<string[]>
+/**
+ * Read data from a file
+ * @param {string} path Path of the file
+ * @param {number} size Size of the data to read
+ * @param {number} offset
+ * @returns {Promise<Buffer>}
+ */
+export function readBuffer(path: string, size: number, offset?: number): Promise<Buffer>

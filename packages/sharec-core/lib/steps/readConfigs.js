@@ -1,9 +1,9 @@
 // @ts-check
 const { readFile } = require('sharec-utils').std
 const { join } = require('sharec-utils').path
-const { find } = require('sharec-utils').fs
+const { find, readBuffer } = require('sharec-utils').fs
 const { InternalError, errorCauses } = require('../errors')
-const binaryExtensions = require('binary-extensions')
+const { isText, getEncoding } = require('istextorbinary')
 
 /**
  * @typedef {import('../').Input} Input
@@ -23,15 +23,13 @@ const readConfigs = async (input) => {
     const withoutBinaries = []
 
     for (const file of withoutLocks) {
-      const match = /.+\.([a-zA-Z0-9]+)$/.exec(file)
-
-      if (match && binaryExtensions.includes(match[1])) {
+      if(isText(file) || getEncoding(await readBuffer(file, 24)) === 'utf8') {
+        withoutBinaries.push(file)
+      } else {
         input.binaries.push({
           filename: file.replace(configsPath, '').replace(/^\//, ''),
           original: file
-        });
-      } else {
-        withoutBinaries.push(file)
+        })
       }
     }
 
@@ -45,7 +43,7 @@ const readConfigs = async (input) => {
         input.binaries.push({
           filename: configKey,
           original: config
-        });
+        })
       } else {
         readedConfigs[configKey] = data
       }

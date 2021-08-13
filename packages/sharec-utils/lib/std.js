@@ -10,4 +10,7 @@ module.exports = {
   writeFile: promisify(nativeFS.writeFile),
   lstat: promisify(nativeFS.lstat),
   removeFile: promisify(nativeFS.unlink),
+  open: promisify(nativeFS.open),
+  close: promisify(nativeFS.close),
+  read: promisify(nativeFS.read),
 }
