@@ -63,8 +63,6 @@ const find = async (path, pattern) => {
  * @returns {Promise<Buffer>}
  */
 const readBuffer = async (path, size, offset = 0) => {
-  console.log(path)
-  console.log(open, read, close)
   const buffer = Buffer.alloc(size)
   const fd = await open(path, 'r')
 
