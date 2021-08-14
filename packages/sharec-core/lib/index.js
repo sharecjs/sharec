@@ -50,7 +50,7 @@ const { errorCauses, InternalError } = require('./errors')
  * @property {object} [local] Configs from target package
  * @property {object} [mergedConfigs] Processed configs from upcoming package
  * @property {object} [cache] Previously installed configuration
- * @property {array} [binaries] Binary files
+ * @property {string[]} [binaries] Binary file paths
  * @property {object} options Different options from CLI
  * @property {boolean} options.silent Disables all messages from sharec
  * @property {boolean} options.overwrite Forcily replaces all configs by new ones

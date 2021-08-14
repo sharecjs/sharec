@@ -26,10 +26,7 @@ const readConfigs = async (input) => {
       if(isText(file) || getEncoding(await readBuffer(file, 24)) === 'utf8') {
         withoutBinaries.push(file)
       } else {
-        input.binaries.push({
-          filename: file.replace(configsPath, '').replace(/^\//, ''),
-          original: file
-        })
+        input.binaries.push(file)
       }
     }
 
@@ -40,10 +37,7 @@ const readConfigs = async (input) => {
       const data = await readFile(config, 'utf8')
 
       if (data.startsWith('#!')) {
-        input.binaries.push({
-          filename: configKey,
-          original: config
-        })
+        input.binaries.push(config)
       } else {
         readedConfigs[configKey] = data
       }
