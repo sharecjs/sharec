@@ -28,7 +28,7 @@ function commandsToMap(params) {
       })
     }
 
-    const splittedCommand = params[key].split(/(\||&{1,2})/).map(trim)
+    const splittedCommand = params[key].split(/([&|]{1,2}|;)/).map(trim)
 
     for (let i = 0; i < splittedCommand.length; i++) {
       const command = splittedCommand[i]
