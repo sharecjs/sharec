@@ -1,5 +1,5 @@
 // @ts-check
-const { readFile } = require('sharec-utils').std
+const { readFile, stat } = require('sharec-utils').std
 const { join } = require('sharec-utils').path
 const { find, readBuffer } = require('sharec-utils').fs
 const { InternalError, errorCauses } = require('../errors')
@@ -19,14 +19,11 @@ const readConfigs = async (input) => {
   try {
     const configsPaths = await find(configsPath, '**/*')
     const withoutLocks = configsPaths.filter((config) => !/(\.|-)lock/.test(config))
-
     const withoutBinaries = []
 
     for (const file of withoutLocks) {
       if(isText(file) || getEncoding(await readBuffer(file, 24)) === 'utf8') {
         withoutBinaries.push(file)
-      } else {
-        input.binaries.push(file)
       }
     }
 
@@ -36,10 +33,13 @@ const readConfigs = async (input) => {
       const configKey = config.replace(configsPath, '').replace(/^\//, '')
       const data = await readFile(config, 'utf8')
 
+      readedConfigs[configKey] = data
+
       if (data.startsWith('#!')) {
-        input.binaries.push(config)
-      } else {
-        readedConfigs[configKey] = data
+        // the text file might be executable
+        const { mode } = await stat(config)
+
+        input.configModes[configKey] = mode
       }
     }
 

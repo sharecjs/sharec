@@ -13,4 +13,6 @@ module.exports = {
   open: promisify(nativeFS.open),
   close: promisify(nativeFS.close),
   read: promisify(nativeFS.read),
+  stat: promisify(nativeFS.stat),
+  chmod: promisify(nativeFS.chmod),
 }

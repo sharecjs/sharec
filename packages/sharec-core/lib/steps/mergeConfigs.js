@@ -13,7 +13,7 @@ const { getConfigPipe } = require('../pipes')
  * @returns {Promise<Input>}
  */
 const mergeConfigs = async (input) => {
-  const { configs, cache = {}, sharecConfig = {}, targetPath, options } = input
+  const { configs, cache = {}, sharecConfig = {}, targetPath, options, configModes } = input
   const { overwrite } = options
 
   for (const configKey in configs) {
@@ -33,6 +33,10 @@ const mergeConfigs = async (input) => {
 
     if (targetPipe && targetPipe.alias) {
       targetConfigPath = join(dirname(targetConfigPath), targetPipe.alias)
+    }
+
+    if (configModes[configKey]) {
+      configModes[targetConfigPath] = configModes[configKey]
     }
 
     try {

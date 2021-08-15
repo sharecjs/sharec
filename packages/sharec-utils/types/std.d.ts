@@ -10,3 +10,5 @@ export const removeFile: typeof nativeFS.unlink.__promisify__
 export const open: typeof nativeFS.open.__promisify__
 export const close: typeof nativeFS.close.__promisify__
 export const read: typeof nativeFS.read.__promisify__
+export const stat: typeof nativeFS.stat.__promisify__
+export const chmod: typeof nativeFS.chmod.__promisify__
