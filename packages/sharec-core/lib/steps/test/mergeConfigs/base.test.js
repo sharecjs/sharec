@@ -26,6 +26,7 @@ describe('steps > mergeConfigs > base', () => {
         targetPath: '/target',
         configs: upcomingConfigs,
         mergedConfigs: {},
+        configModes: {},
         options: {},
         upcomingPackage,
       }
@@ -58,6 +59,7 @@ describe('steps > mergeConfigs > base', () => {
           },
         },
         mergedConfigs: {},
+        configModes: {},
         options: {},
       }
       const dir = {

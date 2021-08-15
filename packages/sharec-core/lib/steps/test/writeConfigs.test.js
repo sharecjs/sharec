@@ -14,6 +14,7 @@ describe('steps > writeConfigs', () => {
         '/target/bar.txt': 'bar',
         '/target/baz.txt': 'baz',
       },
+      configModes: {},
     }
 
     vol.fromJSON({}, '/')

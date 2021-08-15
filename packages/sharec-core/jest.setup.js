@@ -13,6 +13,8 @@ jest.mock('sharec-utils/lib/std', () => {
     open: promisify(fs.open),
     close: promisify(fs.close),
     read: promisify(fs.read),
+    stat: fs.promises.stat,
+    chmod: fs.promises.chmod,
   }
 })
 

@@ -31,6 +31,7 @@ describe('steps > mergeConfigs > mixed', () => {
       targetPath: '/target',
       configs: upcomingConfigs,
       mergedConfigs: {},
+      configModes: {},
       options: {},
       upcomingPackage,
     }

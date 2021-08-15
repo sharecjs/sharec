@@ -22,7 +22,7 @@ const readConfigs = async (input) => {
     const withoutBinaries = []
 
     for (const file of withoutLocks) {
-      if(isText(file) || getEncoding(await readBuffer(file, 24)) === 'utf8') {
+      if (isText(file) || getEncoding(await readBuffer(file, 24)) === 'utf8') {
         withoutBinaries.push(file)
       }
     }
