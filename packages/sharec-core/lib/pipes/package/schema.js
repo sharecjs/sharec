@@ -43,18 +43,7 @@ const packageJson = compose({
   prettier: prettierJson,
 
   // Handle other fields
-  $$ignore: [
-    'sharec',
-    'name',
-    'version',
-    'description',
-    'people',
-    'man',
-    'os',
-    'cpu',
-    'preferGlobal',
-    'private',
-  ],
+  $$ignore: ['sharec', 'name', 'version', 'description', 'people', 'man', 'os', 'cpu', 'preferGlobal', 'private'],
   $$default: fork([[isMap, hashAtom], primitiveAtom]),
 })
 
