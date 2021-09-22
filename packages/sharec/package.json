@@ -54,7 +54,6 @@
     "@types/chalk": "^2.2.0"
   },
   "dependencies": {
-    "colorette": "^1.2.2",
     "mico-spinner": "^1.1.0",
     "minimist": "^1.2.0",
     "sharec-core": "^2.10.2",
