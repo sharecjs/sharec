@@ -1,5 +1,5 @@
 // @ts-check
-const { bold } = require('colorette')
+const { bold } = require('nanocolors')
 
 /**
  * @typedef {import('../').Logger} Logger

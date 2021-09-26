@@ -60,7 +60,6 @@
     "memfs": "^2.15.2"
   },
   "dependencies": {
-    "colorette": "^1.2.2",
     "detect-indent": "^6.0.0",
     "editorconfig": "^0.15.3",
     "enquirer": "^2.3.6",
@@ -70,6 +69,7 @@
     "mico-spinner": "^1.1.0",
     "minimatch": "^3.0.4",
     "minimist": "^1.2.0",
+    "nanocolors": "^0.2.8",
     "sharec-nanomatch": "^2.10.2",
     "sharec-schema": "^2.10.2",
     "sharec-utils": "^2.10.2",
