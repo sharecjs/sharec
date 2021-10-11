@@ -1,3 +1,9 @@
+# 2.10.4
+
+Fix:
+
+- Add missing `minimatch` dependency (#226)
+
 # 2.10.3
 
 Refactor:
