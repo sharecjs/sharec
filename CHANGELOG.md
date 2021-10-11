@@ -1,3 +1,9 @@
+# 2.10.3
+
+Refactor:
+
+- `colorette` replacement by `nanocolors`
+
 # 2.10.2
 
 Refactor:
