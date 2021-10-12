@@ -1,5 +1,5 @@
 // @ts-check
-const micoSpinner = require('mico-spinner')
+const nanospinner = require('nanospinner')
 
 /**
  * @typedef {import('../').Spinner} Spinner
@@ -14,7 +14,7 @@ const micoSpinner = require('mico-spinner')
  * @returns {Spinner}
  */
 const createSpinner = ({ text, silent }) => {
-  const spinner = micoSpinner(text)
+  const spinner = nanospinner.createSpinner(text)
 
   return {
     /**
@@ -43,7 +43,7 @@ const createSpinner = ({ text, silent }) => {
         return spinner
       }
 
-      spinner.succeed(text)
+      spinner.success({ text })
 
       return spinner
     },
@@ -59,7 +59,7 @@ const createSpinner = ({ text, silent }) => {
         return spinner
       }
 
-      spinner.fail(text)
+      spinner.error({ text })
 
       return spinner
     },
@@ -75,7 +75,7 @@ const createSpinner = ({ text, silent }) => {
         return spinner
       }
 
-      spinner.text = text
+      spinner.update({ text })
 
       return spinner
     },
