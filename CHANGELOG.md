@@ -1,3 +1,9 @@
+# 2.10.5
+
+Fix:
+
+- Packages versions mismatch
+
 # 2.10.4
 
 Fix:
