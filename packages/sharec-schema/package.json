@@ -1,6 +1,6 @@
 {
   "name": "sharec-schema",
-  "version": "2.10.4",
+  "version": "2.10.5",
   "description": "Utilities for configuration files merge",
   "keywords": [
     "configuration",
@@ -63,6 +63,6 @@
     "js-yaml": "^4.0.0",
     "json8": "^1.0.3",
     "lodash": "^4.17.21",
-    "sharec-utils": "^2.10.4"
+    "sharec-utils": "^2.10.5"
   }
 }
