@@ -1,7 +1,7 @@
 {
   "name": "sharec",
-  "version": "2.10.4",
-  "description": "The secret weapon against bloat configuration",
+  "version": "2.10.5",
+  "description": "Smart configuration manager for your projects",
   "keywords": [
     "configuration",
     "sharec",
