@@ -1,3 +1,9 @@
+# 2.10.6
+
+Refactor:
+
+- Replace `mico-spinner` by `nanospinner` (#233)
+
 # 2.10.5
 
 Fix:
