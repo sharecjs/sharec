@@ -1,6 +1,7 @@
 {
   "name": "sharec-utils",
   "version": "2.10.4",
+  "description": "Common utilities",
   "keywords": [
     "configuration",
     "sharec",

@@ -1,6 +1,7 @@
 {
   "name": "sharec-schema",
   "version": "2.10.4",
+  "description": "Utilities for configuration files merge",
   "keywords": [
     "configuration",
     "sharec",
