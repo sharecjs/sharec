@@ -1,3 +1,9 @@
+# 2.10.7
+
+Refactor:
+
+- Replace `nanocolors` by `picocolors` (#234)
+
 # 2.10.6
 
 Refactor:

@@ -1,6 +1,6 @@
 // @ts-check
 const get = require('lodash/get')
-const { bold } = require('nanocolors')
+const { bold } = require('picocolors')
 const { readFile } = require('sharec-utils').std
 const { join, dirname, basename } = require('sharec-utils').path
 const { getConfigPipe } = require('../pipes')
