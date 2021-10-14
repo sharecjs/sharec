@@ -1,6 +1,6 @@
 {
   "name": "sharec",
-  "version": "2.10.6",
+  "version": "2.10.7",
   "description": "Smart configuration manager for your projects",
   "keywords": [
     "configuration",
@@ -70,9 +70,9 @@
     "minimist": "^1.2.0",
     "nanospinner": "^0.3.0",
     "picocolors": "^1.0.0",
-    "sharec-nanomatch": "^2.10.2",
-    "sharec-schema": "^2.10.5",
-    "sharec-utils": "^2.10.5",
+    "sharec-nanomatch": "^2.10.7",
+    "sharec-schema": "^2.10.7",
+    "sharec-utils": "^2.10.7",
     "shelljs": "^0.8.3",
     "slash": "^3.0.0"
   },
