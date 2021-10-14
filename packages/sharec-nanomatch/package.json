@@ -1,7 +1,7 @@
 {
   "name": "sharec-nanomatch",
   "description": "Fast, minimal glob matcher for node.js. Similar to micromatch, minimatch and multimatch, but complete Bash 4.3 wildcard support only (no support for exglobs, posix brackets or braces)",
-  "version": "2.10.2",
+  "version": "2.10.7",
   "homepage": "https://github.com/lamartire/sharec",
   "author": "Jon Schlinkert (https://github.com/jonschlinkert)",
   "contributors": [
