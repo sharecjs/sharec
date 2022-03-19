@@ -39,6 +39,14 @@ const { errorCauses, InternalError } = require('./errors')
  */
 
 /**
+ * @typedef {object} ConfigPackage
+ * @property {string} name
+ * @property {string} version
+ * @property {string} path
+ * @property {object} configs
+ */
+
+/**
  * @typedef {object} Input
  * @property {string} targetPath Target project path
  * @property {object} targetPackage `package.json `from `targetPath`
@@ -46,17 +54,11 @@ const { errorCauses, InternalError } = require('./errors')
  * @property {object} upcomingPackage `package.json `from `configPath`
  * @property {SharecRuntimeConfiguration} [sharecConfig]
  * @property {object} [format] //TODO: Formatting rules
- * @property {object} [configs] Original configs from upcoming package
+ * @property {ConfigPackage[]} [configs] Original configs from upcoming package
  * @property {object} [local] Configs from target package
  * @property {object} [mergedConfigs] Processed configs from upcoming package
  * @property {object} [cache] Previously installed configuration
- * @property {object} options Different options from CLI
- * @property {boolean} options.silent Disables all messages from sharec
- * @property {boolean} options.overwrite Forcily replaces all configs by new ones
- * @property {boolean} options.disappear Do not write cache and sharec meta to target project
- * @property {boolean} options.debug Enables debug messages
- * @property {boolean} options.includeCache Can be used to save configs to `.sharec/.cache`
- *  directory instead of `node_modules/.cache`
+ * @property {CliOptions} options Different options from CLI
  */
 
 const commonFlow = composeSteps(
