@@ -2,116 +2,109 @@ const { vol } = require('memfs')
 const readCache = require('../readCache')
 
 describe('steps > readCache', () => {
+  let context
+
   beforeEach(() => {
     vol.reset()
   })
 
-  it('should read cached configs for previous installed version', async () => {
-    const targetPackage = {
-      sharec: {
-        config: 'awesome-config',
-        version: '0.0.0',
-      },
-    }
-    const input = {
-      targetPath: '/target',
-      cache: {},
-      options: {},
-      targetPackage,
-    }
-    const dir = {
-      '/target/package.json': JSON.stringify(targetPackage),
-      '/target/node_modules/.cache/sharec/awesome-config/0.0.0/.eslintrc': 'foo',
-      '/target/node_modules/.cache/sharec/awesome-config/0.0.0/.editorconfig': 'bar',
-      '/target/node_modules/.cache/sharec/awesome-config/0.0.0/.babelrc': 'baz',
-    }
-    vol.fromJSON(dir, '/configs')
+  describe("target doesn't have cache", () => {
+    describe('not included', () => {
+      beforeEach(() => {
+        context = {
+          targetPath: '/',
+          cache: {},
+          options: {
+            cache: true,
+          },
+        }
 
-    const output = await readCache(input)
+        const dir = {}
 
-    expect(output.cache).toEqual({
-      '.eslintrc': 'foo',
-      '.editorconfig': 'bar',
-      '.babelrc': 'baz',
+        vol.fromJSON(dir, '/')
+      })
+
+      it("doesn't modify initial context", async () => {
+        expect.assertions(1)
+
+        await expect(readCache(context)).resolves.toEqual(context)
+      })
+    })
+
+    describe('included', () => {
+      beforeEach(() => {
+        context = {
+          targetPath: '/',
+          cache: {},
+          options: {
+            cache: 'include',
+          },
+        }
+
+        const dir = {}
+
+        vol.fromJSON(dir, '/')
+      })
+
+      it("doesn't modify initial context", async () => {
+        expect.assertions(1)
+
+        await expect(readCache(context)).resolves.toEqual(context)
+      })
     })
   })
 
-  it('should keep cache empty if previous installed cache is not exist', async () => {
-    const targetPackage = {
-      sharec: {
-        config: 'awesome-config',
-        version: '0.0.0',
-      },
-    }
-    const input = {
-      targetPath: '/target',
-      cache: {},
-      options: {},
-      targetPackage,
-    }
-    const dir = {
-      '/target/package.json': JSON.stringify(targetPackage),
-    }
-    vol.fromJSON(dir, '/configs')
+  describe('target has cache', () => {
+    describe('not included', () => {
+      beforeEach(() => {
+        context = {
+          targetPath: '/',
+          cache: {},
+          options: {
+            cache: true,
+          },
+        }
 
-    const output = await readCache(input)
+        const dir = {
+          '/node_modules/.cache/sharec/.eslintrc': 'foo',
+          '/node_modules/.cache/sharec/.editorconfig': 'bar',
+          '/node_modules/.cache/sharec/folder/.babelrc': 'baz',
+        }
 
-    expect(output.cache).toEqual({})
-  })
+        vol.fromJSON(dir, '/')
+      })
 
-  it('should keep cache empty if previous installed cache is not contain any file', async () => {
-    const targetPackage = {
-      sharec: {
-        config: 'awesome-config',
-        version: '0.0.0',
-      },
-    }
-    const input = {
-      targetPath: '/target',
-      cache: {},
-      options: {},
-      targetPackage,
-    }
-    const dir = {
-      '/target/package.json': JSON.stringify(targetPackage),
-      '/target/node_modules/.cache/sharec/awesome-config/0.0.0': {},
-    }
-    vol.fromJSON(dir, '/configs')
+      it('add cache to the context', async () => {
+        expect.assertions(1)
 
-    const output = await readCache(input)
+        await expect(readCache(context)).resolves.toEqual(context)
+      })
+    })
 
-    expect(output.cache).toEqual({})
-  })
+    describe('included', () => {
+      beforeEach(() => {
+        context = {
+          targetPath: '/',
+          cache: {},
+          options: {
+            cache: 'include',
+          },
+        }
 
-  it('should read cached configs from .sharec/.cache if includeCache option is passed', async () => {
-    const targetPackage = {
-      sharec: {
-        config: 'awesome-config',
-        version: '0.0.0',
-      },
-    }
-    const input = {
-      targetPath: '/target',
-      cache: {},
-      options: {
-        includeCache: true,
-      },
-      targetPackage,
-    }
-    const dir = {
-      '/target/package.json': JSON.stringify(targetPackage),
-      '/target/.sharec/.cache/awesome-config/0.0.0/.eslintrc': 'foo',
-      '/target/.sharec/.cache/awesome-config/0.0.0/.editorconfig': 'bar',
-      '/target/.sharec/.cache/awesome-config/0.0.0/.babelrc': 'baz',
-    }
-    vol.fromJSON(dir, '/configs')
+        const dir = {
+          '/.sharec/cache/.eslintrc': 'foo',
+          '/.sharec/cache/.editorconfig': 'bar',
+          '/.sharec/cache/folder/.babelrc': 'baz',
+        }
 
-    const output = await readCache(input)
+        vol.fromJSON(dir, '/')
+      })
 
-    expect(output.cache).toEqual({
-      '.eslintrc': 'foo',
-      '.editorconfig': 'bar',
-      '.babelrc': 'baz',
+      it('adds cache to the context', async () => {
+        expect.assertions(1)
+
+        await expect(readCache(context)).resolves.toEqual(context)
+      })
     })
   })
 })
