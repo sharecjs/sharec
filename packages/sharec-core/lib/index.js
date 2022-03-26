@@ -1,5 +1,5 @@
 // @ts-check
-const { composeSteps, steps } = require('./steps')
+const { commonFlow } = require('./steps')
 const { errorCauses, InternalError } = require('./errors')
 
 /**
@@ -34,25 +34,6 @@ const { errorCauses, InternalError } = require('./errors')
  * @property {object} [cache] Previously installed configuration
  */
 
-const commonFlow = composeSteps(
-  steps.readTargetPackage,
-  steps.readUpcomingPackage,
-  steps.isAlreadyInstalled,
-  steps.isDependantOfSharec,
-  steps.isIgnoresSharecConfigs,
-  steps.readSharecConfig,
-  steps.readConfigs,
-  steps.readCache,
-  steps.readEditorconfig,
-  steps.readPrettier,
-  steps.mergeConfigs,
-  steps.insertMeta,
-  steps.insertEOL,
-  steps.applyFormatting,
-  steps.writeCache,
-  steps.writeConfigs,
-)
-
 /**
  * Main sharec entrance
  * @param {BaseInput} input
@@ -74,8 +55,6 @@ async function sharec(input) {
 
 module.exports = {
   sharec,
-  steps,
-  commonFlow,
   InternalError,
   errorCauses,
 }
