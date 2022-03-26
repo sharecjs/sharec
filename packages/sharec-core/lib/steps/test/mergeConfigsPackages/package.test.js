@@ -1,8 +1,8 @@
 const { fixtures } = require('testUtils')
 const { vol } = require('memfs')
-const mergeConfigs = require('../../mergeConfigs')
+const mergeConfigsPackages = require('../../mergeConfigsPackages')
 
-describe('steps > mergeConfigs > package', () => {
+describe('steps > mergeConfigsPackages > package', () => {
   const packageBaseFxt = fixtures('package/json/00-base')
 
   beforeEach(() => {
@@ -10,26 +10,26 @@ describe('steps > mergeConfigs > package', () => {
   })
 
   it('should write and merge package.json from input to target dir', async () => {
-    const upcomingPackage = {
-      name: 'awesome-config',
-      version: '0.0.0',
-    }
-    const upcomingConfigs = {
-      'package.json': packageBaseFxt.upcoming,
-    }
     const input = {
       targetPath: '/target',
-      configs: upcomingConfigs,
+      configs: [
+        {
+          name: 'awesome-config',
+          version: '1.0.0',
+          configs: {
+            'package.json': packageBaseFxt.upcoming,
+          },
+        },
+      ],
       mergedConfigs: {},
       options: {},
-      upcomingPackage,
     }
     const dir = {
       '/target/package.json': packageBaseFxt.current,
     }
     vol.fromJSON(dir, '/configs')
 
-    const output = await mergeConfigs(input)
+    const output = await mergeConfigsPackages(input)
 
     expect(output.mergedConfigs['/target/package.json']).toWraplessEqual(packageBaseFxt.result, { eof: false })
   })
