@@ -16,6 +16,11 @@ const readConfigsPackages = async (context) => {
   const { configs = [] } = targetPackage.sharec
   const configPackages = []
 
+  if (configs.length === 0) {
+    // TODO
+    throw new Error('')
+  }
+
   for (const config of configs) {
     const configPackagePath = resolve(targetPath, './node_modules', config)
     const configPackageJsonPath = join(configPackagePath, 'package.json')
