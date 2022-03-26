@@ -3,21 +3,21 @@ const { readFile } = require('sharec-utils').std
 const { resolve } = require('sharec-utils').path
 
 /**
- * @typedef {import('../').Input} Input
+ * @typedef {import('../').FlowContext} FlowContext
  */
 
 /**
- * @param {Input} input
- * @returns {Promise<Input>}
+ * @param {FlowContext} context
+ * @returns {Promise<FlowContext>}
  */
-const readTargetPackage = async (input) => {
-  const targetPackageJsonPath = resolve(input.targetPath, './package.json')
+const readTargetPackage = async (context) => {
+  const targetPackageJsonPath = resolve(context.targetPath, './package.json')
   const rawTargetPackageJson = await readFile(targetPackageJsonPath, 'utf8')
   const targetPackage = JSON.parse(rawTargetPackageJson)
 
-  input.targetPackage = targetPackage
+  context.targetPackage = targetPackage
 
-  return input
+  return context
 }
 
 module.exports = readTargetPackage

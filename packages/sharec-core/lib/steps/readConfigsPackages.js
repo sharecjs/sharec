@@ -4,16 +4,16 @@ const { join, resolve } = require('sharec-utils').path
 const { find } = require('sharec-utils').fs
 
 /**
- * @typedef {import('../').Input} Input
+ * @typedef {import('../').FlowContext} FlowContext
  */
 
 /**
- * @param {Input} input
- * @returns {Promise<Input>}
+ * @param {FlowContext} context
+ * @returns {Promise<FlowContext>}
  */
-const readConfigsPackages = async (input) => {
-  const { targetPackage, targetPath } = input
-  const { configs } = targetPackage.sharec
+const readConfigsPackages = async (context) => {
+  const { targetPackage, targetPath } = context
+  const { configs = [] } = targetPackage.sharec
   const configPackages = []
 
   for (const config of configs) {
@@ -42,9 +42,9 @@ const readConfigsPackages = async (input) => {
     configPackages.push(configPackage)
   }
 
-  input.configs = configPackages
+  context.configs = configPackages
 
-  return input
+  return context
 }
 
 module.exports = readConfigsPackages
