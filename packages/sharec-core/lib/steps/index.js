@@ -1,23 +1,14 @@
 // @ts-check
-const isAlreadyInstalled = require('./isAlreadyInstalled')
-const isDependantOfSharec = require('./isDependantOfSharec')
-const isIgnoresSharecConfigs = require('./isIgnoresSharecConfigs')
-const readConfigs = require('./readConfigs')
+const readConfigsPackages = require('./readConfigsPackages')
 const readTargetPackage = require('./readTargetPackage')
-const readUpcomingPackage = require('./readUpcomingPackage')
 const readCache = require('./readCache')
-const readEditorconfig = require('./readEditorconfig')
-const readPrettier = require('./readPrettier')
-const readSharecConfig = require('./readSharecConfig')
-const mergeConfigs = require('./mergeConfigs')
-const insertEOL = require('./insertEOL')
-const applyFormatting = require('./applyFormatting')
 const writeConfigs = require('./writeConfigs')
-const insertMeta = require('./insertMeta')
 const writeCache = require('./writeCache')
+const writeLockdata = require('./writeLockdata')
+const mergeConfigsPackages = require('./mergeConfigsPackages')
 
 /**
- * @typedef {import('../').Input} Input
+ * @typedef {import('../').FlowContext} FlowContext
  */
 
 /**
@@ -28,11 +19,11 @@ const writeCache = require('./writeCache')
  */
 const composeSteps = (...steps) =>
   /**
-   * @param {Input} input
-   * @returns {Promise<Input>}
+   * @param {FlowContext} context
+   * @returns {Promise<FlowContext>}
    */
-  async (input) => {
-    let lastInput = input
+  async (context) => {
+    let lastInput = context
 
     for (const step of steps) {
       lastInput = await step(lastInput)
@@ -41,26 +32,16 @@ const composeSteps = (...steps) =>
     return lastInput
   }
 
-const steps = {
-  isAlreadyInstalled,
-  isDependantOfSharec,
-  isIgnoresSharecConfigs,
-  mergeConfigs,
-  insertEOL,
-  insertMeta,
-  applyFormatting,
-  readConfigs,
+const commonFlow = composeSteps(
   readTargetPackage,
-  readUpcomingPackage,
   readCache,
-  readEditorconfig,
-  readPrettier,
-  readSharecConfig,
-  writeConfigs,
+  readConfigsPackages,
   writeCache,
-}
+  writeConfigs,
+  writeLockdata,
+  mergeConfigsPackages,
+)
 
 module.exports = {
-  composeSteps,
-  steps,
+  commonFlow,
 }
