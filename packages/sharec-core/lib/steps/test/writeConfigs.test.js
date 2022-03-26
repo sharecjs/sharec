@@ -6,7 +6,7 @@ describe('steps > writeConfigs', () => {
     vol.reset()
   })
 
-  it('should write merged configs', async () => {
+  it('writes merged configs', async () => {
     const input = {
       targetPath: '/target',
       mergedConfigs: {
