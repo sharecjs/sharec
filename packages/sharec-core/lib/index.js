@@ -4,7 +4,6 @@ const { errorCauses, InternalError } = require('./errors')
 
 /**
  * @typedef {object} CliOptions
- * @property {boolean} force Forcily replaces all configs by new ones (--force, -f)
  * @property {true|false|'include'} cache Used for cache manipulations (--cache, -c)
  *  `include` – store cache inside `.sharec`, to include it to the project (for yarn@2, etc.)
  *  `true` – store cache inside `node_modules/.cache/.sharec`
