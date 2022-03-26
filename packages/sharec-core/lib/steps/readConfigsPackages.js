@@ -24,7 +24,7 @@ const readConfigsPackages = async (context) => {
   for (const config of configs) {
     const configPackagePath = resolve(targetPath, './node_modules', config)
     const configPackageJsonPath = join(configPackagePath, 'package.json')
-    const rawConfigPackageJson = await readFile(configPackageJsonPath)
+    const rawConfigPackageJson = await readFile(configPackageJsonPath, 'utf8')
     const configPackageJson = JSON.parse(rawConfigPackageJson)
     const configPackageFilesPath = join(configPackagePath, './config')
     const configPackageFilteredFiles = await find(configPackageFilesPath, '**/*')

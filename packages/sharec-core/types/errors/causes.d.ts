@@ -20,3 +20,9 @@ export namespace CONFIGS_NOT_FOUND {
   const symbol_3: symbol
   export { symbol_3 as symbol }
 }
+export namespace DOES_NOT_HAVE_ANY_CONFIG {
+  export function message_4(path: any): string
+  export { message_4 as message }
+  const symbol_4: symbol
+  export { symbol_4 as symbol }
+}

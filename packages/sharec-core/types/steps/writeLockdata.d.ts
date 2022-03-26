@@ -1,4 +1,4 @@
-export = readCache
+export = writeLockdata
 /**
  * @typedef {import('../').FlowContext} FlowContext
  */
@@ -6,8 +6,8 @@ export = readCache
  * @param {FlowContext} context
  * @returns {Promise<FlowContext>}
  */
-declare function readCache(context: FlowContext): Promise<FlowContext>
-declare namespace readCache {
+declare function writeLockdata(context: FlowContext): Promise<FlowContext>
+declare namespace writeLockdata {
   export { FlowContext }
 }
 type FlowContext = {

@@ -1,4 +1,4 @@
-export = readCache
+export = mergeConfigsPackages
 /**
  * @typedef {import('../').FlowContext} FlowContext
  */
@@ -6,8 +6,8 @@ export = readCache
  * @param {FlowContext} context
  * @returns {Promise<FlowContext>}
  */
-declare function readCache(context: FlowContext): Promise<FlowContext>
-declare namespace readCache {
+declare function mergeConfigsPackages(context: FlowContext): Promise<FlowContext>
+declare namespace mergeConfigsPackages {
   export { FlowContext }
 }
 type FlowContext = {

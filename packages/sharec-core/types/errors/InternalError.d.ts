@@ -1,5 +1,9 @@
 export = InternalError
 declare class InternalError extends Error {
-  constructor(message: any, cause: any)
-  cause: any
+  /**
+   * @param {string} message
+   * @param {symbol} cause
+   */
+  constructor(message: string, cause: symbol)
+  cause: symbol
 }
