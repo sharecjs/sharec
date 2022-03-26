@@ -46,7 +46,11 @@
     },
     "rules": {
       "comma-dangle": ["error", "always-multiline"],
-      "space-before-function-paren": ["error", "never"]
+      "space-before-function-paren": ["error", {
+        "asyncArrow": "always",
+        "anonymous": "never",
+        "named": "never"
+      }]
     }
   },
   "eslintIgnore": [
