@@ -1,6 +1,7 @@
 // @ts-check
 const { join } = require('sharec-utils').path
 const { readFile, writeFile } = require('sharec-utils/lib/std')
+const { fromJSON, toJSON } = require('sharec-schema/lib/parsers/json')
 
 /**
  * @typedef {import('../').FlowContext} FlowContext
@@ -12,17 +13,17 @@ const { readFile, writeFile } = require('sharec-utils/lib/std')
  */
 const writeLockdata = async (context) => {
   const { targetPath, configs } = context
-  const lockedVersions = configs.reduce((acc, config) => Object.assign(acc, { [config.name]: config.version }), {})
+  const lockedVersions = configs.reduce(
+    (acc, config) => Object.assign(acc, { [config.name]: config.version }),
+    {},
+  )
   const targetPackagePath = join(targetPath, 'package.json')
   const rawTargetPackage = await readFile(targetPackagePath, 'utf8')
-  const targetPackage = JSON.parse(rawTargetPackage)
+  const targetPackage = fromJSON(rawTargetPackage)
 
-  targetPackage.sharec = {
-    ...targetPackage.sharec,
-    lock: lockedVersions,
-  }
+  targetPackage.get('sharec').set('locked', lockedVersions)
 
-  await writeFile(targetPackagePath, JSON.stringify(targetPackage))
+  await writeFile(targetPackagePath, toJSON(targetPackage))
 
   return context
 }

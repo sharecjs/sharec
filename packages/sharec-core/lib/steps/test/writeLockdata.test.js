@@ -21,7 +21,11 @@ describe('steps > writeLockdata', () => {
       ],
     }
     const dir = {
-      '/package.json': JSON.stringify({}),
+      '/package.json': JSON.stringify({
+        sharec: {
+          configs: ['foo', 'bar'],
+        },
+      }),
     }
 
     vol.fromJSON(dir, '/')
@@ -30,7 +34,8 @@ describe('steps > writeLockdata', () => {
 
     expect(JSON.parse(vol.readFileSync('/package.json', 'utf8'))).toEqual({
       sharec: {
-        lock: {
+        configs: ['foo', 'bar'],
+        locked: {
           foo: '1.0.0',
           bar: '2.0.0',
         },
