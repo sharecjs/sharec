@@ -43,7 +43,6 @@
       "node_modules"
     ],
     "setupFiles": [
-      "jest-plugin-context/setup",
       "./jest.setup.js"
     ],
     "setupFilesAfterEnv": [
@@ -54,7 +53,6 @@
     "callsites": "^3.1.0",
     "jest": "^26.6.3",
     "jest-cli": "^26.6.3",
-    "jest-plugin-context": "^2.9.0",
     "memfs": "^2.15.2"
   },
   "dependencies": {
@@ -68,7 +66,6 @@
     "mico-spinner": "^1.1.0",
     "minimatch": "^3.0.4",
     "minimist": "^1.2.0",
-    "sharec-nanomatch": "^2.10.2",
     "sharec-schema": "^2.10.2",
     "sharec-utils": "^2.10.2",
     "shelljs": "^0.8.3",
