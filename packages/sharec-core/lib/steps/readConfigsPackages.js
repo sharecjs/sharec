@@ -26,7 +26,7 @@ const readConfigsPackages = async (context) => {
     const configPackageJsonPath = join(configPackagePath, 'package.json')
     const rawConfigPackageJson = await readFile(configPackageJsonPath, 'utf8')
     const configPackageJson = JSON.parse(rawConfigPackageJson)
-    const configPackageFilesPath = join(configPackagePath, './config')
+    const configPackageFilesPath = join(configPackagePath, './configs')
     const configPackageFilteredFiles = await find(configPackageFilesPath, '**/*')
     const withoutLocks = configPackageFilteredFiles.filter((config) => !/(\.|-)lock/.test(config))
     const readedConfigs = {}
