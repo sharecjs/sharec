@@ -3,6 +3,7 @@ const {
   hasSpacesIndent,
   hasTabsIndent,
   hasEOF,
+  cutEOF,
   indentWithTab,
   indentWithSpace,
   applyFormat,
@@ -33,6 +34,14 @@ describe('utils > format', () => {
     it('should correctly determine line wrap at the and of the all lines', () => {
       expect(hasEOF('foo\n\n')).toBe(true)
       expect(hasEOF('foo')).toBe(false)
+    })
+  })
+
+  describe('cutEOF', () => {
+    it('cuts off line wrap at the and of the given string', () => {
+      expect(cutEOF('foo\n\n')).toBe('foo\n')
+      expect(cutEOF('foo\n')).toBe('foo')
+      expect(cutEOF('foo')).toBe('foo')
     })
   })
 
