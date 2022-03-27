@@ -14,80 +14,159 @@ describe('sharec > install', () => {
     vol.reset()
   })
 
-  it('should install configs to the target project', async () => {
-    const input = {
+  describe('without cache', () => {
+    const context = {
       targetPath: '/target',
-      configPath: '/configuration-package',
+      cache: {},
+      configs: [],
+      options: {
+        cache: false,
+      },
     }
-    const dir = {
-      '/target/.eslintrc': eslintFxt.current,
-      '/target/.babelrc': babelFxt.current,
-      '/target/.npmignore': npmignoreFxt.current,
-      '/target/.gitignore': gitignoreFxt.current,
-      '/target/package.json': packageFxt.current,
-      '/configuration-package/configs/.eslintrc': eslintFxt.upcoming,
-      '/configuration-package/configs/.editorconfig': 'bar',
-      '/configuration-package/configs/.babelrc': babelFxt.upcoming,
-      '/configuration-package/configs/npmignore': npmignoreFxt.upcoming,
-      '/configuration-package/configs/gitignore': gitignoreFxt.upcoming,
-      '/configuration-package/package.json': JSON.stringify({
-        name: 'awesome-config',
-        version: '1.0.0',
-      }),
-      '/configuration-package/configs/package.json': packageFxt.upcoming,
-    }
-    vol.fromJSON(dir, '/')
 
-    await sharec(input)
+    beforeEach(async () => {
+      const dir = {
+        '/target/.eslintrc': eslintFxt.current,
+        '/target/.babelrc': babelFxt.current,
+        '/target/.npmignore': npmignoreFxt.current,
+        '/target/.gitignore': gitignoreFxt.current,
+        '/target/package.json': packageFxt.current,
+        '/target/node_modules/awesome-config/configs/.eslintrc': eslintFxt.upcoming,
+        '/target/node_modules/awesome-config/configs/.editorconfig': 'bar',
+        '/target/node_modules/awesome-config/configs/.babelrc': babelFxt.upcoming,
+        '/target/node_modules/awesome-config/configs/.npmignore': npmignoreFxt.upcoming,
+        '/target/node_modules/awesome-config/configs/.gitignore': gitignoreFxt.upcoming,
+        '/target/node_modules/awesome-config/package.json': JSON.stringify({
+          name: 'awesome-config',
+          version: '1.0.0',
+        }),
+        '/target/node_modules/awesome-config/configs/package.json': packageFxt.upcoming,
+      }
 
-    expect(vol.readFileSync('/target/.eslintrc', 'utf8')).toWraplessEqual(eslintFxt.result)
-    expect(vol.readFileSync('/target/.babelrc', 'utf8')).toWraplessEqual(babelFxt.result)
-    expect(vol.readFileSync('/target/.editorconfig', 'utf8')).toWraplessEqual('bar\n')
-    expect(vol.readFileSync('/target/.gitignore', 'utf8')).toWraplessEqual(gitignoreFxt.result)
-    expect(vol.readFileSync('/target/.npmignore', 'utf8')).toWraplessEqual(npmignoreFxt.result)
-    expect(vol.readFileSync('/target/package.json', 'utf8')).toWraplessEqual(packageFxt.result)
-    expect(vol.readdirSync('/target/node_modules/.cache/sharec/awesome-config/1.0.0')).toHaveLength(6)
+      vol.fromJSON(dir, '/')
+
+      await sharec(context)
+    })
+
+    it('installs configs', async () => {
+      expect(vol.readFileSync('/target/.eslintrc', 'utf8')).toMatchFxt(eslintFxt.result)
+      expect(vol.readFileSync('/target/.babelrc', 'utf8')).toMatchFxt(babelFxt.result)
+      expect(vol.readFileSync('/target/.editorconfig', 'utf8')).toMatchFxt('bar\n')
+      expect(vol.readFileSync('/target/.gitignore', 'utf8')).toMatchFxt(gitignoreFxt.result)
+      expect(vol.readFileSync('/target/.npmignore', 'utf8')).toMatchFxt(npmignoreFxt.result)
+      expect(vol.readFileSync('/target/package.json', 'utf8')).toMatchFxt(packageFxt.result)
+    })
+
+    it("doesn't write cache to `node_modules`", () => {
+      expect(vol.readdirSync('/target/node_modules')).not.toContain('.cache')
+    })
+
+    it("doesn't write cache to `.sharec`", () => {
+      expect(vol.readdirSync('/target')).not.toContain('.sharec')
+    })
   })
 
-  it('should place cache in target project if includeCache mode is active', async (done) => {
-    const input = {
+  describe('with cache', () => {
+    const context = {
       targetPath: '/target',
-      configPath: '/configuration-package',
-      includeCache: true,
+      cache: {},
+      configs: [],
+      options: {
+        cache: true,
+      },
     }
-    const dir = {
-      '/target/.eslintrc': eslintFxt.current,
-      '/target/.babelrc': babelFxt.current,
-      '/target/.npmignore': npmignoreFxt.current,
-      '/target/.gitignore': gitignoreFxt.current,
-      '/target/package.json': packageFxt.current,
-      '/configuration-package/configs/.eslintrc': eslintFxt.upcoming,
-      '/configuration-package/configs/.editorconfig': 'bar',
-      '/configuration-package/configs/.babelrc': babelFxt.upcoming,
-      '/configuration-package/configs/npmignore': npmignoreFxt.upcoming,
-      '/configuration-package/configs/gitignore': gitignoreFxt.upcoming,
-      '/configuration-package/package.json': JSON.stringify({
-        name: 'awesome-config',
-        version: '1.0.0',
-      }),
-      '/configuration-package/configs/package.json': packageFxt.upcoming,
+
+    beforeEach(async () => {
+      const dir = {
+        '/target/.eslintrc': eslintFxt.current,
+        '/target/.babelrc': babelFxt.current,
+        '/target/.npmignore': npmignoreFxt.current,
+        '/target/.gitignore': gitignoreFxt.current,
+        '/target/package.json': packageFxt.current,
+        '/target/node_modules/awesome-config/configs/.eslintrc': eslintFxt.upcoming,
+        '/target/node_modules/awesome-config/configs/.editorconfig': 'bar',
+        '/target/node_modules/awesome-config/configs/.babelrc': babelFxt.upcoming,
+        '/target/node_modules/awesome-config/configs/.npmignore': npmignoreFxt.upcoming,
+        '/target/node_modules/awesome-config/configs/.gitignore': gitignoreFxt.upcoming,
+        '/target/node_modules/awesome-config/package.json': JSON.stringify({
+          name: 'awesome-config',
+          version: '1.0.0',
+        }),
+        '/target/node_modules/awesome-config/configs/package.json': packageFxt.upcoming,
+      }
+
+      vol.fromJSON(dir, '/')
+
+      await sharec(context)
+    })
+
+    it('installs configs', async () => {
+      expect(vol.readFileSync('/target/.eslintrc', 'utf8')).toMatchFxt(eslintFxt.result)
+      expect(vol.readFileSync('/target/.babelrc', 'utf8')).toMatchFxt(babelFxt.result)
+      expect(vol.readFileSync('/target/.editorconfig', 'utf8')).toMatchFxt('bar\n')
+      expect(vol.readFileSync('/target/.gitignore', 'utf8')).toMatchFxt(gitignoreFxt.result)
+      expect(vol.readFileSync('/target/.npmignore', 'utf8')).toMatchFxt(npmignoreFxt.result)
+      expect(vol.readFileSync('/target/package.json', 'utf8')).toMatchFxt(packageFxt.result)
+    })
+
+    it('writes cache to `node_modules`', () => {
+      expect(vol.readdirSync('/target/node_modules/.cache/sharec')).toHaveLength(6)
+    })
+
+    it("doesn't write cache to `.sharec`", () => {
+      expect(vol.readdirSync('/target')).not.toContain('.sharec')
+    })
+  })
+
+  describe('with included cache', () => {
+    const context = {
+      targetPath: '/target',
+      cache: {},
+      configs: [],
+      options: {
+        cache: 'include',
+      },
     }
-    vol.fromJSON(dir, '/')
 
-    await sharec(input)
+    beforeEach(async () => {
+      const dir = {
+        '/target/.eslintrc': eslintFxt.current,
+        '/target/.babelrc': babelFxt.current,
+        '/target/.npmignore': npmignoreFxt.current,
+        '/target/.gitignore': gitignoreFxt.current,
+        '/target/package.json': packageFxt.current,
+        '/target/node_modules/awesome-config/configs/.eslintrc': eslintFxt.upcoming,
+        '/target/node_modules/awesome-config/configs/.editorconfig': 'bar',
+        '/target/node_modules/awesome-config/configs/.babelrc': babelFxt.upcoming,
+        '/target/node_modules/awesome-config/configs/.npmignore': npmignoreFxt.upcoming,
+        '/target/node_modules/awesome-config/configs/.gitignore': gitignoreFxt.upcoming,
+        '/target/node_modules/awesome-config/package.json': JSON.stringify({
+          name: 'awesome-config',
+          version: '1.0.0',
+        }),
+        '/target/node_modules/awesome-config/configs/package.json': packageFxt.upcoming,
+      }
 
-    expect(vol.readFileSync('/target/.eslintrc', 'utf8')).toWraplessEqual(eslintFxt.result)
-    expect(vol.readFileSync('/target/.babelrc', 'utf8')).toWraplessEqual(babelFxt.result)
-    expect(vol.readFileSync('/target/.editorconfig', 'utf8')).toWraplessEqual('bar\n')
-    expect(vol.readFileSync('/target/.gitignore', 'utf8')).toWraplessEqual(gitignoreFxt.result)
-    expect(vol.readFileSync('/target/.npmignore', 'utf8')).toWraplessEqual(npmignoreFxt.result)
-    expect(vol.readFileSync('/target/package.json', 'utf8')).toWraplessEqual(packageFxt.result)
-    expect(vol.readdirSync('/target/.sharec/.cache/awesome-config/1.0.0')).toHaveLength(6)
+      vol.fromJSON(dir, '/')
 
-    try {
-      vol.readdirSync('/target/node_modules/.cache/sharec/awesome-config/1.0.0')
-    } catch (err) {
-      done()
-    }
+      await sharec(context)
+    })
+
+    it('installs configs', async () => {
+      expect(vol.readFileSync('/target/.eslintrc', 'utf8')).toMatchFxt(eslintFxt.result)
+      expect(vol.readFileSync('/target/.babelrc', 'utf8')).toMatchFxt(babelFxt.result)
+      expect(vol.readFileSync('/target/.editorconfig', 'utf8')).toMatchFxt('bar\n')
+      expect(vol.readFileSync('/target/.gitignore', 'utf8')).toMatchFxt(gitignoreFxt.result)
+      expect(vol.readFileSync('/target/.npmignore', 'utf8')).toMatchFxt(npmignoreFxt.result)
+      expect(vol.readFileSync('/target/package.json', 'utf8')).toMatchFxt(packageFxt.result)
+    })
+
+    it('writes cache to `.sharec`', () => {
+      expect(vol.readdirSync('/target/.sharec/cache')).toHaveLength(6)
+    })
+
+    it("doesn't write cache to `node_modules`", () => {
+      expect(vol.readdirSync('/target/node_modules')).not.toContain('.cache')
+    })
   })
 })

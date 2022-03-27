@@ -9,12 +9,13 @@ const mergeConfigsPackages = require('./mergeConfigsPackages')
 
 /**
  * @typedef {import('../').FlowContext} FlowContext
+ * @typedef {import('../').FlowStep} FlowStep
  */
 
 /**
  * Composes steps in one function
  * Executes each step and pass result to the next one
- * @param {Array<Function>} steps Steps functions
+ * @param {...FlowStep} steps Steps functions
  * @returns {Function}
  */
 const composeSteps = (...steps) =>
@@ -36,10 +37,10 @@ const commonFlow = composeSteps(
   readTargetPackage,
   readCache,
   readConfigsPackages,
-  writeCache,
+  mergeConfigsPackages,
   writeConfigs,
   writeLockdata,
-  mergeConfigsPackages,
+  writeCache,
 )
 
 module.exports = {

@@ -35,6 +35,10 @@ const { errorCauses, InternalError } = require('./errors')
  */
 
 /**
+ * @typedef {(context: FlowContext) => Promise<FlowContext>} FlowStep
+ */
+
+/**
  * Main sharec entrance
  * @param {BaseInput} input
  * @returns {Promise<void>}
