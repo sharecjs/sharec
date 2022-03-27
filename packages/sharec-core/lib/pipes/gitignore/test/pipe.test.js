@@ -4,9 +4,7 @@ const { pipe } = require('../pipe')
 describe('strategies > pipes > gitignore', () => {
   const gitignoreBaseFxt = fixtures('gitignore/lines/00-base')
 
-  it('should process gitignore configs', () => {
-    expect(pipe('gitignore')(gitignoreBaseFxt)).toWraplessEqual(gitignoreBaseFxt.result, {
-      eof: false,
-    })
+  it('handles .gitignore files', () => {
+    expect(pipe('.gitignore')(gitignoreBaseFxt)).toEqual(gitignoreBaseFxt.result)
   })
 })
