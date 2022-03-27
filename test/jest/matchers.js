@@ -7,6 +7,8 @@ const { EOL } = require('os')
  */
 const normalizeWraps = (str) => str.replace(/(\r\n|\n\r|\r|\n)/gm, '\n')
 
+const cutEOL = (str) => str.replace(new RegExp(`${EOL}$`), '')
+
 /**
  * Removes all EOL new line symbols from the end of given string
  * @param {String} str
@@ -55,6 +57,18 @@ const toWraplessEqual = (rawReceived, rawExpected, options = {}) => {
   }
 }
 
+const toMatchFxt = (rawReceived, rawExpected) => {
+  const normalizedReceived = cutEOL(rawReceived)
+  const normalizedExpected = cutEOL(rawExpected)
+
+  expect(normalizedReceived).toEqual(normalizedExpected)
+
+  return {
+    pass: true,
+  }
+}
+
 module.exports = {
   toWraplessEqual,
+  toMatchFxt,
 }
