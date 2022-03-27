@@ -23,8 +23,10 @@ const writeCache = async (context) => {
   await safeMakeDir(cachePath)
 
   for (const config in mergedConfigs) {
-    await safeMakeDir(join(cachePath, dirname(config)))
-    await writeFile(join(cachePath, config), mergedConfigs[config])
+    const configPath = config.replace(new RegExp(`^${targetPath}`), '')
+
+    await safeMakeDir(join(cachePath, dirname(configPath)))
+    await writeFile(join(cachePath, configPath), mergedConfigs[config])
   }
 
   return context
