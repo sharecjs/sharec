@@ -2,7 +2,7 @@ const { fixtures } = require('testUtils')
 const { vol } = require('memfs')
 const { sharec } = require('../../')
 
-describe('sharec > install', () => {
+describe('sharec > install > base', () => {
   const packageFxt = fixtures('package/json/01-install')
   const babelFxt = fixtures('babel/json/00-base')
   const eslintFxt = fixtures('eslint/json/01-base')
@@ -36,11 +36,11 @@ describe('sharec > install', () => {
         '/target/node_modules/awesome-config/configs/.babelrc': babelFxt.upcoming,
         '/target/node_modules/awesome-config/configs/.npmignore': npmignoreFxt.upcoming,
         '/target/node_modules/awesome-config/configs/.gitignore': gitignoreFxt.upcoming,
+        '/target/node_modules/awesome-config/configs/package.json': packageFxt.upcoming,
         '/target/node_modules/awesome-config/package.json': JSON.stringify({
           name: 'awesome-config',
           version: '1.0.0',
         }),
-        '/target/node_modules/awesome-config/configs/package.json': packageFxt.upcoming,
       }
 
       vol.fromJSON(dir, '/')

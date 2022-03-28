@@ -12,7 +12,7 @@ function trimEOF(params) {
   return Object.keys(params).reduce(
     (acc, key) =>
       Object.assign(acc, {
-        [key]: cutEOF(params[key]),
+        [key]: params[key] ? cutEOF(params[key]) : params[key],
       }),
     {},
   )
