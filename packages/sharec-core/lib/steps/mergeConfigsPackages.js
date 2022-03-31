@@ -35,10 +35,11 @@ const mergeConfigsPackages = async (context) => {
         currentConfig = context.mergedConfigs[targetConfigPath]
       }
 
+      // skip config if it was entirely deleted by user
+      if (!currentConfig && cachedConfig) continue
+
       // the file was changed by user
-      if (!targetPipe && cachedConfig !== currentConfig) {
-        continue
-      }
+      if (!targetPipe && cachedConfig !== currentConfig) continue
 
       // when config doesn't have specific strategy – we should just replace it by upcoming one
       if (!targetPipe) {
