@@ -10,7 +10,8 @@
     "lint-staged": "^9.2.0",
     "rimraf": "^2.6.3",
     "size-limit": "^1.3.7",
-    "yaspeller-ci": "^1.0.1"
+    "yaspeller-ci": "^1.0.1",
+    "awesome-config": "2.0.0"
   },
   "husky": {
     "hooks": {
@@ -26,7 +27,9 @@
     "ignoreText": [" \\(by [^)]+\\)."]
   },
   "sharec": {
-    "config": "awesome-config",
-    "version": "1.0.0"
+    "configs": ["awesome-config"],
+    "locked": {
+      "awesome-config": "1.0.0"
+    }
   }
 }
