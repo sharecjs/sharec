@@ -1,5 +1,5 @@
 // @ts-check
-const { writeFile } = require('sharec-utils').std
+const { writeFile, removeFile } = require('sharec-utils').std
 const { join, dirname } = require('sharec-utils').path
 const { safeMakeDir } = require('sharec-utils').fs
 
@@ -20,13 +20,14 @@ const writeCache = async (context) => {
     ? join(targetPath, '.sharec/cache')
     : join(targetPath, 'node_modules/.cache/sharec')
 
-  await safeMakeDir(cachePath)
-
   for (const config in mergedConfigs) {
     const configPath = config.replace(new RegExp(`^${targetPath}`), '')
+    const configCachePath = join(cachePath, configPath)
 
-    await safeMakeDir(join(cachePath, dirname(configPath)))
-    await writeFile(join(cachePath, configPath), mergedConfigs[config])
+    await safeMakeDir(dirname(configCachePath))
+    // invalidate previous cache
+    await removeFile(configCachePath)
+    await writeFile(configCachePath, mergedConfigs[config])
   }
 
   return context
