@@ -48,17 +48,17 @@ describe('steps > readConfigsPackages', () => {
         'node_modules/awesome-config/package.json': JSON.stringify({
           version: '1.0.0',
         }),
-        'node_modules/awesome-config/config/package.json': 'foo',
-        'node_modules/awesome-config/config/.eslintrc': 'bar',
-        'node_modules/awesome-config/config/package-lock.json': 'baz',
-        'node_modules/awesome-config/config/yarn.lock': 'foo',
+        'node_modules/awesome-config/configs/package.json': 'foo',
+        'node_modules/awesome-config/configs/.eslintrc': 'bar',
+        'node_modules/awesome-config/configs/package-lock.json': 'baz',
+        'node_modules/awesome-config/configs/yarn.lock': 'foo',
         'node_modules/second-config/package.json': JSON.stringify({
           version: '2.0.0',
         }),
-        'node_modules/second-config/config/package.json': 'foo',
-        'node_modules/second-config/config/.eslintrc': 'bar',
-        'node_modules/second-config/config/package-lock.json': 'baz',
-        'node_modules/second-config/config/yarn.lock': 'foo',
+        'node_modules/second-config/configs/package.json': 'foo',
+        'node_modules/second-config/configs/.eslintrc': 'bar',
+        'node_modules/second-config/configs/package-lock.json': 'baz',
+        'node_modules/second-config/configs/yarn.lock': 'foo',
       }
       vol.fromJSON(dir, '/')
 
