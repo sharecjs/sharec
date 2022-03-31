@@ -53,7 +53,7 @@
     "callsites": "^3.1.0",
     "jest": "^26.6.3",
     "jest-cli": "^26.6.3",
-    "memfs": "^2.15.2"
+    "memfs": "^3.4.1"
   },
   "dependencies": {
     "colorette": "^1.2.2",
