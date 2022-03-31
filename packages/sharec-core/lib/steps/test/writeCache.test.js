@@ -55,18 +55,19 @@ describe('steps > writeCache', () => {
 
     describe('included', () => {
       it("doesn't write cache", async () => {
-        const input = {
+        const context = {
           targetPath: '/',
           options: {
             cache: 'include',
           },
+          cache: {},
           mergedConfigs: fixtures.mergedConfigs,
         }
         const dir = {}
 
         vol.fromJSON(dir, '/')
 
-        await writeCache(input)
+        await writeCache(context)
 
         expect(vol.readdirSync('/.sharec/cache')).toHaveLength(3)
       })

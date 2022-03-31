@@ -25,8 +25,12 @@ const writeCache = async (context) => {
     const configCachePath = join(cachePath, configPath)
 
     await safeMakeDir(dirname(configCachePath))
+
     // invalidate previous cache
-    await removeFile(configCachePath)
+    try {
+      await removeFile(configCachePath)
+    } catch (err) {}
+
     await writeFile(configCachePath, mergedConfigs[config])
   }
 
