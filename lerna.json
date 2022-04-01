@@ -2,11 +2,8 @@
   "lerna": "2.11.0",
   "packages": [
     "packages/sharec",
-    "packages/sharec-demo-config",
-    "packages/sharec-essential-config",
     "packages/sharec-utils",
     "packages/sharec-schema",
-    "packages/sharec-nanomatch",
     "packages/sharec-core"
   ],
   "version": "2.10.7"
