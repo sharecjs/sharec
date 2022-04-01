@@ -1,15 +1,16 @@
+const { EOL } = require('os')
 const trimEOF = require('../trimEOF')
 
 describe('strategies > helpers > params > trimEOF', () => {
   it('should trim EOF each params entry', () => {
     expect(
       trimEOF({
-        current: 'foo\nbar\nbaz\n',
-        upcoming: 'foo\nbar\nbaz\n',
+        current: `foo${EOL}bar${EOL}baz${EOL}`,
+        upcoming: `foo${EOL}bar${EOL}baz${EOL}`,
       }),
     ).toEqual({
-      current: 'foo\nbar\nbaz',
-      upcoming: 'foo\nbar\nbaz',
+      current: `foo${EOL}bar${EOL}baz`,
+      upcoming: `foo${EOL}bar${EOL}baz`,
     })
   })
 })

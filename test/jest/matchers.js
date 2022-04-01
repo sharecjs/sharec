@@ -58,8 +58,8 @@ const toWraplessEqual = (rawReceived, rawExpected, options = {}) => {
 }
 
 const toMatchFxt = (rawReceived, rawExpected) => {
-  const normalizedReceived = cutEOL(rawReceived)
-  const normalizedExpected = cutEOL(rawExpected)
+  const normalizedReceived = normalizeWraps(cutEOL(rawReceived))
+  const normalizedExpected = normalizeWraps(cutEOL(rawExpected))
 
   expect(normalizedReceived).toEqual(normalizedExpected)
 
