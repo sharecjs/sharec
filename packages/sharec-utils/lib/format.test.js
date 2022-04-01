@@ -1,3 +1,4 @@
+const { EOL } = require('os')
 const { fixtures } = require('testUtils')
 const {
   hasSpacesIndent,
@@ -32,28 +33,28 @@ describe('utils > format', () => {
 
   describe('hasEOF', () => {
     it('should correctly determine line wrap at the and of the all lines', () => {
-      expect(hasEOF('foo\n\n')).toBe(true)
+      expect(hasEOF(`foo${EOL}${EOL}`)).toBe(true)
       expect(hasEOF('foo')).toBe(false)
     })
   })
 
   describe('cutEOF', () => {
     it('cuts off line wrap at the and of the given string', () => {
-      expect(cutEOF('foo\n\n')).toBe('foo\n')
-      expect(cutEOF('foo\n')).toBe('foo')
+      expect(cutEOF(`foo${EOL}${EOL}`)).toBe(`foo${EOL}`)
+      expect(cutEOF(`foo${EOL}`)).toBe('foo')
       expect(cutEOF('foo')).toBe('foo')
     })
   })
 
   describe('indentWithTab', () => {
     it('should replace all spaces with tabs', () => {
-      expect(indentWithTab(jsonFxt.result)).toWraplessEqual(jsonFxt.current, {
+      expect(indentWithTab(jsonFxt.result)).toMatchFxt(jsonFxt.current, {
         eof: false,
       })
     })
 
     it('should not affect string with tabs', () => {
-      expect(indentWithTab(jsonFxt.current)).toWraplessEqual(jsonFxt.current, {
+      expect(indentWithTab(jsonFxt.current)).toMatchFxt(jsonFxt.current, {
         eof: false,
       })
     })
@@ -61,13 +62,13 @@ describe('utils > format', () => {
 
   describe('indentWithSpace', () => {
     it('should replace all tabs with spaces', () => {
-      expect(indentWithSpace(jsonFxt.current, 2)).toWraplessEqual(jsonFxt.result, {
+      expect(indentWithSpace(jsonFxt.current, 2)).toMatchFxt(jsonFxt.result, {
         eof: false,
       })
     })
 
     it('should not affect string with spaces', () => {
-      expect(indentWithSpace(jsonFxt.result, 2)).toWraplessEqual(jsonFxt.result, {
+      expect(indentWithSpace(jsonFxt.result, 2)).toMatchFxt(jsonFxt.result, {
         eof: false,
       })
     })
@@ -84,7 +85,7 @@ describe('utils > format', () => {
             eof: false,
           },
         }),
-      ).toWraplessEqual(jsonFxt.result, {
+      ).toMatchFxt(jsonFxt.result, {
         eof: false,
       })
       expect(
@@ -97,7 +98,7 @@ describe('utils > format', () => {
             eof: false,
           },
         }),
-      ).toWraplessEqual(yamlFxt.result, {
+      ).toMatchFxt(yamlFxt.result, {
         eof: false,
       })
       expect(
@@ -108,7 +109,7 @@ describe('utils > format', () => {
             eof: false,
           },
         }),
-      ).toWraplessEqual(jsonFxt.current, {
+      ).toMatchFxt(jsonFxt.current, {
         eof: false,
       })
       expect(
@@ -120,7 +121,7 @@ describe('utils > format', () => {
             eof: false,
           },
         }),
-      ).toWraplessEqual(yamlFxt.current, {
+      ).toMatchFxt(yamlFxt.current, {
         eof: false,
       })
       expect(
@@ -130,7 +131,7 @@ describe('utils > format', () => {
             eof: true,
           },
         }),
-      ).toWraplessEqual('foo\n', {
+      ).toMatchFxt('foo\n', {
         eof: false,
       })
     })
