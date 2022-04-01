@@ -56,20 +56,9 @@
     "memfs": "^3.4.1"
   },
   "dependencies": {
-    "colorette": "^1.2.2",
-    "detect-indent": "^6.0.0",
-    "editorconfig": "^0.15.3",
-    "enquirer": "^2.3.6",
-    "js-yaml": ">=3.13.1",
-    "json8": "^1.0.1",
     "lodash": "^4.17.15",
-    "mico-spinner": "^1.1.0",
-    "minimatch": "^3.0.4",
-    "minimist": "^1.2.0",
     "sharec-schema": "^2.10.2",
-    "sharec-utils": "^2.10.2",
-    "shelljs": "^0.8.3",
-    "slash": "^3.0.0"
+    "sharec-utils": "^2.10.2"
   },
   "gitHead": "8b056dc9aedf49a712b84b4d47ea9fa1cea45b08"
 }

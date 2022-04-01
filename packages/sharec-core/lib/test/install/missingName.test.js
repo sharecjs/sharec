@@ -1,6 +1,5 @@
 const { fixtures } = require('testUtils')
 const { vol } = require('memfs')
-const { pwd } = require('shelljs')
 const { sharec } = require('../../')
 
 describe('sharec > install > missing name', () => {
@@ -12,7 +11,6 @@ describe('sharec > install > missing name', () => {
 
   beforeEach(() => {
     jest.clearAllMocks()
-    pwd.mockReturnValueOnce({ stdout: '/configuration-package' })
     vol.reset()
   })
 
