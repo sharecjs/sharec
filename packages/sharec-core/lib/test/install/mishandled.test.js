@@ -44,11 +44,11 @@ describe('sharec > install > mishandled', () => {
 
     await sharec(context)
 
-    expect(vol.readFileSync('/target/.eslintrc', 'utf8')).toMatchFxt(eslintFxt.result)
-    expect(vol.readFileSync('/target/.babelrc', 'utf8')).toMatchFxt(babelFxt.result)
-    expect(vol.readFileSync('/target/.editorconfig', 'utf8')).toMatchFxt('bar\n')
-    expect(vol.readFileSync('/target/.gitignore', 'utf8')).toMatchFxt(gitignoreFxt.result)
-    expect(vol.readFileSync('/target/.npmignore', 'utf8')).toMatchFxt(npmignoreFxt.result)
-    expect(vol.readFileSync('/target/package.json', 'utf8')).toMatchFxt(packageFxt.result)
+    expect(vol.readFileSync('/target/.eslintrc', 'utf8')).toMatchSnapshot()
+    expect(vol.readFileSync('/target/.babelrc', 'utf8')).toMatchSnapshot()
+    expect(vol.readFileSync('/target/.editorconfig', 'utf8')).toMatchSnapshot()
+    expect(vol.readFileSync('/target/.gitignore', 'utf8')).toMatchSnapshot()
+    expect(vol.readFileSync('/target/.npmignore', 'utf8')).toMatchSnapshot()
+    expect(vol.readFileSync('/target/package.json', 'utf8')).toMatchSnapshot()
   })
 })

@@ -34,8 +34,8 @@ describe('sharec > install nested configs', () => {
 
     await commonFlow(context)
 
-    expect(vol.readFileSync('/target/foo/bar/index.js', 'utf8')).toEqual(indexFxt)
-    expect(vol.readFileSync('/target/package.json', 'utf8')).toWraplessEqual(packageFxt.result)
+    expect(vol.readFileSync('/target/foo/bar/index.js', 'utf8')).toMatchSnapshot()
+    expect(vol.readFileSync('/target/package.json', 'utf8')).toMatchSnapshot()
     expect(vol.readdirSync('/target/node_modules/.cache/sharec/foo/bar')).toHaveLength(1)
   })
 })

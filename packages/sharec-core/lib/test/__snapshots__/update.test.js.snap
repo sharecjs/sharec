@@ -1,0 +1,297 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sharec > update linear updates configs 1`] = `
+"{
+  \\"foo\\": \\"baz\\",
+  \\"bar\\": {
+    \\"foo\\": \\"foo\\"
+  },
+  \\"baz\\": {
+    \\"foo\\": \\"bar\\",
+    \\"bar\\": \\"baz\\"
+  }
+}
+"
+`;
+
+exports[`sharec > update linear updates configs 2`] = `
+"foo: baz
+bar:
+  foo: foo
+baz:
+  foo: bar
+  bar: baz
+"
+`;
+
+exports[`sharec > update linear updates configs 3`] = `
+"{
+  \\"presets\\": [
+    [
+      \\"env\\",
+      {
+        \\"modules\\": true,
+        \\"targets\\": {
+          \\"browsers\\": [
+            \\"> 1%\\",
+            \\"last 2 versions\\"
+          ]
+        }
+      }
+    ]
+  ],
+  \\"plugins\\": [
+    \\"syntax-dynamic-import\\"
+  ],
+  \\"env\\": {
+    \\"test\\": {
+      \\"presets\\": [
+        \\"stage-3\\",
+        \\"stage-2\\"
+      ]
+    }
+  },
+  \\"ignore\\": [
+    \\"foo\\",
+    \\"bar\\"
+  ]
+}
+"
+`;
+
+exports[`sharec > update linear updates configs 4`] = `
+"{
+  \\"env\\": {
+    \\"browser\\": true,
+    \\"es6\\": true,
+    \\"node\\": true,
+    \\"jest\\": true
+  },
+  \\"extends\\": \\"airbnb\\",
+  \\"rules\\": {
+    \\"space-before-function-paren\\": 1,
+    \\"no-console\\": 0,
+    \\"max-len\\": [
+      \\"warn\\",
+      120,
+      2,
+      {
+        \\"ignoreUrls\\": false,
+        \\"ignoreComments\\": true,
+        \\"ignoreStrings\\": false
+      }
+    ],
+    \\"prettier/trailingComma\\": \\"all\\",
+    \\"prettier/semi\\": false,
+    \\"prettier/singleQuote\\": true
+  },
+  \\"parserOptions\\": {
+    \\"parser\\": \\"babel-eslint\\",
+    \\"ecmaVersion\\": \\"es2019\\",
+    \\"ecmaFeatures\\": {
+      \\"spread\\": false
+    },
+    \\"sourceType\\": \\"module\\"
+  }
+}
+"
+`;
+
+exports[`sharec > update linear updates configs 5`] = `
+"node_modules
+yarn-error.log
+bower_components
+"
+`;
+
+exports[`sharec > update linear updates configs 6`] = `
+"node_modules
+foo
+bar
+baz
+"
+`;
+
+exports[`sharec > update linear updates configs 7`] = `
+"{
+  \\"lang\\": \\"ru\\",
+  \\"ignoreCapitalization\\": false,
+  \\"fileExtensions\\": [
+    \\"foo\\",
+    \\"bar\\",
+    \\"baz\\"
+  ],
+  \\"excludeFiles\\": [
+    \\"README-*.md\\",
+    \\"CHANGELOG.md\\"
+  ],
+  \\"ignoreText\\": [
+    \\" \\\\\\\\(by [^)]+\\\\\\\\).\\"
+  ],
+  \\"dictionary\\": [
+    \\"Async\\",
+    \\"asyncGenerator\\",
+    \\"CLI\\",
+    \\"Clojure\\",
+    \\"ClojureScript\\",
+    \\"Crypto\\",
+    \\"cryptographically\\",
+    \\"formatAsync\\",
+    \\"generateAsync\\",
+    \\"foo\\",
+    \\"bar\\",
+    \\"baz\\"
+  ]
+}
+"
+`;
+
+exports[`sharec > update linear updates configs 8`] = `
+"{
+  \\"scripts\\": {
+    \\"api\\": \\"documentation build *.js -f md -o api.md\\",
+    \\"spell\\": \\"yarn api && yaspeller-ci *.md\\",
+    \\"clean\\": \\"rimraf api.md coverage/\\",
+    \\"test\\": \\"jest && eslint-ci . && size-limit && yarn spell\\"
+  },
+  \\"devDependencies\\": {
+    \\"@logux/eslint-config\\": \\"^29.1.1\\",
+    \\"clean-publish\\": \\"^1.1.2\\",
+    \\"documentation\\": \\"^12.0.3\\",
+    \\"eslint\\": \\"7.0.0\\",
+    \\"eslint-ci\\": \\"^1.0.0\\",
+    \\"eslint-plugin-es5\\": \\"^1.4.1\\",
+    \\"eslint-plugin-import\\": \\"^2.18.2\\",
+    \\"eslint-plugin-jest\\": \\"^22.13.6\\",
+    \\"eslint-plugin-node\\": \\"^9.1.0\\",
+    \\"eslint-plugin-promise\\": \\"^4.2.1\\",
+    \\"eslint-plugin-security\\": \\"^1.4.0\\",
+    \\"eslint-plugin-standard\\": \\"^4.0.0\\",
+    \\"eslint-config-standard\\": \\"^13.0.1\\",
+    \\"husky\\": \\"^3.0.1\\",
+    \\"jest\\": \\"^24.8.0\\",
+    \\"lint-staged\\": \\"^9.2.0\\",
+    \\"rimraf\\": \\"^2.6.3\\",
+    \\"size-limit\\": \\"^1.3.7\\",
+    \\"yaspeller-ci\\": \\"^1.0.1\\",
+    \\"awesome-config\\": \\"2.0.0\\"
+  },
+  \\"husky\\": {
+    \\"hooks\\": {
+      \\"pre-commit\\": \\"lint-staged\\"
+    }
+  },
+  \\"lint-staged\\": {
+    \\"*.md\\": \\"yaspeller\\",
+    \\"*.js\\": \\"eslint\\",
+    \\"*.css\\": \\"stylelint\\"
+  },
+  \\"jest\\": {
+    \\"testEnvironment\\": \\"node\\",
+    \\"coverageThreshold\\": {
+      \\"global\\": {
+        \\"statements\\": 300
+      }
+    }
+  },
+  \\"eslintIgnore\\": [
+    \\"node_modules\\"
+  ],
+  \\"sharec\\": {
+    \\"configs\\": [
+      \\"awesome-config\\"
+    ],
+    \\"locked\\": {
+      \\"awesome-config\\": \\"2.0.0\\"
+    }
+  }
+}"
+`;
+
+exports[`sharec > update with removed configs updates configs 1`] = `
+"{
+  \\"scripts\\": {
+    \\"api\\": \\"documentation build *.js -f md -o api.md\\",
+    \\"clean\\": \\"rimraf api.md coverage/\\",
+    \\"test\\": \\"jest --coverage && eslint-ci . && size-limit && yarn spell\\"
+  },
+  \\"devDependencies\\": {
+    \\"@logux/eslint-config\\": \\"^29.1.1\\",
+    \\"clean-publish\\": \\"^1.1.2\\",
+    \\"documentation\\": \\"^12.0.3\\",
+    \\"husky\\": \\"^3.0.1\\",
+    \\"lint-staged\\": \\"^9.2.0\\",
+    \\"rimraf\\": \\"^2.6.3\\",
+    \\"size-limit\\": \\"^1.3.7\\",
+    \\"yaspeller-ci\\": \\"^1.0.1\\",
+    \\"awesome-config\\": \\"2.0.0\\"
+  },
+  \\"husky\\": {
+    \\"hooks\\": {
+      \\"pre-commit\\": \\"lint-staged\\"
+    }
+  },
+  \\"lint-staged\\": {
+    \\"*.md\\": \\"yaspeller\\"
+  },
+  \\"yaspeller\\": {
+    \\"lang\\": \\"en\\",
+    \\"ignoreCapitalization\\": true,
+    \\"ignoreText\\": [
+      \\" \\\\\\\\(by [^)]+\\\\\\\\).\\"
+    ]
+  },
+  \\"sharec\\": {
+    \\"configs\\": [
+      \\"awesome-config\\"
+    ],
+    \\"locked\\": {
+      \\"awesome-config\\": \\"2.0.0\\"
+    }
+  }
+}"
+`;
+
+exports[`sharec > update with removed fields updates configs 1`] = `
+"{
+  \\"scripts\\": {
+    \\"api\\": \\"documentation build *.js -f md -o api.md\\",
+    \\"clean\\": \\"rimraf api.md coverage/\\",
+    \\"test\\": \\"jest --coverage && eslint-ci . && size-limit && yarn spell\\"
+  },
+  \\"devDependencies\\": {
+    \\"@logux/eslint-config\\": \\"^29.1.1\\",
+    \\"clean-publish\\": \\"^1.1.2\\",
+    \\"documentation\\": \\"^12.0.3\\",
+    \\"husky\\": \\"^3.0.1\\",
+    \\"lint-staged\\": \\"^9.2.0\\",
+    \\"rimraf\\": \\"^2.6.3\\",
+    \\"size-limit\\": \\"^1.3.7\\",
+    \\"yaspeller-ci\\": \\"^1.0.1\\",
+    \\"awesome-config\\": \\"2.0.0\\"
+  },
+  \\"husky\\": {
+    \\"hooks\\": {
+      \\"pre-commit\\": \\"lint-staged\\"
+    }
+  },
+  \\"lint-staged\\": {
+    \\"*.md\\": \\"yaspeller\\"
+  },
+  \\"yaspeller\\": {
+    \\"lang\\": \\"en\\",
+    \\"ignoreCapitalization\\": true,
+    \\"ignoreText\\": [
+      \\" \\\\\\\\(by [^)]+\\\\\\\\).\\"
+    ]
+  },
+  \\"sharec\\": {
+    \\"configs\\": [
+      \\"awesome-config\\"
+    ],
+    \\"locked\\": {
+      \\"awesome-config\\": \\"2.0.0\\"
+    }
+  }
+}"
+`;

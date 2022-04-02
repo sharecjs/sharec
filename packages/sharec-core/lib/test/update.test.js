@@ -65,14 +65,14 @@ describe.only('sharec > update', () => {
 
       await sharec(context)
 
-      expect(vol.readFileSync('/target/folder/foo.json', 'utf8')).toMatchFxt(defaultJsonFxt.result)
-      expect(vol.readFileSync('/target/folder/foo.yaml', 'utf8')).toMatchFxt(defaultYamlFxt.result)
-      expect(vol.readFileSync('/target/.babelrc', 'utf8')).toMatchFxt(babelFxt.result)
-      expect(vol.readFileSync('/target/.eslintrc', 'utf8')).toMatchFxt(eslintFxt.result)
-      expect(vol.readFileSync('/target/.gitignore', 'utf8')).toMatchFxt(gitignoreFxt.result)
-      expect(vol.readFileSync('/target/.npmignore', 'utf8')).toMatchFxt(npmignoreFxt.result)
-      expect(vol.readFileSync('/target/.yaspellerrc', 'utf8')).toMatchFxt(yaspellerFxt.result)
-      expect(vol.readFileSync('/target/package.json', 'utf8')).toMatchFxt(packageFxt.result)
+      expect(vol.readFileSync('/target/folder/foo.json', 'utf8')).toMatchSnapshot()
+      expect(vol.readFileSync('/target/folder/foo.yaml', 'utf8')).toMatchSnapshot()
+      expect(vol.readFileSync('/target/.babelrc', 'utf8')).toMatchSnapshot()
+      expect(vol.readFileSync('/target/.eslintrc', 'utf8')).toMatchSnapshot()
+      expect(vol.readFileSync('/target/.gitignore', 'utf8')).toMatchSnapshot()
+      expect(vol.readFileSync('/target/.npmignore', 'utf8')).toMatchSnapshot()
+      expect(vol.readFileSync('/target/.yaspellerrc', 'utf8')).toMatchSnapshot()
+      expect(vol.readFileSync('/target/package.json', 'utf8')).toMatchSnapshot()
     })
   })
 
@@ -109,7 +109,7 @@ describe.only('sharec > update', () => {
 
       await sharec(context)
 
-      expect(vol.readFileSync('/target/package.json', 'utf8')).toMatchFxt(packageFxt.result)
+      expect(vol.readFileSync('/target/package.json', 'utf8')).toMatchSnapshot()
     })
   })
 
@@ -150,7 +150,7 @@ describe.only('sharec > update', () => {
       await sharec(context)
 
       expect(vol.readdirSync('/target')).not.toContain('.eslintrc')
-      expect(vol.readFileSync('/target/package.json', 'utf8')).toMatchFxt(packageFxt.result)
+      expect(vol.readFileSync('/target/package.json', 'utf8')).toMatchSnapshot()
     })
   })
 })
