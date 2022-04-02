@@ -56,20 +56,7 @@ describe('steps > mergeConfigsPackages > multiple', () => {
 
       const output = await mergeConfigsPackages(input)
 
-      expect(output.mergedConfigs).toEqual({
-        '/.eslintrc': JSON.stringify(
-          {
-            env: {
-              browser: true,
-              es6: true,
-              node: true,
-              jest: true,
-            },
-          },
-          null,
-          2,
-        ),
-      })
+      expect(output.mergedConfigs['/.eslintrc']).toMatchSnapshot()
     })
   })
 })

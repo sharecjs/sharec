@@ -44,10 +44,10 @@ describe('steps > mergeConfigsPackages > configs', () => {
 
     const output = await mergeConfigsPackages(input)
 
-    expect(output.mergedConfigs['/target/.eslintrc']).toWraplessEqual(eslintBaseFxt.result, { eof: false })
-    expect(output.mergedConfigs['/target/.babelrc']).toWraplessEqual(babelBaseFxt.result, { eof: false })
-    expect(output.mergedConfigs['/target/.npmignore']).toWraplessEqual(npmignoreBaseFxt.result, { eof: false })
-    expect(output.mergedConfigs['/target/.gitignore']).toWraplessEqual(gitignoreBaseFxt.result, { eof: false })
-    expect(output.mergedConfigs['/target/.yaspellerrc']).toWraplessEqual(yaspellerBaseFxt.result, { eof: false })
+    expect(output.mergedConfigs['/target/.eslintrc']).toMatchSnapshot()
+    expect(output.mergedConfigs['/target/.babelrc']).toMatchSnapshot()
+    expect(output.mergedConfigs['/target/.npmignore']).toMatchSnapshot()
+    expect(output.mergedConfigs['/target/.gitignore']).toMatchSnapshot()
+    expect(output.mergedConfigs['/target/.yaspellerrc']).toMatchSnapshot()
   })
 })

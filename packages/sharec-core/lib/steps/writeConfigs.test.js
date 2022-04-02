@@ -20,8 +20,8 @@ describe('steps > writeConfigs', () => {
 
     await writeConfigs(input)
 
-    expect(vol.readFileSync('/target/foo.txt', 'utf8')).toEqual('foo\n')
-    expect(vol.readFileSync('/target/bar.txt', 'utf8')).toEqual('bar\n')
-    expect(vol.readFileSync('/target/baz.txt', 'utf8')).toEqual('baz\n')
+    expect(vol.readFileSync('/target/foo.txt', 'utf8')).toMatchSnapshot()
+    expect(vol.readFileSync('/target/bar.txt', 'utf8')).toMatchSnapshot()
+    expect(vol.readFileSync('/target/baz.txt', 'utf8')).toMatchSnapshot()
   })
 })

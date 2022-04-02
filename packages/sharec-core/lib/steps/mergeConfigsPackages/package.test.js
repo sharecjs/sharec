@@ -31,6 +31,6 @@ describe('steps > mergeConfigsPackages > package', () => {
 
     const output = await mergeConfigsPackages(input)
 
-    expect(output.mergedConfigs['/target/package.json']).toWraplessEqual(packageBaseFxt.result, { eof: false })
+    expect(output.mergedConfigs['/target/package.json']).toMatchSnapshot()
   })
 })
