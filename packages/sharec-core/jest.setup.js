@@ -8,6 +8,7 @@ jest.mock('sharec-utils/lib/std', () => {
     copyFile: fs.copyFile,
     writeFile: fs.writeFile,
     lstat: fs.lstat,
+    stat: fs.stat,
     removeFile: fs.unlink,
   }
 })
