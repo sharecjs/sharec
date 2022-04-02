@@ -1,5 +1,5 @@
 const { fixtures } = require('testUtils')
-const listConcatAtom = require('../listConcat')
+const listConcatAtom = require('./listConcat')
 
 describe('atoms > listConcat', () => {
   const primitivesListFxt = fixtures('list/json/00-concat-primitives', 'map')

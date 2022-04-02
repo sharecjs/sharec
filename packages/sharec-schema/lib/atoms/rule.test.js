@@ -1,5 +1,5 @@
 const { fixtures } = require('testUtils')
-const ruleAtom = require('../rule')
+const ruleAtom = require('./rule')
 
 describe('atoms > rule', () => {
   const eslintRuleFxt = fixtures('rule/json/00-eslint', 'map')

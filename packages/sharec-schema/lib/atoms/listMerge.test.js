@@ -1,7 +1,7 @@
 const { fixtures } = require('testUtils')
-const listMergeAtom = require('../listMerge')
-const primitiveAtom = require('../primitive')
-const hashAtom = require('../hash')
+const listMergeAtom = require('./listMerge')
+const primitiveAtom = require('./primitive')
+const hashAtom = require('./hash')
 
 describe('atoms > listMerge', () => {
   const primitivesListFxt = fixtures('list/json/01-merge-primitives', 'map')

@@ -1,5 +1,5 @@
 const { fixtures } = require('testUtils')
-const pairAtom = require('../pair')
+const pairAtom = require('./pair')
 
 describe('atoms > pair', () => {
   const basePairFxt = fixtures('pair/json/00-base', 'map')

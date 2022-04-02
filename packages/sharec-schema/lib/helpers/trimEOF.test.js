@@ -1,5 +1,5 @@
 const { EOL } = require('os')
-const trimEOF = require('../trimEOF')
+const trimEOF = require('./trimEOF')
 
 describe('strategies > helpers > params > trimEOF', () => {
   it('should trim EOF each params entry', () => {

@@ -1,5 +1,5 @@
 const { fixtures } = require('testUtils')
-const linesConcatAtom = require('../linesConcat')
+const linesConcatAtom = require('./linesConcat')
 
 describe('atoms > linesConcat', () => {
   const concatLinesFxt = fixtures('lines/lines/01-concat')

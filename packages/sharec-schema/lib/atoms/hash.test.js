@@ -1,5 +1,5 @@
 const { fixtures } = require('testUtils')
-const hashAtom = require('../hash')
+const hashAtom = require('./hash')
 
 describe('atoms > hash', () => {
   const hashFxt = fixtures('rule/json/01-hash', 'map')

@@ -1,4 +1,4 @@
-const primitiveAtom = require('../primitive')
+const primitiveAtom = require('./primitive')
 
 describe('atoms > primitive', () => {
   it('should return current if upcoming is not passed', () => {

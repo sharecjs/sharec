@@ -1,5 +1,5 @@
 const { fixtures } = require('testUtils')
-const linesMergeAtom = require('../linesMerge')
+const linesMergeAtom = require('./linesMerge')
 
 describe('atoms > linesMerge', () => {
   const mergeLinesFxt = fixtures('lines/lines/00-merge')

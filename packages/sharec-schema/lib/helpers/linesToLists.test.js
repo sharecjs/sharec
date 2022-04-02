@@ -1,4 +1,4 @@
-const linesToLists = require('../linesToLists')
+const linesToLists = require('./linesToLists')
 
 describe('strategies > helpers > params > linesToLists', () => {
   it('should trim EOF each params entry', () => {
