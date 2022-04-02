@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`pipes > prettier > schema JSON should merge configs 1`] = `
+Map {
+  "tab" => true,
+  "tabWidth" => 2,
+  "semi" => true,
+}
+`;

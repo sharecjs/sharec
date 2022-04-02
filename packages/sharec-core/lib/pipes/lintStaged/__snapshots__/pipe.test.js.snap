@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`pipes > lintStaged > pipe JSON should merge configs 1`] = `
+"{
+  \\"src/**/*.{js,jsx,json}\\": [
+    \\"eslint --fix\\",
+    \\"prettier --write\\",
+    \\"git add\\"
+  ],
+  \\"src/**/*.css\\": [
+    \\"stylelint --fix\\",
+    \\"prettier --write\\",
+    \\"git add\\"
+  ]
+}"
+`;

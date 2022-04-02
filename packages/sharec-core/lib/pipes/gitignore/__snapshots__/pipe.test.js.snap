@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`strategies > pipes > gitignore handles .gitignore files 1`] = `
+"node_modules
+foo
+bar
+baz"
+`;

@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`strategies > pipes > babel > schema should handle unique envs 1`] = `
+Map {
+  "env" => Map {
+    "test" => Map {
+      "presets" => Array [
+        "env",
+      ],
+    },
+    "development" => Map {
+      "presets" => Array [
+        "stage-2",
+      ],
+    },
+  },
+}
+`;

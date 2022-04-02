@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`pipes > stylelint > pipe JSON should merge configs 1`] = `
+"{
+  \\"extends\\": [
+    \\"stylelint-config-standard\\",
+    \\"stylelint-config-recess-order\\"
+  ],
+  \\"rules\\": {
+    \\"declaration-block-trailing-semicolon\\": null,
+    \\"block-closing-brace-newline-before\\": null,
+    \\"block-opening-brace-space-before\\": null,
+    \\"at-rule-no-unknown\\": [
+      false,
+      {
+        \\"ignoreAtRules\\": [
+          \\"define-mixin\\",
+          \\"mixin\\"
+        ]
+      }
+    ],
+    \\"color-named\\": \\"never\\"
+  },
+  \\"processors\\": [
+    [
+      \\"stylelint-my-processor\\",
+      {
+        \\"optionOne\\": false
+      }
+    ],
+    [
+      \\"some-other-processor\\",
+      {
+        \\"optionOne\\": false,
+        \\"optionTwo\\": true
+      }
+    ],
+    \\"another-processor\\"
+  ]
+}"
+`;
