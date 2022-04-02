@@ -64,29 +64,7 @@ describe('steps > readConfigsPackages', () => {
 
       const output = await readConfigsPackages(input)
 
-      expect(output).toEqual({
-        ...input,
-        configs: [
-          {
-            name: 'awesome-config',
-            version: '1.0.0',
-            path: '/node_modules/awesome-config',
-            configs: {
-              'package.json': 'foo',
-              '.eslintrc': 'bar',
-            },
-          },
-          {
-            name: 'second-config',
-            version: '2.0.0',
-            path: '/node_modules/second-config',
-            configs: {
-              'package.json': 'foo',
-              '.eslintrc': 'bar',
-            },
-          },
-        ],
-      })
+      expect(output.configs).toMatchSnapshot()
     })
   })
 })

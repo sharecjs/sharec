@@ -1,10 +1,11 @@
+const { EOL } = require('os')
 const { fixtures } = require('testUtils')
 const { vol } = require('memfs')
 const { commonFlow } = require('../../steps')
 
 describe('sharec > install nested configs', () => {
   const packageFxt = fixtures('package/json/01-install')
-  const indexFxt = 'console.log("hello world")\n'
+  const indexFxt = `console.log("hello world")${EOL}`
   const context = {
     targetPath: '/target',
     mergedConfigs: {},

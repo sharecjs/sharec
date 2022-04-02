@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`steps > readConfigsPackages has configs reads configs listed in \`package.json\` 1`] = `
+Array [
+  Object {
+    "configs": Object {
+      ".eslintrc": "bar",
+      "package.json": "foo",
+    },
+    "name": "awesome-config",
+    "path": "/node_modules/awesome-config",
+    "version": "1.0.0",
+  },
+  Object {
+    "configs": Object {
+      ".eslintrc": "bar",
+      "package.json": "foo",
+    },
+    "name": "second-config",
+    "path": "/node_modules/second-config",
+    "version": "2.0.0",
+  },
+]
+`;
