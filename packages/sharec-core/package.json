@@ -44,9 +44,6 @@
     ],
     "setupFiles": [
       "./jest.setup.js"
-    ],
-    "setupFilesAfterEnv": [
-      "../../test/jest/index.js"
     ]
   },
   "devDependencies": {

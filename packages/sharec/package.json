@@ -22,34 +22,6 @@
   "scripts": {
     "types": "echo 'types generation not applicable in this package yet'"
   },
-  "jest": {
-    "moduleDirectories": [
-      "node_modules",
-      "lib",
-      "../../test"
-    ],
-    "moduleFileExtensions": [
-      "js",
-      "json"
-    ],
-    "testMatch": [
-      "**/*.test.js"
-    ],
-    "testPathIgnorePatterns": [
-      "node_modules",
-      "src/__legacy__"
-    ],
-    "coveragePathIgnorePatterns": [
-      "node_modules"
-    ],
-    "setupFiles": [
-      "jest-plugin-context/setup",
-      "./jest.setup.js"
-    ],
-    "setupFilesAfterEnv": [
-      "../../test/jest/index.js"
-    ]
-  },
   "dependencies": {
     "minimist": "^1.2.0",
     "nanospinner": "^0.3.1",
