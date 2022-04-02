@@ -3,14 +3,6 @@ const { commonFlow } = require('./steps')
 const { errorCauses, InternalError } = require('./errors')
 
 /**
- * @typedef {object} CliOptions
- * @property {true|false|'include'} cache Used for cache manipulations (--cache, -c)
- *  `include` – store cache inside `.sharec`, to include it to the project (for yarn@2, etc.)
- *  `true` – store cache inside `node_modules/.cache/.sharec`
- *  `false` – don't store cache at all
- */
-
-/**
  * @typedef {object} BaseInput
  * @property {string} targetPath Target project path
  * @property {CliOptions} options Options given by cli
@@ -25,11 +17,26 @@ const { errorCauses, InternalError } = require('./errors')
  */
 
 /**
+ * @typedef {object} CliOptions
+ * @property {true|false|'include'} cache Used for cache manipulations (--cache, -c)
+ *  `include` – store cache inside `.sharec`, to include it to the project (for yarn@2, etc.)
+ *  `true` – store cache inside `node_modules/.cache/.sharec`
+ *  `false` – don't store cache at all
+ */
+
+/**
+ * @typedef {object} RuntimeConfig
+ * @property {(context: FlowContext) => Promise<FlowContext>} [beforeMerge]
+ * @property {(context: FlowContext) => Promise<FlowContext>} [afterMerge]
+ */
+
+/**
  * @typedef {object} FlowContext
  * @property {string} targetPath Target project path
  * @property {CliOptions} options Different options from CLI
  * @property {object} [targetPackage] `package.json `from `targetPath`
- * @property {ConfigPackage[]} [configs] Original configs from upcoming package
+ * @property {RuntimeConfig} [runtimeConfig]
+ * @property {ConfigPackage[]} configs Original configs from upcoming package
  * @property {object} [mergedConfigs] Processed configs from upcoming package
  * @property {object} [cache] Previously installed configuration
  */
