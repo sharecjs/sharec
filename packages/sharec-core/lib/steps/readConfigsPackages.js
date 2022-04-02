@@ -1,6 +1,6 @@
 // @ts-check
 const { readFile } = require('sharec-utils').std
-const { join, resolve } = require('sharec-utils').path
+const { join } = require('sharec-utils').path
 const { find } = require('sharec-utils').fs
 
 /**
@@ -22,7 +22,7 @@ const readConfigsPackages = async (context) => {
   }
 
   for (const config of configs) {
-    const configPackagePath = resolve(targetPath, './node_modules', config)
+    const configPackagePath = join(targetPath, './node_modules', config)
     const configPackageJsonPath = join(configPackagePath, 'package.json')
     const rawConfigPackageJson = await readFile(configPackageJsonPath, 'utf8')
     const configPackageJson = JSON.parse(rawConfigPackageJson)
