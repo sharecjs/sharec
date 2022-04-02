@@ -17,8 +17,6 @@ describe('atoms > linesMerge', () => {
   })
 
   it('should merge lines as lists', () => {
-    expect(linesMergeAtom(mergeLinesFxt)).toWraplessEqual(mergeLinesFxt.result, {
-      eof: false,
-    })
+    expect(linesMergeAtom(mergeLinesFxt)).toMatchSnapshot()
   })
 })

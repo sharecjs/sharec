@@ -48,29 +48,21 @@ describe('utils > format', () => {
 
   describe('indentWithTab', () => {
     it('should replace all spaces with tabs', () => {
-      expect(indentWithTab(jsonFxt.result)).toMatchFxt(jsonFxt.current, {
-        eof: false,
-      })
+      expect(indentWithTab(jsonFxt.result)).toMatchSnapshot()
     })
 
     it('should not affect string with tabs', () => {
-      expect(indentWithTab(jsonFxt.current)).toMatchFxt(jsonFxt.current, {
-        eof: false,
-      })
+      expect(indentWithTab(jsonFxt.current)).toMatchSnapshot()
     })
   })
 
   describe('indentWithSpace', () => {
     it('should replace all tabs with spaces', () => {
-      expect(indentWithSpace(jsonFxt.current, 2)).toMatchFxt(jsonFxt.result, {
-        eof: false,
-      })
+      expect(indentWithSpace(jsonFxt.current, 2)).toMatchSnapshot()
     })
 
     it('should not affect string with spaces', () => {
-      expect(indentWithSpace(jsonFxt.result, 2)).toMatchFxt(jsonFxt.result, {
-        eof: false,
-      })
+      expect(indentWithSpace(jsonFxt.result, 2)).toMatchSnapshot()
     })
   })
 
@@ -85,9 +77,7 @@ describe('utils > format', () => {
             eof: false,
           },
         }),
-      ).toMatchFxt(jsonFxt.result, {
-        eof: false,
-      })
+      ).toMatchSnapshot()
       expect(
         applyFormat({
           filename: 'foo.yaml',
@@ -98,9 +88,7 @@ describe('utils > format', () => {
             eof: false,
           },
         }),
-      ).toMatchFxt(yamlFxt.result, {
-        eof: false,
-      })
+      ).toMatchSnapshot()
       expect(
         applyFormat({
           content: jsonFxt.result,
@@ -109,9 +97,7 @@ describe('utils > format', () => {
             eof: false,
           },
         }),
-      ).toMatchFxt(jsonFxt.current, {
-        eof: false,
-      })
+      ).toMatchSnapshot()
       expect(
         applyFormat({
           filename: 'bar.yml',
@@ -121,9 +107,7 @@ describe('utils > format', () => {
             eof: false,
           },
         }),
-      ).toMatchFxt(yamlFxt.current, {
-        eof: false,
-      })
+      ).toMatchSnapshot()
       expect(
         applyFormat({
           content: 'foo',
@@ -131,9 +115,7 @@ describe('utils > format', () => {
             eof: true,
           },
         }),
-      ).toMatchFxt('foo\n', {
-        eof: false,
-      })
+      ).toMatchSnapshot()
     })
   })
 

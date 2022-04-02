@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`parsers > yaml fromYAML should create Map from given YAML 1`] = `
+"{
+  \\"foo\\": \\"bar\\",
+  \\"bar\\": \\"baz\\",
+  \\"baz\\": {
+    \\"foo\\": \\"bar\\",
+    \\"bar\\": \\"baz\\"
+  }
+}"
+`;
+
+exports[`parsers > yaml toYAML should create YAML string from Map 1`] = `
+"foo: bar
+bar: baz
+baz:
+  foo: bar
+  bar: baz
+"
+`;

@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`parsers > json toJSON should create JSON string from Map 1`] = `
+"{
+  \\"foo\\": \\"bar\\",
+  \\"bar\\": \\"baz\\",
+  \\"baz\\": {
+    \\"foo\\": \\"bar\\",
+    \\"bar\\": \\"baz\\"
+  }
+}"
+`;
