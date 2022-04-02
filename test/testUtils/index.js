@@ -1,8 +1,13 @@
+const { EOL } = require('os')
 const { resolve, join } = require('path')
 const { readFileSync, readdirSync } = jest.requireActual('fs')
 const json8 = require('json8')
 const zipObject = require('lodash/zipObject')
 const pickBy = require('lodash/pickBy')
+
+function cutEOL(str) {
+  return str.replace(new RegExp(`${EOL}$`), '')
+}
 
 /**
  * Returns fixtures set from given directory
@@ -16,10 +21,11 @@ const pickBy = require('lodash/pickBy')
  *   result: '...',
  *   cached: '...',
  * }
- * @param {String} path Path to fixtures folder from test fixtures folder root
- * @param {String} [format] Fixture format. If it is not passed – returns fixture as
+ * When file has EOL – cuts it away
+ * @param {string} path Path to fixtures folder from test fixtures folder root
+ * @param {string} [format] Fixture format. If it is not passed – returns fixture as
  *  string in UTF8
- * @returns {Object}
+ * @returns {object}
  */
 function fixtures(path, format) {
   const findFixtureFileByKey = (arr, key) => arr.find((item) => new RegExp(`^${key}`).test(item))
@@ -34,10 +40,14 @@ function fixtures(path, format) {
     const fixturePath = join(fixturesPath, fixtureFileName)
     const file = readFileSync(fixturePath, 'utf8')
 
-    if (format === 'json') return JSON.parse(file)
-    if (format === 'map') return json8.parse(file, { map: true })
-
-    return file.replace(/\n$/, '')
+    switch (true) {
+      case format === 'json':
+        return JSON.parse(file)
+      case format === 'map':
+        return json8.parse(file, { map: true })
+      default:
+        return cutEOL(file)
+    }
   })
 
   const fixturesSet = zipObject(fixturesKeys, fixturesValues)
@@ -65,12 +75,8 @@ function createFakePrompt() {
 }
 
 module.exports = {
-  createFakePrompt,
-  createFakeSpinner,
-}
-
-module.exports = {
   fixtures,
   createFakeSpinner,
   createFakePrompt,
+  cutEOL,
 }

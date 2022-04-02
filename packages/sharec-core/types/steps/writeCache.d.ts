@@ -1,42 +1,32 @@
 export = writeCache
 /**
- * @typedef {import('../').Input} Input
+ * @typedef {import('../').FlowContext} FlowContext
  */
 /**
- * @param {Input} input
- * @returns {Promise<Input>}
+ * @param {FlowContext} context
+ * @returns {Promise<FlowContext>}
  */
-declare function writeCache(input: Input): Promise<Input>
+declare function writeCache(context: FlowContext): Promise<FlowContext>
 declare namespace writeCache {
-  export { Input }
+  export { FlowContext }
 }
-type Input = {
+type FlowContext = {
   /**
    * Target project path
    */
   targetPath: string
   /**
+   * Different options from CLI
+   */
+  options: import('..').CliOptions
+  /**
    * `package.json `from `targetPath`
    */
-  targetPackage: any
-  /**
-   * Upcoming configuration path
-   */
-  configPath: string
-  /**
-   * `package.json `from `configPath`
-   */
-  upcomingPackage: any
-  sharecConfig?: import('..').SharecRuntimeConfiguration
-  format?: any
+  targetPackage?: any
   /**
    * Original configs from upcoming package
    */
-  configs?: any
-  /**
-   * Configs from target package
-   */
-  local?: any
+  configs?: import('..').ConfigPackage[]
   /**
    * Processed configs from upcoming package
    */
@@ -45,30 +35,4 @@ type Input = {
    * Previously installed configuration
    */
   cache?: any
-  /**
-   * Different options from CLI
-   */
-  options: {
-    /**
-     * Disables all messages from sharec
-     */
-    silent: boolean
-    /**
-     * Forcily replaces all configs by new ones
-     */
-    overwrite: boolean
-    /**
-     * Do not write cache and sharec meta to target project
-     */
-    disappear: boolean
-    /**
-     * Enables debug messages
-     */
-    debug: boolean
-    /**
-     * Can be used to save configs to `.sharec/.cache`
-     * directory instead of `node_modules/.cache`
-     */
-    includeCache: boolean
-  }
 }

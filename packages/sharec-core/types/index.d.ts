@@ -1,22 +1,14 @@
-export type RuntimeConfigOptions = {
+/**
+ * n@2, etc.)
+ *  `true` – store cache inside `node_modules/.cache/.sharec`
+ *  `false` – don't store cache at all
+ */
+export type CliOptions = {
   /**
-   * Can be used to prevent file formatting after the merge
+   * Used for cache manipulations (--cache, -c)
+   * `include` – store cache inside `.sharec`, to include it to the project (for yarn
    */
-  format?: boolean
-  /**
-   * Can be used to prevent file merge and just force overwritting
-   */
-  overwrite?: boolean
-}
-export type SharecRuntimeConfiguration = {
-  /**
-   * Configs specific options
-   * Can be used to specify merge behavior for specific files by regexps, wildcard patterns,
-   * or filename
-   */
-  configs?: {
-    [x: string]: RuntimeConfigOptions
-  }
+  cache: true | false | 'include'
 }
 export type BaseInput = {
   /**
@@ -24,58 +16,45 @@ export type BaseInput = {
    */
   targetPath: string
   /**
-   * Upcoming configuration path
+   * Options given by cli
    */
-  configPath: string
-  /**
-   * Disables all messages from sharec
-   */
-  silent: boolean
-  /**
-   * Forcily replaces all configs by new ones
-   */
-  overwrite: boolean
-  /**
-   * Do not write cache and sharec meta to target project
-   */
-  disappear: boolean
-  /**
-   * Enables debug messages
-   */
-  debug: boolean
-  /**
-   * Can be used to save configs to `.sharec/.cache`
-   * directory instead of `node_modules/.cache`
-   */
-  includeCache: boolean
+  options: CliOptions
 }
-export type Input = {
+export type ConfigPackage = {
+  /**
+   * Config package name
+   */
+  name: string
+  /**
+   * Config package version
+   */
+  version: string
+  /**
+   * Config package path inside node_modules
+   */
+  path: string
+  /**
+   * Mapped config files with their content
+   */
+  configs: object
+}
+export type FlowContext = {
   /**
    * Target project path
    */
   targetPath: string
   /**
+   * Different options from CLI
+   */
+  options: CliOptions
+  /**
    * `package.json `from `targetPath`
    */
-  targetPackage: object
-  /**
-   * Upcoming configuration path
-   */
-  configPath: string
-  /**
-   * `package.json `from `configPath`
-   */
-  upcomingPackage: object
-  sharecConfig?: SharecRuntimeConfiguration
-  format?: object
+  targetPackage?: object
   /**
    * Original configs from upcoming package
    */
-  configs?: object
-  /**
-   * Configs from target package
-   */
-  local?: object
+  configs?: ConfigPackage[]
   /**
    * Processed configs from upcoming package
    */
@@ -84,112 +63,41 @@ export type Input = {
    * Previously installed configuration
    */
   cache?: object
-  /**
-   * Different options from CLI
-   */
-  options: {
-    silent: boolean
-    overwrite: boolean
-    disappear: boolean
-    debug: boolean
-    includeCache: boolean
-  }
 }
 /**
- * Main sharec entrance
- * @throws
- * @param {BaseInput} baseInput
- * @returns {Promise<void>}
- */
-export function sharec(baseInput: BaseInput): Promise<void>
-export const steps: {
-  isAlreadyInstalled: (input: Input) => Input
-  isDependantOfSharec: (input: Input) => Input
-  isIgnoresSharecConfigs: (input: Input) => Input
-  mergeConfigs: (input: Input) => Promise<Input>
-  insertEOL: (input: Input) => Promise<Input>
-  insertMeta: (input: Input) => Promise<Input>
-  applyFormatting: (input: Input) => Input
-  readConfigs: (input: Input) => Promise<Input>
-  readTargetPackage: (input: Input) => Promise<Input>
-  readUpcomingPackage: (input: Input) => Promise<Input>
-  readCache: (input: Input) => Promise<Input>
-  readEditorconfig: (input: Input) => Promise<Input>
-  readPrettier: (input: Input) => Promise<Input>
-  readSharecConfig: (input: Input) => Promise<Input>
-  writeConfigs: (input: Input) => Promise<Input>
-  writeCache: (input: Input) => Promise<Input>
-}
-/**
- * @typedef {object} RuntimeConfigOptions
- * @property {boolean} [format] Can be used to prevent file formatting after the merge
- * @property {boolean} [overwrite] Can be used to prevent file merge and just force overwritting
- */
-/**
- * @typedef {object} SharecRuntimeConfiguration
- * @property {{ [x: string]: RuntimeConfigOptions }} [configs] Configs specific options
- *  Can be used to specify merge behavior for specific files by regexps, wildcard patterns,
- *  or filename
- *  @example
- *  ```
- *  configs: {
- *    '.eslintrc': {
- *      ignore: true
- *    },
- *    '/\.json$/': {
- *      format: false
- *    }
- *  }
- *  ```
+ * @typedef {object} CliOptions
+ * @property {true|false|'include'} cache Used for cache manipulations (--cache, -c)
+ *  `include` – store cache inside `.sharec`, to include it to the project (for yarn@2, etc.)
+ *  `true` – store cache inside `node_modules/.cache/.sharec`
+ *  `false` – don't store cache at all
  */
 /**
  * @typedef {object} BaseInput
  * @property {string} targetPath Target project path
- * @property {string} configPath Upcoming configuration path
- * @property {boolean} silent Disables all messages from sharec
- * @property {boolean} overwrite Forcily replaces all configs by new ones
- * @property {boolean} disappear Do not write cache and sharec meta to target project
- * @property {boolean} debug Enables debug messages
- * @property {boolean} includeCache Can be used to save configs to `.sharec/.cache`
- *  directory instead of `node_modules/.cache`
+ * @property {CliOptions} options Options given by cli
  */
 /**
- * @typedef {object} Input
+ * @typedef {object} ConfigPackage
+ * @property {string} name Config package name
+ * @property {string} version Config package version
+ * @property {string} path Config package path inside node_modules
+ * @property {object} configs Mapped config files with their content
+ */
+/**
+ * @typedef {object} FlowContext
  * @property {string} targetPath Target project path
- * @property {object} targetPackage `package.json `from `targetPath`
- * @property {string} configPath Upcoming configuration path
- * @property {object} upcomingPackage `package.json `from `configPath`
- * @property {SharecRuntimeConfiguration} [sharecConfig]
- * @property {object} [format] //TODO: Formatting rules
- * @property {object} [configs] Original configs from upcoming package
- * @property {object} [local] Configs from target package
+ * @property {CliOptions} options Different options from CLI
+ * @property {object} [targetPackage] `package.json `from `targetPath`
+ * @property {ConfigPackage[]} [configs] Original configs from upcoming package
  * @property {object} [mergedConfigs] Processed configs from upcoming package
  * @property {object} [cache] Previously installed configuration
- * @property {object} options Different options from CLI
- * @property {boolean} options.silent Disables all messages from sharec
- * @property {boolean} options.overwrite Forcily replaces all configs by new ones
- * @property {boolean} options.disappear Do not write cache and sharec meta to target project
- * @property {boolean} options.debug Enables debug messages
- * @property {boolean} options.includeCache Can be used to save configs to `.sharec/.cache`
- *  directory instead of `node_modules/.cache`
  */
-export const commonFlow: Function
-export const InternalError: typeof import('./errors/InternalError')
-export const errorCauses: {
-  ALREADY_INSTALLED: {
-    message: () => string
-    symbol: symbol
-  }
-  IS_DEPENDANT_OF_SHAREC: {
-    message: () => string
-    symbol: symbol
-  }
-  IS_IGNORES_SHAREC: {
-    message: () => string
-    symbol: symbol
-  }
-  CONFIGS_NOT_FOUND: {
-    message: (path: any) => string
-    symbol: symbol
-  }
-}
+/**
+ * Main sharec entrance
+ * @param {BaseInput} input
+ * @returns {Promise<void>}
+ */
+export function sharec(input: BaseInput): Promise<void>
+import { InternalError } from './errors'
+import { errorCauses } from './errors'
+export { InternalError, errorCauses }

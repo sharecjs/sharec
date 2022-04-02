@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`pipes > default > schema JSON should merge configs 1`] = `
+Map {
+  "foo" => "baz",
+  "bar" => Map {
+    "foo" => "foo",
+  },
+  "baz" => Map {
+    "foo" => "bar",
+    "bar" => "baz",
+  },
+}
+`;

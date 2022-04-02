@@ -1,8 +1,10 @@
+const { EOL } = require('os')
 const { fixtures } = require('testUtils')
 const {
   hasSpacesIndent,
   hasTabsIndent,
   hasEOF,
+  cutEOF,
   indentWithTab,
   indentWithSpace,
   applyFormat,
@@ -31,36 +33,36 @@ describe('utils > format', () => {
 
   describe('hasEOF', () => {
     it('should correctly determine line wrap at the and of the all lines', () => {
-      expect(hasEOF('foo\n\n')).toBe(true)
+      expect(hasEOF(`foo${EOL}${EOL}`)).toBe(true)
       expect(hasEOF('foo')).toBe(false)
+    })
+  })
+
+  describe('cutEOF', () => {
+    it('cuts off line wrap at the and of the given string', () => {
+      expect(cutEOF(`foo${EOL}${EOL}`)).toBe(`foo${EOL}`)
+      expect(cutEOF(`foo${EOL}`)).toBe('foo')
+      expect(cutEOF('foo')).toBe('foo')
     })
   })
 
   describe('indentWithTab', () => {
     it('should replace all spaces with tabs', () => {
-      expect(indentWithTab(jsonFxt.result)).toWraplessEqual(jsonFxt.current, {
-        eof: false,
-      })
+      expect(indentWithTab(jsonFxt.result)).toMatchSnapshot()
     })
 
     it('should not affect string with tabs', () => {
-      expect(indentWithTab(jsonFxt.current)).toWraplessEqual(jsonFxt.current, {
-        eof: false,
-      })
+      expect(indentWithTab(jsonFxt.current)).toMatchSnapshot()
     })
   })
 
   describe('indentWithSpace', () => {
     it('should replace all tabs with spaces', () => {
-      expect(indentWithSpace(jsonFxt.current, 2)).toWraplessEqual(jsonFxt.result, {
-        eof: false,
-      })
+      expect(indentWithSpace(jsonFxt.current, 2)).toMatchSnapshot()
     })
 
     it('should not affect string with spaces', () => {
-      expect(indentWithSpace(jsonFxt.result, 2)).toWraplessEqual(jsonFxt.result, {
-        eof: false,
-      })
+      expect(indentWithSpace(jsonFxt.result, 2)).toMatchSnapshot()
     })
   })
 
@@ -75,9 +77,7 @@ describe('utils > format', () => {
             eof: false,
           },
         }),
-      ).toWraplessEqual(jsonFxt.result, {
-        eof: false,
-      })
+      ).toMatchSnapshot()
       expect(
         applyFormat({
           filename: 'foo.yaml',
@@ -88,9 +88,7 @@ describe('utils > format', () => {
             eof: false,
           },
         }),
-      ).toWraplessEqual(yamlFxt.result, {
-        eof: false,
-      })
+      ).toMatchSnapshot()
       expect(
         applyFormat({
           content: jsonFxt.result,
@@ -99,9 +97,7 @@ describe('utils > format', () => {
             eof: false,
           },
         }),
-      ).toWraplessEqual(jsonFxt.current, {
-        eof: false,
-      })
+      ).toMatchSnapshot()
       expect(
         applyFormat({
           filename: 'bar.yml',
@@ -111,9 +107,7 @@ describe('utils > format', () => {
             eof: false,
           },
         }),
-      ).toWraplessEqual(yamlFxt.current, {
-        eof: false,
-      })
+      ).toMatchSnapshot()
       expect(
         applyFormat({
           content: 'foo',
@@ -121,9 +115,7 @@ describe('utils > format', () => {
             eof: true,
           },
         }),
-      ).toWraplessEqual('foo\n', {
-        eof: false,
-      })
+      ).toMatchSnapshot()
     })
   })
 

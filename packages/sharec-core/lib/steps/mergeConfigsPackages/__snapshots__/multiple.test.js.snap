@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`steps > mergeConfigsPackages > multiple without sharec config merges configs sequently 1`] = `
+"{
+  \\"env\\": {
+    \\"browser\\": true,
+    \\"es6\\": true,
+    \\"node\\": true,
+    \\"jest\\": true
+  }
+}"
+`;

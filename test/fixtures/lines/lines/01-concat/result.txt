@@ -3,4 +3,3 @@ bar
 baz
 new foo
 new bar
-

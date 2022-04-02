@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`atoms > linesMerge should merge lines as lists 1`] = `
+"foo
+new bar
+baz"
+`;

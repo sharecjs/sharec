@@ -6,7 +6,16 @@
     "lint-staged": "lint-staged"
   },
   "dependencies": {
-    "react": "16.0.0"
+    "react": "16.0.0",
+    "awesome-config": "1.0.0"
+  },
+  "sharec": {
+    "configs": [
+      "awesome-config"
+    ],
+    "locked": {
+      "awesome-config": "1.0.0"
+    }
   },
   "lint-staged": {
     "src/**/*.{js,jsx,json}": [
@@ -77,10 +86,6 @@
     "husky": "^2.2.0",
     "lint-staged": "^8.1.6",
     "prettier": "^1.17.1"
-  },
-  "sharec": {
-    "config": "awesome-config",
-    "version": "1.0.0"
   }
 }
 

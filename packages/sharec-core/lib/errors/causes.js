@@ -16,6 +16,10 @@ const CAUSES = {
     message: (path) => `Configuration files were not found in "${path}"`,
     symbol: Symbol('CONFIGS_NOT_FOUND'),
   },
+  DOES_NOT_HAVE_ANY_CONFIG: {
+    message: (path) => `There aren't any config package inside "${path}"`,
+    symbol: Symbol('DOES_NOT_HAVE_ANY_CONFIG'),
+  },
 }
 
 module.exports = CAUSES

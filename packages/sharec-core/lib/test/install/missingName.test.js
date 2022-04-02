@@ -1,9 +1,8 @@
 const { fixtures } = require('testUtils')
 const { vol } = require('memfs')
-const { pwd } = require('shelljs')
 const { sharec } = require('../../')
 
-describe('sharec > install', () => {
+describe('sharec > install > missing name', () => {
   const packageFxt = fixtures('package/json/08-install-missing-name')
   const babelFxt = fixtures('babel/json/00-base')
   const eslintFxt = fixtures('eslint/json/01-base')
@@ -12,14 +11,17 @@ describe('sharec > install', () => {
 
   beforeEach(() => {
     jest.clearAllMocks()
-    pwd.mockReturnValueOnce({ stdout: '/configuration-package' })
     vol.reset()
   })
 
-  it('should install configs even when name is missing', async () => {
-    const input = {
+  it('installs configs even when target package name is missed', async () => {
+    const context = {
       targetPath: '/target',
-      configPath: '/configuration-package',
+      cache: {},
+      configs: [],
+      options: {
+        cache: false,
+      },
     }
     const dir = {
       '/target/.eslintrc': eslintFxt.current,
@@ -27,27 +29,26 @@ describe('sharec > install', () => {
       '/target/.npmignore': npmignoreFxt.current,
       '/target/.gitignore': gitignoreFxt.current,
       '/target/package.json': packageFxt.current,
-      '/configuration-package/configs/.eslintrc': eslintFxt.upcoming,
-      '/configuration-package/configs/.editorconfig': 'bar',
-      '/configuration-package/configs/.babelrc': babelFxt.upcoming,
-      '/configuration-package/configs/npmignore': npmignoreFxt.upcoming,
-      '/configuration-package/configs/gitignore': gitignoreFxt.upcoming,
-      '/configuration-package/package.json': JSON.stringify({
+      '/target/node_modules/awesome-config/configs/.eslintrc': eslintFxt.upcoming,
+      '/target/node_modules/awesome-config/configs/.editorconfig': 'bar',
+      '/target/node_modules/awesome-config/configs/.babelrc': babelFxt.upcoming,
+      '/target/node_modules/awesome-config/configs/.npmignore': npmignoreFxt.upcoming,
+      '/target/node_modules/awesome-config/configs/.gitignore': gitignoreFxt.upcoming,
+      '/target/node_modules/awesome-config/configs/package.json': packageFxt.upcoming,
+      '/target/node_modules/awesome-config/package.json': JSON.stringify({
         name: 'awesome-config',
         version: '1.0.0',
       }),
-      '/configuration-package/configs/package.json': packageFxt.upcoming,
     }
     vol.fromJSON(dir, '/')
 
-    await sharec(input)
+    await sharec(context)
 
-    expect(vol.readFileSync('/target/.eslintrc', 'utf8')).toWraplessEqual(eslintFxt.result)
-    expect(vol.readFileSync('/target/.babelrc', 'utf8')).toWraplessEqual(babelFxt.result)
-    expect(vol.readFileSync('/target/.editorconfig', 'utf8')).toWraplessEqual('bar\n')
-    expect(vol.readFileSync('/target/.gitignore', 'utf8')).toWraplessEqual(gitignoreFxt.result)
-    expect(vol.readFileSync('/target/.npmignore', 'utf8')).toWraplessEqual(npmignoreFxt.result)
-    expect(vol.readFileSync('/target/package.json', 'utf8')).toWraplessEqual(packageFxt.result)
-    expect(vol.readdirSync('/target/node_modules/.cache/sharec/awesome-config/1.0.0')).toHaveLength(6)
+    expect(vol.readFileSync('/target/.eslintrc', 'utf8')).toMatchSnapshot()
+    expect(vol.readFileSync('/target/.babelrc', 'utf8')).toMatchSnapshot()
+    expect(vol.readFileSync('/target/.editorconfig', 'utf8')).toMatchSnapshot()
+    expect(vol.readFileSync('/target/.gitignore', 'utf8')).toMatchSnapshot()
+    expect(vol.readFileSync('/target/.npmignore', 'utf8')).toMatchSnapshot()
+    expect(vol.readFileSync('/target/package.json', 'utf8')).toMatchSnapshot()
   })
 })

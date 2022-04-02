@@ -1,7 +1,0 @@
-#!/usr/bin/env node
-/* eslint-disable */
-const sharec = require('../src')
-
-;(async () => {
-  await sharec(process)
-})()

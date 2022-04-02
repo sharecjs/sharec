@@ -11,7 +11,3 @@ jest.mock('sharec-utils/lib/std', () => {
     removeFile: fs.unlink,
   }
 })
-
-jest.mock('shelljs', () => ({
-  pwd: jest.fn(),
-}))

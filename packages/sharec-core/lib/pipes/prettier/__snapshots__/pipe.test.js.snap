@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`strategies > pipes > prettier > pipe JSON should merge configs 1`] = `
+"{
+  \\"tab\\": true,
+  \\"tabWidth\\": 2,
+  \\"semi\\": true
+}"
+`;
+
+exports[`strategies > pipes > prettier > pipe YAML should merge configs 1`] = `
+"tab: true
+tabWidth: 2
+semi: true"
+`;

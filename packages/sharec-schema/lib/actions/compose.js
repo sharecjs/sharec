@@ -17,7 +17,7 @@ const without = require('lodash/without')
  */
 const applySchemaByKeys = ({ schema, keys = [], target }) =>
   /**
-   * Mutates passed target map!
+   * Mutates the passed map!
    * @param {SchemaParams} params
    * @returns {Map}
    */
@@ -28,20 +28,18 @@ const applySchemaByKeys = ({ schema, keys = [], target }) =>
       const strategy = schema[key] || schema.$$default
       const ignoreList = schema.$$ignore || []
       const current = params.current.get(key)
-      const notChanged = !strategy || !params.upcoming.has(key) || ignoreList.includes(key)
+      const skip = !strategy || !params.upcoming.has(key) || ignoreList.includes(key)
 
-      if (notChanged && current !== undefined) {
+      if (skip && current !== undefined) {
         target.set(key, current)
         continue
       }
-      if (notChanged) continue
+      if (skip) continue
 
       const upcoming = params.upcoming.get(key)
       const cached = params.cached && params.cached.get(key)
 
-      if (current === undefined && cached !== undefined) {
-        continue
-      }
+      if (current === undefined && cached !== undefined) continue
 
       target.set(
         key,

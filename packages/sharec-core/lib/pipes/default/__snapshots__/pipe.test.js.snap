@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`strategies > pipes > eslint > pipe JSON should merge configs 1`] = `
+"{
+  \\"foo\\": \\"baz\\",
+  \\"bar\\": {
+    \\"foo\\": \\"foo\\"
+  },
+  \\"baz\\": {
+    \\"foo\\": \\"bar\\",
+    \\"bar\\": \\"baz\\"
+  }
+}"
+`;
+
+exports[`strategies > pipes > eslint > pipe YAML should merge configs 1`] = `
+"foo: baz
+bar:
+  foo: foo
+baz:
+  foo: bar
+  bar: baz"
+`;
+
+exports[`strategies > pipes > eslint > pipe YAML should merge configs 2`] = `
+"foo: baz
+bar:
+  foo: foo
+baz:
+  foo: bar
+  bar: baz"
+`;

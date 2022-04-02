@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`pipes > eslint > schema JSON should merge configs 1`] = `
+Map {
+  "env" => Map {
+    "browser" => true,
+    "es6" => true,
+    "node" => true,
+    "jest" => true,
+  },
+  "globals" => Map {
+    "foo" => true,
+    "bar" => true,
+  },
+  "extends" => "airbnb",
+  "rules" => Map {
+    "max-len" => Array [
+      "warn",
+      120,
+      4,
+      Map {
+        "ignoreUrls" => false,
+        "ignoreComments" => true,
+        "ignoreStrings" => false,
+      },
+    ],
+    "space-before-function-paren" => 1,
+    "no-console" => 0,
+  },
+  "parserOptions" => Map {
+    "parser" => "babel-eslint",
+    "ecmaVersion" => 7,
+    "ecmaFeatures" => Map {
+      "spread" => true,
+    },
+    "sourceType" => "module",
+  },
+}
+`;

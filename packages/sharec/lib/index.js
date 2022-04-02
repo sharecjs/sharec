@@ -1,6 +1,5 @@
 // @ts-check
 const minimist = require('minimist')
-const { pwd } = require('shelljs')
 const { sharec: sharecCore, errorCauses, InternalError } = require('sharec-core')
 const { createSpinner } = require('./spinner')
 
@@ -16,38 +15,23 @@ const { createSpinner } = require('./spinner')
  */
 async function sharec(targetProcess) {
   // input options
-  const { env } = targetProcess
   const { _, ...options } = minimist(targetProcess.argv.slice(2))
-  const debugMode = env.DEBUG
-  const silentMode = options.s || options.silent
-  const disappearMode = options.d || options.disappear
-  const overwriteMode = options.o || options.overwrite
-  const includeCacheMode = options.c || options['include-cache']
 
   // CLI utilities
   const spinner = createSpinner({
     text: 'Initializing sharec',
-    silent: silentMode,
   })
 
   // steps preparation and definition
   const targetPath = targetProcess.env.INIT_CWD
-  const configPath = pwd().stdout
   const input = {
     targetPath,
-    configPath,
     targetPackage: null,
-    upcomingPackage: null,
     configs: {},
     mergedConfigs: {},
     cache: {},
-    format: null,
     options: {
-      silent: silentMode,
-      overwrite: overwriteMode,
-      disappear: disappearMode,
-      debug: debugMode,
-      includeCache: includeCacheMode,
+      cache: options.c || options.cache || true,
     },
   }
 

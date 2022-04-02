@@ -1,0 +1,78 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`strategies > pipes > commitlint > pipe JSON should merge configs 1`] = `
+"{
+  \\"parserPreset\\": \\"other-parser\\",
+  \\"rules\\": {
+    \\"body-leading-blank\\": [
+      2,
+      \\"never\\"
+    ],
+    \\"body-max-line-length\\": [
+      2,
+      \\"always\\",
+      100
+    ],
+    \\"footer-leading-blank\\": [
+      1,
+      \\"always\\"
+    ],
+    \\"type-enum\\": [
+      2,
+      \\"always\\",
+      [
+        \\"feat\\",
+        \\"fix\\",
+        \\"perf\\",
+        \\"refactor\\",
+        \\"revert\\",
+        \\"style\\",
+        \\"test\\"
+      ]
+    ],
+    \\"footer-max-line-length\\": [
+      2,
+      \\"always\\",
+      100
+    ],
+    \\"header-max-length\\": [
+      2,
+      \\"always\\",
+      100
+    ]
+  }
+}"
+`;
+
+exports[`strategies > pipes > commitlint > pipe YAML should merge configs 1`] = `
+"parserPreset: other-parser
+rules:
+  body-leading-blank:
+    - 2
+    - never
+  body-max-line-length:
+    - 2
+    - always
+    - 100
+  footer-leading-blank:
+    - 1
+    - always
+  type-enum:
+    - 2
+    - always
+    - - feat
+      - fix
+      - perf
+      - refactor
+      - revert
+      - style
+      - test
+  footer-max-line-length:
+    - 2
+    - always
+    - 100
+  header-max-length:
+    - 2
+    - always
+    - 100"
+`;
