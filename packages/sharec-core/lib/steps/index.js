@@ -2,6 +2,7 @@
 const readConfigsPackages = require('./readConfigsPackages')
 const readTargetPackage = require('./readTargetPackage')
 const readCache = require('./readCache')
+const readRuntimeConfig = require('./readRuntimeConfig')
 const writeConfigs = require('./writeConfigs')
 const writeCache = require('./writeCache')
 const writeLockdata = require('./writeLockdata')
@@ -37,6 +38,7 @@ const commonFlow = composeSteps(
   readTargetPackage,
   readCache,
   readConfigsPackages,
+  readRuntimeConfig,
   mergeConfigsPackages,
   writeConfigs,
   writeLockdata,
