@@ -1,10 +1,17 @@
 const { vol } = require('memfs')
-const readCache = require('./readCache')
+const readCache = require('../readCache')
 
 describe('steps > readCache', () => {
+  const semaphore = {
+    start: jest.fn(),
+    success: jest.fn(),
+    error: jest.fn(),
+    fail: jest.fn(),
+  }
   let context
 
   beforeEach(() => {
+    jest.clearAllMocks()
     vol.reset()
   })
 
@@ -27,7 +34,7 @@ describe('steps > readCache', () => {
       it("doesn't modify initial context", async () => {
         expect.assertions(1)
 
-        await expect(readCache(context)).resolves.toEqual(context)
+        await expect(readCache(context, semaphore)).resolves.toEqual(context)
       })
     })
 
@@ -49,7 +56,7 @@ describe('steps > readCache', () => {
       it("doesn't modify initial context", async () => {
         expect.assertions(1)
 
-        await expect(readCache(context)).resolves.toEqual(context)
+        await expect(readCache(context, semaphore)).resolves.toEqual(context)
       })
     })
   })
@@ -77,7 +84,7 @@ describe('steps > readCache', () => {
       it('add cache to the context', async () => {
         expect.assertions(1)
 
-        await expect(readCache(context)).resolves.toEqual(context)
+        await expect(readCache(context, semaphore)).resolves.toEqual(context)
       })
     })
 
@@ -103,7 +110,7 @@ describe('steps > readCache', () => {
       it('adds cache to the context', async () => {
         expect.assertions(1)
 
-        await expect(readCache(context)).resolves.toEqual(context)
+        await expect(readCache(context, semaphore)).resolves.toEqual(context)
       })
     })
   })
