@@ -42,7 +42,15 @@ const { errorCauses, InternalError } = require('./errors')
  */
 
 /**
- * @typedef {(context: FlowContext) => Promise<FlowContext>} FlowStep
+ * @typedef {object} Semaphore
+ * @property {(text: string) => void} start Starts the spinner
+ * @property {(text: string) => void} success Stops the spinner with success
+ * @property {(text: string) => void} error Stops the spinner with failure, but doesn't terminate the program
+ * @property {(text: string) => void} fail Stops the spinner with failure and terminates the program
+ */
+
+/**
+ * @typedef {(context: FlowContext, semaphore?: Semaphore) => Promise<FlowContext>} FlowStep
  */
 
 /**
