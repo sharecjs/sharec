@@ -1,5 +1,5 @@
 const { vol } = require('memfs')
-const writeCache = require('./writeCache')
+const writeCache = require('../writeCache')
 
 const fixtures = {
   mergedConfigs: {
@@ -10,13 +10,22 @@ const fixtures = {
 }
 
 describe('steps > writeCache', () => {
+  const semaphore = {
+    start: jest.fn(),
+    success: jest.fn(),
+    error: jest.fn(),
+    fail: jest.fn(),
+  }
+  let context
+
   beforeEach(() => {
+    jest.clearAllMocks()
     vol.reset()
   })
 
   describe("cache isn't allowed", () => {
-    it("doesn't write cache", async () => {
-      const input = {
+    beforeEach(() => {
+      context = {
         targetPath: '/target',
         options: {
           cache: false,
@@ -26,8 +35,10 @@ describe('steps > writeCache', () => {
       const dir = {}
 
       vol.fromJSON(dir, '/')
+    })
 
-      await writeCache(input)
+    it("doesn't write cache", async () => {
+      await writeCache(context, semaphore)
 
       expect(vol.readdirSync('/')).toHaveLength(0)
     })
@@ -35,8 +46,8 @@ describe('steps > writeCache', () => {
 
   describe('cache is allowed', () => {
     describe('not included', () => {
-      it('writes cache to `node_modules`', async () => {
-        const input = {
+      beforeEach(() => {
+        context = {
           targetPath: '/',
           options: {
             cache: true,
@@ -46,16 +57,18 @@ describe('steps > writeCache', () => {
         const dir = {}
 
         vol.fromJSON(dir, '/')
+      })
 
-        await writeCache(input)
+      it('writes cache to `node_modules`', async () => {
+        await writeCache(context, semaphore)
 
         expect(vol.readdirSync('/node_modules/.cache/sharec')).toHaveLength(3)
       })
     })
 
     describe('included', () => {
-      it("doesn't write cache", async () => {
-        const context = {
+      beforeEach(() => {
+        context = {
           targetPath: '/',
           options: {
             cache: 'include',
@@ -66,8 +79,10 @@ describe('steps > writeCache', () => {
         const dir = {}
 
         vol.fromJSON(dir, '/')
+      })
 
-        await writeCache(context)
+      it("doesn't write cache", async () => {
+        await writeCache(context, semaphore)
 
         expect(vol.readdirSync('/.sharec/cache')).toHaveLength(3)
       })
