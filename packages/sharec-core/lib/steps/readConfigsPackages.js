@@ -5,46 +5,61 @@ const { find } = require('sharec-utils').fs
 
 /**
  * @typedef {import('../').FlowContext} FlowContext
+ * @typedef {import('../').Semaphore} Semaphore
  */
 
 /**
  * @param {FlowContext} context
+ * @param {Semaphore} semaphore
  * @returns {Promise<FlowContext>}
  */
-const readConfigsPackages = async (context) => {
+const readConfigsPackages = async (context, semaphore) => {
+  semaphore.start('Looking for configs')
+
   const { targetPackage, targetPath } = context
   const { configs = [] } = targetPackage.sharec
   const configPackages = []
 
   if (configs.length === 0) {
-    // TODO
-    throw new Error('')
+    semaphore.fail("There aren't any config to install!")
+
+    return context
   }
 
+  semaphore.success(`Found ${configs.length} configs`)
+
   for (const config of configs) {
-    const configPackagePath = join(targetPath, './node_modules', config)
-    const configPackageJsonPath = join(configPackagePath, 'package.json')
-    const rawConfigPackageJson = await readFile(configPackageJsonPath, 'utf8')
-    const configPackageJson = JSON.parse(rawConfigPackageJson)
-    const configPackageFilesPath = join(configPackagePath, './configs')
-    const configPackageFilteredFiles = await find(configPackageFilesPath, '**/*')
-    const withoutLocks = configPackageFilteredFiles.filter((config) => !/(\.|-)lock/.test(config))
-    const readedConfigs = {}
+    semaphore.start(`Reading ${config}`)
 
-    for (const config of withoutLocks) {
-      const configKey = config.replace(configPackageFilesPath, '').replace(/^\//, '')
+    try {
+      const configPackagePath = join(targetPath, './node_modules', config)
+      const configPackageJsonPath = join(configPackagePath, 'package.json')
+      const rawConfigPackageJson = await readFile(configPackageJsonPath, 'utf8')
+      const configPackageJson = JSON.parse(rawConfigPackageJson)
+      const configPackageFilesPath = join(configPackagePath, './configs')
+      const configPackageFilteredFiles = await find(configPackageFilesPath, '**/*')
+      const withoutLocks = configPackageFilteredFiles.filter((config) => !/(\.|-)lock/.test(config))
+      const readedConfigs = {}
 
-      readedConfigs[configKey] = await readFile(config, 'utf8')
+      for (const config of withoutLocks) {
+        const configKey = config.replace(configPackageFilesPath, '').replace(/^\//, '')
+
+        readedConfigs[configKey] = await readFile(config, 'utf8')
+      }
+
+      const configPackage = {
+        name: config,
+        version: configPackageJson.version,
+        path: configPackagePath,
+        configs: readedConfigs,
+      }
+
+      semaphore.success(`${config} has been loaded`)
+
+      configPackages.push(configPackage)
+    } catch (err) {
+      semaphore.error(`${config} hasn't beed loaded`)
     }
-
-    const configPackage = {
-      name: config,
-      version: configPackageJson.version,
-      path: configPackagePath,
-      configs: readedConfigs,
-    }
-
-    configPackages.push(configPackage)
   }
 
   context.configs = configPackages

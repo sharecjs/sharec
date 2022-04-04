@@ -1,14 +1,23 @@
 const { vol } = require('memfs')
-const readConfigsPackages = require('./readConfigsPackages')
+const readConfigsPackages = require('../readConfigsPackages')
 
 describe('steps > readConfigsPackages', () => {
+  const semaphore = {
+    start: jest.fn(),
+    success: jest.fn(),
+    error: jest.fn(),
+    fail: jest.fn(),
+  }
+  let context
+
   beforeEach(() => {
+    jest.clearAllMocks()
     vol.reset()
   })
 
   describe("doesn't have any config", () => {
-    it('throws an error', async () => {
-      const input = {
+    beforeEach(() => {
+      context = {
         targetPackage: {
           devDependencies: {
             'awesome-config': '1.0.0',
@@ -24,14 +33,26 @@ describe('steps > readConfigsPackages', () => {
       const dir = {}
 
       vol.fromJSON(dir, '/')
+    })
 
-      await expect(readConfigsPackages(input)).rejects.toThrow(expect.any(Error))
+    it('triggers `fail` signal', async () => {
+      expect.assertions(1)
+
+      await readConfigsPackages(context, semaphore)
+
+      expect(semaphore.fail).toBeCalled()
+    })
+
+    it("doesn't modify the context", async () => {
+      expect.assertions(1)
+
+      await expect(readConfigsPackages({ ...context }, semaphore)).resolves.toEqual(context)
     })
   })
 
   describe('has configs', () => {
-    it('reads configs listed in `package.json`', async () => {
-      const input = {
+    beforeEach(() => {
+      context = {
         targetPackage: {
           devDependencies: {
             'awesome-config': '1.0.0',
@@ -61,8 +82,16 @@ describe('steps > readConfigsPackages', () => {
         'node_modules/second-config/configs/yarn.lock': 'foo',
       }
       vol.fromJSON(dir, '/')
+    })
 
-      const output = await readConfigsPackages(input)
+    it("doesn't trigger `fail` signal", async () => {
+      await readConfigsPackages(context, semaphore)
+
+      expect(semaphore.fail).not.toBeCalled()
+    })
+
+    it('adds listed configs to the context', async () => {
+      const output = await readConfigsPackages(context, semaphore)
 
       expect(output.configs).toMatchSnapshot()
     })
