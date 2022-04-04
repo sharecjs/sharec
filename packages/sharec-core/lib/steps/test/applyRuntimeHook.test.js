@@ -1,5 +1,5 @@
 const { vol } = require('memfs')
-const applyRuntimeHook = require('./applyRuntimeHook')
+const applyRuntimeHook = require('../applyRuntimeHook')
 
 describe('steps > applyRuntimeHook', () => {
   let context
@@ -60,7 +60,7 @@ describe('steps > applyRuntimeHook', () => {
       vol.fromJSON(dir, '/')
     })
 
-    it('applies hook to the given context', async () => {
+    it('applies hook to the context', async () => {
       expect.assertions(1)
 
       const hook = applyRuntimeHook('afterMerge')
