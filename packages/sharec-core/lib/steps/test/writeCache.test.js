@@ -87,5 +87,27 @@ describe('steps > writeCache', () => {
         expect(vol.readdirSync('/.sharec/cache')).toHaveLength(3)
       })
     })
+
+    describe('nothing to save', () => {
+      beforeEach(() => {
+        context = {
+          targetPath: '/',
+          options: {
+            cache: 'include',
+          },
+          cache: {},
+          mergedConfigs: {},
+        }
+        const dir = {}
+
+        vol.fromJSON(dir, '/')
+      })
+
+      it("doesn't write cache", async () => {
+        await writeCache(context, semaphore)
+
+        expect(vol.readdirSync('/')).not.toContain('.sharec')
+      })
+    })
   })
 })

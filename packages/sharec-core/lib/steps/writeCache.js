@@ -18,6 +18,12 @@ const writeCache = async (context, semaphore) => {
 
   if (!options.cache) return context
 
+  if (Object.keys(mergedConfigs).length === 0) {
+    semaphore.success('Nothing to cache')
+
+    return context
+  }
+
   semaphore.start('Saving cache')
 
   const cachePath = options.cache === 'include'
