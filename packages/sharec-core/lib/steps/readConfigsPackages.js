@@ -17,7 +17,7 @@ const readConfigsPackages = async (context, semaphore) => {
   semaphore.start('Looking for configs')
 
   const { targetPackage, targetPath } = context
-  const { configs = [] } = targetPackage.sharec
+  const { configs = [] } = targetPackage.sharec || {}
   const configPackages = []
 
   if (configs.length === 0) {
