@@ -27,9 +27,9 @@ export type FlowContext = {
 }
 export type FlowStep = (
   context: import('..').FlowContext,
-  logger?: import('..').Logger,
+  semaphore?: import('..').Semaphore,
 ) => Promise<import('..').FlowContext>
-export type Logger = {
+export type Semaphore = {
   /**
    * Starts the spinner
    */

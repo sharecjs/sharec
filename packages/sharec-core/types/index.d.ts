@@ -69,7 +69,7 @@ export type FlowContext = {
    */
   cache?: object
 }
-export type Logger = {
+export type Semaphore = {
   /**
    * Starts the spinner
    */
@@ -87,7 +87,7 @@ export type Logger = {
    */
   fail: (text: string) => void
 }
-export type FlowStep = (context: FlowContext, logger?: Logger) => Promise<FlowContext>
+export type FlowStep = (context: FlowContext, semaphore?: Semaphore) => Promise<FlowContext>
 /**
  * @typedef {object} BaseInput
  * @property {string} targetPath Target project path
@@ -123,19 +123,18 @@ export type FlowStep = (context: FlowContext, logger?: Logger) => Promise<FlowCo
  * @property {object} [cache] Previously installed configuration
  */
 /**
- * @typedef {object} Logger
+ * @typedef {object} Semaphore
  * @property {(text: string) => void} start Starts the spinner
  * @property {(text: string) => void} success Stops the spinner with success
  * @property {(text: string) => void} error Stops the spinner with failure, but doesn't terminate the program
  * @property {(text: string) => void} fail Stops the spinner with failure and terminates the program
  */
 /**
- * @typedef {(context: FlowContext, logger?: Logger) => Promise<FlowContext>} FlowStep
+ * @typedef {(context: FlowContext, semaphore?: Semaphore) => Promise<FlowContext>} FlowStep
  */
 /**
  * Main sharec entrance
  * @param {BaseInput} input
- * @param {Logger} logger
  * @returns {Promise<void>}
  */
-export function sharec(input: BaseInput, logger: Logger): Promise<void>
+export function sharec(input: BaseInput): Promise<void>

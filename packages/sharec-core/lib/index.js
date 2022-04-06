@@ -1,6 +1,5 @@
 // @ts-check
 const { commonFlow } = require('./steps')
-const { errorCauses, InternalError } = require('./errors')
 
 /**
  * @typedef {object} BaseInput
@@ -74,6 +73,4 @@ async function sharec(input) {
 
 module.exports = {
   sharec,
-  InternalError,
-  errorCauses,
 }

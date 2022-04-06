@@ -1,16 +1,16 @@
 export = readTargetPackage
 /**
  * @typedef {import('../').FlowContext} FlowContext
- * @typedef {import('../').Logger} Logger
+ * @typedef {import('../').Semaphore} Semaphore
  */
 /**
  * @param {FlowContext} context
- * @param {Logger} logger
+ * @param {Semaphore} semaphore
  * @returns {Promise<FlowContext>}
  */
-declare function readTargetPackage(context: FlowContext, logger: Logger): Promise<FlowContext>
+declare function readTargetPackage(context: FlowContext, semaphore: Semaphore): Promise<FlowContext>
 declare namespace readTargetPackage {
-  export { FlowContext, Logger }
+  export { FlowContext, Semaphore }
 }
 type FlowContext = {
   /**
@@ -39,7 +39,7 @@ type FlowContext = {
    */
   cache?: any
 }
-type Logger = {
+type Semaphore = {
   /**
    * Starts the spinner
    */

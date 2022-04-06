@@ -1,12 +1,12 @@
 export = writeConfigs
 /**
  * @param {FlowContext} context
- * @param {Logger} logger
+ * @param {Semaphore} semaphore
  * @returns {Promise<FlowContext>}
  */
-declare function writeConfigs(context: FlowContext, logger: Logger): Promise<FlowContext>
+declare function writeConfigs(context: FlowContext, semaphore: Semaphore): Promise<FlowContext>
 declare namespace writeConfigs {
-  export { FlowContext, Logger }
+  export { FlowContext, Semaphore }
 }
 type FlowContext = {
   /**
@@ -35,7 +35,7 @@ type FlowContext = {
    */
   cache?: any
 }
-type Logger = {
+type Semaphore = {
   /**
    * Starts the spinner
    */

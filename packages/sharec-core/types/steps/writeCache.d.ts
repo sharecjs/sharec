@@ -1,16 +1,16 @@
 export = writeCache
 /**
  * @typedef {import('../').FlowContext} FlowContext
- * @typedef {import('../').Logger} Logger
+ * @typedef {import('../').Semaphore} Semaphore
  */
 /**
  * @param {FlowContext} context
- * @param {Logger} logger
+ * @param {Semaphore} semaphore
  * @returns {Promise<FlowContext>}
  */
-declare function writeCache(context: FlowContext, logger: Logger): Promise<FlowContext>
+declare function writeCache(context: FlowContext, semaphore: Semaphore): Promise<FlowContext>
 declare namespace writeCache {
-  export { FlowContext, Logger }
+  export { FlowContext, Semaphore }
 }
 type FlowContext = {
   /**
@@ -39,7 +39,7 @@ type FlowContext = {
    */
   cache?: any
 }
-type Logger = {
+type Semaphore = {
   /**
    * Starts the spinner
    */

@@ -1,7 +1,6 @@
 export = readRuntimeConfig
 /**
  * @typedef {import('../').FlowContext} FlowContext
- * @typedef {import('../').Logger} Logger
  */
 /**
  * @param {'beforeMerge'|'afterMerge'} hook
@@ -9,7 +8,7 @@ export = readRuntimeConfig
  */
 declare function readRuntimeConfig(hook: 'beforeMerge' | 'afterMerge'): (context: FlowContext) => Promise<FlowContext>
 declare namespace readRuntimeConfig {
-  export { FlowContext, Logger }
+  export { FlowContext }
 }
 type FlowContext = {
   /**
@@ -37,22 +36,4 @@ type FlowContext = {
    * Previously installed configuration
    */
   cache?: any
-}
-type Logger = {
-  /**
-   * Starts the spinner
-   */
-  start: (text: string) => void
-  /**
-   * Stops the spinner with success
-   */
-  success: (text: string) => void
-  /**
-   * Stops the spinner with failure, but doesn't terminate the program
-   */
-  error: (text: string) => void
-  /**
-   * Stops the spinner with failure and terminates the program
-   */
-  fail: (text: string) => void
 }

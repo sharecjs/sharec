@@ -1,18 +1,18 @@
 export = readRuntimeConfig
 /**
  * @typedef {import('../').FlowContext} FlowContext
- * @typedef {import('../').Logger} Logger
+ * @typedef {import('../').Semaphore} Semaphore
  */
 /**
  * TODO: don't know how to cover the function with unit-tests
  * `require` can't work inside `memfs`
  * @param {FlowContext} context
- * @param {Logger} logger
+ * @param {Semaphore} semaphore
  * @returns {Promise<FlowContext>}
  */
-declare function readRuntimeConfig(context: FlowContext, logger: Logger): Promise<FlowContext>
+declare function readRuntimeConfig(context: FlowContext, semaphore: Semaphore): Promise<FlowContext>
 declare namespace readRuntimeConfig {
-  export { FlowContext, Logger }
+  export { FlowContext, Semaphore }
 }
 type FlowContext = {
   /**
@@ -41,7 +41,7 @@ type FlowContext = {
    */
   cache?: any
 }
-type Logger = {
+type Semaphore = {
   /**
    * Starts the spinner
    */
