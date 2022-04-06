@@ -16,7 +16,14 @@ const { fromJSON, toJSON } = require('sharec-schema/lib/parsers/json')
 const writeLockdata = async (context, semaphore) => {
   semaphore.start('Saving lock data')
 
-  const { targetPath, configs } = context
+  const { targetPath, configs, mergedConfigs } = context
+
+  if (Object.keys(mergedConfigs).length === 0) {
+    semaphore.success('Nothing to lock')
+
+    return context
+  }
+
   const lockedVersions = configs.reduce(
     (acc, config) => Object.assign(acc, { [config.name]: config.version }),
     {},
@@ -30,7 +37,7 @@ const writeLockdata = async (context, semaphore) => {
   try {
     await writeFile(targetPackagePath, toJSON(targetPackage))
 
-    semaphore.success('Lock data hasn been saved')
+    semaphore.success('Lock data has been saved')
   } catch (err) {
     semaphore.error("Lock data hasn't been saved")
   }
