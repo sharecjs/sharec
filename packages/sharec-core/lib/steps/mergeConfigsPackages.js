@@ -19,7 +19,7 @@ const mergeConfigsPackages = async (context, semaphore) => {
   const { configs, cache = {}, targetPath, targetPackage } = context
 
   for (const configPackage of configs) {
-    const lockedConfigVersion = get(targetPackage, `sharec.locked.${configPackage}`)
+    const lockedConfigVersion = get(targetPackage, `sharec.locked[${configPackage.name}]`)
 
     semaphore.start(`Installing ${configPackage.name}@${configPackage.version}`)
 
