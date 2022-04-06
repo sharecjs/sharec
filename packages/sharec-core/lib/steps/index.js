@@ -12,6 +12,7 @@ const applyRuntimeHook = require('./applyRuntimeHook')
 /**
  * @typedef {import('../').FlowContext} FlowContext
  * @typedef {import('../').FlowStep} FlowStep
+ * @typedef {import('../').Semaphore} Semaphore
  */
 
 /**
@@ -23,13 +24,14 @@ const applyRuntimeHook = require('./applyRuntimeHook')
 const composeSteps = (...steps) =>
   /**
    * @param {FlowContext} context
+   * @param {Semaphore} semaphore
    * @returns {Promise<FlowContext>}
    */
-  async (context) => {
+  async (context, semaphore) => {
     let lastInput = context
 
     for (const step of steps) {
-      lastInput = await step(lastInput)
+      lastInput = await step(lastInput, semaphore)
     }
 
     return lastInput

@@ -1,15 +1,17 @@
-export = writeCache
+export = readRuntimeConfig
 /**
  * @typedef {import('../').FlowContext} FlowContext
  * @typedef {import('../').Logger} Logger
  */
 /**
+ * TODO: don't know how to cover the function with unit-tests
+ * `require` can't work inside `memfs`
  * @param {FlowContext} context
  * @param {Logger} logger
  * @returns {Promise<FlowContext>}
  */
-declare function writeCache(context: FlowContext, logger: Logger): Promise<FlowContext>
-declare namespace writeCache {
+declare function readRuntimeConfig(context: FlowContext, logger: Logger): Promise<FlowContext>
+declare namespace readRuntimeConfig {
   export { FlowContext, Logger }
 }
 type FlowContext = {

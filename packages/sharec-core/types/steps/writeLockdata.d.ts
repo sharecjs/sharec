@@ -1,14 +1,16 @@
 export = writeLockdata
 /**
  * @typedef {import('../').FlowContext} FlowContext
+ * @typedef {import('../').Logger} Logger
  */
 /**
  * @param {FlowContext} context
+ * @param {Logger} logger
  * @returns {Promise<FlowContext>}
  */
-declare function writeLockdata(context: FlowContext): Promise<FlowContext>
+declare function writeLockdata(context: FlowContext, logger: Logger): Promise<FlowContext>
 declare namespace writeLockdata {
-  export { FlowContext }
+  export { FlowContext, Logger }
 }
 type FlowContext = {
   /**
@@ -23,10 +25,11 @@ type FlowContext = {
    * `package.json `from `targetPath`
    */
   targetPackage?: any
+  runtimeConfig?: import('..').RuntimeConfig
   /**
    * Original configs from upcoming package
    */
-  configs?: import('..').ConfigPackage[]
+  configs: import('..').ConfigPackage[]
   /**
    * Processed configs from upcoming package
    */
@@ -35,4 +38,22 @@ type FlowContext = {
    * Previously installed configuration
    */
   cache?: any
+}
+type Logger = {
+  /**
+   * Starts the spinner
+   */
+  start: (text: string) => void
+  /**
+   * Stops the spinner with success
+   */
+  success: (text: string) => void
+  /**
+   * Stops the spinner with failure, but doesn't terminate the program
+   */
+  error: (text: string) => void
+  /**
+   * Stops the spinner with failure and terminates the program
+   */
+  fail: (text: string) => void
 }
