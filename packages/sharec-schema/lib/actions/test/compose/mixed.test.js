@@ -1,6 +1,6 @@
 const { fixtures } = require('testUtils')
-const compose = require('../compose')
-const { listConcatAtom } = require('../../atoms')
+const compose = require('../../compose')
+const { listConcatAtom } = require('../../../atoms')
 
 describe('actions > compose > mixed', () => {
   const listFxt = fixtures('list/json/00-concat-primitives', 'map')

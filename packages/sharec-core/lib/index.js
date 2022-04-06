@@ -55,9 +55,10 @@ const { commonFlow } = require('./steps')
 /**
  * Main sharec entrance
  * @param {BaseInput} input
+ * @param {Semaphore} semaphore
  * @returns {Promise<void>}
  */
-async function sharec(input) {
+async function sharec(input, semaphore) {
   /** @type {FlowContext} */
   const context = {
     targetPath: input.targetPath,
@@ -68,7 +69,7 @@ async function sharec(input) {
     options: input.options,
   }
 
-  await commonFlow(context)
+  await commonFlow(context, semaphore)
 }
 
 module.exports = {

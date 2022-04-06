@@ -1,5 +1,5 @@
 const { fixtures } = require('testUtils')
-const { fromJSON, toJSON } = require('./json')
+const { fromJSON, toJSON } = require('../json')
 
 describe('parsers > json', () => {
   const defaultFxt = fixtures('default/json/00-base')

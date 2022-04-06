@@ -3,6 +3,17 @@ const { vol } = require('memfs')
 const { sharec } = require('../')
 
 describe.only('sharec > update', () => {
+  const semaphore = {
+    start: jest.fn(),
+    error: jest.fn(),
+    success: jest.fn(),
+    fail: jest.fn(),
+  }
+
+  beforeEach(() => {
+    jest.clearAllMocks()
+  })
+
   describe('linear', () => {
     const packageFxt = fixtures('package/json/02-update')
     const babelFxt = fixtures('babel/json/05-update')
@@ -63,7 +74,7 @@ describe.only('sharec > update', () => {
 
       vol.fromJSON(dir, '/')
 
-      await sharec(context)
+      await sharec(context, semaphore)
 
       expect(vol.readFileSync('/target/folder/foo.json', 'utf8')).toMatchSnapshot()
       expect(vol.readFileSync('/target/folder/foo.yaml', 'utf8')).toMatchSnapshot()
@@ -107,7 +118,7 @@ describe.only('sharec > update', () => {
       }
       vol.fromJSON(dir, '/')
 
-      await sharec(context)
+      await sharec(context, semaphore)
 
       expect(vol.readFileSync('/target/package.json', 'utf8')).toMatchSnapshot()
     })
@@ -147,7 +158,7 @@ describe.only('sharec > update', () => {
       }
       vol.fromJSON(dir, '/')
 
-      await sharec(context)
+      await sharec(context, semaphore)
 
       expect(vol.readdirSync('/target')).not.toContain('.eslintrc')
       expect(vol.readFileSync('/target/package.json', 'utf8')).toMatchSnapshot()

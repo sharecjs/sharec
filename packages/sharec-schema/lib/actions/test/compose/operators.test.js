@@ -1,6 +1,6 @@
 const { fixtures } = require('testUtils')
-const compose = require('../compose')
-const { primitiveAtom } = require('../../atoms')
+const compose = require('../../compose')
+const { primitiveAtom } = require('../../../atoms')
 
 describe('actions > compose > operators', () => {
   const hashFxt = fixtures('rule/json/01-hash', 'map')

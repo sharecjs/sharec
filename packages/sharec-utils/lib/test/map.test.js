@@ -1,4 +1,4 @@
-const { pick, pickBy, omit, omitBy } = require('./map')
+const { pick, pickBy, omit, omitBy } = require('../map')
 
 describe('utils > map', () => {
   describe('pick', () => {

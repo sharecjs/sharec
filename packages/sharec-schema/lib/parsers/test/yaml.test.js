@@ -1,5 +1,5 @@
 const { fixtures } = require('testUtils')
-const { fromYAML, toYAML } = require('./yaml')
+const { fromYAML, toYAML } = require('../yaml')
 
 describe('parsers > yaml', () => {
   const defaultFxt = fixtures('default/json/00-base')

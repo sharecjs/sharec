@@ -9,7 +9,7 @@ const {
   indentWithSpace,
   applyFormat,
   getFormatByFilename,
-} = require('./format')
+} = require('../format')
 
 describe('utils > format', () => {
   const jsonFxt = fixtures('default/json/02-formatting')

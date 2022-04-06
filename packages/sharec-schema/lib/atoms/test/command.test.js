@@ -1,4 +1,4 @@
-const commandAtom = require('./command')
+const commandAtom = require('../command')
 
 describe('atoms > command', () => {
   const commandFxt = {

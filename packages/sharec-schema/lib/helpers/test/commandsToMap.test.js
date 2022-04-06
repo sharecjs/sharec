@@ -1,4 +1,4 @@
-const commandsToMap = require('./commandsToMap')
+const commandsToMap = require('../commandsToMap')
 
 describe('strategies > helpers > params > commandsToMap', () => {
   it('should trim EOF each params entry', () => {

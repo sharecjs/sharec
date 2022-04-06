@@ -3,6 +3,12 @@ const { vol } = require('memfs')
 const { sharec } = require('../../')
 
 describe('sharec > install > base', () => {
+  const semaphore = {
+    start: jest.fn(),
+    error: jest.fn(),
+    success: jest.fn(),
+    fail: jest.fn(),
+  }
   const packageFxt = fixtures('package/json/01-install')
   const babelFxt = fixtures('babel/json/00-base')
   const eslintFxt = fixtures('eslint/json/01-base')
@@ -45,7 +51,7 @@ describe('sharec > install > base', () => {
 
       vol.fromJSON(dir, '/')
 
-      await sharec(context)
+      await sharec(context, semaphore)
     })
 
     it('installs configs', async () => {
@@ -97,7 +103,7 @@ describe('sharec > install > base', () => {
 
       vol.fromJSON(dir, '/')
 
-      await sharec(context)
+      await sharec(context, semaphore)
     })
 
     it('installs configs', async () => {
@@ -149,7 +155,7 @@ describe('sharec > install > base', () => {
 
       vol.fromJSON(dir, '/')
 
-      await sharec(context)
+      await sharec(context, semaphore)
     })
 
     it('installs configs', async () => {

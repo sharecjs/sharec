@@ -1,4 +1,4 @@
-const map = require('./map')
+const map = require('../map')
 
 describe('actions > map', () => {
   const mapper = map(['filename', () => 'foo'], [/\.json$/, () => 'bar'], [/\.ya?ml$/, () => 'baz'])
