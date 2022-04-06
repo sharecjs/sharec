@@ -6,6 +6,12 @@ const { commonFlow } = require('../../steps')
 describe('sharec > install nested configs', () => {
   const packageFxt = fixtures('package/json/01-install')
   const indexFxt = `console.log("hello world")${EOL}`
+  const semaphore = {
+    start: jest.fn(),
+    error: jest.fn(),
+    success: jest.fn(),
+    fail: jest.fn(),
+  }
   const context = {
     targetPath: '/target',
     mergedConfigs: {},
@@ -33,7 +39,7 @@ describe('sharec > install nested configs', () => {
     }
     vol.fromJSON(dir, '/')
 
-    await commonFlow(context)
+    await commonFlow(context, semaphore)
 
     expect(vol.readFileSync('/target/foo/bar/index.js', 'utf8')).toMatchSnapshot()
     expect(vol.readFileSync('/target/package.json', 'utf8')).toMatchSnapshot()

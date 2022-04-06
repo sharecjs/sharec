@@ -11,10 +11,11 @@ export type FlowContext = {
    * `package.json `from `targetPath`
    */
   targetPackage?: any
+  runtimeConfig?: import('..').RuntimeConfig
   /**
    * Original configs from upcoming package
    */
-  configs?: import('..').ConfigPackage[]
+  configs: import('..').ConfigPackage[]
   /**
    * Processed configs from upcoming package
    */
@@ -23,5 +24,27 @@ export type FlowContext = {
    * Previously installed configuration
    */
   cache?: any
+}
+export type FlowStep = (
+  context: import('..').FlowContext,
+  semaphore?: import('..').Semaphore,
+) => Promise<import('..').FlowContext>
+export type Semaphore = {
+  /**
+   * Starts the spinner
+   */
+  start: (text: string) => void
+  /**
+   * Stops the spinner with success
+   */
+  success: (text: string) => void
+  /**
+   * Stops the spinner with failure, but doesn't terminate the program
+   */
+  error: (text: string) => void
+  /**
+   * Stops the spinner with failure and terminates the program
+   */
+  fail: (text: string) => void
 }
 export const commonFlow: Function

@@ -29,6 +29,12 @@ export function hasTabsIndent(str: string): boolean
  */
 export function hasEOF(str: string): boolean
 /**
+ * Cuts off EOL in the end of the file
+ * @param {string} str
+ * @returns {string}
+ */
+export function cutEOF(str: string): string
+/**
  * Replaces all indents in string by spaces with given size
  * @param {string} [str = '']
  * @param {number} [size = 2]

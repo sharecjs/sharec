@@ -1,14 +1,12 @@
 export = writeConfigs
 /**
- * @typedef {import('../').FlowContext} FlowContext
- */
-/**
  * @param {FlowContext} context
+ * @param {Semaphore} semaphore
  * @returns {Promise<FlowContext>}
  */
-declare function writeConfigs(context: FlowContext): Promise<FlowContext>
+declare function writeConfigs(context: FlowContext, semaphore: Semaphore): Promise<FlowContext>
 declare namespace writeConfigs {
-  export { FlowContext }
+  export { FlowContext, Semaphore }
 }
 type FlowContext = {
   /**
@@ -23,10 +21,11 @@ type FlowContext = {
    * `package.json `from `targetPath`
    */
   targetPackage?: any
+  runtimeConfig?: import('..').RuntimeConfig
   /**
    * Original configs from upcoming package
    */
-  configs?: import('..').ConfigPackage[]
+  configs: import('..').ConfigPackage[]
   /**
    * Processed configs from upcoming package
    */
@@ -35,4 +34,22 @@ type FlowContext = {
    * Previously installed configuration
    */
   cache?: any
+}
+type Semaphore = {
+  /**
+   * Starts the spinner
+   */
+  start: (text: string) => void
+  /**
+   * Stops the spinner with success
+   */
+  success: (text: string) => void
+  /**
+   * Stops the spinner with failure, but doesn't terminate the program
+   */
+  error: (text: string) => void
+  /**
+   * Stops the spinner with failure and terminates the program
+   */
+  fail: (text: string) => void
 }

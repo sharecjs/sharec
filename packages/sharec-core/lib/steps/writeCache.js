@@ -5,16 +5,26 @@ const { safeMakeDir } = require('sharec-utils').fs
 
 /**
  * @typedef {import('../').FlowContext} FlowContext
+ * @typedef {import('../').Semaphore} Semaphore
  */
 
 /**
  * @param {FlowContext} context
+ * @param {Semaphore} semaphore
  * @returns {Promise<FlowContext>}
  */
-const writeCache = async (context) => {
+const writeCache = async (context, semaphore) => {
   const { mergedConfigs, targetPath, options } = context
 
   if (!options.cache) return context
+
+  if (Object.keys(mergedConfigs).length === 0) {
+    semaphore.success('Nothing to cache')
+
+    return context
+  }
+
+  semaphore.start('Saving cache')
 
   const cachePath = options.cache === 'include'
     ? join(targetPath, '.sharec/cache')
@@ -33,6 +43,8 @@ const writeCache = async (context) => {
 
     await writeFile(configCachePath, mergedConfigs[config])
   }
+
+  semaphore.success('Cache has been saved')
 
   return context
 }

@@ -15,6 +15,12 @@ describe('sharec > install > mishandled', () => {
   })
 
   it('installs configs on mishandled fields', async () => {
+    const semaphore = {
+      start: jest.fn(),
+      error: jest.fn(),
+      success: jest.fn(),
+      fail: jest.fn(),
+    }
     const context = {
       targetPath: '/target',
       cache: {},
@@ -42,7 +48,7 @@ describe('sharec > install > mishandled', () => {
     }
     vol.fromJSON(dir, '/')
 
-    await sharec(context)
+    await sharec(context, semaphore)
 
     expect(vol.readFileSync('/target/.eslintrc', 'utf8')).toMatchSnapshot()
     expect(vol.readFileSync('/target/.babelrc', 'utf8')).toMatchSnapshot()

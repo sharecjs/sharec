@@ -1,6 +1,5 @@
 // @ts-check
 const { commonFlow } = require('./steps')
-const { errorCauses, InternalError } = require('./errors')
 
 /**
  * @typedef {object} BaseInput
@@ -42,15 +41,24 @@ const { errorCauses, InternalError } = require('./errors')
  */
 
 /**
- * @typedef {(context: FlowContext) => Promise<FlowContext>} FlowStep
+ * @typedef {object} Semaphore
+ * @property {(text: string) => void} start Starts the spinner
+ * @property {(text: string) => void} success Stops the spinner with success
+ * @property {(text: string) => void} error Stops the spinner with failure, but doesn't terminate the program
+ * @property {(text: string) => void} fail Stops the spinner with failure and terminates the program
+ */
+
+/**
+ * @typedef {(context: FlowContext, semaphore?: Semaphore) => Promise<FlowContext>} FlowStep
  */
 
 /**
  * Main sharec entrance
  * @param {BaseInput} input
+ * @param {Semaphore} semaphore
  * @returns {Promise<void>}
  */
-async function sharec(input) {
+async function sharec(input, semaphore) {
   /** @type {FlowContext} */
   const context = {
     targetPath: input.targetPath,
@@ -61,11 +69,9 @@ async function sharec(input) {
     options: input.options,
   }
 
-  await commonFlow(context)
+  await commonFlow(context, semaphore)
 }
 
 module.exports = {
   sharec,
-  InternalError,
-  errorCauses,
 }

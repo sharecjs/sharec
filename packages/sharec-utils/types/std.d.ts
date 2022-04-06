@@ -7,3 +7,4 @@ export const copyFile: typeof nativeFS.copyFile.__promisify__
 export const writeFile: typeof nativeFS.writeFile.__promisify__
 export const lstat: typeof nativeFS.lstat.__promisify__
 export const removeFile: typeof nativeFS.unlink.__promisify__
+export const stat: typeof nativeFS.stat.__promisify__
