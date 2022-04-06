@@ -135,6 +135,7 @@ export type FlowStep = (context: FlowContext, semaphore?: Semaphore) => Promise<
 /**
  * Main sharec entrance
  * @param {BaseInput} input
+ * @param {Semaphore} semaphore
  * @returns {Promise<void>}
  */
-export function sharec(input: BaseInput): Promise<void>
+export function sharec(input: BaseInput, semaphore: Semaphore): Promise<void>
