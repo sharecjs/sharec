@@ -19,7 +19,7 @@ async function sharec(targetProcess) {
   let spinner = null
 
   const { _, ...options } = minimist(targetProcess.argv.slice(2))
-  const targetPath = targetProcess.env.INIT_CWD
+  const targetPath = targetProcess.env.PWD
   const input = {
     targetPath,
     options: {
