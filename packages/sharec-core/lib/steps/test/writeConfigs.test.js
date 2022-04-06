@@ -15,22 +15,39 @@ describe('steps > writeConfigs', () => {
     vol.reset()
   })
 
-  it('writes merged configs', async () => {
-    context = {
-      targetPath: '/target',
-      mergedConfigs: {
-        '/target/foo.txt': 'foo',
-        '/target/bar.txt': 'bar',
-        '/target/baz.txt': 'baz',
-      },
-    }
+  describe('with configs', () => {
+    it('writes merged configs', async () => {
+      context = {
+        targetPath: '/target',
+        mergedConfigs: {
+          '/target/foo.txt': 'foo',
+          '/target/bar.txt': 'bar',
+          '/target/baz.txt': 'baz',
+        },
+      }
 
-    vol.fromJSON({}, '/')
+      vol.fromJSON({}, '/')
 
-    await writeConfigs(context, semaphore)
+      await writeConfigs(context, semaphore)
 
-    expect(vol.readFileSync('/target/foo.txt', 'utf8')).toMatchSnapshot()
-    expect(vol.readFileSync('/target/bar.txt', 'utf8')).toMatchSnapshot()
-    expect(vol.readFileSync('/target/baz.txt', 'utf8')).toMatchSnapshot()
+      expect(vol.readFileSync('/target/foo.txt', 'utf8')).toMatchSnapshot()
+      expect(vol.readFileSync('/target/bar.txt', 'utf8')).toMatchSnapshot()
+      expect(vol.readFileSync('/target/baz.txt', 'utf8')).toMatchSnapshot()
+    })
+  })
+
+  describe('without configs', () => {
+    it('writes merged configs', async () => {
+      context = {
+        targetPath: '/target',
+        mergedConfigs: {},
+      }
+
+      vol.fromJSON({}, '/')
+
+      await writeConfigs(context, semaphore)
+
+      expect(vol.readdirSync('/')).toHaveLength(0)
+    })
   })
 })

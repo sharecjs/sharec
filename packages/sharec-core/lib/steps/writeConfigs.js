@@ -21,6 +21,12 @@ const writeConfigs = async (context, semaphore) => {
 
   const { mergedConfigs } = context
 
+  if (Object.keys(mergedConfigs).length === 0) {
+    semaphore.success("There isn't any updated config to write")
+
+    return context
+  }
+
   for (const config in mergedConfigs) {
     const configContent = mergedConfigs[config]
 

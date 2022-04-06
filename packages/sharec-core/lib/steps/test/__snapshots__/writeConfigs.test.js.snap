@@ -1,5 +1,20 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`steps > writeConfigs with configs writes merged configs 1`] = `
+"foo
+"
+`;
+
+exports[`steps > writeConfigs with configs writes merged configs 2`] = `
+"bar
+"
+`;
+
+exports[`steps > writeConfigs with configs writes merged configs 3`] = `
+"baz
+"
+`;
+
 exports[`steps > writeConfigs writes merged configs 1`] = `
 "foo
 "
