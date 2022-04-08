@@ -34,7 +34,7 @@ const { commonFlow } = require('./steps')
  * @property {string} targetPath Target project path
  * @property {CliOptions} options Different options from CLI
  * @property {object} [targetPackage] `package.json `from `targetPath`
- * @property {RuntimeConfig} [runtimeConfig]
+ * @property {RuntimeConfig} [runtimeConfig] Runtime configuration including hooks
  * @property {ConfigPackage[]} configs Original configs from upcoming package
  * @property {object} [mergedConfigs] Processed configs from upcoming package
  * @property {object} [cache] Previously installed configuration
