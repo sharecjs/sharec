@@ -1,4 +1,4 @@
-# Overview
+# Introduction
 
 With **sharec** you can share and manage configuration across projects,
 keep your code up to date and prepare new ones in one command.
