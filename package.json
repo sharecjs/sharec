@@ -3,10 +3,7 @@
   "author": "Konstantin Epishev <lamartire@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "lint": "eslint 'packages/**/*.js'",
-    "fxt:json": "hygen fixture-json with-prompt",
-    "fxt:yaml": "hygen fixture-yaml with-prompt",
-    "fxt:lines": "hygen fixture-lines with-prompt"
+    "lint": "eslint 'packages/**/*.js'"
   },
   "lint-staged": {
     "packages/**/*.js": [
@@ -60,8 +57,7 @@
     }
   },
   "eslintIgnore": [
-    "/node_modules/",
-    "packages/sharec-nanomatch/examples/**/*"
+    "/node_modules/"
   ],
   "devDependencies": {
     "@typescript-eslint/parser": "^4.7.0",
@@ -72,11 +68,9 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
     "gh-pages": "^3.1.0",
-    "hygen": "^6.0.4",
-    "json8": "^1.0.3",
+    "json8": "^1.0.5",
     "lerna": "^3.18.4",
     "lint-staged": "^10.2.2",
-    "lodash": "^4.17.20",
     "prettier": "^2.0.5",
     "simple-git-hooks": "^2.4.1",
     "typescript": "^4.0.5"
