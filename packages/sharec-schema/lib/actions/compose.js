@@ -1,5 +1,5 @@
 // @ts-check
-const without = require('lodash/without')
+const without = require('lodash.without')
 
 /**
  * @typedef {import('../').Schema} Schema

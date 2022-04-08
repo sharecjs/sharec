@@ -1,6 +1,6 @@
 // @ts-check
 
-const isEqual = require('lodash/isEqual')
+const isEqual = require('lodash.isequal')
 
 /**
  * @typedef {import('../').Rule} Rule

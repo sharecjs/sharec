@@ -1,9 +1,9 @@
 // @ts-check
 // TODO: move to parsers
-const trim = require('lodash/trim')
-const identity = require('lodash/identity')
-const last = require('lodash/last')
-const head = require('lodash/head')
+const trim = require('lodash.trim')
+const identity = require('lodash.identity')
+const last = require('lodash.last')
+const head = require('lodash.head')
 
 /**
  * @typedef {import('../').ParsedCommand} ParsedCommand

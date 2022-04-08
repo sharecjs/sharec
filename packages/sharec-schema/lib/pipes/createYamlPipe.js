@@ -1,5 +1,5 @@
 // @ts-check
-const flow = require('lodash/flow')
+const flow = require('lodash.flow')
 const toJson = require('./toJson')
 const fromJson = require('./fromJson')
 const toYaml = require('./toYaml')

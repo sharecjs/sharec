@@ -1,6 +1,6 @@
 // @ts-check
 
-const identity = require('lodash/identity')
+const identity = require('lodash.identity')
 
 /**
  * @typedef {import('../').SchemaParams<any[]>} SchemaAnyListParams

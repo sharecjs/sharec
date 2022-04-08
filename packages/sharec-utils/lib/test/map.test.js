@@ -1,8 +1,27 @@
-const { pick, pickBy, omit, omitBy } = require('../map')
+const { isMap, pick, pickBy, omit, omitBy } = require('../map')
 
 describe('utils > map', () => {
+  describe('isMap', () => {
+    describe('with Map', () => {
+      it('returns true', () => {
+        expect(isMap(new Map())).toBe(true)
+      })
+    })
+
+    describe('with no Map', () => {
+      it('returns false', () => {
+        expect(isMap(1)).toBe(false)
+        expect(isMap('foo')).toBe(false)
+        expect(isMap({})).toBe(false)
+        expect(isMap([])).toBe(false)
+        expect(isMap(new Set())).toBe(false)
+        expect(isMap(new WeakMap())).toBe(false)
+      })
+    })
+  })
+
   describe('pick', () => {
-    it('should pick values by given keys', () => {
+    it('returns values by given keys', () => {
       const target = new Map().set('foo', 'bar').set('bar', 'baz')
 
       expect(pick(target, ['foo'])).toEqual(new Map().set('foo', 'bar'))
@@ -10,7 +29,7 @@ describe('utils > map', () => {
   })
 
   describe('omit', () => {
-    it('should omit values by given keys', () => {
+    it('returns map without given keys', () => {
       const target = new Map().set('foo', 'bar').set('bar', 'baz')
 
       expect(omit(target, ['foo'])).toEqual(new Map().set('bar', 'baz'))
@@ -18,7 +37,7 @@ describe('utils > map', () => {
   })
 
   describe('pickBy', () => {
-    it('should pick values by predicate function', () => {
+    it('returns values matched with predicate', () => {
       const target = new Map().set('foo', 1).set('bar', 'baz')
 
       expect(pickBy(target, (val) => typeof val === 'number')).toEqual(new Map().set('foo', 1))
@@ -26,7 +45,7 @@ describe('utils > map', () => {
   })
 
   describe('omitBy', () => {
-    it('should omit values by predicate function', () => {
+    it('returns map without values mathced with predicate', () => {
       const target = new Map().set('foo', 1).set('bar', 'baz')
 
       expect(omitBy(target, (val) => typeof val === 'number')).toEqual(new Map().set('bar', 'baz'))
