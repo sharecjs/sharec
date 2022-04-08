@@ -1,33 +1,56 @@
-# Introduction
+# Quick start
 
-With **sharec** you can share and manage configuration across projects,
-keep your code up to date and start new projects in one command.
+## Pack your configs
 
-## Quick start
+1. Init new npm package
+2. Create `configs` directory inside
+3. Place some configuration files to the directory
+4. Create `package.json` file inside `configs` directory and add dependencies
+   your tools need
+5. Publish the package
 
-1. Create configuration project and init `npm` inside.
-2. Install `sharec` as dependency:
+## Prepare your project
 
-```shell
-npm i --save sharec
-```
+1. Install your recently published configuration package
+2. Install `sharec` to your project
+3. Modify `package.json` in the project with `sharec` field:
 
-3. Add `postinstall` script to root `package.json` file:
-
-```json
-"scripts": {
-  "postinstall": "sharec"
+```diff
+{
+  "name": "my-awesome-project",
+  "devDependencies": {
+    "my-awesome-config": "1.0.0",
+    "sharec": "3.0.0"
+  },
++  "sharec": {
++    "configs": ["my-awesome-config"]
++  }
 }
 ```
 
-4. Create `configs` directory.
-5. Place some configuration files to the created `configs` directory.
-6. Create `package.json` file inside `configs` directory and add required dependencies for tool what you need.
-7. Publish configuration with `npm publish` command or just push it to git repository.
-8. Install it wherever you want with `npm install` command.
+4. Run `sharec` command manually:
 
-If you want to read the more detailed manual – look at [official demo config](packages/sharec-demo-config)
-and check [sharec](packages/sharec) package if you looking for API reference.
+```shell
+npx sharec
+```
+
+Or add `postinstall` hook:
+
+```diff
+{
+  "name": "my-awesome-project",
++  "scripts": {
++    "postinstall": "sharec"
++  },
+  "devDependencies": {
+    "my-awesome-config": "1.0.0",
+    "sharec": "3.0.0"
+  },
+  "sharec": {
+    "configs": ["my-awesome-config"]
+  }
+}
+```
 
 ## Example
 
@@ -127,7 +150,11 @@ To this:
     "build": "rimraf dist && NODE_ENV=production ./build",
   },
   "devDependencies": {
++    "sharec": "3.0.0",
 +    "my-awesome-config": "1.0.0"
-  }
+  },
++  "sharec": {
++    "configs": ["my-awesome-config"]
++  }
 }
 ```
