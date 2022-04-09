@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Introduction - Sharec</title>
+        <title>Quick start - Sharec</title>
         
         
 
@@ -95,7 +95,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="1_introduction.html">Introduction</a></li><li class="chapter-item expanded affix "><li class="part-title">Handbook</li><li class="chapter-item expanded "><a href="2_quick_start.html"><strong aria-hidden="true">1.</strong> Quick start</a></li><li class="chapter-item expanded "><a href="3_how_it_works.html"><strong aria-hidden="true">2.</strong> How it works</a></li><li class="chapter-item expanded "><a href="4_runtime_configuration.html"><strong aria-hidden="true">3.</strong> Runtime configuration</a></li><li class="chapter-item expanded "><a href="5_multiple_configurations.html"><strong aria-hidden="true">4.</strong> Multi-configuration</a></li><li class="chapter-item expanded "><a href="6_cli.html"><strong aria-hidden="true">5.</strong> CLI API</a></li><li class="chapter-item expanded affix "><li class="part-title">Recipes</li><li class="chapter-item expanded "><a href="7_ready_examples.html"><strong aria-hidden="true">6.</strong> Ready examples</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="1_introduction.html">Introduction</a></li><li class="chapter-item expanded affix "><li class="part-title">Handbook</li><li class="chapter-item expanded "><a href="2_quick_start.html" class="active"><strong aria-hidden="true">1.</strong> Quick start</a></li><li class="chapter-item expanded "><a href="3_how_it_works.html"><strong aria-hidden="true">2.</strong> How it works</a></li><li class="chapter-item expanded "><a href="4_runtime_configuration.html"><strong aria-hidden="true">3.</strong> Runtime configuration</a></li><li class="chapter-item expanded "><a href="5_multiple_configurations.html"><strong aria-hidden="true">4.</strong> Multi-configuration</a></li><li class="chapter-item expanded "><a href="6_cli.html"><strong aria-hidden="true">5.</strong> CLI API</a></li><li class="chapter-item expanded affix "><li class="part-title">Recipes</li><li class="chapter-item expanded "><a href="7_ready_examples.html"><strong aria-hidden="true">6.</strong> Ready examples</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -167,47 +167,166 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#introduction" id="introduction">Introduction</a></h1>
-<p>With <strong>sharec</strong> you can share and manage configuration across projects,
-keep your code up to date and prepare new ones in one command.</p>
-<h2><a class="header" href="#potential-use-cases" id="potential-use-cases">Potential use-cases</a></h2>
-<ul>
-<li>Versionable configuration packages</li>
-<li>Boilerplates and project starters (like <code>create-react-app</code>)</li>
-</ul>
-<h2><a class="header" href="#supported-configs" id="supported-configs">Supported configs</a></h2>
-<p>At this moment, sharec supports:</p>
-<ul>
-<li><code>npmignore</code></li>
-<li><code>eslint</code></li>
-<li><code>eslintignore</code></li>
-<li><code>babel</code></li>
-<li><code>yaspeller</code></li>
-<li><code>browserslist</code></li>
-<li><code>postcss</code></li>
-<li><code>gitignore</code></li>
-<li><code>husky</code></li>
-<li><code>jest</code> (only as <code>package.json</code> member)</li>
-<li><code>lint-staged</code></li>
-<li><code>stylelint</code></li>
-<li><code>commitlint</code></li>
-<li><code>prettier</code></li>
-</ul>
-<p>Other <code>.json</code> or <code>.yaml</code> files will be merged by keys.</p>
-<p>Files with different extension will be just copied.</p>
-<h2><a class="header" href="#gitignore-and-npmignore" id="gitignore-and-npmignore"><code>.gitignore</code> and <code>.npmignore</code></a></h2>
-<p>If you want to include these files, you should name them without dot -
-<code>gitignore</code>, <code>npmignore</code>. It's necessary because originally named
-files won't be readed during installation.</p>
+                        <h1><a class="header" href="#quick-start" id="quick-start">Quick start</a></h1>
+<h2><a class="header" href="#pack-your-configs" id="pack-your-configs">Pack your configs</a></h2>
+<ol>
+<li>Init new npm package</li>
+<li>Create <code>configs</code> directory inside</li>
+<li>Place some configuration files to the directory</li>
+<li>Create <code>package.json</code> file inside <code>configs</code> directory and add dependencies
+your tools need</li>
+<li>Publish the package</li>
+</ol>
+<h2><a class="header" href="#prepare-your-project" id="prepare-your-project">Prepare your project</a></h2>
+<ol>
+<li>Install your recently published configuration package</li>
+<li>Install <code>sharec</code> to your project</li>
+<li>Modify <code>package.json</code> in the project with <code>sharec</code> field:</li>
+</ol>
+<pre><code class="language-diff">{
+  &quot;name&quot;: &quot;my-awesome-project&quot;,
+  &quot;devDependencies&quot;: {
+    &quot;my-awesome-config&quot;: &quot;1.0.0&quot;,
+    &quot;sharec&quot;: &quot;3.0.0&quot;
+  },
++  &quot;sharec&quot;: {
++    &quot;configs&quot;: [&quot;my-awesome-config&quot;]
++  }
+}
+</code></pre>
+<ol start="4">
+<li>Run <code>sharec</code> command manually:</li>
+</ol>
+<pre><code class="language-shell">npx sharec
+</code></pre>
+<p>Or add <code>postinstall</code> hook:</p>
+<pre><code class="language-diff">{
+  &quot;name&quot;: &quot;my-awesome-project&quot;,
++  &quot;scripts&quot;: {
++    &quot;postinstall&quot;: &quot;sharec&quot;
++  },
+  &quot;devDependencies&quot;: {
+    &quot;my-awesome-config&quot;: &quot;1.0.0&quot;,
+    &quot;sharec&quot;: &quot;3.0.0&quot;
+  },
+  &quot;sharec&quot;: {
+    &quot;configs&quot;: [&quot;my-awesome-config&quot;]
+  }
+}
+</code></pre>
+<h2><a class="header" href="#example" id="example">Example</a></h2>
+<p>With sharec you can transform this:</p>
+<pre><code class="language-diff">{
+  &quot;name&quot;: &quot;my-awesome-project&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;scripts&quot;: {
+    &quot;start&quot;: &quot;NODE_ENV=development ./dev&quot;,
+    &quot;build&quot;: &quot;rimraf dist &amp;&amp; NODE_ENV=production ./build&quot;,
+-   &quot;eslint&quot;: &quot;eslint ./src/**/*.js&quot;
+  },
+- &quot;husky&quot;: {
+-   &quot;hooks&quot;: {
+-     &quot;pre-commit&quot;: &quot;lint-staged&quot;
+-   }
+- },
+- &quot;lint-staged&quot;: {
+-   &quot;src/**/*.js&quot;: [
+-     &quot;eslint&quot;,
+-     &quot;prettier --write&quot;,
+-     &quot;git add&quot;
+-   ]
+- },
+- &quot;browserslist&quot;: [
+-   &quot;last 2 version&quot;,
+-   &quot;&gt; 1%&quot;
+- ],
+- &quot;babel&quot;: {
+-   &quot;presets&quot;: [
+-     &quot;@babel/preset-env&quot;
+-   ]
+- },
+- &quot;prettier&quot;: {
+-   &quot;singleQuote&quot;: true,
+-   &quot;semi&quot;: false
+- },
+- &quot;jest&quot;: {
+-   &quot;testURL&quot;: &quot;http://localhost/&quot;,
+-   &quot;moduleNameMapper&quot;: {
+-     &quot;^src/(.*)$&quot;: &quot;&lt;rootDir&gt;/src/$1&quot;
+-   }
+- },
+- &quot;eslintConfig&quot;: {
+-   &quot;parser&quot;: &quot;babel-eslint&quot;,
+-   &quot;env&quot;: {
+-     &quot;browser&quot;: true,
+-     &quot;es6&quot;: true,
+-     &quot;node&quot;: true,
+-     &quot;jest&quot;: true
+-   },
+-   &quot;extends&quot;: &quot;standard&quot;,
+-   &quot;rules&quot;: {
+-     &quot;space-before-function-paren&quot;: 0
+-   },
+-   &quot;parserOptions&quot;: {
+-     &quot;ecmaVersion&quot;: 8,
+-     &quot;ecmaFeatures&quot;: {
+-       &quot;spread&quot;: true
+-     },
+-     &quot;sourceType&quot;: &quot;module&quot;
+-   }
+- },
+- &quot;eslintIgnore&quot;: [
+-   &quot;/node_modules&quot;,
+-   &quot;/dist&quot;
+- ],
+  &quot;devDependencies&quot;: {
+-   &quot;@babel/core&quot;: &quot;^7.0.1&quot;,
+-   &quot;@babel/preset-env&quot;: &quot;^7.0.0&quot;,
+-   &quot;babel-core&quot;: &quot;7.0.0-bridge.0&quot;,
+-   &quot;babel-eslint&quot;: &quot;^10.0.0&quot;,
+-   &quot;babel-jest&quot;: &quot;^23.6.0&quot;,
+-   &quot;eslint&quot;: &quot;^5.6.0&quot;,
+-   &quot;eslint-config-standard&quot;: &quot;^12.0.0&quot;,
+-   &quot;eslint-plugin-import&quot;: &quot;^2.9.0&quot;,
+-   &quot;eslint-plugin-node&quot;: &quot;^9.0.0&quot;,
+-   &quot;eslint-plugin-promise&quot;: &quot;^4.0.1&quot;,
+-   &quot;eslint-plugin-standard&quot;: &quot;^4.0.0&quot;,
+-   &quot;husky&quot;: &quot;^2.0.0&quot;,
+-   &quot;lint-staged&quot;: &quot;^8.0.4&quot;,
+-   &quot;prettier&quot;: &quot;^1.11.1&quot;
+  }
+}
+</code></pre>
+<p>To this:</p>
+<pre><code class="language-diff">{
+  &quot;name&quot;: &quot;my-awesome-project&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;scripts&quot;: {
+    &quot;start&quot;: &quot;NODE_ENV=development ./dev&quot;,
+    &quot;build&quot;: &quot;rimraf dist &amp;&amp; NODE_ENV=production ./build&quot;,
+  },
+  &quot;devDependencies&quot;: {
++    &quot;sharec&quot;: &quot;3.0.0&quot;,
++    &quot;my-awesome-config&quot;: &quot;1.0.0&quot;
+  },
++  &quot;sharec&quot;: {
++    &quot;configs&quot;: [&quot;my-awesome-config&quot;]
++  }
+}
+</code></pre>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
+                            <a rel="prev" href="1_introduction.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
 
                         
-                            <a rel="next" href="2_quick_start.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="3_how_it_works.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -219,9 +338,13 @@ files won't be readed during installation.</p>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
+                    <a rel="prev" href="1_introduction.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
 
                 
-                    <a rel="next" href="2_quick_start.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="3_how_it_works.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 

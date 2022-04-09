@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Quick start - Sharec</title>
+        <title>How it works - Sharec</title>
         
         
 
@@ -95,7 +95,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded affix "><li class="part-title">Docs</li><li class="chapter-item expanded "><a href="overview.html"><strong aria-hidden="true">2.</strong> Overview</a></li><li class="chapter-item expanded "><a href="quick-start.html" class="active"><strong aria-hidden="true">3.</strong> Quick start</a></li><li class="chapter-item expanded "><a href="configuration.html"><strong aria-hidden="true">4.</strong> Configuration</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="1_introduction.html">Introduction</a></li><li class="chapter-item expanded affix "><li class="part-title">Handbook</li><li class="chapter-item expanded "><a href="2_quick_start.html"><strong aria-hidden="true">1.</strong> Quick start</a></li><li class="chapter-item expanded "><a href="3_how_it_works.html" class="active"><strong aria-hidden="true">2.</strong> How it works</a></li><li class="chapter-item expanded "><a href="4_runtime_configuration.html"><strong aria-hidden="true">3.</strong> Runtime configuration</a></li><li class="chapter-item expanded "><a href="5_multiple_configurations.html"><strong aria-hidden="true">4.</strong> Multi-configuration</a></li><li class="chapter-item expanded "><a href="6_cli.html"><strong aria-hidden="true">5.</strong> CLI API</a></li><li class="chapter-item expanded affix "><li class="part-title">Recipes</li><li class="chapter-item expanded "><a href="7_ready_examples.html"><strong aria-hidden="true">6.</strong> Ready examples</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -167,52 +167,76 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#quick-start" id="quick-start">Quick start</a></h1>
-<h2><a class="header" href="#1-initialize-new-package" id="1-initialize-new-package">1. Initialize new package</a></h2>
-<pre><code>mkdir my-awesome-configs
-cd my-awesome-configs
-npm init -y
+                        <h1><a class="header" href="#how-it-works" id="how-it-works">How it works</a></h1>
+<p>Here you can read some details about <code>sharec</code> architecture.</p>
+<h2><a class="header" href="#the-core" id="the-core">The Core</a></h2>
+<p><code>sharec</code> actively uses middleware pattern dividing all the core logic to
+simple steps. All the steps can be divided on three groups: <code>read</code>, <code>process</code>
+and <code>write</code>.</p>
+<p>From step to step we're passing <code>FlowContext</code> – structure which includes all
+the data we need: target package data, loaded configs, cache, processing result;
+and <code>Semaphore</code> – abstraction controlling the whole process:</p>
+<pre><code class="language-text">(context, semaphore) -&gt; readTargetPackage -&gt; ... -&gt; mergeConfigsPackages -&gt; ... -&gt; writeConfigs -&gt; ...
 </code></pre>
-<h2><a class="header" href="#2-install-sharec" id="2-install-sharec">2. Install <code>sharec</code></a></h2>
-<pre><code>npm i --save sharec
+<p><code>FlowContext</code> is very similary to <code>Request</code> and <code>Response</code> parameters in
+<code>express</code> or <code>koa</code> middlewares.</p>
+<p>With <code>Semaphore</code> steps can send any data to CLI or even terminate the process.</p>
+<h2><a class="header" href="#schema-definiton" id="schema-definiton">Schema definiton</a></h2>
+<p><code>sharec</code> allows to describe <code>json</code> and <code>yaml</code> based configurations declaratively
+providing special utilities in <code>sharec-schema</code> package.</p>
+<p>Each field can be processed by helper depending on it's type.</p>
+<p>Composed schema is a just function, which can process given data structure in a
+specific way:</p>
+<pre><code class="language-js">const { compose } = require('sharec-schema').actions
+const { primitiveAtom } = require('sharec-schema').atoms
+
+const schema = compose({
+  field: primitiveAtom,
+})
 </code></pre>
-<h2><a class="header" href="#3-add-sharec-to-npm-postinstall-script" id="3-add-sharec-to-npm-postinstall-script">3. Add <code>sharec</code> to npm <code>postinstall</code> script</a></h2>
-<p>You can easily install your config with <code>postinstall</code> script, just add the following
-line into your <code>package.json</code> <code>scripts</code> section:</p>
-<pre><code>&quot;postinstall&quot;: &quot;sharec&quot;
+<p>Schema has special operators: <code>$$default</code> to handle fields, which weren't
+described and <code>$$ignore</code> to exclude fields from the process:</p>
+<pre><code class="language-js">const { compose } = require('sharec-schema').actions
+const { primitiveAtom, hashAtom } = require('sharec-schema').atoms
+
+const schema = compose({
+  field: hashAtom,
+  $$default: primitiveAtom,
+  $$ignore: ['foo', 'bar', 'baz'],
+})
 </code></pre>
-<p>After that it should look like this:</p>
-<pre><code class="language-json">{
-  &quot;name&quot;: &quot;my-awesome-configs&quot;,
-  &quot;scripts&quot;: {
-    &quot;postinstall&quot;: &quot;sharec&quot;
-  },
-  &quot;dependencies&quot;: {
-    &quot;sharec&quot;: &quot;1.0.0&quot;
-  }
-}
+<p>Fields that have multiple possible types, can be handled by <code>fork</code> operator.
+It allows to match field with predicate and apply required function:</p>
+<pre><code class="language-js">const isMap = require('lodash/isMap')
+const { compose, fork } = require('sharec-schema').actions
+const { hashAtom, listConcatAtom, primitiveAtom } = require('sharec-schema').atoms
+
+const defaultJson = compose({
+  $$default: fork([[Array.isArray, listConcatAtom], [isMap, hashAtom], primitiveAtom]),
+})
 </code></pre>
-<h2><a class="header" href="#4-publish-your-configs-package" id="4-publish-your-configs-package">4. Publish your configs package</a></h2>
-<p>Congratulations, you are ready to share your configuration. You can publish it
-with <code>npm publish</code> or just push it to github.</p>
-<h2><a class="header" href="#5-share-it" id="5-share-it">5. Share it!</a></h2>
-<p>Install your previously published configuration package:</p>
-<pre><code>npm i --save-dev my-awesome-configs
+<p>To apply required schema it should be mapped by certain file name or regexp:</p>
+<pre><code class="language-js">const { map } = require('sharec-schema').actions
+const { createJsonPipe } = require('sharec-schema').pipes
+const { babelJson } = require('./schema')
+
+const babelJsonPipe = createJsonPipe([babelJson])
+
+const babelPipe = map(['.babelrc', babelJsonPipe], ['.babelrc.json', babelJsonPipe], ['babelrc.json', babelJsonPipe])
 </code></pre>
-<p>Configs were successfully installed 🙌</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-                            <a rel="prev" href="overview.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="2_quick_start.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
 
                         
-                            <a rel="next" href="configuration.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="4_runtime_configuration.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -224,13 +248,13 @@ with <code>npm publish</code> or just push it to github.</p>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                    <a rel="prev" href="overview.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="2_quick_start.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
 
                 
-                    <a rel="next" href="configuration.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="4_runtime_configuration.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 

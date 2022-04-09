@@ -97,7 +97,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded affix "><li class="part-title">Docs</li><li class="chapter-item expanded "><a href="overview.html"><strong aria-hidden="true">2.</strong> Overview</a></li><li class="chapter-item expanded "><a href="quick-start.html"><strong aria-hidden="true">3.</strong> Quick start</a></li><li class="chapter-item expanded "><a href="configuration.html"><strong aria-hidden="true">4.</strong> Configuration</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="1_introduction.html">Introduction</a></li><li class="chapter-item expanded affix "><li class="part-title">Handbook</li><li class="chapter-item expanded "><a href="2_quick_start.html"><strong aria-hidden="true">1.</strong> Quick start</a></li><li class="chapter-item expanded "><a href="3_how_it_works.html"><strong aria-hidden="true">2.</strong> How it works</a></li><li class="chapter-item expanded "><a href="4_runtime_configuration.html"><strong aria-hidden="true">3.</strong> Runtime configuration</a></li><li class="chapter-item expanded "><a href="5_multiple_configurations.html"><strong aria-hidden="true">4.</strong> Multi-configuration</a></li><li class="chapter-item expanded "><a href="6_cli.html"><strong aria-hidden="true">5.</strong> CLI API</a></li><li class="chapter-item expanded affix "><li class="part-title">Recipes</li><li class="chapter-item expanded "><a href="7_ready_examples.html"><strong aria-hidden="true">6.</strong> Ready examples</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -171,30 +171,83 @@
                     <main>
                         <h1><a class="header" href="#introduction" id="introduction">Introduction</a></h1>
 <p>With <strong>sharec</strong> you can share and manage configuration across projects,
-keep your code up to date and start new projects in one command.</p>
-<h2><a class="header" href="#quick-start" id="quick-start">Quick start</a></h2>
+keep your code up to date and prepare new ones in one command.</p>
+<h2><a class="header" href="#potential-use-cases" id="potential-use-cases">Potential use-cases</a></h2>
+<ul>
+<li>Versionable configuration packages</li>
+<li>Boilerplates and project starters (like <code>create-react-app</code>)</li>
+</ul>
+<h2><a class="header" href="#supported-configs" id="supported-configs">Supported configs</a></h2>
+<p>At this moment, sharec supports:</p>
+<ul>
+<li><code>npmignore</code></li>
+<li><code>eslint</code></li>
+<li><code>eslintignore</code></li>
+<li><code>babel</code></li>
+<li><code>yaspeller</code></li>
+<li><code>browserslist</code></li>
+<li><code>postcss</code></li>
+<li><code>gitignore</code></li>
+<li><code>husky</code></li>
+<li><code>jest</code> (only as <code>package.json</code> member)</li>
+<li><code>lint-staged</code></li>
+<li><code>stylelint</code></li>
+<li><code>commitlint</code></li>
+<li><code>prettier</code></li>
+</ul>
+<p>Other <code>.json</code> or <code>.yaml</code> files will be merged by keys.</p>
+<p>Files with different extension will be just copied.</p>
+<h2><a class="header" href="#gitignore-and-npmignore" id="gitignore-and-npmignore"><code>.gitignore</code> and <code>.npmignore</code></a></h2>
+<p>If you want to include these files, you should name them without dot -
+<code>gitignore</code>, <code>npmignore</code>. It's necessary because originally named
+files won't be readed during installation.</p>
+<h1><a class="header" href="#quick-start" id="quick-start">Quick start</a></h1>
+<h2><a class="header" href="#pack-your-configs" id="pack-your-configs">Pack your configs</a></h2>
 <ol>
-<li>Create configuration project and init <code>npm</code> inside.</li>
-<li>Install <code>sharec</code> as dependency:</li>
+<li>Init new npm package</li>
+<li>Create <code>configs</code> directory inside</li>
+<li>Place some configuration files to the directory</li>
+<li>Create <code>package.json</code> file inside <code>configs</code> directory and add dependencies
+your tools need</li>
+<li>Publish the package</li>
 </ol>
-<pre><code class="language-shell">npm i --save sharec
-</code></pre>
-<ol start="3">
-<li>Add <code>postinstall</code> script to root <code>package.json</code> file:</li>
+<h2><a class="header" href="#prepare-your-project" id="prepare-your-project">Prepare your project</a></h2>
+<ol>
+<li>Install your recently published configuration package</li>
+<li>Install <code>sharec</code> to your project</li>
+<li>Modify <code>package.json</code> in the project with <code>sharec</code> field:</li>
 </ol>
-<pre><code class="language-json">&quot;scripts&quot;: {
-  &quot;postinstall&quot;: &quot;sharec&quot;
+<pre><code class="language-diff">{
+  &quot;name&quot;: &quot;my-awesome-project&quot;,
+  &quot;devDependencies&quot;: {
+    &quot;my-awesome-config&quot;: &quot;1.0.0&quot;,
+    &quot;sharec&quot;: &quot;3.0.0&quot;
+  },
++  &quot;sharec&quot;: {
++    &quot;configs&quot;: [&quot;my-awesome-config&quot;]
++  }
 }
 </code></pre>
 <ol start="4">
-<li>Create <code>configs</code> directory.</li>
-<li>Place some configuration files to the created <code>configs</code> directory.</li>
-<li>Create <code>package.json</code> file inside <code>configs</code> directory and add required dependencies for tool what you need.</li>
-<li>Publish configuration with <code>npm publish</code> command or just push it to git repository.</li>
-<li>Install it wherever you want with <code>npm install</code> command.</li>
+<li>Run <code>sharec</code> command manually:</li>
 </ol>
-<p>If you want to read the more detailed manual – look at <a href="packages/sharec-demo-config">official demo config</a>
-and check <a href="packages/sharec">sharec</a> package if you looking for API reference.</p>
+<pre><code class="language-shell">npx sharec
+</code></pre>
+<p>Or add <code>postinstall</code> hook:</p>
+<pre><code class="language-diff">{
+  &quot;name&quot;: &quot;my-awesome-project&quot;,
++  &quot;scripts&quot;: {
++    &quot;postinstall&quot;: &quot;sharec&quot;
++  },
+  &quot;devDependencies&quot;: {
+    &quot;my-awesome-config&quot;: &quot;1.0.0&quot;,
+    &quot;sharec&quot;: &quot;3.0.0&quot;
+  },
+  &quot;sharec&quot;: {
+    &quot;configs&quot;: [&quot;my-awesome-config&quot;]
+  }
+}
+</code></pre>
 <h2><a class="header" href="#example" id="example">Example</a></h2>
 <p>With sharec you can transform this:</p>
 <pre><code class="language-diff">{
@@ -287,178 +340,149 @@ and check <a href="packages/sharec">sharec</a> package if you looking for API re
     &quot;build&quot;: &quot;rimraf dist &amp;&amp; NODE_ENV=production ./build&quot;,
   },
   &quot;devDependencies&quot;: {
++    &quot;sharec&quot;: &quot;3.0.0&quot;,
 +    &quot;my-awesome-config&quot;: &quot;1.0.0&quot;
-  }
-}
-</code></pre>
-<h1><a class="header" href="#overview" id="overview">Overview</a></h1>
-<p>Sharec allows you to install configuration via CLI with short and friendly commands.
-Use it in your configuration packages.</p>
-<h2><a class="header" href="#supported-configs" id="supported-configs">Supported configs</a></h2>
-<p>At this moment, sharec supports:</p>
-<ul>
-<li><code>npmignore</code></li>
-<li><code>eslint</code></li>
-<li><code>eslintignore</code></li>
-<li><code>babel</code></li>
-<li><code>yaspeller</code></li>
-<li><code>browserslist</code></li>
-<li><code>postcss</code></li>
-<li><code>gitignore</code></li>
-<li><code>husky</code></li>
-<li><code>jest</code> (only via <code>package.json</code> filed)</li>
-<li><code>lint-staged</code></li>
-<li><code>stylelint</code></li>
-<li><code>commitlint</code></li>
-<li><code>prettier</code></li>
-</ul>
-<p>Other <code>.json</code> or <code>.yaml</code> files will be merged by keys.</p>
-<p>Files with different extension will be just copied.</p>
-<h2><a class="header" href="#potential-use-cases" id="potential-use-cases">Potential use-cases</a></h2>
-<ul>
-<li>Versionable configuration packages (try out <a href="https://github.com/lamartire/sharec/tree/master/packages/sharec-demo-config">demo config</a>)</li>
-<li>Create boilerplates, like <code>create-react-app</code> (see dead simple example <a href="https://github.com/lamartire/sharec-react-app">here</a>)</li>
-</ul>
-<h2><a class="header" href="#gitignore-and-npmignore" id="gitignore-and-npmignore"><code>.gitignore</code> and <code>.npmignore</code></a></h2>
-<p>If you want to include these files, you should name them without dot - <code>gitignore</code>, <code>npmignore</code>.
-It's necessary because originally named files would not be read during installation.</p>
-<h2><a class="header" href="#options" id="options">Options</a></h2>
-<p><strong><code>--silent, -s</code></strong> - hides all outputs from <code>sharec</code> in CLI.</p>
-<p>Example:</p>
-<pre><code class="language-json">{
-  &quot;scripts&quot;: {
-    &quot;postinstall&quot;: &quot;sharec --silent&quot;
-  }
-}
-</code></pre>
-<p><strong><code>--overwrite, -o</code></strong> - force <code>sharec</code> to replace all configs without merging and caching.</p>
-<p>Example:</p>
-<pre><code class="language-json">{
-  &quot;scripts&quot;: {
-    &quot;postinstall&quot;: &quot;sharec --overwrite&quot;
-  }
-}
-</code></pre>
-<p><strong><code>--disappear, -d</code></strong> - installs configuration without meta injecting and caching, like
-you do that by yourself.</p>
-<p>Example:</p>
-<pre><code class="language-json">{
-  &quot;scripts&quot;: {
-    &quot;postinstall&quot;: &quot;sharec --disappear&quot;
-  }
-}
-</code></pre>
-<p><strong><code>--interactive, -i</code></strong> - interactive mode in which <code>sharec</code> asks user before merge any config.</p>
-<p>Example:</p>
-<pre><code class="language-json">{
-  &quot;scripts&quot;: {
-    &quot;postinstall&quot;: &quot;sharec --interactive&quot;
-  }
-}
-</code></pre>
-<p><strong><code>--include-cache, -c</code></strong> - saves configuration cache in target project directory. It is very useful,
-if you want to always have the ability to change configuration version in project without any problems.</p>
-<p>With this option, cache would be saved in <code>&lt;project_path&gt;/.sharec/.cache</code>, instead <code>node_modules</code>.</p>
-<p>This feature might be especially useful if you are using package manager which does not make <code>node_modules</code>.</p>
-<p>If you use this option, ensure that <code>.sharec</code> directory is not ignored by git!</p>
-<p>Example:</p>
-<pre><code class="language-json">{
-  &quot;scripts&quot;: {
-    &quot;postinstall&quot;: &quot;sharec --include-cache&quot;
-  }
-}
-</code></pre>
-<h2><a class="header" href="#ignoring-configuration" id="ignoring-configuration">Ignoring configuration</a></h2>
-<p>If you want to force upcoming <code>sharec</code> configs – just add <code>ignore</code> flag to your projects' <code>sharec</code> field:</p>
-<pre><code class="language-json">{
-  &quot;sharec&quot;: {
-    &quot;ignore&quot;: true
-  }
-}
-</code></pre>
-<h2><a class="header" href="#debugging" id="debugging">Debugging</a></h2>
-<p>If you see some unexpected behavior and want to help with solution - you can get
-some debug information with <code>DEBUG</code> environment variable. It allows to see
-everything what happens inside of sharec flow.</p>
-<pre><code class="language-json">{
-  &quot;scripts&quot;: {
-    &quot;postinstall&quot;: &quot;DEBUG=true sharec&quot;
-  }
-}
-</code></pre>
-<h1><a class="header" href="#quick-start-1" id="quick-start-1">Quick start</a></h1>
-<h2><a class="header" href="#1-initialize-new-package" id="1-initialize-new-package">1. Initialize new package</a></h2>
-<pre><code>mkdir my-awesome-configs
-cd my-awesome-configs
-npm init -y
-</code></pre>
-<h2><a class="header" href="#2-install-sharec" id="2-install-sharec">2. Install <code>sharec</code></a></h2>
-<pre><code>npm i --save sharec
-</code></pre>
-<h2><a class="header" href="#3-add-sharec-to-npm-postinstall-script" id="3-add-sharec-to-npm-postinstall-script">3. Add <code>sharec</code> to npm <code>postinstall</code> script</a></h2>
-<p>You can easily install your config with <code>postinstall</code> script, just add the following
-line into your <code>package.json</code> <code>scripts</code> section:</p>
-<pre><code>&quot;postinstall&quot;: &quot;sharec&quot;
-</code></pre>
-<p>After that it should look like this:</p>
-<pre><code class="language-json">{
-  &quot;name&quot;: &quot;my-awesome-configs&quot;,
-  &quot;scripts&quot;: {
-    &quot;postinstall&quot;: &quot;sharec&quot;
   },
-  &quot;dependencies&quot;: {
-    &quot;sharec&quot;: &quot;1.0.0&quot;
-  }
++  &quot;sharec&quot;: {
++    &quot;configs&quot;: [&quot;my-awesome-config&quot;]
++  }
 }
 </code></pre>
-<h2><a class="header" href="#4-publish-your-configs-package" id="4-publish-your-configs-package">4. Publish your configs package</a></h2>
-<p>Congratulations, you are ready to share your configuration. You can publish it
-with <code>npm publish</code> or just push it to github.</p>
-<h2><a class="header" href="#5-share-it" id="5-share-it">5. Share it!</a></h2>
-<p>Install your previously published configuration package:</p>
-<pre><code>npm i --save-dev my-awesome-configs
+<h1><a class="header" href="#how-it-works" id="how-it-works">How it works</a></h1>
+<p>Here you can read some details about <code>sharec</code> architecture.</p>
+<h2><a class="header" href="#the-core" id="the-core">The Core</a></h2>
+<p><code>sharec</code> actively uses middleware pattern dividing all the core logic to
+simple steps. All the steps can be divided on three groups: <code>read</code>, <code>process</code>
+and <code>write</code>.</p>
+<p>From step to step we're passing <code>FlowContext</code> – structure which includes all
+the data we need: target package data, loaded configs, cache, processing result;
+and <code>Semaphore</code> – abstraction controlling the whole process:</p>
+<pre><code class="language-text">(context, semaphore) -&gt; readTargetPackage -&gt; ... -&gt; mergeConfigsPackages -&gt; ... -&gt; writeConfigs -&gt; ...
 </code></pre>
-<p>Configs were successfully installed 🙌</p>
-<h1><a class="header" href="#configuration" id="configuration">Configuration</a></h1>
-<p>Sharec provides optional runtime configuration for your packages. For example,
-you can overwrite specific files without merge.</p>
-<h2><a class="header" href="#configuration-file" id="configuration-file">Configuration file</a></h2>
-<p>Configuration file should be placed in the root of your configuration package.
-It can be defined in <code>.sharecrc.json</code> file, or in <code>sharec</code> filed in <code>package.json</code>.</p>
-<p>Your project's stucture should look like this:</p>
-<pre><code class="language-text">my-awesome-configs/
-  ├── configs/
-  │  └── ...
-  ├── package.json
-  └── .sharecrc.json
+<p><code>FlowContext</code> is very similary to <code>Request</code> and <code>Response</code> parameters in
+<code>express</code> or <code>koa</code> middlewares.</p>
+<p>With <code>Semaphore</code> steps can send any data to CLI or even terminate the process.</p>
+<h2><a class="header" href="#schema-definiton" id="schema-definiton">Schema definiton</a></h2>
+<p><code>sharec</code> allows to describe <code>json</code> and <code>yaml</code> based configurations declaratively
+providing special utilities in <code>sharec-schema</code> package.</p>
+<p>Each field can be processed by helper depending on it's type.</p>
+<p>Composed schema is a just function, which can process given data structure in a
+specific way:</p>
+<pre><code class="language-js">const { compose } = require('sharec-schema').actions
+const { primitiveAtom } = require('sharec-schema').atoms
+
+const schema = compose({
+  field: primitiveAtom,
+})
 </code></pre>
-<h2><a class="header" href="#reference" id="reference">Reference</a></h2>
-<p><code>configs</code> – configuration files options</p>
-<hr />
-<p><code>configs[name: string].overwrite: boolean</code> – forcibly rewrite the file without merge and caching.</p>
-<p>Example:</p>
-<pre><code class="language-json">{
-  &quot;configs&quot;: {
-    &quot;.eslintrc&quot;: {
-      &quot;overwrite&quot;: true
+<p>Schema has special operators: <code>$$default</code> to handle fields, which weren't
+described and <code>$$ignore</code> to exclude fields from the process:</p>
+<pre><code class="language-js">const { compose } = require('sharec-schema').actions
+const { primitiveAtom, hashAtom } = require('sharec-schema').atoms
+
+const schema = compose({
+  field: hashAtom,
+  $$default: primitiveAtom,
+  $$ignore: ['foo', 'bar', 'baz'],
+})
+</code></pre>
+<p>Fields that have multiple possible types, can be handled by <code>fork</code> operator.
+It allows to match field with predicate and apply required function:</p>
+<pre><code class="language-js">const isMap = require('lodash/isMap')
+const { compose, fork } = require('sharec-schema').actions
+const { hashAtom, listConcatAtom, primitiveAtom } = require('sharec-schema').atoms
+
+const defaultJson = compose({
+  $$default: fork([[Array.isArray, listConcatAtom], [isMap, hashAtom], primitiveAtom]),
+})
+</code></pre>
+<p>To apply required schema it should be mapped by certain file name or regexp:</p>
+<pre><code class="language-js">const { map } = require('sharec-schema').actions
+const { createJsonPipe } = require('sharec-schema').pipes
+const { babelJson } = require('./schema')
+
+const babelJsonPipe = createJsonPipe([babelJson])
+
+const babelPipe = map(['.babelrc', babelJsonPipe], ['.babelrc.json', babelJsonPipe], ['babelrc.json', babelJsonPipe])
+</code></pre>
+<h1><a class="header" href="#runtime-configuration" id="runtime-configuration">Runtime configuration</a></h1>
+<p>With runtime configuration you can add <code>hooks</code> to customize any field in
+<code>FlowContext</code>.</p>
+<p>Hook should match following signature:</p>
+<pre><code class="language-ts">type FlowStep = (context: FlowContext) =&gt; Promise&lt;FlowContext&gt;
+</code></pre>
+<p>At this moment <code>sharec</code> supports two hooks: <code>beforeMerge</code> and <code>afterMerge</code>.</p>
+<pre><code class="language-js">// .sharecrc.js
+const { EOL } = require('os')
+
+module.exports = {
+  // here we're logging whole the context before `mergeConfigsPackages` step
+  beforeMerge: async (context) =&gt; {
+    console.log('Before merge hooks has been fired: ', context)
+    return context
+  },
+  // in this step we're removing EOL from the all files
+  afterMerge: async (context) =&gt; {
+    const eolRe = new RegExp(`${EOL}$`)
+
+    for (const config in context.mergedConfigs) {
+      if (!eolRe.test(context.mergedConfigs[config])) continue
+
+      context.mergedConfigs[config] = context.mergedConfigs[config].replace(eolRe, '')
     }
-  }
+
+    return context
+  },
 }
 </code></pre>
-<p><code>.eslintrc</code> will be always equal to the upcoming one.</p>
-<hr />
-<p><code>configs[name: string].format: boolean</code> – enables or disables formatting with
-<code>prettier</code> or <code>editorconfig</code>.</p>
-<p>Example:</p>
+<p>You can write your own hook, publish it and re-use everywhere you need.</p>
+<h1><a class="header" href="#multiple-configurations" id="multiple-configurations">Multiple configurations</a></h1>
+<p><code>sharec</code> supports multiple configuration package.</p>
+<p>You just need to install packages you need and pass them to <code>sharec.configs</code>
+field in your <code>package.json</code> file:</p>
 <pre><code class="language-json">{
-  &quot;configs&quot;: {
-    &quot;.eslintrc&quot;: {
-      &quot;format&quot;: false
-    }
+  &quot;name&quot;: &quot;my-awesome-project&quot;,
+  &quot;devDependencies&quot;: {
+    &quot;config-a&quot;: &quot;0.0.1&quot;,
+    &quot;config-b&quot;: &quot;0.1.0&quot;,
+    &quot;config-c&quot;: &quot;1.0.0&quot;,
+    &quot;sharec&quot;: &quot;3.0.0&quot;
+  },
+  &quot;sharec&quot;: {
+    &quot;configs&quot;: [&quot;config-a&quot;, &quot;config-b&quot;, &quot;config-c&quot;]
   }
 }
 </code></pre>
-<p><code>.eslintrc</code> will not be formatted.</p>
+<h2><a class="header" href="#how-configs-will-be-applyed" id="how-configs-will-be-applyed">How configs will be applyed</a></h2>
+<p>Your configs will be merged in order you described in <code>sharec.configs</code>.</p>
+<p>Keep in mind, that next config can overwrite previous one.</p>
+<h2><a class="header" href="#use-cases" id="use-cases">Use cases</a></h2>
+<p>You can divide your configs by purporse: <code>javascript</code>, <code>css</code>, <code>git</code>,
+<code>utilities</code>, etc. And then combine them between each other to make them
+lighter and much more maintainable.</p>
+<h1><a class="header" href="#cli-api" id="cli-api">CLI API</a></h1>
+<p><code>sharec</code> ships only one command. Use it to apply all your configuration packages:</p>
+<pre><code class="language-shell">npx sharec
+</code></pre>
+<h2><a class="header" href="#options" id="options">Options</a></h2>
+<p><strong><code>--cache, -c</code></strong> - disables or enables cache for configuration versioning. Also in can place all the <code>cahce</code> to <code>.sharec</code>
+directory if you don't have <code>node_modules</code>. By default cache is enabled.</p>
+<ul>
+<li><code>true</code> – cache will be saved inside <code>&lt;project_path&gt;/node_modules/.cache/sharec</code></li>
+<li><code>false</code> – cache won't be saved</li>
+<li><code>include</code> – cache would be saved in <code>&lt;project_path&gt;/.sharec/cache</code>, instead <code>node_modules</code></li>
+</ul>
+<p>Examples:</p>
+<pre><code class="language-shell">npx sharec --cache
+npx sharec --cache false
+npx sharec --cache include
+</code></pre>
+<h1><a class="header" href="#ready-examples" id="ready-examples">Ready examples</a></h1>
+<ul>
+<li>[<code>sharec-essential-config</code>][config] – just set of configs ready to apply</li>
+<li><a href="https://github.com/sharecjs/sharec-react-app/blob/master/README.md"><code>sharec-react-app</code></a> – attempt to reproduce <code>create-react-app</code>
+functionality just as pack of static files</li>
+</ul>
 
                     </main>
 

@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Introduction - Sharec</title>
+        <title>Multi-configuration - Sharec</title>
         
         
 
@@ -95,7 +95,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="1_introduction.html">Introduction</a></li><li class="chapter-item expanded affix "><li class="part-title">Handbook</li><li class="chapter-item expanded "><a href="2_quick_start.html"><strong aria-hidden="true">1.</strong> Quick start</a></li><li class="chapter-item expanded "><a href="3_how_it_works.html"><strong aria-hidden="true">2.</strong> How it works</a></li><li class="chapter-item expanded "><a href="4_runtime_configuration.html"><strong aria-hidden="true">3.</strong> Runtime configuration</a></li><li class="chapter-item expanded "><a href="5_multiple_configurations.html"><strong aria-hidden="true">4.</strong> Multi-configuration</a></li><li class="chapter-item expanded "><a href="6_cli.html"><strong aria-hidden="true">5.</strong> CLI API</a></li><li class="chapter-item expanded affix "><li class="part-title">Recipes</li><li class="chapter-item expanded "><a href="7_ready_examples.html"><strong aria-hidden="true">6.</strong> Ready examples</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="1_introduction.html">Introduction</a></li><li class="chapter-item expanded affix "><li class="part-title">Handbook</li><li class="chapter-item expanded "><a href="2_quick_start.html"><strong aria-hidden="true">1.</strong> Quick start</a></li><li class="chapter-item expanded "><a href="3_how_it_works.html"><strong aria-hidden="true">2.</strong> How it works</a></li><li class="chapter-item expanded "><a href="4_runtime_configuration.html"><strong aria-hidden="true">3.</strong> Runtime configuration</a></li><li class="chapter-item expanded "><a href="5_multiple_configurations.html" class="active"><strong aria-hidden="true">4.</strong> Multi-configuration</a></li><li class="chapter-item expanded "><a href="6_cli.html"><strong aria-hidden="true">5.</strong> CLI API</a></li><li class="chapter-item expanded affix "><li class="part-title">Recipes</li><li class="chapter-item expanded "><a href="7_ready_examples.html"><strong aria-hidden="true">6.</strong> Ready examples</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -167,47 +167,43 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#introduction" id="introduction">Introduction</a></h1>
-<p>With <strong>sharec</strong> you can share and manage configuration across projects,
-keep your code up to date and prepare new ones in one command.</p>
-<h2><a class="header" href="#potential-use-cases" id="potential-use-cases">Potential use-cases</a></h2>
-<ul>
-<li>Versionable configuration packages</li>
-<li>Boilerplates and project starters (like <code>create-react-app</code>)</li>
-</ul>
-<h2><a class="header" href="#supported-configs" id="supported-configs">Supported configs</a></h2>
-<p>At this moment, sharec supports:</p>
-<ul>
-<li><code>npmignore</code></li>
-<li><code>eslint</code></li>
-<li><code>eslintignore</code></li>
-<li><code>babel</code></li>
-<li><code>yaspeller</code></li>
-<li><code>browserslist</code></li>
-<li><code>postcss</code></li>
-<li><code>gitignore</code></li>
-<li><code>husky</code></li>
-<li><code>jest</code> (only as <code>package.json</code> member)</li>
-<li><code>lint-staged</code></li>
-<li><code>stylelint</code></li>
-<li><code>commitlint</code></li>
-<li><code>prettier</code></li>
-</ul>
-<p>Other <code>.json</code> or <code>.yaml</code> files will be merged by keys.</p>
-<p>Files with different extension will be just copied.</p>
-<h2><a class="header" href="#gitignore-and-npmignore" id="gitignore-and-npmignore"><code>.gitignore</code> and <code>.npmignore</code></a></h2>
-<p>If you want to include these files, you should name them without dot -
-<code>gitignore</code>, <code>npmignore</code>. It's necessary because originally named
-files won't be readed during installation.</p>
+                        <h1><a class="header" href="#multiple-configurations" id="multiple-configurations">Multiple configurations</a></h1>
+<p><code>sharec</code> supports multiple configuration package.</p>
+<p>You just need to install packages you need and pass them to <code>sharec.configs</code>
+field in your <code>package.json</code> file:</p>
+<pre><code class="language-json">{
+  &quot;name&quot;: &quot;my-awesome-project&quot;,
+  &quot;devDependencies&quot;: {
+    &quot;config-a&quot;: &quot;0.0.1&quot;,
+    &quot;config-b&quot;: &quot;0.1.0&quot;,
+    &quot;config-c&quot;: &quot;1.0.0&quot;,
+    &quot;sharec&quot;: &quot;3.0.0&quot;
+  },
+  &quot;sharec&quot;: {
+    &quot;configs&quot;: [&quot;config-a&quot;, &quot;config-b&quot;, &quot;config-c&quot;]
+  }
+}
+</code></pre>
+<h2><a class="header" href="#how-configs-will-be-applyed" id="how-configs-will-be-applyed">How configs will be applyed</a></h2>
+<p>Your configs will be merged in order you described in <code>sharec.configs</code>.</p>
+<p>Keep in mind, that next config can overwrite previous one.</p>
+<h2><a class="header" href="#use-cases" id="use-cases">Use cases</a></h2>
+<p>You can divide your configs by purporse: <code>javascript</code>, <code>css</code>, <code>git</code>,
+<code>utilities</code>, etc. And then combine them between each other to make them
+lighter and much more maintainable.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
+                            <a rel="prev" href="4_runtime_configuration.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
 
                         
-                            <a rel="next" href="2_quick_start.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="6_cli.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -219,9 +215,13 @@ files won't be readed during installation.</p>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
+                    <a rel="prev" href="4_runtime_configuration.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
 
                 
-                    <a rel="next" href="2_quick_start.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="6_cli.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 

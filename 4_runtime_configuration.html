@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Configuration - Sharec</title>
+        <title>Runtime configuration - Sharec</title>
         
         
 
@@ -95,7 +95,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded affix "><li class="part-title">Docs</li><li class="chapter-item expanded "><a href="overview.html"><strong aria-hidden="true">2.</strong> Overview</a></li><li class="chapter-item expanded "><a href="quick-start.html"><strong aria-hidden="true">3.</strong> Quick start</a></li><li class="chapter-item expanded "><a href="configuration.html" class="active"><strong aria-hidden="true">4.</strong> Configuration</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="1_introduction.html">Introduction</a></li><li class="chapter-item expanded affix "><li class="part-title">Handbook</li><li class="chapter-item expanded "><a href="2_quick_start.html"><strong aria-hidden="true">1.</strong> Quick start</a></li><li class="chapter-item expanded "><a href="3_how_it_works.html"><strong aria-hidden="true">2.</strong> How it works</a></li><li class="chapter-item expanded "><a href="4_runtime_configuration.html" class="active"><strong aria-hidden="true">3.</strong> Runtime configuration</a></li><li class="chapter-item expanded "><a href="5_multiple_configurations.html"><strong aria-hidden="true">4.</strong> Multi-configuration</a></li><li class="chapter-item expanded "><a href="6_cli.html"><strong aria-hidden="true">5.</strong> CLI API</a></li><li class="chapter-item expanded affix "><li class="part-title">Recipes</li><li class="chapter-item expanded "><a href="7_ready_examples.html"><strong aria-hidden="true">6.</strong> Ready examples</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -167,57 +167,52 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#configuration" id="configuration">Configuration</a></h1>
-<p>Sharec provides optional runtime configuration for your packages. For example,
-you can overwrite specific files without merge.</p>
-<h2><a class="header" href="#configuration-file" id="configuration-file">Configuration file</a></h2>
-<p>Configuration file should be placed in the root of your configuration package.
-It can be defined in <code>.sharecrc.json</code> file, or in <code>sharec</code> filed in <code>package.json</code>.</p>
-<p>Your project's stucture should look like this:</p>
-<pre><code class="language-text">my-awesome-configs/
-  ├── configs/
-  │  └── ...
-  ├── package.json
-  └── .sharecrc.json
+                        <h1><a class="header" href="#runtime-configuration" id="runtime-configuration">Runtime configuration</a></h1>
+<p>With runtime configuration you can add <code>hooks</code> to customize any field in
+<code>FlowContext</code>.</p>
+<p>Hook should match following signature:</p>
+<pre><code class="language-ts">type FlowStep = (context: FlowContext) =&gt; Promise&lt;FlowContext&gt;
 </code></pre>
-<h2><a class="header" href="#reference" id="reference">Reference</a></h2>
-<p><code>configs</code> – configuration files options</p>
-<hr />
-<p><code>configs[name: string].overwrite: boolean</code> – forcibly rewrite the file without merge and caching.</p>
-<p>Example:</p>
-<pre><code class="language-json">{
-  &quot;configs&quot;: {
-    &quot;.eslintrc&quot;: {
-      &quot;overwrite&quot;: true
+<p>At this moment <code>sharec</code> supports two hooks: <code>beforeMerge</code> and <code>afterMerge</code>.</p>
+<pre><code class="language-js">// .sharecrc.js
+const { EOL } = require('os')
+
+module.exports = {
+  // here we're logging whole the context before `mergeConfigsPackages` step
+  beforeMerge: async (context) =&gt; {
+    console.log('Before merge hooks has been fired: ', context)
+    return context
+  },
+  // in this step we're removing EOL from the all files
+  afterMerge: async (context) =&gt; {
+    const eolRe = new RegExp(`${EOL}$`)
+
+    for (const config in context.mergedConfigs) {
+      if (!eolRe.test(context.mergedConfigs[config])) continue
+
+      context.mergedConfigs[config] = context.mergedConfigs[config].replace(eolRe, '')
     }
-  }
+
+    return context
+  },
 }
 </code></pre>
-<p><code>.eslintrc</code> will be always equal to the upcoming one.</p>
-<hr />
-<p><code>configs[name: string].format: boolean</code> – enables or disables formatting with
-<code>prettier</code> or <code>editorconfig</code>.</p>
-<p>Example:</p>
-<pre><code class="language-json">{
-  &quot;configs&quot;: {
-    &quot;.eslintrc&quot;: {
-      &quot;format&quot;: false
-    }
-  }
-}
-</code></pre>
-<p><code>.eslintrc</code> will not be formatted.</p>
+<p>You can write your own hook, publish it and re-use everywhere you need.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-                            <a rel="prev" href="quick-start.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="3_how_it_works.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
 
+                        
+                            <a rel="next" href="5_multiple_configurations.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
                         
 
                         <div style="clear: both"></div>
@@ -227,11 +222,15 @@ It can be defined in <code>.sharecrc.json</code> file, or in <code>sharec</code>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                    <a rel="prev" href="quick-start.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="3_how_it_works.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
 
+                
+                    <a rel="next" href="5_multiple_configurations.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
                 
             </nav>
 
