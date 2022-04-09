@@ -1,6 +1,6 @@
 {
   "name": "sharec-core",
-  "version": "3.0.0-alpha.0",
+  "version": "3.0.0",
   "keywords": [
     "configuration",
     "sharec",
@@ -54,8 +54,8 @@
   "dependencies": {
     "lodash.get": "^4.4.2",
     "lodash.omit": "^4.5.0",
-    "sharec-schema": "^3.0.0-alpha.0",
-    "sharec-utils": "^3.0.0-alpha.0"
+    "sharec-schema": "^3.0.0",
+    "sharec-utils": "^3.0.0"
   },
   "gitHead": "8b056dc9aedf49a712b84b4d47ea9fa1cea45b08"
 }
