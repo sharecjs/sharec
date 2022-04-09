@@ -28,6 +28,7 @@ Breaking changes:
 - Configuration package doesn't need `sharec` as dependency anymore
 - Target package requres sharec as dependency (it can be installed globally,
   though)
+- `sharec-nanomatch` removed
 
 # 2.10.7
 
