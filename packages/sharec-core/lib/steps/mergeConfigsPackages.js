@@ -1,5 +1,5 @@
 // @ts-check
-const get = require('lodash/get')
+const get = require('lodash.get')
 const { readFile } = require('sharec-utils').std
 const { join } = require('sharec-utils').path
 const { getConfigPipe } = require('../pipes')

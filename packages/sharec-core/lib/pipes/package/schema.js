@@ -1,5 +1,5 @@
 // @ts-check
-const isMap = require('lodash/isMap')
+const { isMap } = require('sharec-utils').map
 const { compose, fork } = require('sharec-schema').actions
 const { hashAtom, listConcatAtom, primitiveAtom, commandAtom } = require('sharec-schema').atoms
 const { eslintJson } = require('../eslint/schema')

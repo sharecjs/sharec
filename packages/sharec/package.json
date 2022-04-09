@@ -25,8 +25,7 @@
   "dependencies": {
     "minimist": "^1.2.0",
     "nanospinner": "^0.3.1",
-    "sharec-core": "^2.10.2",
-    "shelljs": "^0.8.3"
+    "sharec-core": "^2.10.2"
   },
   "gitHead": "8b056dc9aedf49a712b84b4d47ea9fa1cea45b08"
 }

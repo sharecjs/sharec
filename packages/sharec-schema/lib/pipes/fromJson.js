@@ -1,7 +1,7 @@
 // @ts-check
-const omitBy = require('lodash/omitBy')
-const isUndefined = require('lodash/isUndefined')
-const mapValues = require('lodash/mapValues')
+const omitBy = require('lodash.omitby')
+const isUndefined = require('lodash.isundefined')
+const mapValues = require('lodash.mapvalues')
 const { fromJSON } = require('../parsers/json')
 
 /**

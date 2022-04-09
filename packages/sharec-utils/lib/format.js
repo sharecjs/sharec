@@ -1,6 +1,6 @@
 // @ts-check
 const { EOL } = require('os')
-const get = require('lodash/get')
+const get = require('lodash.get')
 const detectIndent = require('detect-indent')
 const minimatch = require('minimatch')
 const { basename } = require('./path')

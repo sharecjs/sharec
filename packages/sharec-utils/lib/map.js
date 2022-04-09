@@ -1,6 +1,14 @@
 // @ts-check
 
 /**
+ * Works like lodash/isMap
+ * Returns `true` if given value is instance of Map
+ * @param {any} val
+ * @returns {boolean}
+ */
+const isMap = (val) => val instanceof Map
+
+/**
  * Works like lodash/pick, but with maps
  * Picks entries from target map by given keys and returns new map
  * @param {Map} target Target map
@@ -77,6 +85,7 @@ const omitBy = (target, predicate) => {
 }
 
 module.exports = {
+  isMap,
   pick,
   omit,
   pickBy,
