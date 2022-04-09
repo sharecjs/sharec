@@ -7,3 +7,7 @@
 - [Runtime configuration](./4_runtime_configuration.md)
 - [Multi-configuration](./5_multiple_configurations.md)
 - [CLI API](./6_cli.md)
+
+# Recipes
+
+- [Ready examples](./7_ready_examples.md)
