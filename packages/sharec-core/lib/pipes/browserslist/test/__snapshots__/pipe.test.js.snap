@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`strategies > pipes > browserslist should process browserslist configs 1`] = `
+"last 1 version
+> 1%
+maintained node versions
+not dead"
+`;

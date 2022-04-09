@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`pipes > lintStaged > schema JSON should merge configs 1`] = `
+Map {
+  "src/**/*.{js,jsx,json}" => Array [
+    "eslint --fix",
+    "prettier --write",
+    "git add",
+  ],
+  "src/**/*.css" => Array [
+    "stylelint --fix",
+    "prettier --write",
+    "git add",
+  ],
+}
+`;

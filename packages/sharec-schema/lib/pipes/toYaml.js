@@ -1,5 +1,5 @@
 // @ts-check
-const last = require('lodash/last')
+const last = require('lodash.last')
 const { toYAML } = require('../parsers/yaml')
 
 /**

@@ -1,6 +1,6 @@
 {
   "name": "sharec",
-  "version": "2.10.7",
+  "version": "3.0.0-alpha.0",
   "description": "Smart configuration manager for your projects",
   "keywords": [
     "configuration",
@@ -20,61 +20,12 @@
   "main": "./src/sharec.js",
   "bin": "./bin/sharec",
   "scripts": {
-    "test": "tsc --noEmit && jest",
     "types": "echo 'types generation not applicable in this package yet'"
   },
-  "jest": {
-    "moduleDirectories": [
-      "node_modules",
-      "src",
-      "../../test"
-    ],
-    "moduleFileExtensions": [
-      "js",
-      "json"
-    ],
-    "testMatch": [
-      "**/*.test.js"
-    ],
-    "testPathIgnorePatterns": [
-      "node_modules",
-      "src/__legacy__"
-    ],
-    "coveragePathIgnorePatterns": [
-      "node_modules"
-    ],
-    "setupFiles": [
-      "jest-plugin-context/setup",
-      "./jest.setup.js"
-    ],
-    "setupFilesAfterEnv": [
-      "../../test/jest/index.js"
-    ]
-  },
-  "devDependencies": {
-    "@types/chalk": "^2.2.0",
-    "callsites": "^3.1.0",
-    "jest": "^26.6.3",
-    "jest-cli": "^26.6.3",
-    "jest-plugin-context": "^2.9.0",
-    "memfs": "^2.15.2"
-  },
   "dependencies": {
-    "detect-indent": "^6.0.0",
-    "editorconfig": "^0.15.3",
-    "enquirer": "^2.3.6",
-    "js-yaml": ">=3.13.1",
-    "json8": "^1.0.1",
-    "lodash": "^4.17.15",
-    "minimatch": "^3.0.4",
     "minimist": "^1.2.0",
-    "nanospinner": "^0.3.0",
-    "picocolors": "^1.0.0",
-    "sharec-nanomatch": "^2.10.7",
-    "sharec-schema": "^2.10.7",
-    "sharec-utils": "^2.10.7",
-    "shelljs": "^0.8.3",
-    "slash": "^3.0.0"
+    "nanospinner": "^0.3.1",
+    "sharec-core": "^3.0.0-alpha.0"
   },
   "gitHead": "8b056dc9aedf49a712b84b4d47ea9fa1cea45b08"
 }

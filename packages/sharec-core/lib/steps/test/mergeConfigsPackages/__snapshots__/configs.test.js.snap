@@ -1,0 +1,143 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`steps > mergeConfigsPackages > configs merges and writes configs 1`] = `
+"{
+  \\"env\\": {
+    \\"browser\\": true,
+    \\"es6\\": true,
+    \\"node\\": true,
+    \\"jest\\": true
+  },
+  \\"globals\\": {
+    \\"foo\\": true,
+    \\"bar\\": true
+  },
+  \\"extends\\": \\"airbnb\\",
+  \\"rules\\": {
+    \\"max-len\\": [
+      \\"warn\\",
+      120,
+      4,
+      {
+        \\"ignoreUrls\\": false,
+        \\"ignoreComments\\": true,
+        \\"ignoreStrings\\": false
+      }
+    ],
+    \\"space-before-function-paren\\": 1,
+    \\"no-console\\": 0
+  },
+  \\"parserOptions\\": {
+    \\"parser\\": \\"babel-eslint\\",
+    \\"ecmaVersion\\": 7,
+    \\"ecmaFeatures\\": {
+      \\"spread\\": true
+    },
+    \\"sourceType\\": \\"module\\"
+  }
+}"
+`;
+
+exports[`steps > mergeConfigsPackages > configs merges and writes configs 2`] = `
+"{
+  \\"presets\\": [
+    [
+      \\"env\\",
+      {
+        \\"modules\\": false,
+        \\"targets\\": {
+          \\"browsers\\": [
+            \\"> 1%\\",
+            \\"last 2 versions\\",
+            \\"not ie > 0\\"
+          ]
+        }
+      }
+    ],
+    \\"stage-2\\"
+  ],
+  \\"plugins\\": [
+    [
+      \\"syntax-dynamic-import\\",
+      {
+        \\"foo\\": \\"bar\\"
+      }
+    ],
+    \\"lodash\\"
+  ],
+  \\"env\\": {
+    \\"test\\": {
+      \\"presets\\": [
+        \\"env\\",
+        \\"stage-2\\"
+      ],
+      \\"plugins\\": [
+        \\"dynamic-import-node\\"
+      ]
+    }
+  },
+  \\"ignore\\": [
+    \\"*.babelrc\\"
+  ]
+}"
+`;
+
+exports[`steps > mergeConfigsPackages > configs merges and writes configs 3`] = `
+"node_modules
+foo
+bar
+baz"
+`;
+
+exports[`steps > mergeConfigsPackages > configs merges and writes configs 4`] = `
+"node_modules
+foo
+bar
+baz"
+`;
+
+exports[`steps > mergeConfigsPackages > configs merges and writes configs 5`] = `
+"{
+  \\"lang\\": \\"en\\",
+  \\"ignoreCapitalization\\": false,
+  \\"excludeFiles\\": [
+    \\"README-*.md\\",
+    \\"CHANGELOG.md\\"
+  ],
+  \\"ignoreText\\": [
+    \\" \\\\\\\\(by [^)]+\\\\\\\\).\\"
+  ],
+  \\"ignoreTags\\": [
+    \\"foo\\"
+  ],
+  \\"dictionary\\": [
+    \\"cryptographically\\",
+    \\"formatAsync\\",
+    \\"generateAsync\\",
+    \\"gzip\\",
+    \\"gzipped\\",
+    \\"Haskell\\",
+    \\"js\\",
+    \\"JSDoc\\",
+    \\"nanoid\\",
+    \\"Nim\\",
+    \\"nonSecure\\",
+    \\"npm\\",
+    \\"UUID\\",
+    \\"v4\\",
+    \\"Versioning\\",
+    \\"JS\\",
+    \\"PouchDB\\",
+    \\"CouchDB\\",
+    \\"Async\\",
+    \\"asyncGenerator\\",
+    \\"CLI\\",
+    \\"Clojure\\",
+    \\"ClojureScript\\",
+    \\"Crypto\\"
+  ],
+  \\"fileExtensions\\": [
+    \\"bar\\"
+  ]
+}"
+`;

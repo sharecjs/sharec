@@ -1,5 +1,5 @@
 // @ts-check
-const flow = require('lodash/flow')
+const flow = require('lodash.flow')
 const { trimEOF, linesToLists } = require('../helpers')
 const listMergeAtom = require('./listMerge')
 const primitiveAtom = require('./primitive')

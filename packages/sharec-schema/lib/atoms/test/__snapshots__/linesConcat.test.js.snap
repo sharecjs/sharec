@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`atoms > linesConcat should merge lines as lists 1`] = `
+"foo
+bar
+baz
+new foo
+new bar"
+`;
+
+exports[`atoms > linesConcat should return current if upcoming is not passed 1`] = `
+"foo
+bar
+baz"
+`;
+
+exports[`atoms > linesConcat should return upcoming if current is not passed 1`] = `
+"new foo
+new bar"
+`;

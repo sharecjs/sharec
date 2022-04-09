@@ -1,5 +1,5 @@
 // @ts-check
-const without = require('lodash/without')
+const without = require('lodash.without')
 
 /**
  * @typedef {import('../').Schema} Schema
@@ -17,7 +17,7 @@ const without = require('lodash/without')
  */
 const applySchemaByKeys = ({ schema, keys = [], target }) =>
   /**
-   * Mutates passed target map!
+   * Mutates the passed map!
    * @param {SchemaParams} params
    * @returns {Map}
    */
@@ -27,19 +27,19 @@ const applySchemaByKeys = ({ schema, keys = [], target }) =>
     for (const key of keys) {
       const strategy = schema[key] || schema.$$default
       const ignoreList = schema.$$ignore || []
+      const current = params.current.get(key)
+      const skip = !strategy || !params.upcoming.has(key) || ignoreList.includes(key)
 
-      if (!strategy || !params.upcoming.has(key) || ignoreList.includes(key)) {
-        target.set(key, params.current.get(key))
+      if (skip && current !== undefined) {
+        target.set(key, current)
         continue
       }
+      if (skip) continue
 
-      const current = params.current.get(key)
       const upcoming = params.upcoming.get(key)
       const cached = params.cached && params.cached.get(key)
 
-      if (current === undefined && cached !== undefined) {
-        continue
-      }
+      if (current === undefined && cached !== undefined) continue
 
       target.set(
         key,

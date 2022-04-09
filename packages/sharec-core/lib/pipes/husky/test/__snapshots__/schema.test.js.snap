@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`pipes > husky > schema JSON should merge configs 1`] = `
+Map {
+  "hooks" => Map {
+    "pre-commit" => "different-linter",
+    "post-commit" => "echo 'yay'",
+  },
+}
+`;

@@ -1,7 +1,7 @@
 // @ts-check
 
-const isEqual = require('lodash/isEqual')
-const uniqWith = require('lodash/uniqWith')
+const isEqual = require('lodash.isequal')
+const uniqWith = require('lodash.uniqwith')
 
 /**
  * @typedef {import('../').SchemaParams<string[]>} SchemaListParams

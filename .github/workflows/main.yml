@@ -1,4 +1,10 @@
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - '*'
 
 jobs:
   lint:
@@ -12,6 +18,12 @@ jobs:
     - uses: actions/setup-node@v2
       with:
         version: '16.x'
+    - name: Restore npm cache
+      uses: actions/cache@v2
+      with:
+        path: |
+          node_modules
+        key: ${{ runner.os }}-${{ hashFiles('./package-lock.json') }}
     - name: Install dependencies
       run: |
         npm i
@@ -33,6 +45,13 @@ jobs:
     - name: Install dependencies
       run: |
         npm i
+    - name: Restore lerna cache
+      uses: actions/cache@v2
+      with:
+        path: |
+          node_modules
+          */*/node_modules
+        key: ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
     - name: Install packages dependencies
       run: |
         npx lerna bootstrap

@@ -1,6 +1,6 @@
 {
   "name": "sharec-utils",
-  "version": "2.10.7",
+  "version": "3.0.0-alpha.0",
   "description": "Common utilities",
   "keywords": [
     "configuration",
@@ -19,8 +19,7 @@
   "license": "MIT",
   "scripts": {
     "test": "tsc --noEmit && jest",
-    "types": "tsc --emitDeclarationOnly",
-    "test:watch": "jest --watch"
+    "types": "tsc --emitDeclarationOnly"
   },
   "main": "./lib/index.js",
   "types": "./types/index.d.ts",
@@ -45,24 +44,19 @@
       "node_modules"
     ],
     "setupFiles": [
-      "jest-plugin-context/setup",
       "./jest.setup.js"
-    ],
-    "setupFilesAfterEnv": [
-      "../../test/jest/index.js"
     ]
   },
   "devDependencies": {
     "jest": "^26.6.3",
     "jest-cli": "^26.6.3",
-    "jest-plugin-context": "^2.9.0",
-    "memfs": "^3.2.0"
+    "memfs": "^3.4.1"
   },
   "dependencies": {
     "detect-indent": "^6.0.0",
-    "lodash": "^4.17.21",
+    "lodash.get": "^4.4.2",
     "minimatch": "^3.0.4",
-    "sharec-nanomatch": "^2.10.7",
+    "nanomatch": "^1.2.13",
     "slash": "^3.0.0"
   }
 }

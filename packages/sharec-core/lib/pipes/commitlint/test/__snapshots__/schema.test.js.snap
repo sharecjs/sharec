@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`pipes > commitlint > schema JSON should merge configs 1`] = `
+Map {
+  "parserPreset" => "other-parser",
+  "rules" => Map {
+    "body-leading-blank" => Array [
+      2,
+      "never",
+    ],
+    "body-max-line-length" => Array [
+      2,
+      "always",
+      100,
+    ],
+    "footer-leading-blank" => Array [
+      1,
+      "always",
+    ],
+    "type-enum" => Array [
+      2,
+      "always",
+      Array [
+        "feat",
+        "fix",
+        "perf",
+        "refactor",
+        "revert",
+        "style",
+        "test",
+      ],
+    ],
+    "footer-max-line-length" => Array [
+      2,
+      "always",
+      100,
+    ],
+    "header-max-length" => Array [
+      2,
+      "always",
+      100,
+    ],
+  },
+}
+`;

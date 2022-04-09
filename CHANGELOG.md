@@ -1,3 +1,35 @@
+# 3.0.0
+
+This release changes `sharec` usage at all.
+
+Now it contains less magic and it's much more stable.
+
+Features:
+
+- Detailed re-think of each package inside the project
+- `.d.ts` generation and better documentation for the whole code base
+- Multi-configuration support – now you can decompose you configs and install
+  some of them in favor of bloat packages (`sharec.configs` field in
+  `package.json`)
+- `semaphore` as new and predictable abstration to control the flow
+- `hooks` to customize `sharec` output
+- Lockdata – to handle, which version was already installed to the project
+  (`sharec.locked` field in `package.json`)
+- Stable tests on all popular platforms (`window`, `linux`, `osx`) with
+  snapshots. Much reliable and stable tests
+
+Breaking changes:
+
+- `sharec` isn't fully automated tool anymore. You should describe all your
+  configuration packages and execute the program manually
+- Formatting steps were removed in favor of custom hooks and simple, solid core
+- `silent`, `overwrite`, `debug`, `include`, `interactive` CLI options were
+  deprecated
+- Configuration package doesn't need `sharec` as dependency anymore
+- Target package requres sharec as dependency (it can be installed globally,
+  though)
+- `sharec-nanomatch` removed
+
 # 2.10.7
 
 Refactor:

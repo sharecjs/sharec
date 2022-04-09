@@ -1,0 +1,14 @@
+{
+  "scripts": {
+    "start": "rimraf && start-script"
+  },
+  "dependencies": {
+    "react": "16.0.0",
+    "awesome-config": "1.0.0"
+  },
+  "sharec": {
+    "configs": [
+      "awesome-config"
+    ]
+  }
+}

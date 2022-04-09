@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`pipes > postcss > schema merge should merge objects by one deep level 1`] = `
+Map {
+  "plugins" => Map {
+    "postcss-partial-import" => Map {},
+    "postcss-custom-properties" => Map {
+      "preserve" => true,
+    },
+    "postcss-nested" => Map {},
+    "autoprefixer" => Map {},
+  },
+}
+`;

@@ -131,4 +131,66 @@ describe('strategies > helpers > params > commandsToMap', () => {
       ]),
     })
   })
+
+  it('should handle the logical operator or', () => {
+    expect(
+      commandsToMap({
+        current: 'npx fixpack || true',
+      }),
+    ).toEqual({
+      current: new Map([
+        [
+          'npx',
+          [
+            new Map([
+              ['separator', '||'],
+              ['env', []],
+              ['args', ['fixpack']],
+            ]),
+          ],
+        ],
+        [
+          'true',
+          [
+            new Map([
+              ['separator', null],
+              ['env', []],
+              ['args', []],
+            ]),
+          ],
+        ],
+      ]),
+    })
+  })
+
+  it('should handle the command separator', () => {
+    expect(
+      commandsToMap({
+        current: 'fixpack; husky install',
+      }),
+    ).toEqual({
+      current: new Map([
+        [
+          'fixpack',
+          [
+            new Map([
+              ['separator', ';'],
+              ['env', []],
+              ['args', []],
+            ]),
+          ],
+        ],
+        [
+          'husky',
+          [
+            new Map([
+              ['separator', null],
+              ['env', []],
+              ['args', ['install']],
+            ]),
+          ],
+        ],
+      ]),
+    })
+  })
 })

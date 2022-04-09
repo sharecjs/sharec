@@ -1,0 +1,47 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`pipes > yaspeller > schema should merge yaspeller json configs 1`] = `
+Map {
+  "lang" => "en",
+  "ignoreCapitalization" => false,
+  "excludeFiles" => Array [
+    "README-*.md",
+    "CHANGELOG.md",
+  ],
+  "ignoreText" => Array [
+    " \\\\(by [^)]+\\\\).",
+  ],
+  "ignoreTags" => Array [
+    "foo",
+  ],
+  "dictionary" => Array [
+    "cryptographically",
+    "formatAsync",
+    "generateAsync",
+    "gzip",
+    "gzipped",
+    "Haskell",
+    "js",
+    "JSDoc",
+    "nanoid",
+    "Nim",
+    "nonSecure",
+    "npm",
+    "UUID",
+    "v4",
+    "Versioning",
+    "JS",
+    "PouchDB",
+    "CouchDB",
+    "Async",
+    "asyncGenerator",
+    "CLI",
+    "Clojure",
+    "ClojureScript",
+    "Crypto",
+  ],
+  "fileExtensions" => Array [
+    "bar",
+  ],
+}
+`;

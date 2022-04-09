@@ -1,8 +1,11 @@
 // @ts-check
-const get = require('lodash/get')
+const { EOL } = require('os')
+const get = require('lodash.get')
 const detectIndent = require('detect-indent')
 const minimatch = require('minimatch')
 const { basename } = require('./path')
+
+const eolRe = new RegExp(`${EOL}$`)
 
 /**
  * @typedef {import('./index').FormattingRules} FormattingRules
@@ -28,7 +31,14 @@ const hasSpacesIndent = (str) => detectIndent(str).type === 'space'
  * @param {string} str
  * @returns {boolean}
  */
-const hasEOF = (str) => /^\s*$/gm.test(str)
+const hasEOF = (str) => eolRe.test(str)
+
+/**
+ * Cuts off EOL in the end of the file
+ * @param {string} str
+ * @returns {string}
+ */
+const cutEOF = (str) => str.replace(eolRe, '')
 
 /**
  * Replaces all indents in string by tabs
@@ -112,6 +122,7 @@ module.exports = {
   hasSpacesIndent,
   hasTabsIndent,
   hasEOF,
+  cutEOF,
   indentWithSpace,
   indentWithTab,
   applyFormat,
