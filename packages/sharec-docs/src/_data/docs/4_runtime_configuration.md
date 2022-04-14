@@ -1,3 +1,8 @@
+---
+title: Runtime configuration
+permalink: '/docs/runtime_configuration/'
+---
+
 # Runtime configuration
 
 With runtime configuration you can add `hooks` to customize any field in

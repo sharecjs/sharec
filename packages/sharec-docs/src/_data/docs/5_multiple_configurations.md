@@ -1,3 +1,8 @@
+---
+title: Multiple configurations
+permalink: '/docs/multi_configs/'
+---
+
 # Multiple configurations
 
 `sharec` supports multiple configuration package.

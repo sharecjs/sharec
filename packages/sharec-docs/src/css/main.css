@@ -1,0 +1,4 @@
+@import 'reset.css';
+@import './base.css';
+@tailwind base;
+@tailwind utilities;

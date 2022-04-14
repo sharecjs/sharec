@@ -1,3 +1,8 @@
+---
+title: Quick start
+permalink: '/docs/quick_start/'
+---
+
 # Quick start
 
 ## Pack your configs

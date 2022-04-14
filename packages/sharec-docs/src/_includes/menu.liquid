@@ -1,0 +1,14 @@
+<nav class="flex flex-col rounded list-none text-lg h-full font-mono">
+  {% for doc in docs %}
+    <li class='mb-2 last:mb-0'>
+      {% if page.url == doc[1].permalink %}
+        <p class='menu-link font-bold cursor-default'>{{ doc[1].title }}</p>
+      {% else %}
+        <a class='menu-link cursor-pointer' href='{{ doc[1].permalink }}'>{{ doc[1].title }}</a>
+      {% endif %}
+    </li>
+  {% endfor %}
+  <li class='mt-auto'>
+    <a class='menu-link' href='github.com/sharecjs/sharec' target='_blank'>Github</a>
+  </li>
+</nav>

@@ -1,0 +1,13 @@
+---
+pagination:
+  data: docs
+  size: 1
+  alias: doc
+permalink: '{{ docs[doc].permalink }}index.html'
+---
+{% layout 'main.liquid' %}
+{% block content %}
+  <div class='article'>
+    {{ docs[doc].body }}
+  </div>
+{% endblock %}

@@ -1,3 +1,8 @@
+---
+title: How it works
+permalink: '/docs/how_it_works/'
+---
+
 # How it works
 
 Here you can read some details about `sharec` architecture.
