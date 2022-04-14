@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <title></title>
+    <meta charset='urf-8'>
+    <meta name='viewport' content='width=device-width,initial-scale=1'>
+    <meta name='description' content='Konstantin Epishev – Software Englineer'>
+    <meta property='og:type' content='website'>
+    <meta property='og:url' content='https://www.11ty.dev/'>
+    <meta property='og:site_name' content='Eleventy'>
+    <meta property='og:locale' content='en_US'>
+    <meta property='og:title' content='K'>
+    <meta property='og:description' content='Konstantin Epishev – Software Englineer'>
+    <link rel='stylesheet' href='/assets/css/main.css'>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/github.min.css">
+  </head>
+  <body>
+    <div class='min-h-screen pl-80'>
+      <section class='flex flex-col w-80 h-full py-8 px-6 shadow fixed left-0 top-0 bg-white overflow-y-auto'>
+        
+          <a href='/'>
+            <div class='flex justify-center items-center font-mono text-2xl mb-10 bg-gray-100 p-4 rounded shadow'>
+  <img class='flex-0 w-8 mr-4' src='/assets/images/logo.svg' alt='Sharec logo' />
+  Sharec
+</div>
+
+          </a>
+        
+        <nav class="flex flex-col rounded list-none text-lg h-full font-mono">
+  
+    <li class='mb-2 last:mb-0'>
+      
+        <a class='menu-link cursor-pointer' href='/'>Introduction</a>
+      
+    </li>
+  
+    <li class='mb-2 last:mb-0'>
+      
+        <p class='menu-link font-bold cursor-default'>Quick start</p>
+      
+    </li>
+  
+    <li class='mb-2 last:mb-0'>
+      
+        <a class='menu-link cursor-pointer' href='/docs/how_it_works/'>How it works</a>
+      
+    </li>
+  
+    <li class='mb-2 last:mb-0'>
+      
+        <a class='menu-link cursor-pointer' href='/docs/runtime_configuration/'>Runtime configuration</a>
+      
+    </li>
+  
+    <li class='mb-2 last:mb-0'>
+      
+        <a class='menu-link cursor-pointer' href='/docs/multi_configs/'>Multiple configurations</a>
+      
+    </li>
+  
+    <li class='mb-2 last:mb-0'>
+      
+        <a class='menu-link cursor-pointer' href='/docs/cli_api/'>CLI API</a>
+      
+    </li>
+  
+    <li class='mb-2 last:mb-0'>
+      
+        <a class='menu-link cursor-pointer' href='/docs/ready_examples/'>Ready examples</a>
+      
+    </li>
+  
+  <li class='mt-auto'>
+    <a class='menu-link' href='github.com/sharecjs/sharec' target='_blank'>Github</a>
+  </li>
+</nav>
+
+      </section>
+      <section class='w-full min-h-screen bg-gray-100'>
+        
+  <div class='article'>
+    <h1>Quick start</h1>
+<h2>Pack your configs</h2>
+<ol>
+<li>Init new npm package</li>
+<li>Create <code>configs</code> directory inside</li>
+<li>Place some configuration files to the directory</li>
+<li>Create <code>package.json</code> file inside <code>configs</code> directory and add dependencies
+your tools need</li>
+<li>Publish the package</li>
+</ol>
+<h2>Prepare your project</h2>
+<ol>
+<li>Install your recently published configuration package</li>
+<li>Install <code>sharec</code> to your project</li>
+<li>Modify <code>package.json</code> in the project with <code>sharec</code> field:</li>
+</ol>
+<pre><code class="language-diff">{
+  &quot;name&quot;: &quot;my-awesome-project&quot;,
+  &quot;devDependencies&quot;: {
+    &quot;my-awesome-config&quot;: &quot;1.0.0&quot;,
+    &quot;sharec&quot;: &quot;3.0.0&quot;
+  },
++  &quot;sharec&quot;: {
++    &quot;configs&quot;: [&quot;my-awesome-config&quot;]
++  }
+}
+</code></pre>
+<ol start="4">
+<li>Run <code>sharec</code> command manually:</li>
+</ol>
+<pre><code class="language-shell">npx sharec
+</code></pre>
+<p>Or add <code>postinstall</code> hook:</p>
+<pre><code class="language-diff">{
+  &quot;name&quot;: &quot;my-awesome-project&quot;,
++  &quot;scripts&quot;: {
++    &quot;postinstall&quot;: &quot;sharec&quot;
++  },
+  &quot;devDependencies&quot;: {
+    &quot;my-awesome-config&quot;: &quot;1.0.0&quot;,
+    &quot;sharec&quot;: &quot;3.0.0&quot;
+  },
+  &quot;sharec&quot;: {
+    &quot;configs&quot;: [&quot;my-awesome-config&quot;]
+  }
+}
+</code></pre>
+<h2>Example</h2>
+<p>With sharec you can transform this:</p>
+<pre><code class="language-diff">{
+  &quot;name&quot;: &quot;my-awesome-project&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;scripts&quot;: {
+    &quot;start&quot;: &quot;NODE_ENV=development ./dev&quot;,
+    &quot;build&quot;: &quot;rimraf dist &amp;&amp; NODE_ENV=production ./build&quot;,
+-   &quot;eslint&quot;: &quot;eslint ./src/**/*.js&quot;
+  },
+- &quot;husky&quot;: {
+-   &quot;hooks&quot;: {
+-     &quot;pre-commit&quot;: &quot;lint-staged&quot;
+-   }
+- },
+- &quot;lint-staged&quot;: {
+-   &quot;src/**/*.js&quot;: [
+-     &quot;eslint&quot;,
+-     &quot;prettier --write&quot;,
+-     &quot;git add&quot;
+-   ]
+- },
+- &quot;browserslist&quot;: [
+-   &quot;last 2 version&quot;,
+-   &quot;&gt; 1%&quot;
+- ],
+- &quot;babel&quot;: {
+-   &quot;presets&quot;: [
+-     &quot;@babel/preset-env&quot;
+-   ]
+- },
+- &quot;prettier&quot;: {
+-   &quot;singleQuote&quot;: true,
+-   &quot;semi&quot;: false
+- },
+- &quot;jest&quot;: {
+-   &quot;testURL&quot;: &quot;http://localhost/&quot;,
+-   &quot;moduleNameMapper&quot;: {
+-     &quot;^src/(.*)$&quot;: &quot;&lt;rootDir&gt;/src/$1&quot;
+-   }
+- },
+- &quot;eslintConfig&quot;: {
+-   &quot;parser&quot;: &quot;babel-eslint&quot;,
+-   &quot;env&quot;: {
+-     &quot;browser&quot;: true,
+-     &quot;es6&quot;: true,
+-     &quot;node&quot;: true,
+-     &quot;jest&quot;: true
+-   },
+-   &quot;extends&quot;: &quot;standard&quot;,
+-   &quot;rules&quot;: {
+-     &quot;space-before-function-paren&quot;: 0
+-   },
+-   &quot;parserOptions&quot;: {
+-     &quot;ecmaVersion&quot;: 8,
+-     &quot;ecmaFeatures&quot;: {
+-       &quot;spread&quot;: true
+-     },
+-     &quot;sourceType&quot;: &quot;module&quot;
+-   }
+- },
+- &quot;eslintIgnore&quot;: [
+-   &quot;/node_modules&quot;,
+-   &quot;/dist&quot;
+- ],
+  &quot;devDependencies&quot;: {
+-   &quot;@babel/core&quot;: &quot;^7.0.1&quot;,
+-   &quot;@babel/preset-env&quot;: &quot;^7.0.0&quot;,
+-   &quot;babel-core&quot;: &quot;7.0.0-bridge.0&quot;,
+-   &quot;babel-eslint&quot;: &quot;^10.0.0&quot;,
+-   &quot;babel-jest&quot;: &quot;^23.6.0&quot;,
+-   &quot;eslint&quot;: &quot;^5.6.0&quot;,
+-   &quot;eslint-config-standard&quot;: &quot;^12.0.0&quot;,
+-   &quot;eslint-plugin-import&quot;: &quot;^2.9.0&quot;,
+-   &quot;eslint-plugin-node&quot;: &quot;^9.0.0&quot;,
+-   &quot;eslint-plugin-promise&quot;: &quot;^4.0.1&quot;,
+-   &quot;eslint-plugin-standard&quot;: &quot;^4.0.0&quot;,
+-   &quot;husky&quot;: &quot;^2.0.0&quot;,
+-   &quot;lint-staged&quot;: &quot;^8.0.4&quot;,
+-   &quot;prettier&quot;: &quot;^1.11.1&quot;
+  }
+}
+</code></pre>
+<p>To this:</p>
+<pre><code class="language-diff">{
+  &quot;name&quot;: &quot;my-awesome-project&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;scripts&quot;: {
+    &quot;start&quot;: &quot;NODE_ENV=development ./dev&quot;,
+    &quot;build&quot;: &quot;rimraf dist &amp;&amp; NODE_ENV=production ./build&quot;,
+  },
+  &quot;devDependencies&quot;: {
++    &quot;sharec&quot;: &quot;3.0.0&quot;,
++    &quot;my-awesome-config&quot;: &quot;1.0.0&quot;
+  },
++  &quot;sharec&quot;: {
++    &quot;configs&quot;: [&quot;my-awesome-config&quot;]
++  }
+}
+</code></pre>
+
+  </div>
+
+      </section>
+    </div>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+    <script>window.hljs.highlightAll();</script>
+  </body>
+</html>

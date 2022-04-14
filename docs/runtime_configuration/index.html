@@ -18,17 +18,19 @@
     <div class='min-h-screen pl-80'>
       <section class='flex flex-col w-80 h-full py-8 px-6 shadow fixed left-0 top-0 bg-white overflow-y-auto'>
         
-          <div class='flex justify-center items-center font-mono text-2xl mb-10 bg-gray-100 p-4 rounded shadow'>
+          <a href='/'>
+            <div class='flex justify-center items-center font-mono text-2xl mb-10 bg-gray-100 p-4 rounded shadow'>
   <img class='flex-0 w-8 mr-4' src='/assets/images/logo.svg' alt='Sharec logo' />
   Sharec
 </div>
 
+          </a>
         
         <nav class="flex flex-col rounded list-none text-lg h-full font-mono">
   
     <li class='mb-2 last:mb-0'>
       
-        <p class='menu-link font-bold cursor-default'>Introduction</p>
+        <a class='menu-link cursor-pointer' href='/'>Introduction</a>
       
     </li>
   
@@ -46,7 +48,7 @@
   
     <li class='mb-2 last:mb-0'>
       
-        <a class='menu-link cursor-pointer' href='/docs/runtime_configuration/'>Runtime configuration</a>
+        <p class='menu-link font-bold cursor-default'>Runtime configuration</p>
       
     </li>
   
@@ -77,38 +79,37 @@
       <section class='w-full min-h-screen bg-gray-100'>
         
   <div class='article'>
-    <h1>Introduction</h1>
-<p>With <strong>sharec</strong> you can share and manage configuration across projects,
-keep your code up to date and prepare new ones in one command.</p>
-<h2>Potential use-cases</h2>
-<ul>
-<li>Versionable configuration packages</li>
-<li>Boilerplates and project starters (like <code>create-react-app</code>)</li>
-</ul>
-<h2>Supported configs</h2>
-<p>At this moment, sharec supports:</p>
-<ul>
-<li><code>npmignore</code></li>
-<li><code>eslint</code></li>
-<li><code>eslintignore</code></li>
-<li><code>babel</code></li>
-<li><code>yaspeller</code></li>
-<li><code>browserslist</code></li>
-<li><code>postcss</code></li>
-<li><code>gitignore</code></li>
-<li><code>husky</code></li>
-<li><code>jest</code> (only as <code>package.json</code> member)</li>
-<li><code>lint-staged</code></li>
-<li><code>stylelint</code></li>
-<li><code>commitlint</code></li>
-<li><code>prettier</code></li>
-</ul>
-<p>Other <code>.json</code> or <code>.yaml</code> files will be merged by keys.</p>
-<p>Files with different extension will be just copied.</p>
-<h2><code>.gitignore</code> and <code>.npmignore</code></h2>
-<p>If you want to include these files, you should name them without dot -
-<code>gitignore</code>, <code>npmignore</code>. It's necessary because originally named
-files won't be readed during installation.</p>
+    <h1>Runtime configuration</h1>
+<p>With runtime configuration you can add <code>hooks</code> to customize any field in
+<code>FlowContext</code>.</p>
+<p>Hook should match following signature:</p>
+<pre><code class="language-ts">type FlowStep = (context: FlowContext) =&gt; Promise&lt;FlowContext&gt;
+</code></pre>
+<p>At this moment <code>sharec</code> supports two hooks: <code>beforeMerge</code> and <code>afterMerge</code>.</p>
+<pre><code class="language-js">// .sharecrc.js
+const { EOL } = require('os')
+
+module.exports = {
+  // here we're logging whole the context before `mergeConfigsPackages` step
+  beforeMerge: async (context) =&gt; {
+    console.log('Before merge hooks has been fired: ', context)
+    return context
+  },
+  // in this step we're removing EOL from the all files
+  afterMerge: async (context) =&gt; {
+    const eolRe = new RegExp(`${EOL}$`)
+
+    for (const config in context.mergedConfigs) {
+      if (!eolRe.test(context.mergedConfigs[config])) continue
+
+      context.mergedConfigs[config] = context.mergedConfigs[config].replace(eolRe, '')
+    }
+
+    return context
+  },
+}
+</code></pre>
+<p>You can write your own hook, publish it and re-use everywhere you need.</p>
 
   </div>
 

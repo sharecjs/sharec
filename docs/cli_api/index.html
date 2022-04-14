@@ -18,17 +18,19 @@
     <div class='min-h-screen pl-80'>
       <section class='flex flex-col w-80 h-full py-8 px-6 shadow fixed left-0 top-0 bg-white overflow-y-auto'>
         
-          <div class='flex justify-center items-center font-mono text-2xl mb-10 bg-gray-100 p-4 rounded shadow'>
+          <a href='/'>
+            <div class='flex justify-center items-center font-mono text-2xl mb-10 bg-gray-100 p-4 rounded shadow'>
   <img class='flex-0 w-8 mr-4' src='/assets/images/logo.svg' alt='Sharec logo' />
   Sharec
 </div>
 
+          </a>
         
         <nav class="flex flex-col rounded list-none text-lg h-full font-mono">
   
     <li class='mb-2 last:mb-0'>
       
-        <p class='menu-link font-bold cursor-default'>Introduction</p>
+        <a class='menu-link cursor-pointer' href='/'>Introduction</a>
       
     </li>
   
@@ -58,7 +60,7 @@
   
     <li class='mb-2 last:mb-0'>
       
-        <a class='menu-link cursor-pointer' href='/docs/cli_api/'>CLI API</a>
+        <p class='menu-link font-bold cursor-default'>CLI API</p>
       
     </li>
   
@@ -77,38 +79,23 @@
       <section class='w-full min-h-screen bg-gray-100'>
         
   <div class='article'>
-    <h1>Introduction</h1>
-<p>With <strong>sharec</strong> you can share and manage configuration across projects,
-keep your code up to date and prepare new ones in one command.</p>
-<h2>Potential use-cases</h2>
+    <h1>CLI API</h1>
+<p><code>sharec</code> ships only one command. Use it to apply all your configuration packages:</p>
+<pre><code class="language-shell">npx sharec
+</code></pre>
+<h2>Options</h2>
+<p><strong><code>--cache, -c</code></strong> - disables or enables cache for configuration versioning. Also in can place all the <code>cahce</code> to <code>.sharec</code>
+directory if you don't have <code>node_modules</code>. By default cache is enabled.</p>
 <ul>
-<li>Versionable configuration packages</li>
-<li>Boilerplates and project starters (like <code>create-react-app</code>)</li>
+<li><code>true</code> – cache will be saved inside <code>&lt;project_path&gt;/node_modules/.cache/sharec</code></li>
+<li><code>false</code> – cache won't be saved</li>
+<li><code>include</code> – cache would be saved in <code>&lt;project_path&gt;/.sharec/cache</code>, instead <code>node_modules</code></li>
 </ul>
-<h2>Supported configs</h2>
-<p>At this moment, sharec supports:</p>
-<ul>
-<li><code>npmignore</code></li>
-<li><code>eslint</code></li>
-<li><code>eslintignore</code></li>
-<li><code>babel</code></li>
-<li><code>yaspeller</code></li>
-<li><code>browserslist</code></li>
-<li><code>postcss</code></li>
-<li><code>gitignore</code></li>
-<li><code>husky</code></li>
-<li><code>jest</code> (only as <code>package.json</code> member)</li>
-<li><code>lint-staged</code></li>
-<li><code>stylelint</code></li>
-<li><code>commitlint</code></li>
-<li><code>prettier</code></li>
-</ul>
-<p>Other <code>.json</code> or <code>.yaml</code> files will be merged by keys.</p>
-<p>Files with different extension will be just copied.</p>
-<h2><code>.gitignore</code> and <code>.npmignore</code></h2>
-<p>If you want to include these files, you should name them without dot -
-<code>gitignore</code>, <code>npmignore</code>. It's necessary because originally named
-files won't be readed during installation.</p>
+<p>Examples:</p>
+<pre><code class="language-shell">npx sharec --cache
+npx sharec --cache false
+npx sharec --cache include
+</code></pre>
 
   </div>
 

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <title></title>
+    <meta charset='urf-8'>
+    <meta name='viewport' content='width=device-width,initial-scale=1'>
+    <meta name='description' content='Konstantin Epishev – Software Englineer'>
+    <meta property='og:type' content='website'>
+    <meta property='og:url' content='https://www.11ty.dev/'>
+    <meta property='og:site_name' content='Eleventy'>
+    <meta property='og:locale' content='en_US'>
+    <meta property='og:title' content='K'>
+    <meta property='og:description' content='Konstantin Epishev – Software Englineer'>
+    <link rel='stylesheet' href='/assets/css/main.css'>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/github.min.css">
+  </head>
+  <body>
+    <div class='min-h-screen pl-80'>
+      <section class='flex flex-col w-80 h-full py-8 px-6 shadow fixed left-0 top-0 bg-white overflow-y-auto'>
+        
+          <a href='/'>
+            <div class='flex justify-center items-center font-mono text-2xl mb-10 bg-gray-100 p-4 rounded shadow'>
+  <img class='flex-0 w-8 mr-4' src='/assets/images/logo.svg' alt='Sharec logo' />
+  Sharec
+</div>
+
+          </a>
+        
+        <nav class="flex flex-col rounded list-none text-lg h-full font-mono">
+  
+    <li class='mb-2 last:mb-0'>
+      
+        <a class='menu-link cursor-pointer' href='/'>Introduction</a>
+      
+    </li>
+  
+    <li class='mb-2 last:mb-0'>
+      
+        <a class='menu-link cursor-pointer' href='/docs/quick_start/'>Quick start</a>
+      
+    </li>
+  
+    <li class='mb-2 last:mb-0'>
+      
+        <p class='menu-link font-bold cursor-default'>How it works</p>
+      
+    </li>
+  
+    <li class='mb-2 last:mb-0'>
+      
+        <a class='menu-link cursor-pointer' href='/docs/runtime_configuration/'>Runtime configuration</a>
+      
+    </li>
+  
+    <li class='mb-2 last:mb-0'>
+      
+        <a class='menu-link cursor-pointer' href='/docs/multi_configs/'>Multiple configurations</a>
+      
+    </li>
+  
+    <li class='mb-2 last:mb-0'>
+      
+        <a class='menu-link cursor-pointer' href='/docs/cli_api/'>CLI API</a>
+      
+    </li>
+  
+    <li class='mb-2 last:mb-0'>
+      
+        <a class='menu-link cursor-pointer' href='/docs/ready_examples/'>Ready examples</a>
+      
+    </li>
+  
+  <li class='mt-auto'>
+    <a class='menu-link' href='github.com/sharecjs/sharec' target='_blank'>Github</a>
+  </li>
+</nav>
+
+      </section>
+      <section class='w-full min-h-screen bg-gray-100'>
+        
+  <div class='article'>
+    <h1>How it works</h1>
+<p>Here you can read some details about <code>sharec</code> architecture.</p>
+<h2>The Core</h2>
+<p><code>sharec</code> actively uses middleware pattern dividing all the core logic to
+simple steps. All the steps can be divided on three groups: <code>read</code>, <code>process</code>
+and <code>write</code>.</p>
+<p>From step to step we're passing <code>FlowContext</code> – structure which includes all
+the data we need: target package data, loaded configs, cache, processing result;
+and <code>Semaphore</code> – abstraction controlling the whole process:</p>
+<pre><code class="language-text">(context, semaphore) -&gt; readTargetPackage -&gt; ... -&gt; mergeConfigsPackages -&gt; ... -&gt; writeConfigs -&gt; ...
+</code></pre>
+<p><code>FlowContext</code> is very similary to <code>Request</code> and <code>Response</code> parameters in
+<code>express</code> or <code>koa</code> middlewares.</p>
+<p>With <code>Semaphore</code> steps can send any data to CLI or even terminate the process.</p>
+<h2>Schema definiton</h2>
+<p><code>sharec</code> allows to describe <code>json</code> and <code>yaml</code> based configurations declaratively
+providing special utilities in <code>sharec-schema</code> package.</p>
+<p>Each field can be processed by helper depending on it's type.</p>
+<p>Composed schema is a just function, which can process given data structure in a
+specific way:</p>
+<pre><code class="language-js">const { compose } = require('sharec-schema').actions
+const { primitiveAtom } = require('sharec-schema').atoms
+
+const schema = compose({
+  field: primitiveAtom,
+})
+</code></pre>
+<p>Schema has special operators: <code>$$default</code> to handle fields, which weren't
+described and <code>$$ignore</code> to exclude fields from the process:</p>
+<pre><code class="language-js">const { compose } = require('sharec-schema').actions
+const { primitiveAtom, hashAtom } = require('sharec-schema').atoms
+
+const schema = compose({
+  field: hashAtom,
+  $$default: primitiveAtom,
+  $$ignore: ['foo', 'bar', 'baz'],
+})
+</code></pre>
+<p>Fields that have multiple possible types, can be handled by <code>fork</code> operator.
+It allows to match field with predicate and apply required function:</p>
+<pre><code class="language-js">const isMap = require('lodash/isMap')
+const { compose, fork } = require('sharec-schema').actions
+const { hashAtom, listConcatAtom, primitiveAtom } = require('sharec-schema').atoms
+
+const defaultJson = compose({
+  $$default: fork([[Array.isArray, listConcatAtom], [isMap, hashAtom], primitiveAtom]),
+})
+</code></pre>
+<p>To apply required schema it should be mapped by certain file name or regexp:</p>
+<pre><code class="language-js">const { map } = require('sharec-schema').actions
+const { createJsonPipe } = require('sharec-schema').pipes
+const { babelJson } = require('./schema')
+
+const babelJsonPipe = createJsonPipe([babelJson])
+
+const babelPipe = map(['.babelrc', babelJsonPipe], ['.babelrc.json', babelJsonPipe], ['babelrc.json', babelJsonPipe])
+</code></pre>
+
+  </div>
+
+      </section>
+    </div>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+    <script>window.hljs.highlightAll();</script>
+  </body>
+</html>

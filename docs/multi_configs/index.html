@@ -18,17 +18,19 @@
     <div class='min-h-screen pl-80'>
       <section class='flex flex-col w-80 h-full py-8 px-6 shadow fixed left-0 top-0 bg-white overflow-y-auto'>
         
-          <div class='flex justify-center items-center font-mono text-2xl mb-10 bg-gray-100 p-4 rounded shadow'>
+          <a href='/'>
+            <div class='flex justify-center items-center font-mono text-2xl mb-10 bg-gray-100 p-4 rounded shadow'>
   <img class='flex-0 w-8 mr-4' src='/assets/images/logo.svg' alt='Sharec logo' />
   Sharec
 </div>
 
+          </a>
         
         <nav class="flex flex-col rounded list-none text-lg h-full font-mono">
   
     <li class='mb-2 last:mb-0'>
       
-        <p class='menu-link font-bold cursor-default'>Introduction</p>
+        <a class='menu-link cursor-pointer' href='/'>Introduction</a>
       
     </li>
   
@@ -52,7 +54,7 @@
   
     <li class='mb-2 last:mb-0'>
       
-        <a class='menu-link cursor-pointer' href='/docs/multi_configs/'>Multiple configurations</a>
+        <p class='menu-link font-bold cursor-default'>Multiple configurations</p>
       
     </li>
   
@@ -77,38 +79,30 @@
       <section class='w-full min-h-screen bg-gray-100'>
         
   <div class='article'>
-    <h1>Introduction</h1>
-<p>With <strong>sharec</strong> you can share and manage configuration across projects,
-keep your code up to date and prepare new ones in one command.</p>
-<h2>Potential use-cases</h2>
-<ul>
-<li>Versionable configuration packages</li>
-<li>Boilerplates and project starters (like <code>create-react-app</code>)</li>
-</ul>
-<h2>Supported configs</h2>
-<p>At this moment, sharec supports:</p>
-<ul>
-<li><code>npmignore</code></li>
-<li><code>eslint</code></li>
-<li><code>eslintignore</code></li>
-<li><code>babel</code></li>
-<li><code>yaspeller</code></li>
-<li><code>browserslist</code></li>
-<li><code>postcss</code></li>
-<li><code>gitignore</code></li>
-<li><code>husky</code></li>
-<li><code>jest</code> (only as <code>package.json</code> member)</li>
-<li><code>lint-staged</code></li>
-<li><code>stylelint</code></li>
-<li><code>commitlint</code></li>
-<li><code>prettier</code></li>
-</ul>
-<p>Other <code>.json</code> or <code>.yaml</code> files will be merged by keys.</p>
-<p>Files with different extension will be just copied.</p>
-<h2><code>.gitignore</code> and <code>.npmignore</code></h2>
-<p>If you want to include these files, you should name them without dot -
-<code>gitignore</code>, <code>npmignore</code>. It's necessary because originally named
-files won't be readed during installation.</p>
+    <h1>Multiple configurations</h1>
+<p><code>sharec</code> supports multiple configuration package.</p>
+<p>You just need to install packages you need and pass them to <code>sharec.configs</code>
+field in your <code>package.json</code> file:</p>
+<pre><code class="language-json">{
+  &quot;name&quot;: &quot;my-awesome-project&quot;,
+  &quot;devDependencies&quot;: {
+    &quot;config-a&quot;: &quot;0.0.1&quot;,
+    &quot;config-b&quot;: &quot;0.1.0&quot;,
+    &quot;config-c&quot;: &quot;1.0.0&quot;,
+    &quot;sharec&quot;: &quot;3.0.0&quot;
+  },
+  &quot;sharec&quot;: {
+    &quot;configs&quot;: [&quot;config-a&quot;, &quot;config-b&quot;, &quot;config-c&quot;]
+  }
+}
+</code></pre>
+<h2>How configs will be applyed</h2>
+<p>Your configs will be merged in order you described in <code>sharec.configs</code>.</p>
+<p>Keep in mind, that next config can overwrite previous one.</p>
+<h2>Use cases</h2>
+<p>You can divide your configs by purporse: <code>javascript</code>, <code>css</code>, <code>git</code>,
+<code>utilities</code>, etc. And then combine them between each other to make them
+lighter and much more maintainable.</p>
 
   </div>
 
