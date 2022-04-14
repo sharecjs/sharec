@@ -1,3 +1,8 @@
+---
+title: Introduction
+permalink: '/'
+---
+
 # Introduction
 
 With **sharec** you can share and manage configuration across projects,

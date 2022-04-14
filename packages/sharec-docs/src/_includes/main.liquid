@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <title>{{ title }}</title>
+    <meta charset='urf-8'>
+    <meta name='viewport' content='width=device-width,initial-scale=1'>
+    <meta name='description' content='Konstantin Epishev – Software Englineer'>
+    <meta property='og:type' content='website'>
+    <meta property='og:url' content='https://www.11ty.dev/'>
+    <meta property='og:site_name' content='Eleventy'>
+    <meta property='og:locale' content='en_US'>
+    <meta property='og:title' content='K'>
+    <meta property='og:description' content='Konstantin Epishev – Software Englineer'>
+    <link rel='stylesheet' href='/assets/css/main.css'>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/github.min.css">
+  </head>
+  <body>
+    <div class='min-h-screen pl-80'>
+      <section class='flex flex-col w-80 h-full py-8 px-6 shadow fixed left-0 top-0 bg-white overflow-y-auto'>
+        {% if page.url == '/' %}
+          {% include 'logo.liquid' %}
+        {% else %}
+          <a href='/'>
+            {% include 'logo.liquid' %}
+          </a>
+        {% endif %}
+        {% include 'menu.liquid' %}
+      </section>
+      <section class='w-full min-h-screen bg-gray-100'>
+        {% block content %}{% endblock %}
+      </section>
+    </div>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+    <script>window.hljs.highlightAll();</script>
+  </body>
+</html>

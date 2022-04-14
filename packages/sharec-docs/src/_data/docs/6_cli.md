@@ -1,3 +1,8 @@
+---
+title: CLI API
+permalink: '/docs/cli_api/'
+---
+
 # CLI API
 
 `sharec` ships only one command. Use it to apply all your configuration packages:
