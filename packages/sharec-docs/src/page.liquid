@@ -5,9 +5,13 @@ pagination:
   alias: doc
 permalink: '{{ docs[doc].permalink }}index.html'
 ---
+
 {% layout 'main.liquid' %}
+{% block title %}
+  {{ docs[doc].title }} | Sharec
+{% endblock %}
 {% block content %}
-  <div class='article'>
+  <div class='article px-8'>
     {{ docs[doc].body }}
   </div>
 {% endblock %}
