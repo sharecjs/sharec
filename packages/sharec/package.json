@@ -1,6 +1,6 @@
 {
   "name": "sharec",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "description": "Smart configuration manager for your projects",
   "keywords": [
     "configuration",
@@ -25,7 +25,7 @@
   "dependencies": {
     "minimist": "^1.2.0",
     "nanospinner": "^0.3.1",
-    "sharec-core": "^3.0.0"
+    "sharec-core": "^3.1.0"
   },
   "gitHead": "8b056dc9aedf49a712b84b4d47ea9fa1cea45b08"
 }
