@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`utils > format applyFormat should apply format to given string 1`] = `
+exports[`utils > format applyFormat applies format to given string 1`] = `
 "{
   \\"foo\\": \\"foo\\",
   \\"bar\\": \\"bar\\",
@@ -8,13 +8,13 @@ exports[`utils > format applyFormat should apply format to given string 1`] = `
 }"
 `;
 
-exports[`utils > format applyFormat should apply format to given string 2`] = `
+exports[`utils > format applyFormat applies format to given string 2`] = `
 "foo:
   bar:
     baz: baz"
 `;
 
-exports[`utils > format applyFormat should apply format to given string 3`] = `
+exports[`utils > format applyFormat applies format to given string 3`] = `
 "{
 	\\"foo\\": \\"foo\\",
 	\\"bar\\": \\"bar\\",
@@ -22,18 +22,21 @@ exports[`utils > format applyFormat should apply format to given string 3`] = `
 }"
 `;
 
-exports[`utils > format applyFormat should apply format to given string 4`] = `
+exports[`utils > format applyFormat applies format to given string 4`] = `
 "foo:
   bar:
     baz: baz"
 `;
 
-exports[`utils > format applyFormat should apply format to given string 5`] = `
-"foo
-"
+exports[`utils > format indentWithSpace increases space indent 1`] = `
+"{
+    \\"foo\\": \\"foo\\",
+    \\"bar\\": \\"bar\\",
+    \\"baz\\": \\"baz\\"
+}"
 `;
 
-exports[`utils > format indentWithSpace should not affect string with spaces 1`] = `
+exports[`utils > format indentWithSpace replaces all tabs with spaces 1`] = `
 "{
   \\"foo\\": \\"foo\\",
   \\"bar\\": \\"bar\\",
@@ -41,15 +44,7 @@ exports[`utils > format indentWithSpace should not affect string with spaces 1`]
 }"
 `;
 
-exports[`utils > format indentWithSpace should replace all tabs with spaces 1`] = `
-"{
-  \\"foo\\": \\"foo\\",
-  \\"bar\\": \\"bar\\",
-  \\"baz\\": \\"baz\\"
-}"
-`;
-
-exports[`utils > format indentWithTab should not affect string with tabs 1`] = `
+exports[`utils > format indentWithTab doesn't affect string with tabs 1`] = `
 "{
 	\\"foo\\": \\"foo\\",
 	\\"bar\\": \\"bar\\",
@@ -57,7 +52,7 @@ exports[`utils > format indentWithTab should not affect string with tabs 1`] = `
 }"
 `;
 
-exports[`utils > format indentWithTab should replace all spaces with tabs 1`] = `
+exports[`utils > format indentWithTab replaces all spaces with tabs 1`] = `
 "{
 	\\"foo\\": \\"foo\\",
 	\\"bar\\": \\"bar\\",

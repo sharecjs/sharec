@@ -5,9 +5,7 @@ const json8 = require('json8')
 const zipObject = require('lodash/zipObject')
 const pickBy = require('lodash/pickBy')
 
-function cutEOL(str) {
-  return str.replace(new RegExp(`${EOL}$`), '')
-}
+const cutEOL = (str) => str.replace(new RegExp(`${EOL}$`), '')
 
 /**
  * Returns fixtures set from given directory
@@ -27,7 +25,7 @@ function cutEOL(str) {
  *  string in UTF8
  * @returns {object}
  */
-function fixtures(path, format) {
+const fixtures = (path, format) => {
   const findFixtureFileByKey = (arr, key) => arr.find((item) => new RegExp(`^${key}`).test(item))
   const fixturesPath = resolve(__dirname, `../fixtures/${path}`)
   const files = readdirSync(fixturesPath)
@@ -40,10 +38,10 @@ function fixtures(path, format) {
     const fixturePath = join(fixturesPath, fixtureFileName)
     const file = readFileSync(fixturePath, 'utf8')
 
-    switch (true) {
-      case format === 'json':
+    switch (format) {
+      case 'json':
         return JSON.parse(file)
-      case format === 'map':
+      case 'map':
         return json8.parse(file, { map: true })
       default:
         return cutEOL(file)
@@ -55,28 +53,7 @@ function fixtures(path, format) {
   return pickBy(fixturesSet)
 }
 
-function createFakeSpinner() {
-  const spinner = {
-    start: jest.fn().mockImplementation(() => spinner),
-    succeed: jest.fn().mockImplementation(() => spinner),
-    fail: jest.fn().mockImplementation(() => spinner),
-    frame: jest.fn().mockImplementation(() => spinner),
-  }
-
-  return spinner
-}
-
-function createFakePrompt() {
-  const prompt = {
-    confirm: jest.fn().mockResolvedValue(true),
-  }
-
-  return prompt
-}
-
 module.exports = {
   fixtures,
-  createFakeSpinner,
-  createFakePrompt,
   cutEOL,
 }
