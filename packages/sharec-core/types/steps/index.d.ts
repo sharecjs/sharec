@@ -11,6 +11,9 @@ export type FlowContext = {
    * `package.json `from `targetPath`
    */
   targetPackage?: any
+  /**
+   * Runtime configuration including hooks
+   */
   runtimeConfig?: import('..').RuntimeConfig
   /**
    * Original configs from upcoming package

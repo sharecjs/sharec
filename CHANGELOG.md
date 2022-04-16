@@ -1,3 +1,15 @@
+# 3.1.1
+
+Fixes:
+
+- Pass semaphore to hooks
+
+# 3.1.0
+
+Refactor:
+
+- Clean-up dependencies and simplify `format` utils
+
 # 3.0.0
 
 This release changes `sharec` usage at all.
@@ -44,13 +56,13 @@ Refactor:
 
 # 2.10.5
 
-Fix:
+Fixes:
 
 - Packages versions mismatch
 
 # 2.10.4
 
-Fix:
+Fixes:
 
 - Add missing `minimatch` dependency (#226)
 
@@ -111,7 +123,7 @@ Refactor:
 
 # 2.8.1
 
-Fix:
+Fixes:
 
 - Return back missing sharec config reading step (#182)
 
@@ -226,13 +238,13 @@ Chore:
 
 - Move all linters and other tools to the root of project
 
-Fix:
+Fixes:
 
 - Removed configuration files now not rewrites by upcoming package
 
 # v2.1.1
 
-Fix:
+Fixes:
 
 - Nested configs paths fix if target directory is not exist
 
@@ -242,20 +254,20 @@ Features:
 
 - Sharec skip fields removed by user (#78)
 
-Fix:
+Fixes:
 
 - Aliases for configs pipes (#107)
 
 # v2.0.3
 
-Fix:
+Fixes:
 
 - Remove error if target package is dependent of sharec
 - Quotes processing in YAML files
 
 # v2.0.2
 
-Fix:
+Fixes:
 
 - Handling internal errors
 
@@ -266,7 +278,7 @@ CI:
 
 # v2.0.1
 
-Fix:
+Fixes:
 
 - Add `nanomatch`
 
