@@ -25,8 +25,8 @@ const { commonFlow } = require('./steps')
 
 /**
  * @typedef {object} RuntimeConfig
- * @property {(context: FlowContext) => Promise<FlowContext>} [beforeMerge]
- * @property {(context: FlowContext) => Promise<FlowContext>} [afterMerge]
+ * @property {FlowStep} [beforeMerge]
+ * @property {FlowStep} [afterMerge]
  */
 
 /**

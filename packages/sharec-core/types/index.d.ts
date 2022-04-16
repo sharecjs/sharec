@@ -39,8 +39,8 @@ export type CliOptions = {
   cache: true | false | 'include'
 }
 export type RuntimeConfig = {
-  beforeMerge?: (context: FlowContext) => Promise<FlowContext>
-  afterMerge?: (context: FlowContext) => Promise<FlowContext>
+  beforeMerge?: FlowStep
+  afterMerge?: FlowStep
 }
 export type FlowContext = {
   /**
@@ -55,6 +55,9 @@ export type FlowContext = {
    * `package.json `from `targetPath`
    */
   targetPackage?: object
+  /**
+   * Runtime configuration including hooks
+   */
   runtimeConfig?: RuntimeConfig
   /**
    * Original configs from upcoming package
@@ -109,15 +112,15 @@ export type FlowStep = (context: FlowContext, semaphore?: Semaphore) => Promise<
  */
 /**
  * @typedef {object} RuntimeConfig
- * @property {(context: FlowContext) => Promise<FlowContext>} [beforeMerge]
- * @property {(context: FlowContext) => Promise<FlowContext>} [afterMerge]
+ * @property {FlowStep} [beforeMerge]
+ * @property {FlowStep} [afterMerge]
  */
 /**
  * @typedef {object} FlowContext
  * @property {string} targetPath Target project path
  * @property {CliOptions} options Different options from CLI
  * @property {object} [targetPackage] `package.json `from `targetPath`
- * @property {RuntimeConfig} [runtimeConfig]
+ * @property {RuntimeConfig} [runtimeConfig] Runtime configuration including hooks
  * @property {ConfigPackage[]} configs Original configs from upcoming package
  * @property {object} [mergedConfigs] Processed configs from upcoming package
  * @property {object} [cache] Previously installed configuration
