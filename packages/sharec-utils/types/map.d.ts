@@ -1,4 +1,11 @@
 /**
+ * Works like lodash/isMap
+ * Returns `true` if given value is instance of Map
+ * @param {any} val
+ * @returns {boolean}
+ */
+export function isMap(val: any): boolean
+/**
  * Works like lodash/pick, but with maps
  * Picks entries from target map by given keys and returns new map
  * @param {Map} target Target map

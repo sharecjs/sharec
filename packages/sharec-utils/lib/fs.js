@@ -1,5 +1,5 @@
 // @ts-check
-const nanomatch = require('nanomatch')
+const minimatch = require('minimatch')
 const { makedir, readdir, lstat } = require('./std')
 const { join } = require('./path')
 
@@ -37,12 +37,8 @@ const find = async (path, pattern) => {
     const fullFilePath = join(path, file)
     const stats = await lstat(fullFilePath)
 
-    if (stats.isFile()) {
-      result.push(
-        ...nanomatch([fullFilePath], pattern, {
-          dot: true,
-        }),
-      )
+    if (stats.isFile() && minimatch(fullFilePath, pattern, { dot: true })) {
+      result.push(fullFilePath)
       continue
     }
 

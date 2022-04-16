@@ -60,10 +60,7 @@ const indentWithTab = (str = '') => {
  * @returns {string}
  */
 const indentWithSpace = (str = '', size = 2) => {
-  const { type, indent } = detectIndent(str)
-
-  if (type !== 'tab') return str
-
+  const { indent } = detectIndent(str)
   const newIndent = Array(size).fill(' ').join('')
 
   return str.replace(new RegExp(indent, 'gm'), newIndent)
@@ -84,16 +81,18 @@ const applyFormat = ({ filename, content, rules }) => {
   const isYaml = filename && /\.ya?ml/.test(filename)
   let result = content
 
-  if (indentType === 'tab' && !isYaml) {
-    result = indentWithTab(result)
-  }
-
-  if (indentType === 'space' || isYaml) {
-    result = indentWithSpace(result, indentSize)
-  }
-
-  if (eof && !hasEOF(content)) {
-    result += '\n'
+  switch (true) {
+    case indentType === 'tab' && !isYaml:
+      result = indentWithTab(result)
+      break
+    case indentType === 'space' || isYaml:
+      result = indentWithSpace(result, indentSize)
+      break
+    case eof && !hasEOF(content):
+      result += EOL
+      break
+    default:
+      break
   }
 
   return result

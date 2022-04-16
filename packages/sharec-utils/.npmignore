@@ -1,1 +1,5 @@
 src/**/*.test.js
+.gitignore
+tsconfig.json
+lib/test
+jest.setup.js

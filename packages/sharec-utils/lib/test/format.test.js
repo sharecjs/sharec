@@ -16,7 +16,7 @@ describe('utils > format', () => {
   const yamlFxt = fixtures('default/yaml/01-formatting')
 
   describe('hasSpacesIndent', () => {
-    it('should correctly determine spaces indent in string', () => {
+    it('determines spaces indent', () => {
       expect(hasSpacesIndent(jsonFxt.result)).toBe(true)
       expect(hasSpacesIndent(yamlFxt.result)).toBe(true)
       expect(hasSpacesIndent(jsonFxt.current)).toBe(false)
@@ -24,7 +24,7 @@ describe('utils > format', () => {
   })
 
   describe('hasTabsIndent', () => {
-    it('should correctly determine tabs indent in string', () => {
+    it('determines tabs', () => {
       expect(hasTabsIndent(jsonFxt.result)).toBe(false)
       expect(hasTabsIndent(yamlFxt.result)).toBe(false)
       expect(hasTabsIndent(jsonFxt.current)).toBe(true)
@@ -32,7 +32,7 @@ describe('utils > format', () => {
   })
 
   describe('hasEOF', () => {
-    it('should correctly determine line wrap at the and of the all lines', () => {
+    it('determines line wrap at the and of the string', () => {
       expect(hasEOF(`foo${EOL}${EOL}`)).toBe(true)
       expect(hasEOF('foo')).toBe(false)
     })
@@ -47,27 +47,27 @@ describe('utils > format', () => {
   })
 
   describe('indentWithTab', () => {
-    it('should replace all spaces with tabs', () => {
+    it('replaces all spaces with tabs', () => {
       expect(indentWithTab(jsonFxt.result)).toMatchSnapshot()
     })
 
-    it('should not affect string with tabs', () => {
+    it("doesn't affect string with tabs", () => {
       expect(indentWithTab(jsonFxt.current)).toMatchSnapshot()
     })
   })
 
   describe('indentWithSpace', () => {
-    it('should replace all tabs with spaces', () => {
+    it('replaces all tabs with spaces', () => {
       expect(indentWithSpace(jsonFxt.current, 2)).toMatchSnapshot()
     })
 
-    it('should not affect string with spaces', () => {
-      expect(indentWithSpace(jsonFxt.result, 2)).toMatchSnapshot()
+    it('increases space indent', () => {
+      expect(indentWithSpace(jsonFxt.result, 4)).toMatchSnapshot()
     })
   })
 
   describe('applyFormat', () => {
-    it('should apply format to given string', () => {
+    it('applies format to given string', () => {
       expect(
         applyFormat({
           content: jsonFxt.current,
@@ -108,14 +108,6 @@ describe('utils > format', () => {
           },
         }),
       ).toMatchSnapshot()
-      expect(
-        applyFormat({
-          content: 'foo',
-          rules: {
-            eof: true,
-          },
-        }),
-      ).toMatchSnapshot()
     })
   })
 
@@ -123,7 +115,7 @@ describe('utils > format', () => {
     const jsFormat = { foo: 'bar' }
     const yamlFormat = { bar: 'baz' }
 
-    it('should return format by extname', () => {
+    it('formats by extname', () => {
       const formats = {
         '*.json': jsFormat,
         '*.yaml': yamlFormat,
@@ -133,7 +125,7 @@ describe('utils > format', () => {
       expect(getFormatByFilename(formats, 'foo.yaml')).toBe(yamlFormat)
     })
 
-    it('should return format by extnames sequence', () => {
+    it('formats by extnames sequence', () => {
       const formats = {
         '*.{json,yaml}': jsFormat,
       }
@@ -142,7 +134,7 @@ describe('utils > format', () => {
       expect(getFormatByFilename(formats, 'foo.yaml')).toBe(jsFormat)
     })
 
-    it('should return format by filename', () => {
+    it('formats by filename', () => {
       const formats = {
         'foo.json': jsFormat,
         'bar.yaml': yamlFormat,
@@ -152,7 +144,7 @@ describe('utils > format', () => {
       expect(getFormatByFilename(formats, 'bar.yaml')).toBe(yamlFormat)
     })
 
-    it('should return format by filenames sequence', () => {
+    it('formats by filenames sequence', () => {
       const formats = {
         '{foo.json,bar.yaml}': jsFormat,
         '{bar.json,baz.yaml}': yamlFormat,
