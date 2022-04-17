@@ -23,8 +23,9 @@
     "types": "echo 'types generation not applicable in this package yet'"
   },
   "dependencies": {
-    "minimist": "^1.2.0",
-    "nanospinner": "^0.3.1",
+    "minimist": "^1.2.6",
+    "nanospinner": "^1.1.0",
+    "picocolors": "^1.0.0",
     "sharec-core": "^3.1.1"
   },
   "gitHead": "8b056dc9aedf49a712b84b4d47ea9fa1cea45b08"
