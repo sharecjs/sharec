@@ -21,7 +21,7 @@ const readConfigsPackages = async (context, semaphore) => {
   const configPackages = []
 
   if (configs.length === 0) {
-    semaphore.fail("There aren't any config to install!")
+    semaphore.warn("There aren't any config to install!")
 
     return context
   }
@@ -58,7 +58,7 @@ const readConfigsPackages = async (context, semaphore) => {
 
       configPackages.push(configPackage)
     } catch (err) {
-      semaphore.error(`${config} hasn't beed loaded`)
+      semaphore.error(`${config} hasn't been loaded`)
     }
   }
 

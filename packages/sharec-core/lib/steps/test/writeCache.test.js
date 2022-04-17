@@ -15,6 +15,7 @@ describe('steps > writeCache', () => {
     success: jest.fn(),
     error: jest.fn(),
     fail: jest.fn(),
+    warn: jest.fn(),
   }
   let context
 

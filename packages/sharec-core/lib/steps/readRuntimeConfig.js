@@ -23,7 +23,7 @@ const readRuntimeConfig = async (context, semaphore) => {
 
     await stat(runtimeConfigPath)
   } catch (err) {
-    semaphore.error('No runtime configuration found')
+    semaphore.warn('No runtime configuration found')
 
     return context
   }

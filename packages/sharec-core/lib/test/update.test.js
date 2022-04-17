@@ -8,6 +8,7 @@ describe.only('sharec > update', () => {
     error: jest.fn(),
     success: jest.fn(),
     fail: jest.fn(),
+    warn: jest.fn(),
   }
 
   beforeEach(() => {
