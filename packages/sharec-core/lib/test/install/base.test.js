@@ -8,6 +8,7 @@ describe('sharec > install > base', () => {
     error: jest.fn(),
     success: jest.fn(),
     fail: jest.fn(),
+    warn: jest.fn(),
   }
   const packageFxt = fixtures('package/json/01-install')
   const babelFxt = fixtures('babel/json/00-base')

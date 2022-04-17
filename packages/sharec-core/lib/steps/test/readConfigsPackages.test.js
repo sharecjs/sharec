@@ -7,6 +7,7 @@ describe('steps > readConfigsPackages', () => {
     success: jest.fn(),
     error: jest.fn(),
     fail: jest.fn(),
+    warn: jest.fn(),
   }
   let context
 
@@ -35,12 +36,12 @@ describe('steps > readConfigsPackages', () => {
       vol.fromJSON(dir, '/')
     })
 
-    it('triggers `fail` signal', async () => {
+    it('triggers `warn` signal', async () => {
       expect.assertions(1)
 
       await readConfigsPackages(context, semaphore)
 
-      expect(semaphore.fail).toBeCalled()
+      expect(semaphore.warn).toBeCalled()
     })
 
     it("doesn't modify the context", async () => {

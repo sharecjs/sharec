@@ -2,6 +2,7 @@
 const minimist = require('minimist')
 const { sharec: sharecCore } = require('sharec-core')
 const { createSpinner } = require('nanospinner')
+const { green } = require('picocolors')
 
 /**
  * @typedef {import('nanospinner').Spinner} Spinner
@@ -57,6 +58,7 @@ async function sharec(targetProcess) {
       },
     )
 
+    console.info(`Run ${green('npm install')} to complete the config installation.`)
     targetProcess.exit(0)
   } catch (err) {
     if (spinner) {

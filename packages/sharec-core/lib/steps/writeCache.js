@@ -19,7 +19,7 @@ const writeCache = async (context, semaphore) => {
   if (!options.cache) return context
 
   if (Object.keys(mergedConfigs).length === 0) {
-    semaphore.success('Nothing to cache')
+    semaphore.warn('Nothing to cache')
 
     return context
   }

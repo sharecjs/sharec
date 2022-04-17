@@ -19,7 +19,7 @@ const writeLockdata = async (context, semaphore) => {
   const { targetPath, configs, mergedConfigs } = context
 
   if (Object.keys(mergedConfigs).length === 0) {
-    semaphore.success('Nothing to lock')
+    semaphore.warn('Nothing to lock')
 
     return context
   }

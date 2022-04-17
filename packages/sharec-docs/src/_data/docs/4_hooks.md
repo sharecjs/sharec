@@ -1,12 +1,12 @@
 ---
-title: Runtime configuration
-permalink: '/docs/runtime_configuration/'
+title: Hooks
+permalink: '/docs/hooks/'
 ---
 
-# Runtime configuration
+# Hooks
 
-With runtime configuration you can add `hooks` to customize any field in
-`FlowContext`.
+You can define your hooks in the runtime configuration finle. With hooks you can
+customize any field in `FlowContext`.
 
 Hook should match following signature:
 
@@ -15,6 +15,22 @@ type FlowStep = (context: FlowContext) => Promise<FlowContext>
 ```
 
 At this moment `sharec` supports two hooks: `beforeMerge` and `afterMerge`.
+
+## Using hooks
+
+You can install and use any external hook:
+
+```js
+const prettierHook = require('sharec-prettier-hook')
+
+module.exports = {
+  afterMerge: prettierHook,
+}
+```
+
+## Writting your own hook
+
+Hooks authoring is very simple:
 
 ```js
 // .sharecrc.js
@@ -41,4 +57,7 @@ module.exports = {
 }
 ```
 
-You can write your own hook, publish it and re-use everywhere you need.
+## Official hooks
+
+- [`sharec-editorconfig-hook`](https://github.com/sharecjs/sharec-editorconfig-hook) – applies formatting from `.editorconfig`
+- [`sharec-prettier-hook`](https://github.com/sharecjs/sharec-prettier-hook) – applies `prettier` formatting

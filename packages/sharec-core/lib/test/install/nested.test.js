@@ -11,6 +11,7 @@ describe('sharec > install nested configs', () => {
     error: jest.fn(),
     success: jest.fn(),
     fail: jest.fn(),
+    warn: jest.fn(),
   }
   const context = {
     targetPath: '/target',

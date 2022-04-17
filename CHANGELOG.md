@@ -1,3 +1,11 @@
+# 3.2.0
+
+Features:
+
+- Adds `warn` method to semaphore
+- Adds message about dependencies update after successful install
+- Update documentation
+
 # 3.1.1
 
 Fixes:
