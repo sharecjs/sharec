@@ -42,6 +42,10 @@ export type Semaphore = {
    */
   success: (text: string) => void
   /**
+   * Stops the spinner with warning
+   */
+  warn: (text: string) => void
+  /**
    * Stops the spinner with failure, but doesn't terminate the program
    */
   error: (text: string) => void

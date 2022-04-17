@@ -82,6 +82,10 @@ export type Semaphore = {
    */
   success: (text: string) => void
   /**
+   * Stops the spinner with warning
+   */
+  warn: (text: string) => void
+  /**
    * Stops the spinner with failure, but doesn't terminate the program
    */
   error: (text: string) => void
@@ -129,6 +133,7 @@ export type FlowStep = (context: FlowContext, semaphore?: Semaphore) => Promise<
  * @typedef {object} Semaphore
  * @property {(text: string) => void} start Starts the spinner
  * @property {(text: string) => void} success Stops the spinner with success
+ * @property {(text: string) => void} warn Stops the spinner with warning
  * @property {(text: string) => void} error Stops the spinner with failure, but doesn't terminate the program
  * @property {(text: string) => void} fail Stops the spinner with failure and terminates the program
  */
