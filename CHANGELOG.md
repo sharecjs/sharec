@@ -1,3 +1,9 @@
+# 3.2.1
+
+Fixes:
+
+- Provide `warn` method in CLI
+
 # 3.2.0
 
 Features:

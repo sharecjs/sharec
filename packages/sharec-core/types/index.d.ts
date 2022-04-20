@@ -72,6 +72,9 @@ export type FlowContext = {
    */
   cache?: object
 }
+/**
+ * Abstraction to communicate with interface outside the flow
+ */
 export type Semaphore = {
   /**
    * Starts the spinner
@@ -130,6 +133,7 @@ export type FlowStep = (context: FlowContext, semaphore?: Semaphore) => Promise<
  * @property {object} [cache] Previously installed configuration
  */
 /**
+ * Abstraction to communicate with interface outside the flow
  * @typedef {object} Semaphore
  * @property {(text: string) => void} start Starts the spinner
  * @property {(text: string) => void} success Stops the spinner with success
