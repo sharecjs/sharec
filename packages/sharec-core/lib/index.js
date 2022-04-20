@@ -41,6 +41,7 @@ const { commonFlow } = require('./steps')
  */
 
 /**
+ * Abstraction to communicate with interface outside the flow
  * @typedef {object} Semaphore
  * @property {(text: string) => void} start Starts the spinner
  * @property {(text: string) => void} success Stops the spinner with success

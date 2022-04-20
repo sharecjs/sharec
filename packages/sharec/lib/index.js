@@ -55,6 +55,12 @@ async function sharec(targetProcess) {
 
           targetProcess.exit(1)
         },
+        warn: text => {
+          if (!spinner) return
+
+          spinner.warn({ text })
+          spinner = null
+        },
       },
     )
 
