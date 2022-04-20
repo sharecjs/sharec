@@ -1,16 +1,19 @@
+
 <!DOCTYPE html>
 <html lang='en'>
   <head>
-    <title></title>
+    <title>
+  Hooks | Sharec
+</title>
     <meta charset='urf-8'>
     <meta name='viewport' content='width=device-width,initial-scale=1'>
-    <meta name='description' content='Konstantin Epishev – Software Englineer'>
+    <meta name='description' content='Sharec – javascript configuration manager'>
     <meta property='og:type' content='website'>
-    <meta property='og:url' content='https://www.11ty.dev/'>
-    <meta property='og:site_name' content='Eleventy'>
+    <meta property='og:url' content='https://sharec.js.org'>
+    <meta property='og:site_name' content='Sharec'>
     <meta property='og:locale' content='en_US'>
-    <meta property='og:title' content='K'>
-    <meta property='og:description' content='Konstantin Epishev – Software Englineer'>
+    <meta property='og:title' content='Sharec'>
+    <meta property='og:description' content='Sharec – javascript configuration manager'>
     <link rel='stylesheet' href='/assets/css/main.css'>
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/github.min.css">
   </head>
@@ -48,7 +51,7 @@
   
     <li class='mb-2 last:mb-0'>
       
-        <p class='menu-link font-bold cursor-default'>Runtime configuration</p>
+        <p class='menu-link font-bold cursor-default'>Hooks</p>
       
     </li>
   
@@ -78,14 +81,24 @@
       </section>
       <section class='w-full min-h-screen bg-gray-100'>
         
-  <div class='article'>
-    <h1>Runtime configuration</h1>
-<p>With runtime configuration you can add <code>hooks</code> to customize any field in
-<code>FlowContext</code>.</p>
+  <div class='article px-8'>
+    <h1>Hooks</h1>
+<p>You can define your hooks in the runtime configuration finle. With hooks you can
+customize any field in <code>FlowContext</code>.</p>
 <p>Hook should match following signature:</p>
 <pre><code class="language-ts">type FlowStep = (context: FlowContext) =&gt; Promise&lt;FlowContext&gt;
 </code></pre>
 <p>At this moment <code>sharec</code> supports two hooks: <code>beforeMerge</code> and <code>afterMerge</code>.</p>
+<h2>Using hooks</h2>
+<p>You can install and use any external hook:</p>
+<pre><code class="language-js">const prettierHook = require('sharec-prettier-hook')
+
+module.exports = {
+  afterMerge: prettierHook,
+}
+</code></pre>
+<h2>Writting your own hook</h2>
+<p>Hooks authoring is very simple:</p>
 <pre><code class="language-js">// .sharecrc.js
 const { EOL } = require('os')
 
@@ -109,7 +122,11 @@ module.exports = {
   },
 }
 </code></pre>
-<p>You can write your own hook, publish it and re-use everywhere you need.</p>
+<h2>Official hooks</h2>
+<ul>
+<li><a href="https://github.com/sharecjs/sharec-editorconfig-hook"><code>sharec-editorconfig-hook</code></a> – applies formatting from <code>.editorconfig</code></li>
+<li><a href="https://github.com/sharecjs/sharec-prettier-hook"><code>sharec-prettier-hook</code></a> – applies <code>prettier</code> formatting</li>
+</ul>
 
   </div>
 

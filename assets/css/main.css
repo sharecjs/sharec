@@ -744,6 +744,11 @@ Ensure the default browser behavior of the `hidden` attribute.
 	padding: 1rem;
 }
 
+.px-8 {
+	padding-left: 2rem;
+	padding-right: 2rem;
+}
+
 .py-8 {
 	padding-top: 2rem;
 	padding-bottom: 2rem;
