@@ -52,7 +52,7 @@
     "gulp-svgmin": "^4.1.0",
     "gulp-svgstore": "^9.0.0",
     "markdown-it": "^12.3.2",
-    "postcss": "^8.4.7",
+    "postcss": "^8.4.31",
     "postcss-import": "^14.0.2",
     "postcss-nested": "^5.0.6",
     "rimraf": "^3.0.2",
